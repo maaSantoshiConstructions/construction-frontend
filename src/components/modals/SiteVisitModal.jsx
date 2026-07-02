@@ -18,24 +18,20 @@ export default function SiteVisitModal({ onClose }) {
   if (confirmed) {
     return (
       <div onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-        className="fixed inset-0 bg-black/70 z-[130] flex items-center justify-center p-4">
-        <div onClick={(e) => e.stopPropagation()} className="bg-white max-w-md w-full rounded-3xl p-8 text-center shadow-2xl"
-          style={{ animation: 'modalPopIn 0.3s ease forwards' }}>
-          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <FaCheckDouble className="text-emerald-500 text-3xl" />
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[130] flex items-center justify-center p-4">
+        <div onClick={(e) => e.stopPropagation()}
+          className="modal bg-gradient-to-br from-white to-emerald-50 max-w-md w-full rounded-2xl p-8 text-center shadow-2xl border border-white/10">
+          <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg shadow-emerald-500/20">
+            <FaCheckDouble className="text-white text-3xl" />
           </div>
           <div className="font-bold text-2xl text-slate-800">Site Visit Confirmed!</div>
-          <div className="mt-2 text-slate-600">
-            Your visit is scheduled for <strong>{date}</strong> at <strong>{time}</strong>
+          <div className="mt-2 text-slate-500">
+            Your visit is scheduled for <strong className="text-slate-700">{date}</strong> at <strong className="text-slate-700">{time}</strong>
           </div>
-          <div className="my-6 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-sm text-left">
-            <div className="font-semibold">WhatsApp Confirmation Sent</div>
-            <div className="text-emerald-700">+91 98765 43210</div>
-            <div className="mt-3 text-xs">Google Maps link and assigned executive details shared.</div>
-          </div>
+          <div className="mt-3 text-sm text-slate-400">A confirmation has been sent via WhatsApp. Our executive will call you 1 hour before the visit.</div>
           <button onClick={onClose}
-            className="px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-3xl text-sm font-semibold transition">
-            DONE
+            className="mt-6 px-8 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl font-semibold hover:from-emerald-700 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-500/20">
+            Done
           </button>
         </div>
       </div>
@@ -44,23 +40,24 @@ export default function SiteVisitModal({ onClose }) {
 
   return (
     <div onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4">
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
       <div onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden"
-        style={{ animation: 'modalPopIn 0.3s ease forwards' }}>
-        <div className="px-7 py-5 border-b">
-          <span className="px-3 py-1 text-xs font-bold bg-blue-600 text-white rounded-2xl">FEATURE 07</span>
-          <div className="font-bold text-xl mt-1 text-slate-800">Smart Site Visit Booking</div>
+        className="modal bg-white w-full max-w-md rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
+        <div className="px-7 py-5 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
+          <span className="px-3 py-1 text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg">FEATURE 07</span>
+          <div className="font-bold text-xl mt-2 text-slate-800">Smart Site Visit Booking</div>
         </div>
         <div className="p-7 space-y-4 text-sm">
           <div>
-            <label className="text-xs font-medium text-slate-600">Preferred Date</label>
-            <input type="date" defaultValue={date} className="w-full border px-4 py-2.5 rounded-2xl mt-1" />
+            <label className="text-xs font-semibold text-slate-500">Preferred Date</label>
+            <input id="visit-date" type="date" value={date}
+              className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-slate-600">Time Slot</label>
-              <select value={time} onChange={(e) => setTime(e.target.value)} className="w-full border px-4 py-2.5 rounded-2xl mt-1">
+              <label className="text-xs font-semibold text-slate-500">Time Slot</label>
+              <select id="visit-time" value={time} onChange={(e) => setTime(e.target.value)}
+                className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
                 <option>10:00 AM - 11:00 AM</option>
                 <option>11:30 AM - 12:30 PM</option>
                 <option>02:00 PM - 03:00 PM</option>
@@ -68,8 +65,8 @@ export default function SiteVisitModal({ onClose }) {
               </select>
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-600">Pickup Location</label>
-              <select className="w-full border px-4 py-2.5 rounded-2xl mt-1">
+              <label className="text-xs font-semibold text-slate-500">Pickup Location</label>
+              <select id="visit-pickup" className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
                 <option>Patia Square</option>
                 <option>Jaydev Vihar</option>
                 <option>Khandagiri Square</option>
@@ -79,8 +76,8 @@ export default function SiteVisitModal({ onClose }) {
             </div>
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-600">Preferred Sales Executive (Optional)</label>
-            <select className="w-full border px-4 py-2.5 rounded-2xl mt-1">
+            <label className="text-xs font-semibold text-slate-500">Preferred Sales Executive (Optional)</label>
+            <select id="visit-executive" className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
               <option value="">Any Available Executive</option>
               <option>Mr. Rajesh Patra (Senior)</option>
               <option>Ms. Ananya Mishra</option>
@@ -88,10 +85,14 @@ export default function SiteVisitModal({ onClose }) {
             </select>
           </div>
           <button onClick={handleBooking} disabled={loading}
-            className="mt-3 w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-semibold rounded-3xl flex justify-center items-center gap-x-2 transition">
-            {loading ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> PROCESSING...</> : <><FaCheckDouble /> CONFIRM BOOKING</>}
+            className="mt-3 w-full py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 active:from-emerald-800 active:to-emerald-900 text-white font-semibold rounded-xl flex justify-center items-center gap-x-2 shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-50">
+            {loading ? (
+              <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> <span>Booking...</span></>
+            ) : (
+              <><FaCheckDouble /> <span>Confirm Site Visit</span></>
+            )}
           </button>
-          <div className="text-center text-[10px] text-emerald-600">Instant WhatsApp confirmation + Google Maps link will be sent</div>
+          <div className="text-[10px] text-center text-slate-400">You will receive instant WhatsApp confirmation + reminder</div>
         </div>
       </div>
     </div>

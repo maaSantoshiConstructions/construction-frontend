@@ -42,35 +42,31 @@ export default function GenericFeatureModal({ num, onClose, onShowAI }) {
 
   return (
     <div onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4">
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
       <div onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden"
-        style={{ animation: 'modalPopIn 0.3s ease forwards' }}>
-        <div className="px-7 py-5 border-b flex justify-between items-center">
+        className="modal bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
+        <div className="px-7 py-5 border-b border-slate-100 flex justify-between items-center bg-gradient-to-r from-slate-50 to-white">
           <div>
-            <span className="text-xs px-3 py-1 bg-blue-600 text-white rounded-2xl font-bold">
+            <span className="text-xs px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold">
               FEATURE {String(num).padStart(2, '0')}
             </span>
             <div className="font-bold text-xl mt-2 text-slate-800">{title}</div>
           </div>
-          <button onClick={onClose} className="text-3xl text-slate-300 hover:text-slate-500 leading-none">&times;</button>
+          <button onClick={onClose} className="w-8 h-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all text-xl leading-none">&times;</button>
         </div>
-        <div className="p-7 text-sm text-slate-600">
-          <p>{desc}</p>
-
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-2xl text-xs">
-            <strong className="text-blue-700">This feature is LIVE</strong> on the Jai Santoshi Maa website.
-            All 25 features have been built by Briskode Technology with modern UI/UX and robust backend.
-          </div>
-
-          <div className="mt-5 flex gap-x-3">
-            <button onClick={() => { onClose(); setTimeout(onShowAI, 300); }}
-              className="flex-1 py-2.5 text-sm border border-blue-600 text-blue-600 hover:bg-blue-50 rounded-2xl font-semibold transition flex items-center justify-center gap-2">
-              <FaRobot /> Try AI Tools
-            </button>
-            <button onClick={onClose}
-              className="flex-1 py-2.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-semibold transition">
-              Close
+        <div className="p-7">
+          <p className="text-slate-500 leading-relaxed">{desc}</p>
+          <div className="mt-6 p-5 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-100 rounded-xl">
+            <div className="flex items-start gap-x-3">
+              <FaRobot className="text-blue-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="font-semibold text-sm text-slate-700">Try Our AI Recommendation System</div>
+                <div className="text-xs text-slate-500 mt-1 leading-relaxed">This feature is available on the live platform. Use our AI-powered property recommendation to instantly find the best match for your needs.</div>
+              </div>
+            </div>
+            <button onClick={onShowAI}
+              className="mt-4 w-full py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-sm transition-all shadow-lg shadow-blue-500/20">
+              Try AI Property Match
             </button>
           </div>
         </div>

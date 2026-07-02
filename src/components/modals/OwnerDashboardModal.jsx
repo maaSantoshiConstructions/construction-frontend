@@ -21,119 +21,115 @@ export default function OwnerDashboardModal({ onClose }) {
 
   return (
     <div onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      className="fixed inset-0 bg-black/70 z-[110] flex items-center justify-center p-4">
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
       <div onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-5xl rounded-3xl shadow-2xl overflow-hidden"
-        style={{ maxHeight: '92vh', animation: 'modalPopIn 0.3s ease forwards' }}>
-        <div className="px-8 py-4 border-b flex items-center justify-between bg-slate-900 text-white">
+        className="modal bg-white w-full max-w-5xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
+        style={{ maxHeight: '92vh' }}>
+        <div className="px-8 py-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-slate-900 via-slate-800 to-blue-900 text-white">
           <div className="flex items-center gap-x-3">
-            <FaUserShield className="text-xl" />
+            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+              <FaUserShield className="text-lg" />
+            </div>
             <div>
               <div className="font-bold">Owner & Investor Dashboard</div>
-              <div className="text-xs opacity-75">Welcome back, <span className="font-semibold">Debasis Patra</span></div>
+              <div className="text-[10px] text-white/60">Welcome back, Mr. Santosh Patnaik</div>
             </div>
           </div>
-          <button onClick={onClose} className="text-white/60 hover:text-white text-3xl leading-none">&times;</button>
+          <button onClick={onClose} className="w-8 h-8 rounded-xl flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all text-xl leading-none">&times;</button>
         </div>
 
-        <div className="p-6">
-          <div className="flex border-b mb-6 text-sm overflow-x-auto">
-            {tabs.map((tab) => (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-2.5 whitespace-nowrap transition-all ${activeTab === tab.id
-                  ? 'border-b-3 border-blue-600 text-blue-600 font-semibold'
-                  : 'text-slate-500 hover:text-slate-700'}`}
-                style={activeTab === tab.id ? { borderBottom: '3px solid #2563EB' } : {}}>
-                {tab.label}
-              </button>
-            ))}
-          </div>
+        {/* Tabs */}
+        <div className="flex border-b border-slate-100 px-8">
+          {tabs.map((tab) => (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+              className={`dashboard-tab px-5 py-3 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors ${activeTab === tab.id ? 'active text-blue-600' : ''}`}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
+        <div className="p-8 overflow-y-auto" style={{ maxHeight: 'calc(92vh - 130px)' }}>
+          {/* Tab 0: My Properties */}
           {activeTab === 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="border rounded-2xl p-5">
-                <div className="flex justify-between">
+            <div className="space-y-4">
+              {[
+                { name: 'Plot A-42, Santoshi Enclave', size: '2400 sq.ft', status: 'Active', progress: 'Construction Complete', color: 'emerald' },
+                { name: 'Villa B-07, Santoshi Villas', size: '3200 sq.ft', status: 'Active', progress: '65% Complete', color: 'blue' },
+              ].map((prop, i) => (
+                <div key={i} className="flex items-center justify-between p-5 bg-gradient-to-br from-slate-50 to-white border border-slate-100 rounded-xl">
                   <div>
-                    <div className="text-emerald-600 text-xs font-bold">BOOKED • PHASE 1</div>
-                    <div className="font-bold text-xl text-slate-800">Plot A-42, Santoshi Enclave</div>
-                    <div className="text-sm text-slate-500">2400 sq.ft • North Facing • ₹58.8 Lakh</div>
+                    <div className="font-semibold text-slate-800">{prop.name}</div>
+                    <div className="text-sm text-slate-400">{prop.size}</div>
                   </div>
-                  <div className="text-right text-xs">
-                    <div className="px-3 py-0.5 bg-emerald-100 text-emerald-700 rounded">Possession: Dec 2027</div>
-                  </div>
-                </div>
-                <div className="mt-4 text-xs flex gap-x-2">
-                  <button onClick={() => toast.success('Agreement downloaded (demo)')}
-                    className="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs rounded-2xl transition">
-                    DOWNLOAD AGREEMENT
-                  </button>
-                  <button className="flex-1 py-2 border text-xs rounded-2xl hover:bg-slate-50 transition">
-                    VIEW ON MAP
-                  </button>
-                </div>
-              </div>
-              <div className="border rounded-2xl p-5">
-                <div className="flex justify-between">
-                  <div>
-                    <div className="text-emerald-600 text-xs font-bold">BOOKED • PHASE 2</div>
-                    <div className="font-bold text-xl text-slate-800">Villa B-07, Santoshi Villas</div>
-                    <div className="text-sm text-slate-500">3200 sq.ft • East Facing • ₹1.55 Cr</div>
-                  </div>
-                  <div className="text-right text-xs">
-                    <div className="px-3 py-0.5 bg-amber-100 text-amber-700 rounded">Under Construction</div>
+                  <div className="text-right">
+                    <div className={`text-xs font-bold px-3 py-1 rounded-full ${prop.color === 'emerald' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`}>{prop.progress}</div>
                   </div>
                 </div>
-                <div className="mt-4 text-xs flex gap-x-2">
-                  <button className="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs rounded-2xl transition">
-                    VIEW PROGRESS
-                  </button>
-                  <button className="flex-1 py-2 border text-xs rounded-2xl hover:bg-slate-50 transition">
-                    PAYMENT SCHEDULE
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
           )}
 
+          {/* Tab 1: Payments & Documents */}
           {activeTab === 1 && (
-            <div>
-              <div className="text-sm text-slate-600">Payment History & Legal Documents</div>
-              <table className="mt-3 w-full text-sm">
-                <tbody>
-                  <tr className="border-b"><td className="py-2 text-slate-600">Token Amount</td><td className="text-right font-mono">₹5,00,000</td><td className="text-right text-emerald-600">PAID</td></tr>
-                  <tr className="border-b"><td className="py-2 text-slate-600">1st Installment (30%)</td><td className="text-right font-mono">₹17.64 Lakh</td><td className="text-right text-emerald-600">PAID</td></tr>
-                  <tr className="border-b"><td className="py-2 text-slate-600">2nd Installment (Due 15 Aug)</td><td className="text-right font-mono">₹17.64 Lakh</td><td className="text-right text-amber-600">PENDING</td></tr>
-                </tbody>
-              </table>
-              <button onClick={() => toast.success('Invoices downloaded (demo)')}
-                className="mt-4 text-xs px-5 py-2 bg-white border rounded-2xl hover:bg-slate-50 transition">
-                DOWNLOAD ALL INVOICES & LEGAL DOCS
-              </button>
-            </div>
-          )}
-
-          {activeTab === 2 && (
-            <div>
-              <div className="text-sm text-slate-600 mb-3">Latest Construction Updates — Plot A-42</div>
-              <div className="space-y-3 text-sm">
-                <div className="flex gap-3"><div className="font-mono text-xs w-20 text-slate-400">15 Jun 2026</div> <div className="text-slate-600">Foundation & plinth beam completed. Drone footage uploaded.</div></div>
-                <div className="flex gap-3"><div className="font-mono text-xs w-20 text-slate-400">02 Jun 2026</div> <div className="text-slate-600">Site clearing & layout finalization done. Engineer report available.</div></div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 3 && (
-            <div>
-              <div className="font-semibold text-slate-800">Your Referral Dashboard</div>
-              <div className="mt-2 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex justify-between items-center">
-                <div>
-                  <div className="text-xs text-slate-500">TOTAL EARNED</div>
-                  <div className="text-3xl font-bold text-emerald-700">₹1,20,000 <span className="text-base font-normal">+ 2 Gold Coins</span></div>
+            <div className="space-y-4">
+              {[
+                { label: 'Payment Schedule', desc: 'Total: ₹58.8 Lakh • Paid: ₹35.28 Lakh (60%)', cta: 'View Schedule' },
+                { label: 'Sale Deed', desc: 'Registered • Ready for download', cta: 'Download' },
+                { label: 'Mutation Certificate', desc: 'Pending • Expected in 30 days', cta: 'Track Status' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center justify-between p-5 bg-gradient-to-br from-slate-50 to-white border border-slate-100 rounded-xl">
+                  <div>
+                    <div className="font-semibold text-slate-800">{item.label}</div>
+                    <div className="text-sm text-slate-400">{item.desc}</div>
+                  </div>
+                  <button className="text-xs font-semibold px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-500/20">{item.cta}</button>
                 </div>
-                <button onClick={referFriend}
-                  className="px-6 py-2 text-sm bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl transition">
-                  REFER A FRIEND
-                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Tab 2: Construction Updates */}
+          {activeTab === 2 && (
+            <div className="space-y-4">
+              {[
+                { date: '28 Jun 2026', text: 'Roofing completed for A-block. Waterproofing in progress.' },
+                { date: '15 Jun 2026', text: 'Electrical wiring completed for Phase 1 plots.' },
+                { date: '01 Jun 2026', text: 'Road paving completed for main avenue.' },
+              ].map((update, i) => (
+                <div key={i} className="flex gap-4 p-5 bg-gradient-to-br from-slate-50 to-white border border-slate-100 rounded-xl">
+                  <div className="w-2 h-2 mt-1.5 rounded-full bg-blue-500 flex-shrink-0" />
+                  <div>
+                    <div className="text-xs text-slate-400 font-medium">{update.date}</div>
+                    <div className="text-sm text-slate-600 mt-0.5">{update.text}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Tab 3: Referrals */}
+          {activeTab === 3 && (
+            <div className="text-center py-6">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/20">
+                <span className="text-white text-2xl font-bold">₹</span>
+              </div>
+              <div className="font-bold text-xl text-slate-800">Earn ₹10,000 + Gold Coin per Referral</div>
+              <div className="text-sm text-slate-400 mt-1">Refer a friend who buys a plot. No limit on referrals.</div>
+              <button onClick={referFriend}
+                className="mt-5 px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-xl font-semibold transition-all shadow-lg shadow-amber-500/20">
+                Refer a Friend Now
+              </button>
+              <div className="mt-6 grid grid-cols-2 gap-3 text-left">
+                {[
+                  { name: 'Mr. Rajesh Das', status: 'Site Visit Done' },
+                  { name: 'Mrs. Sunita Patra', status: 'Booking Done — ₹10,000 Earned!' },
+                  { name: 'Mr. Alok Mishra', status: 'Interested' },
+                ].map((ref, i) => (
+                  <div key={i} className="p-4 bg-gradient-to-br from-slate-50 to-white border border-slate-100 rounded-xl">
+                    <div className="font-medium text-sm text-slate-700">{ref.name}</div>
+                    <div className="text-xs text-slate-400 mt-0.5">{ref.status}</div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
