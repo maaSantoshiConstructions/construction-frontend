@@ -8,45 +8,31 @@ import ChatbotModal from '../../components/modals/ChatbotModal';
 import SiteVisitModal from '../../components/modals/SiteVisitModal';
 import OwnerDashboardModal from '../../components/modals/OwnerDashboardModal';
 import GenericFeatureModal from '../../components/modals/GenericFeatureModal';
-import {
-  FaArrowRight, FaRobot, FaCalendarCheck, FaShieldAlt, FaMapMarkedAlt, FaHeadset,
-  FaCheckDouble, FaPlay, FaChevronDown, FaCheckCircle, FaMap, FaCaretRight,
-  FaStar, FaChartLine, FaHome, FaBuilding, FaHardHat, FaHandHoldingUsd,
-  FaUserShield, FaComments, FaVrCardboard, FaCalculator, FaHandshake,
-  FaCouch, FaCompass, FaHospital, FaFileAlt, FaWhatsapp, FaBell,
-  FaVideo, FaFire, FaCrosshairs, FaUserFriends, FaRocket, FaMagic
-} from 'react-icons/fa';
 
 const featureList = [
-  { num: 1, title: 'AI Property Recommendation System', desc: 'Personalized recommendations based on budget, location preference, plot type & investment goals.', icon: FaStar, cta: 'TRY LIVE DEMO' },
-  { num: 2, title: 'Investment Return Calculator', desc: 'Calculate future value, rental income, ROI & EMI over 5, 10 & 15 years with appreciation projections.', icon: FaChartLine, cta: 'OPEN CALCULATOR' },
-  { num: 3, title: 'Live Plot Availability Map', desc: 'Real-time interactive township map. Green = Available, Yellow = Reserved, Red = Sold. Instant booking.', icon: FaMap, cta: 'VIEW LIVE MAP' },
-  { num: 4, title: '360° Virtual Site Visit', desc: 'Drone videos, virtual walkthroughs & Street View. Experience the site 24×7 from any device.', icon: FaVrCardboard, cta: 'START VIRTUAL TOUR' },
-  { num: 5, title: 'Smart Construction Progress Tracker', desc: 'Secure personal login to track weekly images, drone updates, engineer reports & payment schedule.', icon: FaHardHat, cta: 'TRACK PROGRESS' },
-  { num: 6, title: 'AI Sales Assistant (24×7)', desc: 'Multilingual intelligent chatbot answering plot prices, loan eligibility, RERA status & books visits.', icon: FaComments, cta: 'CHAT WITH AI NOW' },
-  { num: 7, title: 'Smart Site Visit Booking', desc: 'Frictionless booking with auto-assigned executive, instant WhatsApp confirmation & reminders.', icon: FaCalendarCheck, cta: 'BOOK NOW' },
-  { num: 8, title: 'Customer Referral Program', desc: 'Earn ₹10,000 + Gold Coin + Cashback. Track referrals live with personal dashboard.', icon: FaUserFriends, cta: 'REFER NOW' },
-  { num: 9, title: 'Channel Partner Portal', desc: 'Self-service portal for agents. Download brochures, view commissions, generate leads & track payments.', icon: FaHandshake, cta: 'PARTNER LOGIN' },
-  { num: 10, title: 'Online Plot Booking', desc: 'Book instantly with ₹5,000–₹25,000 token. Upload Aadhaar, PAN & get instant receipt & agreement.', icon: FaCrosshairs, cta: 'BOOK A PLOT' },
-  { num: 11, title: 'Property Comparison Tool', desc: 'Compare up to 4 properties side-by-side on price, road width, appreciation & loan eligibility.', icon: FaChartLine, cta: 'COMPARE' },
-  { num: 12, title: 'AI Loan Eligibility Checker', desc: 'Instantly calculate max eligible loan, EMI & partner banks based on income & obligations.', icon: FaCalculator, cta: 'CHECK ELIGIBILITY' },
-  { num: 13, title: 'Construction Cost Calculator', desc: 'Detailed cost breakdown for self-build customers based on land size, floors & material quality.', icon: FaBuilding, cta: 'CALCULATE' },
-  { num: 14, title: 'Smart Lead Scoring Dashboard', desc: 'AI automatically ranks leads as Hot / Warm / Cold for sales team efficiency.', icon: FaFire, cta: 'VIEW LEADS' },
-  { num: 15, title: 'Dynamic Price Increase Timer', desc: 'Transparent countdown timers showing upcoming price increases to create genuine urgency.', icon: FaBell, cta: 'VIEW TIMER' },
-  { num: 16, title: 'AI Interior Visualizer', desc: 'Upload any room photo & instantly visualize modern, luxury, Scandinavian or traditional interiors.', icon: FaCouch, cta: 'VISUALIZE' },
-  { num: 17, title: 'Plot Direction Analyzer', desc: 'Vastu analysis with score, sunlight, wind direction & East/North facing benefits.', icon: FaCompass, cta: 'ANALYZE' },
-  { num: 18, title: 'Nearby Location Explorer', desc: 'Interactive map showing schools, hospitals, malls, temples & commute times in minutes.', icon: FaHospital, cta: 'EXPLORE' },
-  { num: 19, title: 'Legal Document Verification', desc: 'Secure online viewer for Sale Deed, Mutation, ROR, Layout Approval & all NOCs.', icon: FaFileAlt, cta: 'VIEW DOCUMENTS' },
-  { num: 20, title: 'WhatsApp CRM Integration', desc: 'Every inquiry instantly routed to sales executive + CRM + WhatsApp with zero lead leakage.', icon: FaWhatsapp, cta: 'LEARN MORE' },
-  { num: 21, title: 'AI Follow-up Automation', desc: 'Intelligent nurturing sequences via WhatsApp, email & SMS based on lead behavior.', icon: FaRobot, cta: 'AUTOMATE' },
-  { num: 22, title: 'Live Customer Reviews', desc: 'Video testimonials, Google reviews & authentic before/after construction stories.', icon: FaVideo, cta: 'WATCH REVIEWS' },
-  { num: 23, title: 'Interactive Odisha Investment Heatmap', desc: 'Visual heatmap of high-growth areas, highways, metro proposals & Smart City projects.', icon: FaFire, cta: 'VIEW HEATMAP' },
-  { num: 24, title: 'AI Property Valuation Tool', desc: 'Get instant credible property value estimates. Excellent lead generation for buyers & landowners.', icon: FaChartLine, cta: 'GET VALUATION' },
-  { num: 25, title: 'Owner & Investor Dashboard', desc: 'Complete self-service portal to view properties, payments, documents, updates & earn referral rewards.', icon: FaUserShield, cta: 'ACCESS DASHBOARD' },
+  { num: 1, title: 'AI Property Recommendation System', desc: 'Personalized recommendations based on budget, location preference, plot type & investment goals.', cta: 'TRY LIVE DEMO' },
+  { num: 2, title: 'Investment Return Calculator', desc: 'Calculate future value, rental income, ROI & EMI over 5, 10 & 15 years with appreciation projections.', cta: 'OPEN CALCULATOR' },
+  { num: 3, title: 'Live Plot Availability Map', desc: 'Real-time interactive township map. Green = Available, Yellow = Reserved, Red = Sold. Instant booking.', cta: 'VIEW LIVE MAP' },
+  { num: 4, title: '360° Virtual Site Visit', desc: 'Drone videos, virtual walkthroughs & Street View. Experience the site 24×7 from any device.', cta: 'START VIRTUAL TOUR' },
+  { num: 6, title: 'AI Sales Assistant (24×7)', desc: 'Multilingual intelligent chatbot answering plot prices, loan eligibility, RERA status & books visits.', cta: 'CHAT WITH AI NOW' },
+  { num: 7, title: 'Smart Site Visit Booking', desc: 'Frictionless booking with auto-assigned executive, instant WhatsApp confirmation & reminders.', cta: 'BOOK NOW' },
+  { num: 8, title: 'Customer Referral Program', desc: 'Earn ₹10,000 + Gold Coin + Cashback. Track referrals live with personal dashboard.', cta: 'REFER NOW' },
+  { num: 10, title: 'Online Plot Booking', desc: 'Book instantly with ₹5,000–₹25,000 token. Upload Aadhaar, PAN & get instant receipt & agreement.', cta: 'BOOK A PLOT' },
+  { num: 12, title: 'AI Loan Eligibility Checker', desc: 'Instantly calculate max eligible loan, EMI & partner banks based on income & obligations.', cta: 'CHECK ELIGIBILITY' },
+  { num: 13, title: 'Construction Cost Calculator', desc: 'Detailed cost breakdown for self-build customers based on land size, floors & material quality.', cta: 'CALCULATE' },
+  { num: 15, title: 'Dynamic Price Increase Timer', desc: 'Transparent countdown timers showing upcoming price increases to create genuine urgency.', cta: 'VIEW TIMER' },
+  { num: 16, title: 'AI Interior Visualizer', desc: 'Upload any room photo & instantly visualize modern, luxury, Scandinavian or traditional interiors.', cta: 'VISUALIZE' },
+  { num: 17, title: 'Plot Direction Analyzer', desc: 'Vastu analysis with score, sunlight, wind direction & East/North facing benefits.', cta: 'ANALYZE' },
+  { num: 18, title: 'Nearby Location Explorer', desc: 'Interactive map showing schools, hospitals, malls, temples & commute times in minutes.', cta: 'EXPLORE' },
+  { num: 19, title: 'Legal Document Verification', desc: 'Secure online viewer for Sale Deed, Mutation, ROR, Layout Approval & all NOCs.', cta: 'VIEW DOCUMENTS' },
+  { num: 20, title: 'WhatsApp CRM Integration', desc: 'Every inquiry instantly routed to sales executive + CRM + WhatsApp with zero lead leakage.', cta: 'LEARN MORE' },
+  { num: 21, title: 'AI Follow-up Automation', desc: 'Intelligent nurturing sequences via WhatsApp, email & SMS based on lead behavior.', cta: 'AUTOMATE' },
+  { num: 22, title: 'Live Customer Reviews', desc: 'Video testimonials, Google reviews & authentic before/after construction stories.', cta: 'WATCH REVIEWS' },
+  { num: 25, title: 'Owner & Investor Dashboard', desc: 'Complete self-service portal to view properties, payments, documents, updates & earn referral rewards.', cta: 'ACCESS DASHBOARD' },
 ];
 
 const projectsData = [
-  { id: 1, name: 'Santoshi Enclave - Phase 1', location: 'Patia, Bhubaneswar', price: '₹2,450/sq.ft', status: '68% Sold', statusColor: 'emerald', img: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80', tags: ['1200–4000 sqft plots', 'North & East facing'], plots: 142 },
+  { id: 1, name: 'Santoshi Enclave - Phase 1', location: 'Patia, Bhubaneswar', price: '₹2,450/sq.ft', status: '68% Sold', statusColor: 'emerald', img: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80', tags: ['1200\u20134000 sqft plots', 'North & East facing'], plots: 142 },
   { id: 2, name: 'Santoshi Villas', location: 'Chandrasekharpur, Bhubaneswar', price: '₹4,850/sq.ft', status: 'Phase 2 Launching', statusColor: 'amber', img: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80', tags: ['3 & 4 BHK Villas', 'Gated Community'], plots: 37 },
   { id: 3, name: 'Santoshi Greens', location: 'Khandagiri, Bhubaneswar', price: '₹1,950/sq.ft', status: 'New Launch', statusColor: 'emerald', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56b08?w=800&q=80', tags: ['Affordable Plots', 'Near NH-16'], plots: 89 },
 ];
@@ -55,16 +41,15 @@ export default function Home() {
   const { showModal, openModal, closeModal } = useModal();
   const [projects, setProjects] = useState([]);
 
-  // Investment Calculator state
   const [invAmount, setInvAmount] = useState(4500000);
   const [invRate, setInvRate] = useState(11);
   const [invYears, setInvYears] = useState(10);
-  // Loan Calculator
+
   const [loanIncome, setLoanIncome] = useState(85000);
   const [loanEmi, setLoanEmi] = useState(12000);
   const [loanAge, setLoanAge] = useState(34);
   const [loanTenure, setLoanTenure] = useState(25);
-  // Construction Calculator
+
   const [constSize, setConstSize] = useState(2400);
   const [constFloors, setConstFloors] = useState(2);
   const [constQuality, setConstQuality] = useState('premium');
@@ -81,7 +66,6 @@ export default function Home() {
     fetchProjects();
   }, []);
 
-  // Keyboard escape for all modals (matches index.html behavior)
   useEffect(() => {
     const handler = (e) => {
       if (e.key === 'Escape') closeModal();
@@ -91,8 +75,6 @@ export default function Home() {
   }, [closeModal]);
 
   const showFeature = (num) => {
-    // Matches index.html showFeatureModal logic exactly:
-    // Features 1,3,6,7,25 have dedicated modals; all others show generic modal
     const dedicated = { 1: 'ai', 3: 'plot-map', 6: 'chatbot', 7: 'visit', 25: 'dashboard' };
     openModal(dedicated[num] || num);
   };
@@ -123,20 +105,19 @@ export default function Home() {
 
   return (
     <div>
-      {/* HERO SECTION */}
-      <header className="relative min-h-screen flex items-center"
+      {/* HERO */}
+      <header className="relative min-h-[620px] h-[100dvh] flex items-center"
         style={{
           backgroundImage: 'linear-gradient(rgba(15,23,42,0.75), rgba(15,23,42,0.65)), url(https://images.unsplash.com/photo-1600585154340-be6161a56b08?w=2000&q=80)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundSize: 'cover', backgroundPosition: 'center'
         }}>
         <div className="max-w-screen-2xl mx-auto px-8 pt-12 pb-16 w-full">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-x-2 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full mb-6 shadow-sm">
+            <div className="inline-flex items-center gap-x-2 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-3xl mb-6 shadow-sm border border-white/60">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
               <span className="text-xs font-bold tracking-widest text-emerald-700">RERA APPROVED • BHUBANESWAR, ODISHA</span>
             </div>
-            <h1 className="text-5xl md:text-7xl leading-[1.05] font-bold tracking-tighter text-white">
+            <h1 className="text-6xl md:text-7xl leading-[1.05] font-bold tracking-tighter text-white">
               Your Dream Plot.<br />
               <span className="bg-gradient-to-r from-blue-400 to-white bg-clip-text text-transparent">Intelligent Buying.</span>
             </h1>
@@ -145,15 +126,15 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <button onClick={() => openModal('ai')}
-                className="group flex items-center justify-center gap-x-3 bg-white hover:bg-amber-50 text-slate-900 font-semibold px-8 h-14 rounded-full text-base shadow-xl transition-all active:scale-[0.985]">
+                className="group flex items-center gap-x-3 bg-white hover:bg-amber-50 text-slate-900 font-semibold px-8 h-14 rounded-3xl text-base shadow-xl transition-all active:scale-[0.985]">
                 <span>Find My Perfect Plot with AI</span>
-                <FaArrowRight className="group-hover:translate-x-0.5 transition" />
+                <i className="fa-solid fa-arrow-right group-hover:translate-x-0.5 transition" />
               </button>
-              <Link to="/virtual-tour"
-                className="flex items-center justify-center gap-x-3 border-2 border-white/70 hover:bg-white/10 text-white font-semibold px-7 h-14 rounded-full text-base transition-all">
-                <FaPlay className="mr-1" />
+              <button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                className="flex items-center gap-x-3 border-2 border-white/70 hover:bg-white/10 text-white font-semibold px-7 h-14 rounded-3xl text-base transition-all">
+                <i className="fa-solid fa-play mr-1" />
                 <span>Watch 1:42 Video Tour</span>
-              </Link>
+              </button>
             </div>
             <div className="mt-8 flex items-center gap-x-6 text-sm">
               <div className="flex -space-x-2">
@@ -170,7 +151,7 @@ export default function Home() {
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
           <div className="flex flex-col items-center text-white/60 text-xs tracking-widest">
             <span>SCROLL TO EXPLORE</span>
-            <FaChevronDown className="mt-1 animate-bounce" />
+            <i className="fa-solid fa-chevron-down mt-1 animate-bounce" />
           </div>
         </div>
       </header>
@@ -180,12 +161,12 @@ export default function Home() {
         <div className="max-w-screen-2xl mx-auto px-8 py-5">
           <div className="flex flex-wrap justify-center md:justify-between items-center gap-x-8 gap-y-4 text-sm">
             <div className="flex items-center gap-x-8 text-slate-600">
-              <div className="flex items-center gap-x-2"><FaShieldAlt className="text-emerald-600" /> <span className="font-medium">RERA Registered</span></div>
-              <div className="flex items-center gap-x-2"><FaHeadset className="text-emerald-600" /> <span className="font-medium">24×7 AI Support</span></div>
-              <div className="flex items-center gap-x-2"><FaMapMarkedAlt className="text-emerald-600" /> <span className="font-medium">Live Plot Tracking</span></div>
+              <div className="flex items-center gap-x-2"><i className="fa-solid fa-shield-halved text-emerald-600" /> <span className="font-medium">RERA Registered</span></div>
+              <div className="flex items-center gap-x-2"><i className="fa-solid fa-headset text-emerald-600" /> <span className="font-medium">24×7 AI Support</span></div>
+              <div className="flex items-center gap-x-2"><i className="fa-solid fa-map-marked text-emerald-600" /> <span className="font-medium">Live Plot Tracking</span></div>
             </div>
-            <div className="text-xs px-4 py-1.5 bg-emerald-100 text-emerald-700 rounded-full font-bold flex items-center gap-x-1.5">
-              <FaCheckDouble />
+            <div className="text-xs px-4 py-1.5 bg-emerald-100 text-emerald-700 rounded-3xl font-bold flex items-center gap-x-1.5">
+              <i className="fa-solid fa-check-double" />
               <span>100% Transparent Construction Updates</span>
             </div>
           </div>
@@ -203,7 +184,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROJECTS SECTION */}
+      {/* PROJECTS */}
       <section id="projects" className="max-w-screen-2xl mx-auto px-8 pb-16">
         <div className="flex items-end justify-between mb-8">
           <div>
@@ -212,7 +193,7 @@ export default function Home() {
             <p className="text-slate-600">Premium plotted development • Patia, Bhubaneswar • RERA: OR/06/2025/001234</p>
           </div>
           <Link to="/projects" className="hidden md:flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700">
-            View All Projects <FaArrowRight className="ml-2" />
+            View All Projects <i className="ml-2 fa-solid fa-arrow-right" />
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -226,11 +207,10 @@ export default function Home() {
             const isStatusColor = p.statusColor;
 
             return (
-              <div key={i}
-                className="real-estate-card bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:shadow-xl transition-all hover:-translate-y-1 duration-300">
+              <div key={i} className="real-estate-card bg-white border border-slate-200 rounded-3xl overflow-hidden group">
                 <div className="relative h-56 overflow-hidden">
                   <img src={img} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={name} />
-                  <div className="absolute top-4 right-4 bg-white text-xs font-bold px-3.5 py-1 rounded-full shadow flex items-center gap-x-1">
+                  <div className="absolute top-4 right-4 bg-white text-xs font-bold px-3.5 py-1 rounded-3xl shadow flex items-center gap-x-1">
                     <div className={`w-2 h-2 rounded-full ${isStatusColor === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'}`} />
                     <span className="font-bold text-slate-700">{status}</span>
                   </div>
@@ -255,9 +235,8 @@ export default function Home() {
                       <span className="font-semibold">{plotsAvail}</span>
                       <span className="text-slate-500"> plots available</span>
                     </div>
-                    <button onClick={() => openModal('plot-map')}
-                      className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-x-1 text-xs">
-                      VIEW LIVE MAP <FaMap className="ml-1" />
+                    <button onClick={() => openModal('plot-map')} className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-x-1 text-xs">
+                      VIEW LIVE MAP <i className="fa-solid fa-map ml-1" />
                     </button>
                   </div>
                 </div>
@@ -267,11 +246,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 25 FEATURES SECTION */}
+      {/* 25 FEATURES */}
       <section id="features" className="bg-white py-16 border-t border-b">
         <div className="max-w-screen-2xl mx-auto px-8">
           <div className="text-center mb-10">
-            <div className="inline-block px-4 py-1 bg-blue-100 text-blue-700 text-xs font-extrabold tracking-widest rounded-full mb-3">POWERED BY BRISKODE TECHNOLOGY</div>
+            <div className="inline-block px-4 py-1 bg-blue-100 text-blue-700 text-xs font-extrabold tracking-widest rounded-3xl mb-3">POWERED BY BRISKODE TECHNOLOGY</div>
             <h2 className="text-4xl font-bold tracking-tight text-slate-800">25 Powerful Features</h2>
             <p className="mt-3 text-lg text-slate-600 max-w-md mx-auto">Every tool designed to convert visitors into buyers, build trust and deliver a world-class digital experience.</p>
           </div>
@@ -280,33 +259,30 @@ export default function Home() {
               <div key={feat.num} onClick={() => showFeature(feat.num)}
                 className="feature-card cursor-pointer bg-white border border-slate-200 hover:border-blue-200 p-5 rounded-3xl group">
                 <div className="flex items-start gap-x-4">
-                  <div className="w-8 h-8 flex-shrink-0 rounded-2xl flex items-center justify-center text-sm font-extrabold text-white"
-                    style={{ background: 'linear-gradient(135deg, #2563EB, #1E40AF)', boxShadow: '0 10px 10px -3px rgb(37 99 235 / 0.3)' }}>
+                  <div className="feature-number w-8 h-8 flex-shrink-0 rounded-2xl flex items-center justify-center text-sm font-extrabold">
                     {String(feat.num).padStart(2, '0')}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-base leading-tight group-hover:text-blue-700 transition-colors">{feat.title}</div>
+                    <div className="font-semibold text-base leading-tight group-hover:text-blue-700 transition-colors text-slate-800">{feat.title}</div>
                     <div className="text-xs text-slate-500 mt-1.5 line-clamp-2">{feat.desc}</div>
                     <div className="mt-3 text-[10px] text-emerald-600 font-medium flex items-center">
-                      <FaRocket className="mr-1.5" /> {feat.cta}
+                      <i className="fa-solid fa-rocket mr-1.5" /> {feat.cta}
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Jump to calculators link (matches index.html exactly) */}
           <div className="text-center mt-8">
             <button onClick={() => document.getElementById('calculators-section')?.scrollIntoView({ behavior: 'smooth' })}
-              className="inline-flex items-center text-sm px-5 py-2.5 font-semibold border border-slate-300 hover:bg-slate-100 transition rounded-full">
-              <span>Jump to Interactive Calculators</span> <FaChevronDown className="ml-2" />
+              className="inline-flex items-center text-sm px-5 py-2.5 font-semibold border border-slate-300 hover:bg-slate-100 transition rounded-3xl">
+              <span>Jump to Interactive Calculators</span> <i className="ml-2 fa-solid fa-arrow-down" />
             </button>
           </div>
         </div>
       </section>
 
-      {/* INTERACTIVE CALCULATORS SECTION */}
+      {/* CALCULATORS */}
       <section id="calculators-section" className="max-w-screen-2xl mx-auto px-8 py-16">
         <div className="text-center mb-10">
           <div className="text-blue-600 tracking-widest text-xs font-extrabold">POWERFUL TOOLS</div>
@@ -314,10 +290,10 @@ export default function Home() {
           <p className="text-slate-600 mt-2">Real calculators used by thousands of smart buyers in Odisha</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Investment Return Calculator */}
+          {/* Investment Calculator */}
           <div className="bg-white border border-slate-200 rounded-3xl p-7">
             <div className="flex items-center gap-x-3 mb-5">
-              <FaChartLine className="text-3xl text-blue-600" />
+              <i className="fa-solid fa-chart-line text-3xl text-blue-600" />
               <div>
                 <div className="font-bold text-slate-800">Investment Return Calculator</div>
                 <div className="text-xs text-slate-500">Feature #2 • Live Demo</div>
@@ -357,10 +333,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* AI Loan Eligibility Checker */}
+          {/* Loan Calculator */}
           <div className="bg-white border border-slate-200 rounded-3xl p-7">
             <div className="flex items-center gap-x-3 mb-5">
-              <FaHandHoldingUsd className="text-3xl text-blue-600" />
+              <i className="fa-solid fa-hand-holding-usd text-3xl text-blue-600" />
               <div>
                 <div className="font-bold text-slate-800">AI Loan Eligibility Checker</div>
                 <div className="text-xs text-slate-500">Feature #12 • Instant Results</div>
@@ -394,10 +370,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Construction Cost Calculator */}
+          {/* Construction Calculator */}
           <div className="bg-white border border-slate-200 rounded-3xl p-7">
             <div className="flex items-center gap-x-3 mb-5">
-              <FaHardHat className="text-3xl text-blue-600" />
+              <i className="fa-solid fa-hard-hat text-3xl text-blue-600" />
               <div>
                 <div className="font-bold text-slate-800">Construction Cost Calculator</div>
                 <div className="text-xs text-slate-500">Feature #13 • For Self-Build Buyers</div>
@@ -437,20 +413,18 @@ export default function Home() {
       </section>
 
       {/* FINAL CTA */}
-      <section style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)' }} className="text-white">
+      <section className="premium-gradient text-white">
         <div className="max-w-screen-2xl mx-auto px-8 py-16 text-center">
           <div className="max-w-lg mx-auto">
             <h2 className="text-4xl font-bold tracking-tight">Ready to Transform Your Real Estate Sales?</h2>
-            <p className="mt-4 text-white/80">
-              These 25 features give Jai Santoshi Maa Infrastructure Pvt. Ltd. a significant competitive advantage in the Odisha real estate market.
-            </p>
+            <p className="mt-4 text-white/80">These 25 features give Jai Santoshi Maa Infrastructure Pvt. Ltd. a significant competitive advantage in the Odisha real estate market.</p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <button onClick={() => openModal('dashboard')}
-                className="px-8 py-3.5 bg-white text-slate-900 font-semibold rounded-full flex-1 sm:flex-none hover:bg-slate-100 transition">
+                className="px-8 py-3.5 bg-white text-slate-900 font-semibold rounded-3xl flex-1 sm:flex-none hover:bg-slate-100 transition">
                 Access Owner Dashboard Demo
               </button>
               <a href="https://briskode.com" target="_blank" rel="noopener noreferrer"
-                className="px-8 py-3.5 border border-white/60 hover:bg-white/10 transition rounded-full flex-1 sm:flex-none">
+                className="px-8 py-3.5 border border-white/60 hover:bg-white/10 transition rounded-3xl flex-1 sm:flex-none">
                 Talk to Briskode Technology
               </a>
             </div>
@@ -461,62 +435,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== MODALS ==================== */}
+      {/* FOOTER */}
+      <footer className="bg-slate-900 text-slate-400 text-xs">
+        <div className="max-w-screen-2xl mx-auto px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-y-3">
+          <div>© 2026 Jai Santoshi Maa Infrastructure Pvt. Ltd. All rights reserved. | RERA compliant digital platform</div>
+          <div className="flex items-center gap-x-5">
+            <div>Powered by <span className="font-semibold text-white">Briskode Technology</span></div>
+            <div className="hidden md:block">|</div>
+            <div>Bhubaneswar, Odisha</div>
+          </div>
+        </div>
+      </footer>
 
-      {/* AI Property Recommendation Modal (Feature 1) */}
-      {showModal === 'ai' && (
-        <AIRecommendationModal
-          onClose={closeModal}
-          onBookVisit={() => openModal('visit')}
-        />
-      )}
-
-      {/* Live Plot Map Modal (Feature 3) */}
-      {showModal === 'plot-map' && (
-        <PlotMapModal onClose={closeModal} />
-      )}
-
-      {/* AI Sales Assistant Modal (Feature 6) */}
-      {showModal === 'chatbot' && (
-        <ChatbotModal
-          onClose={closeModal}
-          onBookVisit={() => openModal('visit')}
-        />
-      )}
-
-      {/* Site Visit Booking Modal (Feature 7) */}
-      {showModal === 'visit' && (
-        <SiteVisitModal onClose={closeModal} />
-      )}
-
-      {/* Owner Dashboard Modal (Feature 25) */}
-      {showModal === 'dashboard' && (
-        <OwnerDashboardModal onClose={closeModal} />
-      )}
-
-      {/* Generic Feature Modals (Features 4,5,8,9,11,14-23) */}
+      {/* MODALS */}
+      {showModal === 'ai' && <AIRecommendationModal onClose={closeModal} onBookVisit={() => openModal('visit')} />}
+      {showModal === 'plot-map' && <PlotMapModal onClose={closeModal} />}
+      {showModal === 'chatbot' && <ChatbotModal onClose={closeModal} onBookVisit={() => openModal('visit')} />}
+      {showModal === 'visit' && <SiteVisitModal onClose={closeModal} />}
+      {showModal === 'dashboard' && <OwnerDashboardModal onClose={closeModal} />}
       {typeof showModal === 'number' && showModal >= 4 && (
-        <GenericFeatureModal
-          num={showModal}
-          onClose={closeModal}
-          onShowAI={() => openModal('ai')}
-        />
+        <GenericFeatureModal num={showModal} onClose={closeModal} onShowAI={() => openModal('ai')} />
       )}
-
-      {/* Modal animations */}
-      <style>{`
-        @keyframes modalPopIn {
-          from { opacity: 0; transform: scale(0.95) translateY(20px); }
-          to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .real-estate-card {
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .real-estate-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-        }
-      `}</style>
     </div>
   );
 }

@@ -83,11 +83,7 @@ export default function ChatbotModal({ onClose, onBookVisit }) {
         <div ref={chatRef} className="flex-1 p-5 overflow-y-auto bg-slate-50 text-sm space-y-1">
           {messages.map((msg, i) => (
             <div key={i}
-              className={`max-w-[75%] px-4 py-3 rounded-[18px] mb-2 leading-relaxed ${msg.role === 'user'
-                ? 'bg-blue-600 text-white rounded-br-[4px] ml-auto'
-                : 'bg-slate-100 text-slate-800 rounded-bl-[4px]'} ${msg.small ? 'text-xs opacity-75' : ''}`}
-              dangerouslySetInnerHTML={msg.text ? undefined : undefined}
-            >
+              className={`chat-message ${msg.role === 'user' ? 'chat-user' : 'chat-bot'} ${msg.small ? 'text-xs opacity-75' : ''}`}>
               {msg.text}
             </div>
           ))}
