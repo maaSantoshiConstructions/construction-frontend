@@ -78,13 +78,13 @@ export default function ManageGallery() {
           <p className="text-slate-500 text-sm">Upload and manage project images</p>
         </div>
         <div className="flex items-center gap-3">
-          <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+          <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
             <option value="">All Types</option>
             <option value="image">Images</option>
             <option value="video">Videos</option>
             <option value="virtual_tour">Virtual Tours</option>
           </select>
-          <button onClick={() => setShowUpload(true)} className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors">
+          <button onClick={() => setShowUpload(true)} className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-xl transition-colors">
             <FaUpload /> Upload
           </button>
         </div>
@@ -146,11 +146,11 @@ export default function ManageGallery() {
             <div className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Caption</label>
-                <input value={caption} onChange={e => setCaption(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                <input value={caption} onChange={e => setCaption(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Type</label>
-                <select value={type} onChange={e => setType(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                <select value={type} onChange={e => setType(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
                   <option value="image">Image</option>
                   <option value="video">Video</option>
                   <option value="virtual_tour">Virtual Tour</option>
@@ -158,11 +158,11 @@ export default function ManageGallery() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">File</label>
-                <input ref={fileRef} type="file" accept="image/*" className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                <input ref={fileRef} type="file" accept="image/*" className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button onClick={() => setShowUpload(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button onClick={handleUpload} disabled={uploading} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
+                <button onClick={handleUpload} disabled={uploading} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
                   {uploading && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                   Upload
                 </button>

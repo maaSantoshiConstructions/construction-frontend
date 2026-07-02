@@ -9,7 +9,7 @@ import DataTable from '../../../components/common/DataTable';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const referralStatusColors = {
-  new: 'bg-blue-100 text-blue-700', contacted: 'bg-purple-100 text-purple-700',
+  new: 'bg-orange-100 text-orange-700', contacted: 'bg-amber-100 text-amber-700',
   interested: 'bg-amber-100 text-amber-700', converted: 'bg-green-100 text-green-700',
   lost: 'bg-red-100 text-red-700',
 };
@@ -99,7 +99,7 @@ export default function PartnerDashboard() {
           />
           <button
             onClick={handleCopyLink}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
           >
             {copied ? <FaCheck /> : <FaCopy />}
             {copied ? 'Copied!' : 'Copy'}

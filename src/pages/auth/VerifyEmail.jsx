@@ -33,7 +33,7 @@ export default function VerifyEmail() {
       >
         {status === 'loading' && (
           <>
-            <FaSpinner className="text-blue-600 text-5xl mx-auto mb-4 animate-spin" />
+            <FaSpinner className="text-orange-600 text-5xl mx-auto mb-4 animate-spin" />
             <h2 className="text-xl font-bold text-slate-800">Verifying your email...</h2>
             <p className="text-slate-500 text-sm mt-2">Please wait while we verify your email address.</p>
           </>
@@ -46,7 +46,7 @@ export default function VerifyEmail() {
             <p className="text-slate-600 text-sm mt-2">{message}</p>
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 mt-6 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-sm"
+              className="inline-flex items-center gap-2 mt-6 px-6 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-sm"
             >
               <FaArrowLeft /> Go to Login
             </Link>
@@ -60,7 +60,7 @@ export default function VerifyEmail() {
             <p className="text-slate-600 text-sm mt-2">{message}</p>
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 mt-6 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-sm"
+              className="inline-flex items-center gap-2 mt-6 px-6 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-sm"
             >
               <FaArrowLeft /> Go to Login
             </Link>

@@ -19,7 +19,7 @@ export default function Pagination({ page, totalPages, onPageChange }) {
 
   const btnClass = (active = false) =>
     `w-9 h-9 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${
-      active ? 'bg-blue-600 text-white' : 'text-slate-600 hover:bg-slate-100'
+      active ? 'bg-orange-600 text-white' : 'text-slate-600 hover:bg-slate-100'
     }`;
 
   const arrowBtnClass = (disabled) =>

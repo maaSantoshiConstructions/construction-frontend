@@ -3,12 +3,12 @@ import { FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
 
 export default function StatsCard({ title, value, icon: Icon, color = 'blue', trend }) {
   const colorMap = {
-    blue: 'bg-blue-50 text-blue-600',
+    blue: 'bg-orange-50 text-orange-600',
     green: 'bg-emerald-50 text-emerald-600',
     red: 'bg-red-50 text-red-600',
     yellow: 'bg-amber-50 text-amber-600',
-    purple: 'bg-purple-50 text-purple-600',
-    indigo: 'bg-indigo-50 text-indigo-600',
+    purple: 'bg-amber-50 text-amber-600',
+    indigo: 'bg-amber-50 text-amber-600',
     teal: 'bg-teal-50 text-teal-600',
     orange: 'bg-orange-50 text-orange-600',
   };

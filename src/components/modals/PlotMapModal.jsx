@@ -97,7 +97,7 @@ export default function PlotMapModal({ onClose }) {
         className="modal bg-white w-full max-w-5xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
         <div className="px-8 py-5 border-b border-slate-100 flex justify-between items-center">
           <div>
-            <span className="px-3 py-1 text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg">FEATURE 03</span>
+            <span className="px-3 py-1 text-xs font-bold bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg">FEATURE 03</span>
             <span className="ml-3 font-bold text-xl text-slate-800">Live Plot Availability Map — Santoshi Enclave</span>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all text-xl leading-none">&times;</button>

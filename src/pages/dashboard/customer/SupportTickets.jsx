@@ -6,7 +6,7 @@ import DataTable from '../../../components/common/DataTable';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const ticketStatusColors = {
-  open: 'bg-blue-100 text-blue-700',
+  open: 'bg-orange-100 text-orange-700',
   in_progress: 'bg-amber-100 text-amber-700',
   resolved: 'bg-green-100 text-green-700',
   closed: 'bg-slate-100 text-slate-600',
@@ -14,7 +14,7 @@ const ticketStatusColors = {
 
 const priorityColors = {
   low: 'bg-slate-100 text-slate-600',
-  medium: 'bg-blue-100 text-blue-700',
+  medium: 'bg-orange-100 text-orange-700',
   high: 'bg-orange-100 text-orange-700',
   urgent: 'bg-red-100 text-red-700',
 };
@@ -76,7 +76,7 @@ export default function SupportTickets() {
     { key: 'actions', label: 'Actions', render: r => (
       <button
         onClick={() => { setSelectedTicket(r); setShowConversation(true); }}
-        className="flex items-center gap-1.5 px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded-lg text-xs font-medium transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 text-orange-600 hover:bg-orange-50 rounded-lg text-xs font-medium transition-colors"
       >
         <FaEye /> View
       </button>
@@ -92,7 +92,7 @@ export default function SupportTickets() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
         >
           <FaPlus /> New Ticket
         </button>
@@ -112,11 +112,11 @@ export default function SupportTickets() {
             <form onSubmit={handleCreateTicket} className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Subject *</label>
-                <input type="text" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="Brief subject" required />
+                <input type="text" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" placeholder="Brief subject" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Priority</label>
-                <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
@@ -125,11 +125,11 @@ export default function SupportTickets() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Message *</label>
-                <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} rows={5} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="Describe your issue..." required />
+                <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} rows={5} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" placeholder="Describe your issue..." required />
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowCreate(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg">Submit Ticket</button>
+                <button type="submit" className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg">Submit Ticket</button>
               </div>
             </form>
           </motion.div>
@@ -149,13 +149,13 @@ export default function SupportTickets() {
               <button onClick={() => setShowConversation(false)} className="p-1 hover:bg-slate-100 rounded-lg"><FaTimes /></button>
             </div>
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
-              <div className="bg-blue-50 rounded-xl p-4">
-                <p className="text-xs text-blue-500 mb-1">You</p>
+              <div className="bg-orange-50 rounded-xl p-4">
+                <p className="text-xs text-orange-500 mb-1">You</p>
                 <p className="text-sm text-slate-700">{selectedTicket.message || selectedTicket.description || 'No description'}</p>
                 <p className="text-xs text-slate-400 mt-1">{new Date(selectedTicket.createdAt || selectedTicket.date).toLocaleString()}</p>
               </div>
               {selectedTicket.conversation?.map((msg, i) => (
-                <div key={i} className={`rounded-xl p-4 ${msg.isAdmin ? 'bg-slate-100 ml-8' : 'bg-blue-50 mr-8'}`}>
+                <div key={i} className={`rounded-xl p-4 ${msg.isAdmin ? 'bg-slate-100 ml-8' : 'bg-orange-50 mr-8'}`}>
                   <p className="text-xs text-slate-500 mb-1">{msg.isAdmin ? 'Support Team' : 'You'}</p>
                   <p className="text-sm text-slate-700">{msg.text || msg.message}</p>
                   <p className="text-xs text-slate-400 mt-1">{new Date(msg.createdAt || msg.date).toLocaleString()}</p>
@@ -170,9 +170,9 @@ export default function SupportTickets() {
                 value={replyText}
                 onChange={e => setReplyText(e.target.value)}
                 placeholder="Type your reply..."
-                className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500"
               />
-              <button onClick={handleSendReply} disabled={!replyText.trim()} className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg">
+              <button onClick={handleSendReply} disabled={!replyText.trim()} className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg">
                 <FaReply /> Send
               </button>
             </div>

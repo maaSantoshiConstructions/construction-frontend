@@ -42,8 +42,8 @@ export default function ResetPassword() {
         className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8"
       >
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <FaLock className="text-blue-600 text-2xl" />
+          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FaLock className="text-orange-600 text-2xl" />
           </div>
           <h2 className="text-2xl font-bold text-slate-800">Reset Password</h2>
           <p className="text-slate-500 text-sm mt-1">Enter your new password</p>
@@ -60,7 +60,7 @@ export default function ResetPassword() {
                   required: 'Password is required',
                   minLength: { value: 6, message: 'Minimum 6 characters' },
                 })}
-                className="w-full pl-10 pr-10 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                className="w-full pl-10 pr-10 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm"
                 placeholder="••••••••"
               />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
@@ -80,7 +80,7 @@ export default function ResetPassword() {
                   required: 'Please confirm your password',
                   validate: (value) => value === watch('password') || 'Passwords do not match',
                 })}
-                className="w-full pl-10 pr-10 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                className="w-full pl-10 pr-10 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm"
                 placeholder="••••••••"
               />
               <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
@@ -93,14 +93,14 @@ export default function ResetPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full py-2.5 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
           >
             {loading && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
             {loading ? 'Resetting...' : 'Reset Password'}
           </button>
 
           <div className="text-center">
-            <Link to="/login" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm">
+            <Link to="/login" className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium text-sm">
               <FaArrowLeft /> Back to Login
             </Link>
           </div>

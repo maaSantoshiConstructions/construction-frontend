@@ -144,11 +144,11 @@ export default function AIRecommendation() {
   if (results) {
     return (
       <div className="min-h-screen bg-slate-50">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-12">
+        <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <h1 className="text-3xl font-bold text-white mb-2">Your AI Recommendations</h1>
-              <p className="text-blue-100">Top matching plots based on your preferences</p>
+              <p className="text-orange-100">Top matching plots based on your preferences</p>
             </motion.div>
           </div>
         </div>
@@ -157,9 +157,9 @@ export default function AIRecommendation() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-sm p-4 mb-6">
             <div className="flex flex-wrap gap-4 text-sm">
               <span className="text-slate-400">Your preferences:</span>
-              <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full font-medium">{budgetRanges.find((b) => b.value === formData.budget)?.label}</span>
+              <span className="px-3 py-1 bg-orange-50 text-orange-600 rounded-full font-medium">{budgetRanges.find((b) => b.value === formData.budget)?.label}</span>
               <span className="px-3 py-1 bg-green-50 text-green-600 rounded-full font-medium">{formData.location}</span>
-              <span className="px-3 py-1 bg-purple-50 text-purple-600 rounded-full font-medium">{formData.propertyType}</span>
+              <span className="px-3 py-1 bg-amber-50 text-amber-600 rounded-full font-medium">{formData.propertyType}</span>
               <span className="px-3 py-1 bg-amber-50 text-amber-600 rounded-full font-medium">{formData.purpose}</span>
             </div>
           </motion.div>
@@ -191,15 +191,15 @@ export default function AIRecommendation() {
                     </div>
                     <p className="text-sm text-slate-500 mb-3">{rec.reason}</p>
                     <div className="flex items-center gap-4 text-sm mb-4">
-                      <span className="text-blue-600 font-bold">{formatCurrency(rec.price)}</span>
+                      <span className="text-orange-600 font-bold">{formatCurrency(rec.price)}</span>
                       <span className="text-slate-400">|</span>
                       <span className="text-slate-600">{rec.size} sq ft</span>
                     </div>
                     <div className="flex flex-wrap gap-3">
-                      <Link to={`/projects/green-valley-estate`} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-1">
+                      <Link to={`/projects/green-valley-estate`} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-1">
                         Book This Plot <FaArrowRight className="text-xs" />
                       </Link>
-                      <a href="tel:+919876543210" className="px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-50 text-sm font-medium rounded-lg transition-colors flex items-center gap-1">
+                      <a href="tel:+919876543210" className="px-4 py-2 border border-orange-600 text-orange-600 hover:bg-orange-50 text-sm font-medium rounded-lg transition-colors flex items-center gap-1">
                         <FaPhone /> Contact Sales
                       </a>
                     </div>
@@ -212,7 +212,7 @@ export default function AIRecommendation() {
           <div className="text-center mt-8">
             <button
               onClick={() => { setResults(null); setStep(1); setFormData({ budget: '', location: '', propertyType: '', purpose: '' }); }}
-              className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+              className="text-orange-600 hover:text-orange-700 font-medium text-sm"
             >
               Start Over
             </button>
@@ -224,14 +224,14 @@ export default function AIRecommendation() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
               <FaStar className="text-white text-2xl" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">AI Recommendation</h1>
-            <p className="text-blue-100">Answer a few questions and let our AI find the perfect plot for you</p>
+            <p className="text-orange-100">Answer a few questions and let our AI find the perfect plot for you</p>
           </motion.div>
         </div>
       </div>
@@ -241,10 +241,10 @@ export default function AIRecommendation() {
           <div className="flex items-center justify-between mb-8">
             {steps.map((s) => (
               <div key={s.id} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${step >= s.id ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${step >= s.id ? 'bg-orange-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
                   {step > s.id ? <FaCheckCircle /> : s.id}
                 </div>
-                {s.id < 4 && <div className={`w-8 sm:w-16 h-1 mx-1 rounded transition-colors ${step > s.id ? 'bg-blue-600' : 'bg-slate-200'}`} />}
+                {s.id < 4 && <div className={`w-8 sm:w-16 h-1 mx-1 rounded transition-colors ${step > s.id ? 'bg-orange-600' : 'bg-slate-200'}`} />}
               </div>
             ))}
           </div>
@@ -266,7 +266,7 @@ export default function AIRecommendation() {
                       <button
                         key={range.value}
                         onClick={() => updateField('budget', range.value)}
-                        className={`w-full p-4 rounded-xl border text-left transition-all ${formData.budget === range.value ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 hover:border-blue-300'}`}
+                        className={`w-full p-4 rounded-xl border text-left transition-all ${formData.budget === range.value ? 'border-orange-600 bg-orange-50 ring-2 ring-orange-200' : 'border-slate-200 hover:border-orange-300'}`}
                       >
                         <span className="font-medium text-slate-800">{range.label}</span>
                       </button>
@@ -284,9 +284,9 @@ export default function AIRecommendation() {
                       <button
                         key={loc}
                         onClick={() => updateField('location', loc)}
-                        className={`p-4 rounded-xl border text-center transition-all ${formData.location === loc ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 hover:border-blue-300'}`}
+                        className={`p-4 rounded-xl border text-center transition-all ${formData.location === loc ? 'border-orange-600 bg-orange-50 ring-2 ring-orange-200' : 'border-slate-200 hover:border-orange-300'}`}
                       >
-                        <FaMapMarkerAlt className={`mx-auto mb-1 ${formData.location === loc ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <FaMapMarkerAlt className={`mx-auto mb-1 ${formData.location === loc ? 'text-orange-600' : 'text-slate-400'}`} />
                         <span className="font-medium text-slate-800 text-sm">{loc}</span>
                       </button>
                     ))}
@@ -303,9 +303,9 @@ export default function AIRecommendation() {
                       <button
                         key={type}
                         onClick={() => updateField('propertyType', type)}
-                        className={`p-4 rounded-xl border text-center transition-all ${formData.propertyType === type ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 hover:border-blue-300'}`}
+                        className={`p-4 rounded-xl border text-center transition-all ${formData.propertyType === type ? 'border-orange-600 bg-orange-50 ring-2 ring-orange-200' : 'border-slate-200 hover:border-orange-300'}`}
                       >
-                        <FaHome className={`mx-auto mb-1 ${formData.propertyType === type ? 'text-blue-600' : 'text-slate-400'}`} />
+                        <FaHome className={`mx-auto mb-1 ${formData.propertyType === type ? 'text-orange-600' : 'text-slate-400'}`} />
                         <span className="font-medium text-slate-800 text-sm">{type}</span>
                       </button>
                     ))}
@@ -322,7 +322,7 @@ export default function AIRecommendation() {
                       <button
                         key={purpose}
                         onClick={() => updateField('purpose', purpose)}
-                        className={`w-full p-4 rounded-xl border text-left transition-all ${formData.purpose === purpose ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 hover:border-blue-300'}`}
+                        className={`w-full p-4 rounded-xl border text-left transition-all ${formData.purpose === purpose ? 'border-orange-600 bg-orange-50 ring-2 ring-orange-200' : 'border-slate-200 hover:border-orange-300'}`}
                       >
                         <span className="font-medium text-slate-800">{purpose}</span>
                         <p className="text-xs text-slate-500 mt-1">
@@ -349,7 +349,7 @@ export default function AIRecommendation() {
             <button
               onClick={handleNext}
               disabled={loading}
-              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition-colors flex items-center gap-2 text-sm"
+              className="px-6 py-2.5 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-medium rounded-lg transition-colors flex items-center gap-2 text-sm"
             >
               {loading ? (
                 <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Analyzing...</>

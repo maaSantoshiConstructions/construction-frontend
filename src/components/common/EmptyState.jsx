@@ -13,7 +13,7 @@ export default function EmptyState({ icon: Icon = FaFolderOpen, title, descripti
       {action && (
         <button
           onClick={action.onClick}
-          className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-full transition-colors"
+          className="px-5 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-full transition-colors"
         >
           {action.label || 'Get Started'}
         </button>

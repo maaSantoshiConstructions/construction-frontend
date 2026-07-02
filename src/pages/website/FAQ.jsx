@@ -56,14 +56,14 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
               <FaQuestionCircle className="text-white text-2xl" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Frequently Asked Questions</h1>
-            <p className="text-blue-100">Find answers to common questions about our services</p>
+            <p className="text-orange-100">Find answers to common questions about our services</p>
           </motion.div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function FAQ() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search FAQs..."
-              className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+              className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-sm"
             />
           </div>
         </motion.div>
@@ -87,7 +87,7 @@ export default function FAQ() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${activeCategory === cat ? 'bg-blue-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-300'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${activeCategory === cat ? 'bg-orange-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-orange-300'}`}
             >
               {cat}
             </button>
@@ -127,7 +127,7 @@ export default function FAQ() {
                       <div className="px-5 pb-5 border-t border-slate-100 pt-4">
                         <p className="text-sm text-slate-600 leading-relaxed">{faq.answer}</p>
                         {faq.category && (
-                          <span className="inline-block mt-3 px-2.5 py-0.5 bg-blue-50 text-blue-600 rounded-full text-xs capitalize">
+                          <span className="inline-block mt-3 px-2.5 py-0.5 bg-orange-50 text-orange-600 rounded-full text-xs capitalize">
                             {faq.category}
                           </span>
                         )}

@@ -41,6 +41,26 @@ const projectsData = [
 export default function Home() {
   const { showModal, openModal, closeModal } = useModal();
   const [projects, setProjects] = useState([]);
+  const [typewriterDone, setTypewriterDone] = useState(false);
+  const [typewriterText, setTypewriterText] = useState('');
+
+  useEffect(() => {
+    const text = 'Intelligent Buying.';
+    let i = 0;
+    const startTimeout = setTimeout(() => {
+      setTypewriterText('');
+      setTypewriterDone(false);
+      const interval = setInterval(() => {
+        setTypewriterText(text.slice(0, i + 1));
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          setTypewriterDone(true);
+        }
+      }, 60);
+    }, 1200);
+    return () => clearTimeout(startTimeout);
+  }, []);
 
   const [invAmount, setInvAmount] = useState(4500000);
   const [invRate, setInvRate] = useState(11);
@@ -118,13 +138,15 @@ export default function Home() {
             backgroundSize: 'cover', backgroundPosition: 'center',
             opacity: 0.3
           }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-transparent to-purple-900/20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-900/30 via-transparent to-amber-900/20 pointer-events-none animate-gradient-shift" />
         {/* Dot pattern overlay */}
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{ backgroundImage: `radial-gradient(circle, white 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none animate-float-1" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none animate-float-2" />
-        <div className="max-w-screen-2xl mx-auto px-8 pt-28 pb-16 w-full relative z-10">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl pointer-events-none animate-blob" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none animate-float-2" />
+        <div className="absolute top-1/3 -left-24 w-64 h-64 bg-orange-600/10 rounded-full blur-3xl pointer-events-none animate-float-3" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-amber-400/10 rounded-full blur-3xl pointer-events-none animate-float-1" />
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 w-full relative z-10">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-x-2 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full mb-6 shadow-sm border border-white/60 opacity-0 animate-slide-down"
               style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
@@ -134,7 +156,10 @@ export default function Home() {
             <h1 className="text-5xl md:text-7xl lg:text-8xl leading-[1.02] font-bold tracking-tighter text-white font-heading opacity-0 animate-fade-in-up"
               style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
               Your Dream Plot.<br />
-              <span className="bg-gradient-to-r from-blue-300 via-white to-blue-200 bg-clip-text text-transparent">Intelligent Buying.</span>
+              <span className="bg-gradient-to-r from-orange-300 via-white to-orange-200 bg-clip-text text-transparent animate-text-shimmer">
+                {typewriterText || '\u00A0'}
+                {!typewriterDone && <span className="typewriter-cursor">&nbsp;</span>}
+              </span>
             </h1>
             <p className="mt-6 max-w-lg text-xl text-white/80 leading-relaxed opacity-0 animate-fade-in-up"
               style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
@@ -143,7 +168,7 @@ export default function Home() {
             <div className="mt-10 flex flex-wrap gap-4 opacity-0 animate-fade-in-up"
               style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}>
               <button onClick={() => openModal('ai')}
-                className="group flex items-center gap-x-3 bg-white hover:bg-blue-50 text-slate-900 font-semibold px-8 h-14 rounded-full text-base shadow-lg shadow-black/10 hover:shadow-xl transition-all duration-300 active:scale-[0.98]">
+                className="group relative flex items-center gap-x-3 bg-white hover:bg-orange-50 text-slate-900 font-semibold px-8 h-14 rounded-full text-base shadow-lg shadow-black/10 hover:shadow-xl transition-all duration-300 active:scale-[0.98] animate-cta-ring">
                 <span>Find My Perfect Plot with AI</span>
                 <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300" />
               </button>
@@ -176,8 +201,8 @@ export default function Home() {
       </header>
 
       {/* TRUST BAR */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-slate-100">
-        <div className="max-w-screen-2xl mx-auto px-8 py-5">
+      <div className="bg-orange-50/40 border-b border-orange-100/50">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-wrap justify-center md:justify-between items-center gap-x-8 gap-y-4 text-sm">
             <div className="flex items-center gap-x-8 text-slate-600">
               <div className="flex items-center gap-x-2"><i className="fa-solid fa-shield-halved text-emerald-500" /> <span className="font-medium">RERA Registered</span></div>
@@ -193,28 +218,31 @@ export default function Home() {
       </div>
 
       {/* EXECUTIVE SUMMARY */}
-      <section className="max-w-screen-2xl mx-auto px-8 py-24">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-blue-700 text-xs font-bold tracking-widest rounded-full mb-5">EXECUTIVE SUMMARY</div>
-          <h2 className="section-header font-heading">The website is not just a brochure.<br />It is a <span className="text-blue-600">24×7 Sales & Lead Generation Platform.</span></h2>
-          <div className="mt-6 text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">
-            For Jai Santoshi Maa Infrastructure Pvt. Ltd., Briskode Technology has built a complete suite of modern, AI-powered features designed specifically for the Indian real estate market. From intelligent property matching to automated follow-ups and transparent construction tracking — every feature is built to build trust, create urgency, and drive conversions.
+      <section className="bg-white">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-700 text-xs font-bold tracking-widest rounded-full mb-5">EXECUTIVE SUMMARY</div>
+            <h2 className="section-header font-heading">The website is not just a brochure.<br />It is a <span className="text-orange-600">24×7 Sales & Lead Generation Platform.</span></h2>
+            <div className="mt-6 text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">
+              For Jai Santoshi Maa Infrastructure Pvt. Ltd., Briskode Technology has built a complete suite of modern, AI-powered features designed specifically for the Indian real estate market. From intelligent property matching to automated follow-ups and transparent construction tracking — every feature is built to build trust, create urgency, and drive conversions.
+            </div>
           </div>
         </div>
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="max-w-screen-2xl mx-auto px-8 pb-24">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-blue-700 text-xs font-bold tracking-widest rounded-full mb-4">OUR FLAGSHIP PROJECT</div>
-            <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 font-heading">Santoshi Enclave</h3>
-            <p className="text-slate-500 mt-1">Premium plotted development • Patia, Bhubaneswar • RERA: OR/06/2025/001234</p>
+      <section id="projects" className="bg-orange-50/30 border-t border-orange-100/30">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-700 text-xs font-bold tracking-widest rounded-full mb-4">OUR FLAGSHIP PROJECT</div>
+              <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 font-heading">Santoshi Enclave</h3>
+              <p className="text-slate-500 mt-1">Premium plotted development • Patia, Bhubaneswar • RERA: OR/06/2025/001234</p>
+            </div>
+            <Link to="/projects" className="hidden md:flex items-center text-sm font-semibold text-orange-600 hover:text-orange-700 transition-colors">
+              View All Projects <i className="ml-2 fa-solid fa-arrow-right" />
+            </Link>
           </div>
-          <Link to="/projects" className="hidden md:flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-            View All Projects <i className="ml-2 fa-solid fa-arrow-right" />
-          </Link>
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {(projects.length > 0 ? projects.slice(0, 3) : projectsData).map((p, i) => {
             const name = p.name || p.title;
@@ -255,7 +283,7 @@ export default function Home() {
                       <span className="font-semibold text-slate-800">{plotsAvail}</span>
                       <span className="text-slate-400"> plots available</span>
                     </div>
-                    <button onClick={() => openModal('plot-map')} className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                    <button onClick={() => openModal('plot-map')} className="inline-flex items-center gap-1 text-xs font-semibold text-orange-600 hover:text-orange-700 transition-colors">
                       VIEW LIVE MAP <i className="fa-solid fa-map ml-1" />
                     </button>
                   </div>
@@ -264,13 +292,14 @@ export default function Home() {
             );
           })}
         </div>
+        </div>
       </section>
 
       {/* 25 FEATURES */}
-      <section id="features" className="bg-gradient-to-b from-slate-50 to-white py-24 border-t border-b border-slate-100">
-        <div className="max-w-screen-2xl mx-auto px-8">
+      <section id="features" className="bg-gradient-to-b from-orange-50/40 to-white py-24 lg:py-32 border-t border-orange-100/30 border-b border-slate-100">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-blue-700 text-xs font-extrabold tracking-widest rounded-full mb-4">POWERED BY BRISKODE TECHNOLOGY</div>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-100 text-orange-700 text-xs font-extrabold tracking-widest rounded-full mb-4">POWERED BY BRISKODE TECHNOLOGY</div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 font-heading">25 Powerful Features</h2>
             <p className="mt-4 text-lg text-slate-500 max-w-xl mx-auto">Every tool designed to convert visitors into buyers, build trust and deliver a world-class digital experience.</p>
           </div>
@@ -283,7 +312,7 @@ export default function Home() {
                     {String(feat.num).padStart(2, '0')}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-sm leading-snug group-hover:text-blue-700 transition-colors text-slate-800">{feat.title}</div>
+                    <div className="font-semibold text-sm leading-snug group-hover:text-orange-700 transition-colors text-slate-800">{feat.title}</div>
                     <div className="text-xs text-slate-400 mt-1.5 line-clamp-2 leading-relaxed">{feat.desc}</div>
                     <div className="mt-3 text-[10px] text-emerald-600 font-semibold flex items-center gap-1.5">
                       <i className="fa-solid fa-rocket" /> {feat.cta}
@@ -303,9 +332,10 @@ export default function Home() {
       </section>
 
       {/* CALCULATORS */}
-      <section id="calculators-section" className="max-w-screen-2xl mx-auto px-8 py-24">
+      <section id="calculators-section" className="bg-white">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-blue-700 text-xs font-extrabold tracking-widest rounded-full mb-4">POWERFUL TOOLS</div>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-700 text-xs font-extrabold tracking-widest rounded-full mb-4">POWERFUL TOOLS</div>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 font-heading">Try Our Interactive Tools</h2>
           <p className="text-slate-500 mt-3 text-lg">Real calculators used by thousands of smart buyers in Odisha</p>
         </div>
@@ -313,7 +343,7 @@ export default function Home() {
           {/* Investment Calculator */}
           <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
             <div className="flex items-center gap-x-4 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-lg shadow-lg shadow-blue-500/20">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center text-white text-lg shadow-lg shadow-orange-500/20">
                 <i className="fa-solid fa-chart-line" />
               </div>
               <div>
@@ -325,20 +355,20 @@ export default function Home() {
               <div>
                 <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Investment Amount (₹)</label>
                 <input type="range" min={1500000} max={15000000} step={50000} value={invAmount}
-                  onChange={(e) => setInvAmount(Number(e.target.value))} className="w-full accent-blue-600" />
+                  onChange={(e) => setInvAmount(Number(e.target.value))} className="w-full accent-orange-600" />
                 <div className="flex justify-between text-xs mt-1"><span className="text-slate-400">15L</span><span className="font-mono font-semibold text-slate-700">{formatINR(invAmount)}</span><span className="text-slate-400">1.5Cr</span></div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Rate (%/yr)</label>
                   <input type="range" min={6} max={18} step={0.5} value={invRate}
-                    onChange={(e) => setInvRate(Number(e.target.value))} className="w-full accent-blue-600" />
+                    onChange={(e) => setInvRate(Number(e.target.value))} className="w-full accent-orange-600" />
                   <div className="text-center mt-0.5"><span className="font-mono font-semibold text-slate-700">{invRate}</span><span className="text-slate-400">%</span></div>
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Period</label>
                   <select value={invYears} onChange={(e) => setInvYears(Number(e.target.value))}
-                    className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow">
+                    className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow">
                     <option value={5}>5 Years</option>
                     <option value={10}>10 Years</option>
                     <option value={15}>15 Years</option>
@@ -367,7 +397,7 @@ export default function Home() {
           {/* Loan Calculator */}
           <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
             <div className="flex items-center gap-x-4 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-lg shadow-lg shadow-blue-500/20">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center text-white text-lg shadow-lg shadow-orange-500/20">
                 <i className="fa-solid fa-hand-holding-usd" />
               </div>
               <div>
@@ -378,15 +408,15 @@ export default function Home() {
             <div className="space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="text-xs font-semibold text-slate-500">Monthly Income (₹)</label>
-                  <input type="number" value={loanIncome} onChange={(e) => setLoanIncome(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow" /></div>
+                  <input type="number" value={loanIncome} onChange={(e) => setLoanIncome(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow" /></div>
                 <div><label className="text-xs font-semibold text-slate-500">Existing EMI (₹)</label>
-                  <input type="number" value={loanEmi} onChange={(e) => setLoanEmi(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow" /></div>
+                  <input type="number" value={loanEmi} onChange={(e) => setLoanEmi(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow" /></div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="text-xs font-semibold text-slate-500">Age</label>
-                  <input type="number" value={loanAge} onChange={(e) => setLoanAge(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow" /></div>
+                  <input type="number" value={loanAge} onChange={(e) => setLoanAge(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow" /></div>
                 <div><label className="text-xs font-semibold text-slate-500">Tenure (Years)</label>
-                  <select value={loanTenure} onChange={(e) => setLoanTenure(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow">
+                  <select value={loanTenure} onChange={(e) => setLoanTenure(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow">
                     <option value={20}>20 Years</option>
                     <option value={25}>25 Years</option>
                     <option value={30}>30 Years</option>
@@ -406,7 +436,7 @@ export default function Home() {
           {/* Construction Calculator */}
           <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
             <div className="flex items-center gap-x-4 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-lg shadow-lg shadow-blue-500/20">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center text-white text-lg shadow-lg shadow-orange-500/20">
                 <i className="fa-solid fa-hard-hat" />
               </div>
               <div>
@@ -417,16 +447,16 @@ export default function Home() {
             <div className="space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-x-3">
                 <div><label className="text-xs font-semibold text-slate-500">Plot Size (sq.ft)</label>
-                  <input type="number" value={constSize} onChange={(e) => setConstSize(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow" /></div>
+                  <input type="number" value={constSize} onChange={(e) => setConstSize(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow" /></div>
                 <div><label className="text-xs font-semibold text-slate-500">Floors</label>
-                  <select value={constFloors} onChange={(e) => setConstFloors(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow">
+                  <select value={constFloors} onChange={(e) => setConstFloors(Number(e.target.value))} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow">
                     <option value={1}>G+0 (Ground)</option>
                     <option value={2}>G+1</option>
                     <option value={3}>G+2</option>
                   </select></div>
               </div>
               <div><label className="text-xs font-semibold text-slate-500">Material Quality</label>
-                <select value={constQuality} onChange={(e) => setConstQuality(e.target.value)} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-shadow">
+                <select value={constQuality} onChange={(e) => setConstQuality(e.target.value)} className="w-full mt-1 border border-slate-200 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-shadow">
                   <option value="standard">Standard</option>
                   <option value="premium">Premium</option>
                   <option value="luxury">Luxury</option>
@@ -452,14 +482,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </div>
       </section>
-
-      {/* FINAL CTA */}
       <section className="premium-gradient text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 pointer-events-none" />
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="max-w-screen-2xl mx-auto px-8 py-20 text-center relative z-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-amber-500/10 pointer-events-none" />
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center relative z-10">
           <div className="max-w-xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight font-heading leading-tight">Ready to Transform Your Real Estate Sales?</h2>
             <p className="mt-5 text-lg text-white/70 leading-relaxed">These 25 features give Jai Santoshi Maa Infrastructure Pvt. Ltd. a significant competitive advantage in the Odisha real estate market.</p>
@@ -479,18 +508,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="bg-slate-900 text-slate-400 text-xs">
-        <div className="max-w-screen-2xl mx-auto px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-y-3">
-          <div>© 2026 Jai Santoshi Maa Infrastructure Pvt. Ltd. All rights reserved. | RERA compliant digital platform</div>
-          <div className="flex items-center gap-x-5">
-            <div>Powered by <span className="font-semibold text-white">Briskode Technology</span></div>
-            <div className="hidden md:block">|</div>
-            <div>Bhubaneswar, Odisha</div>
-          </div>
-        </div>
-      </footer>
 
       {/* MODALS */}
       {showModal === 'ai' && <AIRecommendationModal onClose={closeModal} onBookVisit={() => openModal('visit')} />}

@@ -94,7 +94,7 @@ export default function WhatsAppCRM() {
               {[
                 { label: 'Lead Leakage', before: '30-40%', after: '<2%', color: 'text-emerald-600' },
                 { label: 'Response Time', before: '4-6 hours', after: '<2 min', color: 'text-emerald-600' },
-                { label: 'Conversion Rate', before: '8-12%', after: '25-35%', color: 'text-blue-600' },
+                { label: 'Conversion Rate', before: '8-12%', after: '25-35%', color: 'text-orange-600' },
               ].map((item, i) => (
                 <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
                   <span className="text-sm text-slate-600">{item.label}</span>

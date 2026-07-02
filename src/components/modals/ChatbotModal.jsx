@@ -69,7 +69,7 @@ export default function ChatbotModal({ onClose, onBookVisit }) {
       <div onClick={(e) => e.stopPropagation()}
         className="modal bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-white/10 overflow-hidden flex flex-col"
         style={{ height: '620px' }}>
-        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-blue-700 via-blue-600 to-purple-700 text-white">
+        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-orange-700 via-orange-600 to-amber-700 text-white">
           <div className="flex items-center gap-x-3">
             <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
               <FaRobot className="text-xl" />
@@ -91,15 +91,15 @@ export default function ChatbotModal({ onClose, onBookVisit }) {
           {showQuickReplies && messages.length <= 2 && (
             <div className="flex flex-wrap gap-2 mt-3">
               <button onClick={() => quickReply('What is the price of Plot A-42?')}
-                className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-xl hover:border-blue-200 hover:bg-blue-50 transition-all text-slate-600">
+                className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-xl hover:border-orange-200 hover:bg-orange-50 transition-all text-slate-600">
                 Price of Plot A-42?
               </button>
               <button onClick={() => quickReply('Is the project RERA approved?')}
-                className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-xl hover:border-blue-200 hover:bg-blue-50 transition-all text-slate-600">
+                className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-xl hover:border-orange-200 hover:bg-orange-50 transition-all text-slate-600">
                 RERA status?
               </button>
               <button onClick={() => quickReply('Book a site visit')}
-                className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-xl hover:border-blue-200 hover:bg-blue-50 transition-all text-slate-600">
+                className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-xl hover:border-orange-200 hover:bg-orange-50 transition-all text-slate-600">
                 Book site visit
               </button>
             </div>
@@ -110,10 +110,10 @@ export default function ChatbotModal({ onClose, onBookVisit }) {
             <input value={input} onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') sendMessage(); }}
               type="text" placeholder="Ask about plots, pricing, RERA..."
-              className="flex-1 border border-slate-200 rounded-xl px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all"
+              className="flex-1 border border-slate-200 rounded-xl px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all"
             />
             <button onClick={sendMessage}
-              className="px-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center">
+              className="px-5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white rounded-xl transition-all shadow-lg shadow-orange-500/20 flex items-center justify-center">
               <FaPaperPlane />
             </button>
           </div>

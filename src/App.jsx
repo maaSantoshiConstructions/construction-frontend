@@ -83,11 +83,10 @@ import SupportTickets from './pages/dashboard/customer/SupportTickets';
 import Profile from './pages/dashboard/customer/Profile';
 import Wishlist from './pages/dashboard/customer/Wishlist';
 
-// Layout wrapper for public pages
 const PublicLayout = ({ children }) => (
   <>
     <Navbar />
-    <main className="min-h-screen pt-16 lg:pt-20">{children}</main>
+    <main className="min-h-screen">{children}</main>
     <Footer />
   </>
 );

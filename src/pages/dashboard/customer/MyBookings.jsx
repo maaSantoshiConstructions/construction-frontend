@@ -7,15 +7,15 @@ import Loader from '../../../components/common/Loader';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const bookingStatusColors = {
-  token: 'bg-purple-100 text-purple-700',
-  partial: 'bg-blue-100 text-blue-700',
+  token: 'bg-amber-100 text-amber-700',
+  partial: 'bg-orange-100 text-orange-700',
   completed: 'bg-green-100 text-green-700',
   cancelled: 'bg-red-100 text-red-700',
 };
 
 const paymentStatusColors = {
   pending: 'bg-amber-100 text-amber-700',
-  partial: 'bg-blue-100 text-blue-700',
+  partial: 'bg-orange-100 text-orange-700',
   paid: 'bg-green-100 text-green-700',
   overdue: 'bg-red-100 text-red-700',
 };
@@ -122,14 +122,14 @@ export default function MyBookings() {
                     <p className="text-xs text-slate-400 mb-1">Payment Progress</p>
                     <div className="w-full bg-slate-100 rounded-full h-2">
                       <div
-                        className="bg-blue-600 h-2 rounded-full transition-all"
+                        className="bg-orange-600 h-2 rounded-full transition-all"
                         style={{ width: Math.min(100, ((b.paidAmount || 0) / (b.totalAmount || b.amount || 1)) * 100) + '%' }}
                       />
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-xs font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 text-orange-700 hover:bg-orange-100 rounded-lg text-xs font-medium transition-colors">
                       <FaEye /> View Details
                     </button>
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg text-xs font-medium transition-colors">

@@ -87,13 +87,13 @@ export default function Wishlist() {
                     </div>
                     <div>
                       <p className="text-slate-400 text-xs">Price</p>
-                      <p className="font-semibold text-blue-600">₹{((item.price || item.totalPrice || 0)).toLocaleString()}</p>
+                      <p className="font-semibold text-orange-600">₹{((item.price || item.totalPrice || 0)).toLocaleString()}</p>
                     </div>
                   </div>
 
                   <button
                     onClick={() => handleBookNow(item)}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
                   >
                     <FaBookmark /> Book Now
                   </button>

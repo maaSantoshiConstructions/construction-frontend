@@ -14,14 +14,14 @@ export default function NotFound() {
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="text-8xl sm:text-9xl font-bold text-blue-600/20 mb-4 select-none"
+          className="text-8xl sm:text-9xl font-bold text-orange-600/20 mb-4 select-none"
         >
           404
         </motion.div>
 
         <div className="relative inline-block mb-8">
-          <div className="w-40 h-40 mx-auto bg-blue-50 rounded-full flex items-center justify-center">
-            <FaHome className="text-6xl text-blue-300" />
+          <div className="w-40 h-40 mx-auto bg-orange-50 rounded-full flex items-center justify-center">
+            <FaHome className="text-6xl text-orange-300" />
           </div>
           <div className="absolute -top-2 -right-2 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
             <span className="text-red-400 font-bold text-lg">?</span>
@@ -36,7 +36,7 @@ export default function NotFound() {
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-full transition-colors shadow-sm"
           >
             <FaArrowLeft /> Back to Home
           </Link>
@@ -57,7 +57,7 @@ export default function NotFound() {
               { to: '/contact', label: 'Contact' },
               { to: '/faq', label: 'FAQ' },
             ].map((link) => (
-              <Link key={link.to} to={link.to} className="text-blue-600 hover:text-blue-700 underline underline-offset-2">
+              <Link key={link.to} to={link.to} className="text-orange-600 hover:text-orange-700 underline underline-offset-2">
                 {link.label}
               </Link>
             ))}

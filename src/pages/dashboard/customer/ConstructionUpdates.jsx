@@ -86,7 +86,7 @@ export default function ConstructionUpdates() {
 
             <div className="w-full bg-slate-100 rounded-full h-2.5 mb-6">
               <div
-                className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
+                className="bg-orange-600 h-2.5 rounded-full transition-all duration-500"
                 style={{ width: progressPct + '%' }}
               />
             </div>
@@ -100,9 +100,9 @@ export default function ConstructionUpdates() {
                   transition={{ delay: i * 0.05 }}
                   className="relative pl-8 pb-6 last:pb-0"
                 >
-                  <div className="absolute left-0 top-1 w-3 h-3 rounded-full bg-blue-600 border-2 border-white shadow" />
+                  <div className="absolute left-0 top-1 w-3 h-3 rounded-full bg-orange-600 border-2 border-white shadow" />
                   {i < projectUpdates.length - 1 && (
-                    <div className="absolute left-[5px] top-4 bottom-0 w-0.5 bg-blue-200" />
+                    <div className="absolute left-[5px] top-4 bottom-0 w-0.5 bg-orange-200" />
                   )}
 
                   <div

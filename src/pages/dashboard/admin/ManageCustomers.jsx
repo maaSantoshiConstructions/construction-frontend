@@ -33,7 +33,7 @@ export default function ManageCustomers() {
   const columns = [
     { key: 'name', label: 'Name', render: r => (
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 text-sm font-bold">{r.name?.charAt(0) || '?'}</div>
+        <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-700 text-sm font-bold">{r.name?.charAt(0) || '?'}</div>
         <span className="font-medium text-slate-800">{r.name}</span>
       </div>
     )},
@@ -42,7 +42,7 @@ export default function ManageCustomers() {
     { key: 'properties', label: 'Properties', render: r => r.bookings?.length || r.properties || 0 },
     { key: 'totalPaid', label: 'Total Paid', render: r => `₹${(r.totalPaid || 0).toLocaleString()}` },
     { key: 'actions', label: 'Actions', render: r => (
-      <button onClick={() => setViewCustomer(r)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"><FaEye /></button>
+      <button onClick={() => setViewCustomer(r)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg"><FaEye /></button>
     )},
   ];
 
@@ -69,7 +69,7 @@ export default function ManageCustomers() {
             </div>
             <div className="p-5 space-y-4">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 text-xl font-bold">{viewCustomer.name?.charAt(0) || '?'}</div>
+                <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center text-orange-700 text-xl font-bold">{viewCustomer.name?.charAt(0) || '?'}</div>
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800">{viewCustomer.name}</h3>
                   <p className="text-sm text-slate-500">{viewCustomer.email}</p>
@@ -96,7 +96,7 @@ export default function ManageCustomers() {
                             <td className="px-3 py-2">{b.project?.name || b.plot?.project?.name || '-'}</td>
                             <td className="px-3 py-2">#{b.plot?.plotNumber || '-'}</td>
                             <td className="px-3 py-2">₹{(b.totalAmount || b.amount || 0).toLocaleString()}</td>
-                            <td className="px-3 py-2"><span className={`px-1.5 py-0.5 rounded text-xs font-medium ${b.status === 'completed' ? 'bg-green-100 text-green-700' : b.status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>{b.status}</span></td>
+                            <td className="px-3 py-2"><span className={`px-1.5 py-0.5 rounded text-xs font-medium ${b.status === 'completed' ? 'bg-green-100 text-green-700' : b.status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>{b.status}</span></td>
                           </tr>
                         ))}
                       </tbody>

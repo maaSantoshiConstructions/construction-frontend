@@ -96,7 +96,7 @@ export default function BookVisit() {
           </a>
           <button
             onClick={() => { setSuccess(false); setVisitDetails(null); }}
-            className="block mt-4 mx-auto text-sm text-blue-600 hover:text-blue-700 font-medium"
+            className="block mt-4 mx-auto text-sm text-orange-600 hover:text-orange-700 font-medium"
           >
             Book Another Visit
           </button>
@@ -107,11 +107,11 @@ export default function BookVisit() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Book a Site Visit</h1>
-            <p className="text-blue-100">Schedule a visit to explore your dream plot in person</p>
+            <p className="text-orange-100">Schedule a visit to explore your dream plot in person</p>
           </motion.div>
         </div>
       </div>
@@ -124,7 +124,7 @@ export default function BookVisit() {
               <label className="block text-sm font-medium text-slate-700 mb-1">Select Project</label>
               <select
                 {...register('project', { required: 'Please select a project' })}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-sm"
               >
                 <option value="">Choose a project</option>
                 {projects.map((p) => <option key={p._id} value={p.name}>{p.name}</option>)}
@@ -141,7 +141,7 @@ export default function BookVisit() {
                     type="date"
                     min={getMinDate()}
                     {...register('date', { required: 'Please select a date' })}
-                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-sm"
                   />
                 </div>
                 {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>}
@@ -153,7 +153,7 @@ export default function BookVisit() {
                   <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm z-10" />
                   <select
                     {...register('timeSlot', { required: 'Please select a time' })}
-                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm appearance-none bg-white"
+                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-sm appearance-none bg-white"
                   >
                     <option value="">Select time</option>
                     {timeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
@@ -170,7 +170,7 @@ export default function BookVisit() {
                 <input
                   type="text"
                   {...register('pickupLocation', { required: 'Pickup location is required' })}
-                  className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+                  className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-sm"
                   placeholder="Enter your pickup address"
                 />
               </div>
@@ -180,7 +180,7 @@ export default function BookVisit() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               {loading && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
               {loading ? 'Booking...' : 'Book Site Visit'}

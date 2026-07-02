@@ -33,7 +33,7 @@ export default function AIRecommendationModal({ onClose, onBookVisit }) {
         className="modal bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
         <div className="px-8 py-5 border-b border-slate-100 flex justify-between items-center bg-gradient-to-r from-slate-50 to-white">
           <div>
-            <span className="px-3 py-1 text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg">FEATURE 01</span>
+            <span className="px-3 py-1 text-xs font-bold bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg">FEATURE 01</span>
             <span className="ml-3 font-bold text-xl text-slate-800">AI Property Recommendation System</span>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all text-xl leading-none">&times;</button>
@@ -44,7 +44,7 @@ export default function AIRecommendationModal({ onClose, onBookVisit }) {
             <div>
               <label className="text-xs font-semibold tracking-wider text-slate-500">YOUR BUDGET</label>
               <select id="ai-budget" value={budget} onChange={(e) => setBudget(e.target.value)}
-                className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
+                className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all">
                 <option value="25-40">₹25 – 40 Lakh</option>
                 <option value="40-60">₹40 – 60 Lakh</option>
                 <option value="60-90">₹60 – 90 Lakh</option>
@@ -54,7 +54,7 @@ export default function AIRecommendationModal({ onClose, onBookVisit }) {
             <div>
               <label className="text-xs font-semibold tracking-wider text-slate-500">PREFERRED LOCATION</label>
               <select id="ai-location" value={location} onChange={(e) => setLocation(e.target.value)}
-                className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
+                className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all">
                 <option value="patia">Patia / Chandrasekharpur</option>
                 <option value="khandagiri">Khandagiri / Jagamara</option>
                 <option value="nayapalli">Nayapalli / IRC Village</option>
@@ -67,7 +67,7 @@ export default function AIRecommendationModal({ onClose, onBookVisit }) {
                 {['plot', 'villa', 'apartment'].map((t) => (
                   <label key={t} className="flex-1 cursor-pointer">
                     <input type="radio" name="ai-type" value={t} checked={type === t} onChange={() => setType(t)} className="peer hidden" />
-                    <span className="block text-center border border-slate-200 peer-checked:border-blue-400 peer-checked:bg-blue-50 rounded-xl py-2 text-sm font-medium text-slate-600 peer-checked:text-blue-700 transition-all">{t.charAt(0).toUpperCase() + t.slice(1)}</span>
+                    <span className="block text-center border border-slate-200 peer-checked:border-orange-400 peer-checked:bg-orange-50 rounded-xl py-2 text-sm font-medium text-slate-600 peer-checked:text-orange-700 transition-all">{t.charAt(0).toUpperCase() + t.slice(1)}</span>
                   </label>
                 ))}
               </div>
@@ -75,7 +75,7 @@ export default function AIRecommendationModal({ onClose, onBookVisit }) {
             <div>
               <label className="text-xs font-semibold tracking-wider text-slate-500">PURPOSE</label>
               <select id="ai-purpose" value={purpose} onChange={(e) => setPurpose(e.target.value)}
-                className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
+                className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all">
                 <option value="self">Self-use / Living</option>
                 <option value="invest">Investment</option>
                 <option value="both">Both</option>
@@ -84,7 +84,7 @@ export default function AIRecommendationModal({ onClose, onBookVisit }) {
           </div>
           <div className="mt-6">
             <button onClick={runRecommendation}
-              className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:from-blue-800 active:to-purple-800 transition-all text-white font-semibold rounded-xl flex items-center justify-center gap-x-2 shadow-lg shadow-blue-500/20">
+              className="w-full py-3.5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 active:from-orange-800 active:to-amber-800 transition-all text-white font-semibold rounded-xl flex items-center justify-center gap-x-2 shadow-lg shadow-orange-500/20">
               <FaMagic />
               <span>GET MY PERSONALIZED RECOMMENDATION</span>
             </button>

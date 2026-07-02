@@ -69,7 +69,7 @@ export default function ManageSettings() {
   if (loading) return <div className="space-y-4">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-12 bg-slate-200 rounded-xl animate-pulse" />)}</div>;
   if (error) return <ErrorMessage message={error} onRetry={fetchSettings} />;
 
-  const inputClass = "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500";
+  const inputClass = "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500";
 
   const renderGeneral = () => (
     <div className="space-y-4">
@@ -192,7 +192,7 @@ export default function ManageSettings() {
           <button
             onClick={() => handleSaveGroup(tabKeys[activeTab])}
             disabled={saving}
-            className="flex items-center gap-2 px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg transition-colors"
+            className="flex items-center gap-2 px-5 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg transition-colors"
           >
             <FaSave /> {saving ? 'Saving...' : 'Save Changes'}
           </button>

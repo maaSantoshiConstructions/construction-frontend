@@ -38,11 +38,11 @@ export default function PropertyComparison() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Property Comparison</h1>
-            <p className="text-blue-100">Compare up to 4 properties side-by-side</p>
+            <p className="text-orange-100">Compare up to 4 properties side-by-side</p>
           </motion.div>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function PropertyComparison() {
           {selected.length > 0 && (
             <div className="grid gap-4 mb-6" style={{ gridTemplateColumns: `repeat(${Math.max(selected.length, 1)}, 1fr)` }}>
               {selected.map((prop) => (
-                <div key={prop.id} className="relative border border-blue-200 bg-blue-50 rounded-xl p-3">
+                <div key={prop.id} className="relative border border-orange-200 bg-orange-50 rounded-xl p-3">
                   <button onClick={() => removeProperty(prop.id)} className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs"><FaTimes /></button>
                   <p className="font-semibold text-slate-800 text-sm">{prop.name}</p>
                   <p className="text-xs text-slate-500">{prop.project}</p>
@@ -70,7 +70,7 @@ export default function PropertyComparison() {
                   <button
                     key={prop.id}
                     onClick={() => addProperty(prop)}
-                    className="flex items-center gap-2 px-3 py-1.5 text-xs border border-slate-200 rounded-full hover:border-blue-300 hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-2 px-3 py-1.5 text-xs border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors"
                   >
                     <FaPlus className="text-[10px]" /> {prop.name} - {prop.project}
                   </button>

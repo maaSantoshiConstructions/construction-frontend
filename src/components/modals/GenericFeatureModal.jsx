@@ -47,7 +47,7 @@ export default function GenericFeatureModal({ num, onClose, onShowAI }) {
         className="modal bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
         <div className="px-7 py-5 border-b border-slate-100 flex justify-between items-center bg-gradient-to-r from-slate-50 to-white">
           <div>
-            <span className="text-xs px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold">
+            <span className="text-xs px-3 py-1 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg font-bold">
               FEATURE {String(num).padStart(2, '0')}
             </span>
             <div className="font-bold text-xl mt-2 text-slate-800">{title}</div>
@@ -56,16 +56,16 @@ export default function GenericFeatureModal({ num, onClose, onShowAI }) {
         </div>
         <div className="p-7">
           <p className="text-slate-500 leading-relaxed">{desc}</p>
-          <div className="mt-6 p-5 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-100 rounded-xl">
+          <div className="mt-6 p-5 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100 rounded-xl">
             <div className="flex items-start gap-x-3">
-              <FaRobot className="text-blue-500 mt-0.5 flex-shrink-0" />
+              <FaRobot className="text-orange-500 mt-0.5 flex-shrink-0" />
               <div>
                 <div className="font-semibold text-sm text-slate-700">Try Our AI Recommendation System</div>
                 <div className="text-xs text-slate-500 mt-1 leading-relaxed">This feature is available on the live platform. Use our AI-powered property recommendation to instantly find the best match for your needs.</div>
               </div>
             </div>
             <button onClick={onShowAI}
-              className="mt-4 w-full py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-sm transition-all shadow-lg shadow-blue-500/20">
+              className="mt-4 w-full py-2.5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white rounded-xl font-semibold text-sm transition-all shadow-lg shadow-orange-500/20">
               Try AI Property Match
             </button>
           </div>

@@ -85,7 +85,7 @@ export default function PlotMap() {
             <select
               value={filters.project}
               onChange={(e) => setFilters({ ...filters, project: e.target.value })}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none"
             >
               <option value="">All Projects</option>
               {projects.map((p) => <option key={p._id} value={p.name}>{p.name}</option>)}
@@ -96,7 +96,7 @@ export default function PlotMap() {
             <select
               value={filters.facing}
               onChange={(e) => setFilters({ ...filters, facing: e.target.value })}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none"
             >
               <option value="">All Directions</option>
               {['North', 'South', 'East', 'West', 'North-East', 'North-West', 'South-East', 'South-West'].map((d) => (
@@ -109,7 +109,7 @@ export default function PlotMap() {
             <select
               value={filters.sizeRange}
               onChange={(e) => setFilters({ ...filters, sizeRange: e.target.value })}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none"
             >
               <option value="">Any Size</option>
               <option value="0-1000">Up to 1000</option>
@@ -134,7 +134,7 @@ export default function PlotMap() {
           </div>
           <button
             onClick={() => setFilters({ project: '', facing: '', status: '', sizeRange: '' })}
-            className="w-full py-2 text-sm text-blue-600 hover:text-blue-700 font-medium"
+            className="w-full py-2 text-sm text-orange-600 hover:text-orange-700 font-medium"
           >
             Clear All Filters
           </button>
@@ -158,7 +158,7 @@ export default function PlotMap() {
             <button
               key={plot._id}
               onClick={() => handlePlotClick(plot)}
-              className={`w-full text-left p-3 rounded-lg border text-sm transition-colors ${selectedPlot?._id === plot._id ? 'border-blue-500 bg-blue-50' : 'border-slate-100 hover:border-slate-200'}`}
+              className={`w-full text-left p-3 rounded-lg border text-sm transition-colors ${selectedPlot?._id === plot._id ? 'border-orange-500 bg-orange-50' : 'border-slate-100 hover:border-slate-200'}`}
             >
               <div className="flex items-center justify-between">
                 <span className="font-medium text-slate-800">{plot.plotNumber}</span>
@@ -189,7 +189,7 @@ export default function PlotMap() {
                   <div
                     key={plot._id}
                     onClick={() => handlePlotClick(plot)}
-                    className={`p-3 rounded-lg border text-center cursor-pointer text-sm transition-colors ${selectedPlot?._id === plot._id ? 'border-blue-500 bg-blue-50' : 'border-slate-200 bg-white hover:border-blue-300'}`}
+                    className={`p-3 rounded-lg border text-center cursor-pointer text-sm transition-colors ${selectedPlot?._id === plot._id ? 'border-orange-500 bg-orange-50' : 'border-slate-200 bg-white hover:border-orange-300'}`}
                   >
                     <span className="block font-medium text-slate-800">{plot.plotNumber}</span>
                     <span className={`text-xs font-medium capitalize ${statusConfig[plot.status]?.text}`}>{plot.status}</span>
@@ -201,7 +201,7 @@ export default function PlotMap() {
         ) : (
           <div className="h-full bg-slate-200 flex items-center justify-center relative">
             <div className="text-center">
-              <FaMapMarkerAlt className="text-5xl text-blue-600 mx-auto mb-4" />
+              <FaMapMarkerAlt className="text-5xl text-orange-600 mx-auto mb-4" />
               <p className="text-slate-500 text-sm">Map component would render here with Leaflet</p>
               <p className="text-xs text-slate-400 mt-1">{filteredPlots.length} plots loaded</p>
             </div>
@@ -246,11 +246,11 @@ export default function PlotMap() {
             <div className="grid grid-cols-2 gap-3 text-sm mb-4">
               <div><span className="text-slate-400">Size</span><p className="font-medium text-slate-700">{selectedPlot.size} sq ft</p></div>
               <div><span className="text-slate-400">Facing</span><p className="font-medium text-slate-700">{selectedPlot.facing}</p></div>
-              <div><span className="text-slate-400">Price</span><p className="font-medium text-blue-600">₹{(selectedPlot.price || 0).toLocaleString('en-IN')}</p></div>
+              <div><span className="text-slate-400">Price</span><p className="font-medium text-orange-600">₹{(selectedPlot.price || 0).toLocaleString('en-IN')}</p></div>
             </div>
             <Link
               to="/book-visit"
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               <FaCrosshairs /> Book Now
             </Link>

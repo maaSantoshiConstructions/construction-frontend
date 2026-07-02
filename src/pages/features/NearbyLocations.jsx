@@ -4,9 +4,9 @@ import React from 'react';
 import { FaSchool, FaHospital, FaShoppingCart, FaBus, FaPlane, FaTrain, FaChurch, FaMapMarkerAlt } from 'react-icons/fa';
 
 const categories = [
-  { id: 'schools', icon: FaSchool, label: 'Schools', color: 'text-blue-600' },
+  { id: 'schools', icon: FaSchool, label: 'Schools', color: 'text-orange-600' },
   { id: 'hospitals', icon: FaHospital, label: 'Hospitals', color: 'text-red-600' },
-  { id: 'shopping', icon: FaShoppingCart, label: 'Shopping', color: 'text-purple-600' },
+  { id: 'shopping', icon: FaShoppingCart, label: 'Shopping', color: 'text-amber-600' },
   { id: 'transport', icon: FaBus, label: 'Transport', color: 'text-emerald-600' },
   { id: 'airport', icon: FaPlane, label: 'Airport', color: 'text-amber-600' },
   { id: 'railway', icon: FaTrain, label: 'Railway', color: 'text-cyan-600' },
@@ -75,7 +75,7 @@ export default function NearbyLocations() {
                 key={cat.id}
                 onClick={() => setActive(cat.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all ${
-                  active === cat.id ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
+                  active === cat.id ? 'bg-orange-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
                 }`}
               >
                 <cat.icon className={active === cat.id ? 'text-white' : cat.color} />
@@ -86,14 +86,14 @@ export default function NearbyLocations() {
 
           <motion.div key={active} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
             <h3 className="text-lg font-bold text-slate-800 capitalize mb-4 flex items-center gap-2">
-              {categories.find((c) => c.id === active)?.icon && React.createElement(categories.find((c) => c.id === active).icon, { className: 'text-blue-600' })}
+              {categories.find((c) => c.id === active)?.icon && React.createElement(categories.find((c) => c.id === active).icon, { className: 'text-orange-600' })}
               {categories.find((c) => c.id === active)?.label}
             </h3>
             {nearbyData[active].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition-colors">
+              <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-orange-50 transition-colors">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                    <FaMapMarkerAlt className="text-blue-600" />
+                    <FaMapMarkerAlt className="text-orange-600" />
                   </div>
                   <div>
                     <p className="font-medium text-slate-800 text-sm">{item.name}</p>

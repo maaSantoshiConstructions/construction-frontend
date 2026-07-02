@@ -20,7 +20,7 @@ const RatingStars = ({ rating }) => (
 );
 
 const Avatar = ({ name }) => (
-  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
     {name?.split(' ').map(n => n[0]).join('').slice(0, 2) || 'U'}
   </div>
 );
@@ -36,11 +36,11 @@ export default function CustomerReviews() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 py-16">
+      <div className="bg-gradient-to-r from-slate-900 via-orange-900 to-amber-900 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Customer Reviews</h1>
-            <p className="text-blue-200">Hear from our happy customers about their experience</p>
+            <p className="text-orange-200">Hear from our happy customers about their experience</p>
           </motion.div>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function CustomerReviews() {
                 href="https://g.co/kgs/demo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-xl transition-colors"
               >
                 <FaGoogle /> Write a Review
               </a>
@@ -81,12 +81,12 @@ export default function CustomerReviews() {
         </motion.div>
 
         <div className="flex flex-wrap gap-2 mb-6">
-          <button onClick={() => setFilter(0)} className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === 0 ? 'bg-blue-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-300'}`}>All</button>
+          <button onClick={() => setFilter(0)} className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === 0 ? 'bg-orange-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-orange-300'}`}>All</button>
           {[5, 4, 3, 2, 1].map((star) => (
             <button
               key={star}
               onClick={() => setFilter(filter === star ? 0 : star)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors flex items-center gap-1 ${filter === star ? 'bg-blue-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-300'}`}
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors flex items-center gap-1 ${filter === star ? 'bg-orange-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-orange-300'}`}
             >
               <FaStar /> {star}
             </button>
@@ -103,7 +103,7 @@ export default function CustomerReviews() {
               transition={{ delay: i * 0.05 }}
               className="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow"
             >
-              <FaQuoteLeft className="text-blue-200 text-xl mb-3" />
+              <FaQuoteLeft className="text-orange-200 text-xl mb-3" />
               <RatingStars rating={review.rating} />
               <h3 className="font-semibold text-slate-800 mt-2 mb-1">{review.title}</h3>
               <p className="text-sm text-slate-600 leading-relaxed">{review.comment}</p>

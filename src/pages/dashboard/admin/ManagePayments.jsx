@@ -8,7 +8,7 @@ import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColors = {
   success: 'bg-green-100 text-green-700', pending: 'bg-yellow-100 text-yellow-700',
-  failed: 'bg-red-100 text-red-700', refunded: 'bg-purple-100 text-purple-700',
+  failed: 'bg-red-100 text-red-700', refunded: 'bg-amber-100 text-amber-700',
 };
 
 export default function ManagePayments() {
@@ -58,7 +58,7 @@ export default function ManagePayments() {
     { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status}</span> },
     { key: 'date', label: 'Date', render: r => r.createdAt ? new Date(r.createdAt).toLocaleDateString() : '-' },
     { key: 'actions', label: 'Actions', render: r => (
-      <button onClick={() => handleDownload(r._id)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"><FaDownload /></button>
+      <button onClick={() => handleDownload(r._id)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg"><FaDownload /></button>
     )},
   ];
 

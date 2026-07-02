@@ -40,7 +40,7 @@ export default function BlogDetails() {
     <div className="min-h-screen bg-white">
       <div className="bg-slate-50 border-b border-slate-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <Link to="/blogs" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 text-sm font-medium transition-colors">
+          <Link to="/blogs" className="inline-flex items-center gap-2 text-slate-500 hover:text-orange-600 text-sm font-medium transition-colors">
             <FaArrowLeft /> Back to Blogs
           </Link>
         </div>
@@ -54,7 +54,7 @@ export default function BlogDetails() {
         <div className="mb-8">
           <div className="flex flex-wrap gap-2 mb-4">
             {blog.tags?.map((tag, i) => (
-              <span key={i} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium">{tag}</span>
+              <span key={i} className="px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-xs font-medium">{tag}</span>
             ))}
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 leading-tight mb-4">{blog.title}</h1>
@@ -90,9 +90,9 @@ export default function BlogDetails() {
               <span className="text-sm font-medium text-slate-600">Share this article:</span>
               <div className="flex gap-2">
                 {[
-                  { icon: FaFacebook, href: `https://facebook.com/sharer.php?u=${shareUrl}`, color: 'hover:bg-blue-100 hover:text-blue-600' },
+                  { icon: FaFacebook, href: `https://facebook.com/sharer.php?u=${shareUrl}`, color: 'hover:bg-orange-100 hover:text-orange-600' },
                   { icon: FaTwitter, href: `https://twitter.com/intent/tweet?url=${shareUrl}`, color: 'hover:bg-sky-100 hover:text-sky-500' },
-                  { icon: FaLinkedin, href: `https://linkedin.com/sharing/share-offsite/?url=${shareUrl}`, color: 'hover:bg-blue-100 hover:text-blue-700' },
+                  { icon: FaLinkedin, href: `https://linkedin.com/sharing/share-offsite/?url=${shareUrl}`, color: 'hover:bg-orange-100 hover:text-orange-700' },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className={`w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 text-slate-500 ${s.color} transition-colors`}>
                     <s.icon />

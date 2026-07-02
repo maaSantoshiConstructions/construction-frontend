@@ -74,14 +74,14 @@ export default function AIChatbot() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <div className="bg-gradient-to-r from-blue-700 to-slate-900 py-12">
+      <div className="bg-gradient-to-r from-orange-700 to-slate-900 py-12">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
               <FaRobot className="text-white text-3xl" />
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">AI Sales Assistant</h1>
-            <p className="text-blue-200">24×7 multilingual support • English • हिंदी • ଓଡ଼ିଆ</p>
+            <p className="text-orange-200">24×7 multilingual support • English • हिंदी • ଓଡ଼ିଆ</p>
           </motion.div>
         </div>
       </div>
@@ -97,10 +97,10 @@ export default function AIChatbot() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[80%] flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.role === 'user' ? 'bg-blue-600' : 'bg-slate-700'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.role === 'user' ? 'bg-orange-600' : 'bg-slate-700'}`}>
                     {msg.role === 'user' ? <FaUser className="text-white text-xs" /> : <FaRobot className="text-white text-xs" />}
                   </div>
-                  <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-md' : 'bg-white border border-slate-200 rounded-bl-md'}`}>
+                  <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-orange-600 text-white rounded-br-md' : 'bg-white border border-slate-200 rounded-bl-md'}`}>
                     {msg.content}
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default function AIChatbot() {
                   <button
                     key={i}
                     onClick={() => handleQuickReply(qr)}
-                    className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-full hover:border-blue-300 hover:text-blue-600 transition-colors"
+                    className="text-xs px-4 py-2 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors"
                   >
                     {qr}
                   </button>
@@ -147,12 +147,12 @@ export default function AIChatbot() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Ask about plots, pricing, RERA..."
-                className="flex-1 px-5 py-3 border border-slate-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-5 py-3 border border-slate-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
               <button
                 onClick={() => handleSend()}
                 disabled={loading || !input.trim()}
-                className="w-12 h-12 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-full flex items-center justify-center transition-colors"
+                className="w-12 h-12 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white rounded-full flex items-center justify-center transition-colors"
               >
                 <FaPaperPlane />
               </button>

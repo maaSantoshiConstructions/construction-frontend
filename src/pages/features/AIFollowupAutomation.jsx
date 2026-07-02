@@ -37,14 +37,14 @@ export default function AIFollowupAutomation() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-indigo-700 to-purple-800 py-16">
+      <div className="bg-gradient-to-r from-amber-700 to-amber-800 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
               <FaRobot className="text-white text-3xl" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">AI Follow-up Automation</h1>
-            <p className="text-indigo-200">Intelligent nurturing sequences that convert leads into customers</p>
+            <p className="text-amber-200">Intelligent nurturing sequences that convert leads into customers</p>
           </motion.div>
         </div>
       </div>
@@ -57,7 +57,7 @@ export default function AIFollowupAutomation() {
                 key={seq.id}
                 onClick={() => setActive(seq)}
                 className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                  active.id === seq.id ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 border border-slate-200 hover:border-indigo-300'
+                  active.id === seq.id ? 'bg-amber-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 border border-slate-200 hover:border-amber-300'
                 }`}
               >
                 {seq.name}
@@ -80,16 +80,16 @@ export default function AIFollowupAutomation() {
                 className="relative flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100"
               >
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
                     {step.channel === 'WhatsApp' ? <FaWhatsapp className="text-green-600" /> :
-                     step.channel === 'Email' ? <FaEnvelope className="text-blue-600" /> :
-                     <FaSms className="text-purple-600" />}
+                     step.channel === 'Email' ? <FaEnvelope className="text-orange-600" /> :
+                     <FaSms className="text-amber-600" />}
                   </div>
-                  {i < active.steps.length - 1 && <div className="w-0.5 h-full bg-indigo-200 mt-1" />}
+                  {i < active.steps.length - 1 && <div className="w-0.5 h-full bg-amber-200 mt-1" />}
                 </div>
                 <div className="flex-1 pb-4">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-medium rounded">{step.time}</span>
+                    <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-medium rounded">{step.time}</span>
                     <span className="text-xs font-medium text-slate-500">{step.channel}</span>
                   </div>
                   <p className="text-sm text-slate-600">{step.message}</p>
@@ -112,10 +112,10 @@ export default function AIFollowupAutomation() {
               transition={{ delay: 0.1 * i }}
               className="bg-white rounded-2xl shadow-sm p-5 border border-slate-100 text-center"
             >
-              <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <stat.icon className="text-indigo-600" />
+              <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <stat.icon className="text-amber-600" />
               </div>
-              <p className="text-2xl font-bold text-indigo-600">{stat.value}</p>
+              <p className="text-2xl font-bold text-amber-600">{stat.value}</p>
               <p className="text-xs text-slate-500 mt-1">{stat.sub}</p>
             </motion.div>
           ))}

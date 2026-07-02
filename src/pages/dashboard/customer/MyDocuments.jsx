@@ -6,8 +6,8 @@ import { getMyDocuments, uploadDocument } from '../../../api/documents';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const docTypeColors = {
-  agreement: 'bg-blue-100 text-blue-700',
-  kyc: 'bg-purple-100 text-purple-700',
+  agreement: 'bg-orange-100 text-orange-700',
+  kyc: 'bg-amber-100 text-amber-700',
   payment_receipt: 'bg-green-100 text-green-700',
   identification: 'bg-amber-100 text-amber-700',
   other: 'bg-slate-100 text-slate-600',
@@ -85,7 +85,7 @@ export default function MyDocuments() {
         </div>
         <button
           onClick={() => setShowUpload(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
         >
           <FaUpload /> Upload Document
         </button>
@@ -117,8 +117,8 @@ export default function MyDocuments() {
               className="bg-white rounded-2xl border border-slate-200 p-5 flex items-center justify-between"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                  <FaFileAlt className="text-blue-600" />
+                <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+                  <FaFileAlt className="text-orange-600" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-slate-800">{doc.title || doc.name}</p>
@@ -133,7 +133,7 @@ export default function MyDocuments() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => handleView(doc)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg" title="View"><FaEye /></button>
+                <button onClick={() => handleView(doc)} className="p-2 text-orange-600 hover:bg-orange-50 rounded-lg" title="View"><FaEye /></button>
                 <button onClick={() => handleView(doc)} className="p-2 text-green-600 hover:bg-green-50 rounded-lg" title="Download"><FaDownload /></button>
               </div>
             </motion.div>
@@ -151,11 +151,11 @@ export default function MyDocuments() {
             <form onSubmit={handleUpload} className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
-                <input type="text" value={uploadForm.title} onChange={e => setUploadForm({ ...uploadForm, title: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="Document title" required />
+                <input type="text" value={uploadForm.title} onChange={e => setUploadForm({ ...uploadForm, title: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" placeholder="Document title" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Type</label>
-                <select value={uploadForm.type} onChange={e => setUploadForm({ ...uploadForm, type: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                <select value={uploadForm.type} onChange={e => setUploadForm({ ...uploadForm, type: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
                   <option value="agreement">Agreement</option>
                   <option value="kyc">KYC</option>
                   <option value="payment_receipt">Payment Receipt</option>
@@ -165,11 +165,11 @@ export default function MyDocuments() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">File *</label>
-                <input type="file" onChange={e => setFile(e.target.files[0])} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required />
+                <input type="file" onChange={e => setFile(e.target.files[0])} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" required />
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowUpload(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button type="submit" disabled={uploading} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg">{uploading ? 'Uploading...' : 'Upload'}</button>
+                <button type="submit" disabled={uploading} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg">{uploading ? 'Uploading...' : 'Upload'}</button>
               </div>
             </form>
           </motion.div>

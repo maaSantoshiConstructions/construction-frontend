@@ -10,8 +10,8 @@ import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const roleColors = {
   super_admin: 'bg-red-100 text-red-700',
-  company_admin: 'bg-purple-100 text-purple-700',
-  sales_executive: 'bg-blue-100 text-blue-700',
+  company_admin: 'bg-amber-100 text-amber-700',
+  sales_executive: 'bg-orange-100 text-orange-700',
   channel_partner: 'bg-green-100 text-green-700',
   customer: 'bg-slate-100 text-slate-700',
 };
@@ -75,7 +75,7 @@ export default function ManageUsers() {
   const columns = [
     { key: 'name', label: 'Name', render: r => (
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 text-sm font-bold">{r.name?.charAt(0) || '?'}</div>
+        <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-700 text-sm font-bold">{r.name?.charAt(0) || '?'}</div>
         <span className="font-medium text-slate-800">{r.name}</span>
       </div>
     )},
@@ -105,7 +105,7 @@ export default function ManageUsers() {
           <h1 className="text-2xl font-bold text-slate-800">Manage Users</h1>
           <p className="text-slate-500 text-sm">Manage system users and their roles</p>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors">
+        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-xl transition-colors">
           <FaPlus /> Add User
         </button>
       </div>
@@ -127,22 +127,22 @@ export default function ManageUsers() {
             <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Name *</label>
-                <input {...register('name', { required: 'Name is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input {...register('name', { required: 'Name is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Email *</label>
-                <input type="email" {...register('email', { required: 'Email is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input type="email" {...register('email', { required: 'Email is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Password *</label>
-                <input type="password" {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Min 6 characters' } })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input type="password" {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Min 6 characters' } })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Role</label>
-                <select {...register('role')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                <select {...register('role')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none">
                   <option value="super_admin">Super Admin</option>
                   <option value="company_admin">Company Admin</option>
                   <option value="sales_executive">Sales Executive</option>
@@ -152,7 +152,7 @@ export default function ManageUsers() {
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button type="submit" disabled={submitting} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
+                <button type="submit" disabled={submitting} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
                   {submitting && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                   Create
                 </button>

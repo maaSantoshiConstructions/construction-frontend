@@ -7,7 +7,7 @@ import DataTable from '../../../components/common/DataTable';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColors = {
-  scheduled: 'bg-blue-100 text-blue-700', confirmed: 'bg-purple-100 text-purple-700',
+  scheduled: 'bg-orange-100 text-orange-700', confirmed: 'bg-amber-100 text-amber-700',
   completed: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700',
   rescheduled: 'bg-amber-100 text-amber-700',
 };
@@ -94,7 +94,7 @@ export default function SiteVisits() {
             key={f}
             onClick={() => setFilter(f)}
             className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              filter === f ? 'bg-blue-600 text-white' : 'bg-white text-slate-600 border border-slate-300 hover:bg-slate-50'
+              filter === f ? 'bg-orange-600 text-white' : 'bg-white text-slate-600 border border-slate-300 hover:bg-slate-50'
             }`}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -122,7 +122,7 @@ export default function SiteVisits() {
                 onChange={e => setNotes(e.target.value)}
                 rows={4}
                 placeholder="Visit notes (optional)..."
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500"
               />
               <div className="flex justify-end gap-3">
                 <button onClick={() => setShowCompleteModal(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>

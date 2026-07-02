@@ -107,7 +107,7 @@ export default function ManageBlogs() {
     { key: 'date', label: 'Date', render: r => r.createdAt ? new Date(r.createdAt).toLocaleDateString() : '-' },
     { key: 'actions', label: 'Actions', render: r => (
       <div className="flex items-center gap-2">
-        <button onClick={() => openEdit(r)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"><FaEdit /></button>
+        <button onClick={() => openEdit(r)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg"><FaEdit /></button>
         <button onClick={() => handleDelete(r._id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg"><FaTrash /></button>
       </div>
     )},
@@ -120,7 +120,7 @@ export default function ManageBlogs() {
           <h1 className="text-2xl font-bold text-slate-800">Manage Blogs</h1>
           <p className="text-slate-500 text-sm">Create and manage blog posts</p>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors">
+        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-xl transition-colors">
           <FaPlus /> Add Blog
         </button>
       </div>
@@ -142,35 +142,35 @@ export default function ManageBlogs() {
             <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
-                <input {...register('title', { required: 'Title is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input {...register('title', { required: 'Title is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Content *</label>
-                <textarea {...register('content', { required: 'Content is required' })} rows={6} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <textarea {...register('content', { required: 'Content is required' })} rows={6} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 {errors.content && <p className="text-red-500 text-xs mt-1">{errors.content.message}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Excerpt</label>
-                <textarea {...register('excerpt')} rows={2} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <textarea {...register('excerpt')} rows={2} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Category</label>
-                  <input {...register('category')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <input {...register('category')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Tags (comma separated)</label>
-                  <input {...register('tags')} placeholder="e.g. real-estate, tips" className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <input {...register('tags')} placeholder="e.g. real-estate, tips" className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <input type="checkbox" {...register('published')} className="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                <input type="checkbox" {...register('published')} className="rounded border-slate-300 text-orange-600 focus:ring-orange-500" />
                 <label className="text-sm text-slate-700">Publish immediately</label>
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button type="submit" disabled={submitting} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
+                <button type="submit" disabled={submitting} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
                   {submitting && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                   {editing ? 'Update' : 'Create'}
                 </button>

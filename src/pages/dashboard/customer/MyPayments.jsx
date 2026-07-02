@@ -8,11 +8,11 @@ import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const paymentStatusColors = {
   pending: 'bg-amber-100 text-amber-700',
-  partial: 'bg-blue-100 text-blue-700',
+  partial: 'bg-orange-100 text-orange-700',
   completed: 'bg-green-100 text-green-700',
   paid: 'bg-green-100 text-green-700',
   failed: 'bg-red-100 text-red-700',
-  refunded: 'bg-purple-100 text-purple-700',
+  refunded: 'bg-amber-100 text-amber-700',
 };
 
 export default function MyPayments() {
@@ -59,7 +59,7 @@ export default function MyPayments() {
     { key: 'amount', label: 'Amount', render: r => <span className="font-medium">₹{(r.amount || 0).toLocaleString()}</span> },
     { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${paymentStatusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status?.replace(/_/g, ' ')}</span> },
     { key: 'receipt', label: 'Receipt', render: r => (
-      <button onClick={() => handleDownloadInvoice(r._id)} className="flex items-center gap-1.5 text-blue-600 hover:text-blue-700 text-xs font-medium">
+      <button onClick={() => handleDownloadInvoice(r._id)} className="flex items-center gap-1.5 text-orange-600 hover:text-orange-700 text-xs font-medium">
         <FaDownload /> Invoice
       </button>
     )},

@@ -74,7 +74,7 @@ export default function PriceTimer() {
 
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-colors shadow-lg shadow-blue-600/30"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-full transition-colors shadow-lg shadow-orange-600/30"
           >
             Book Now at Current Price <FaArrowRight />
           </Link>

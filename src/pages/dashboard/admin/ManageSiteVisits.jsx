@@ -8,7 +8,7 @@ import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColors = {
-  scheduled: 'bg-blue-100 text-blue-700', confirmed: 'bg-green-100 text-green-700',
+  scheduled: 'bg-orange-100 text-orange-700', confirmed: 'bg-green-100 text-green-700',
   completed: 'bg-slate-100 text-slate-700', cancelled: 'bg-red-100 text-red-700',
 };
 
@@ -87,10 +87,10 @@ export default function ManageSiteVisits() {
           <button onClick={() => handleConfirm(r._id)} className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg" title="Confirm"><FaCalendarCheck /></button>
         )}
         {r.status === 'confirmed' && (
-          <button onClick={() => handleComplete(r._id)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg" title="Complete"><FaCheck /></button>
+          <button onClick={() => handleComplete(r._id)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg" title="Complete"><FaCheck /></button>
         )}
         <div className="relative group">
-          <button className="p-1.5 text-purple-600 hover:bg-purple-50 rounded-lg" title="Assign"><FaUserCheck /></button>
+          <button className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg" title="Assign"><FaUserCheck /></button>
           <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-xl shadow-xl border py-1 z-50 hidden group-hover:block">
             {users.map(u => (
               <button key={u._id} onClick={() => handleAssign(r._id, u._id)} className="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50">{u.name}</button>

@@ -4,14 +4,14 @@ import { FaPlay, FaVrCardboard, FaCamera, FaStreetView, FaMobileAlt } from 'reac
 export default function VirtualSiteTour() {
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 py-16">
+      <div className="bg-gradient-to-r from-slate-900 via-orange-900 to-amber-900 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
               <FaVrCardboard className="text-white text-3xl" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">360° Virtual Site Visit</h1>
-            <p className="text-blue-200">Experience the site from anywhere, anytime</p>
+            <p className="text-orange-200">Experience the site from anywhere, anytime</p>
           </motion.div>
         </div>
       </div>
@@ -27,7 +27,7 @@ export default function VirtualSiteTour() {
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                <FaPlay className="text-blue-600 text-3xl ml-1" />
+                <FaPlay className="text-orange-600 text-3xl ml-1" />
               </div>
             </div>
             <div className="absolute bottom-6 left-6 text-white">
@@ -50,8 +50,8 @@ export default function VirtualSiteTour() {
               transition={{ delay: i * 0.1 }}
               className="bg-white rounded-2xl shadow-sm p-6 border border-slate-100"
             >
-              <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
-                <item.icon className="text-blue-600 text-xl" />
+              <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4">
+                <item.icon className="text-orange-600 text-xl" />
               </div>
               <h3 className="font-semibold text-slate-800 mb-2">{item.title}</h3>
               <p className="text-sm text-slate-600">{item.desc}</p>

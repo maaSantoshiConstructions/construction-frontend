@@ -134,7 +134,7 @@ export default function ManagePlots() {
     { key: 'owner', label: 'Owner', render: r => r.owner?.name || '-' },
     { key: 'actions', label: 'Actions', render: r => (
       <div className="flex items-center gap-2">
-        <button onClick={() => openEdit(r)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"><FaEdit /></button>
+        <button onClick={() => openEdit(r)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg"><FaEdit /></button>
         <button onClick={() => handleDelete(r._id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg"><FaTrash /></button>
       </div>
     )},
@@ -147,24 +147,24 @@ export default function ManagePlots() {
           <h1 className="text-2xl font-bold text-slate-800">Manage Plots</h1>
           <p className="text-slate-500 text-sm">Manage plot inventory across projects</p>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors">
+        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-xl transition-colors">
           <FaPlus /> Add Plot
         </button>
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <select value={filters.project} onChange={e => { setFilters(f => ({ ...f, project: e.target.value })); setPage(1); }} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+        <select value={filters.project} onChange={e => { setFilters(f => ({ ...f, project: e.target.value })); setPage(1); }} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
           <option value="">All Projects</option>
           {projects.map(p => <option key={p._id} value={p._id}>{p.name}</option>)}
         </select>
-        <select value={filters.status} onChange={e => { setFilters(f => ({ ...f, status: e.target.value })); setPage(1); }} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+        <select value={filters.status} onChange={e => { setFilters(f => ({ ...f, status: e.target.value })); setPage(1); }} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
           <option value="">All Status</option>
           <option value="available">Available</option>
           <option value="reserved">Reserved</option>
           <option value="sold">Sold</option>
           <option value="blocked">Blocked</option>
         </select>
-        <select value={filters.facing} onChange={e => { setFilters(f => ({ ...f, facing: e.target.value })); setPage(1); }} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+        <select value={filters.facing} onChange={e => { setFilters(f => ({ ...f, facing: e.target.value })); setPage(1); }} className="px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
           <option value="">All Facings</option>
           {facings.map(f => <option key={f} value={f}>{f}</option>)}
         </select>
@@ -187,12 +187,12 @@ export default function ManagePlots() {
             <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Plot Number *</label>
-                <input {...register('plotNumber', { required: 'Plot number is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input {...register('plotNumber', { required: 'Plot number is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 {errors.plotNumber && <p className="text-red-500 text-xs mt-1">{errors.plotNumber.message}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Project *</label>
-                <select {...register('project', { required: 'Project is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                <select {...register('project', { required: 'Project is required' })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none">
                   <option value="">Select Project</option>
                   {projects.map(p => <option key={p._id} value={p._id}>{p.name}</option>)}
                 </select>
@@ -201,48 +201,48 @@ export default function ManagePlots() {
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Size (sq.ft)</label>
-                  <input type="number" {...register('size')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <input type="number" {...register('size')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Length</label>
-                  <input type="number" {...register('length')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <input type="number" {...register('length')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Width</label>
-                  <input type="number" {...register('width')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <input type="number" {...register('width')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Facing</label>
-                  <select {...register('facing')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                  <select {...register('facing')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none">
                     {facings.map(f => <option key={f} value={f}>{f}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Road Width</label>
-                  <input {...register('roadWidth')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <input {...register('roadWidth')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Price (₹)</label>
-                <input type="number" {...register('price')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input type="number" {...register('price')} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Coordinates (lat,lng)</label>
-                  <input {...register('coordinates')} placeholder="28.6139,77.2090" className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <input {...register('coordinates')} placeholder="28.6139,77.2090" className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" />
                 </div>
                 <div className="flex items-center pt-6">
                   <label className="flex items-center gap-2 text-sm text-slate-700">
-                    <input type="checkbox" {...register('corner')} className="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                    <input type="checkbox" {...register('corner')} className="rounded border-slate-300 text-orange-600 focus:ring-orange-500" />
                     Corner Plot
                   </label>
                 </div>
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button type="submit" disabled={submitting} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
+                <button type="submit" disabled={submitting} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg flex items-center gap-2">
                   {submitting && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                   {editing ? 'Update' : 'Create'}
                 </button>

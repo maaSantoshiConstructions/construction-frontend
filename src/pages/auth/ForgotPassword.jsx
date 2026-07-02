@@ -38,8 +38,8 @@ export default function ForgotPassword() {
         className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8"
       >
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <FaEnvelope className="text-blue-600 text-2xl" />
+          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FaEnvelope className="text-orange-600 text-2xl" />
           </div>
           <h2 className="text-2xl font-bold text-slate-800">Forgot Password?</h2>
           <p className="text-slate-500 text-sm mt-1">No worries, we&apos;ll send you a reset link</p>
@@ -51,7 +51,7 @@ export default function ForgotPassword() {
               <p className="text-green-700 text-sm font-medium">Reset link sent!</p>
               <p className="text-green-600 text-xs mt-1">Please check your email inbox and follow the instructions.</p>
             </div>
-            <Link to="/login" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm">
+            <Link to="/login" className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium text-sm">
               <FaArrowLeft /> Back to Login
             </Link>
           </div>
@@ -67,7 +67,7 @@ export default function ForgotPassword() {
                     required: 'Email is required',
                     pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' },
                   })}
-                  className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                  className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm"
                   placeholder="you@example.com"
                 />
               </div>
@@ -77,14 +77,14 @@ export default function ForgotPassword() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2.5 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               {loading && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
               {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
 
             <div className="text-center">
-              <Link to="/login" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm">
+              <Link to="/login" className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium text-sm">
                 <FaArrowLeft /> Back to Login
               </Link>
             </div>

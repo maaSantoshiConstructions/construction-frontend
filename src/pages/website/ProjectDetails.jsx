@@ -51,7 +51,7 @@ export default function ProjectDetails() {
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <nav className="text-sm text-slate-500 mb-4">
-            <Link to="/projects" className="hover:text-blue-600">Projects</Link>
+            <Link to="/projects" className="hover:text-orange-600">Projects</Link>
             <span className="mx-2">/</span>
             <span className="text-slate-800 font-medium">{project.name}</span>
           </nav>
@@ -67,7 +67,7 @@ export default function ProjectDetails() {
                     <button
                       key={i}
                       onClick={() => setSelectedImage(i)}
-                      className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${selectedImage === i ? 'border-blue-600' : 'border-transparent'}`}
+                      className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${selectedImage === i ? 'border-orange-600' : 'border-transparent'}`}
                     >
                       <img src={img} alt="" className="w-full h-full object-cover" />
                     </button>
@@ -86,7 +86,7 @@ export default function ProjectDetails() {
 
               <div className="bg-slate-50 rounded-xl p-5 mb-6">
                 <p className="text-sm text-slate-500 mb-1">Starting Price</p>
-                <p className="text-3xl font-bold text-blue-600">{project.price || '₹35 Lakhs'}</p>
+                <p className="text-3xl font-bold text-orange-600">{project.price || '₹35 Lakhs'}</p>
               </div>
 
               <div className="grid grid-cols-3 gap-3 mb-6">
@@ -105,10 +105,10 @@ export default function ProjectDetails() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Link to={`/plot-map?project=${project.slug}`} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
+                <Link to={`/plot-map?project=${project.slug}`} className="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
                   <FaMapMarkerAlt /> View on Map
                 </Link>
-                <Link to="/book-visit" className="px-5 py-2.5 border border-blue-600 text-blue-600 hover:bg-blue-50 font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
+                <Link to="/book-visit" className="px-5 py-2.5 border border-orange-600 text-orange-600 hover:bg-orange-50 font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
                   <FaCalendarAlt /> Book Visit
                 </Link>
                 <button className="px-5 py-2.5 border border-slate-300 text-slate-600 hover:bg-slate-50 font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
@@ -127,8 +127,8 @@ export default function ProjectDetails() {
             <div className="grid grid-cols-2 gap-3">
               {amenitiesList.map((amenity, i) => (
                 <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-100">
-                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <amenity.icon className="text-blue-600" />
+                  <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <amenity.icon className="text-orange-600" />
                   </div>
                   <span className="text-sm text-slate-700 font-medium">{amenity.label}</span>
                 </div>
@@ -153,10 +153,10 @@ export default function ProjectDetails() {
               ))}
             </div>
 
-            <div className="mt-6 bg-blue-50 rounded-xl p-5 border border-blue-100">
+            <div className="mt-6 bg-orange-50 rounded-xl p-5 border border-orange-100">
               <h3 className="font-semibold text-slate-800 mb-2">Interested in this project?</h3>
               <p className="text-sm text-slate-600 mb-4">Our sales team is ready to help you with more details.</p>
-              <a href="tel:+919876543210" className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-sm">
+              <a href="tel:+919876543210" className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-sm">
                 <FaPhone /> Call +91 98765 43210
               </a>
             </div>

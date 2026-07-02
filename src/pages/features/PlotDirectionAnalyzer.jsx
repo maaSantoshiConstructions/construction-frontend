@@ -79,7 +79,7 @@ export default function PlotDirectionAnalyzer() {
                 key={dir.id}
                 onClick={() => setSelected(dir)}
                 className={`p-3 rounded-xl border text-center transition-all ${
-                  selected.id === dir.id ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 hover:border-blue-300'
+                  selected.id === dir.id ? 'border-orange-600 bg-orange-50 ring-2 ring-orange-200' : 'border-slate-200 hover:border-orange-300'
                 }`}
               >
                 <div className="text-lg font-bold text-slate-700">{dir.icon}</div>
@@ -143,7 +143,7 @@ export default function PlotDirectionAnalyzer() {
                 </div>
               </div>
 
-              <div className="mt-4 p-4 bg-blue-50 border border-blue-100 rounded-xl text-xs text-blue-700 flex items-start gap-2">
+              <div className="mt-4 p-4 bg-orange-50 border border-orange-100 rounded-xl text-xs text-orange-700 flex items-start gap-2">
                 <FaInfoCircle className="mt-0.5 flex-shrink-0" />
                 <span>For personalized Vastu analysis of your specific plot, contact our Vastu consultant who can provide detailed guidance based on exact plot dimensions and surrounding structures.</span>
               </div>

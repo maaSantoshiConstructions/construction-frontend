@@ -44,20 +44,20 @@ export default function SiteVisitModal({ onClose }) {
       <div onClick={(e) => e.stopPropagation()}
         className="modal bg-white w-full max-w-md rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
         <div className="px-7 py-5 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
-          <span className="px-3 py-1 text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg">FEATURE 07</span>
+          <span className="px-3 py-1 text-xs font-bold bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg">FEATURE 07</span>
           <div className="font-bold text-xl mt-2 text-slate-800">Smart Site Visit Booking</div>
         </div>
         <div className="p-7 space-y-4 text-sm">
           <div>
             <label className="text-xs font-semibold text-slate-500">Preferred Date</label>
             <input id="visit-date" type="date" value={date}
-              className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all" />
+              className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="text-xs font-semibold text-slate-500">Time Slot</label>
               <select id="visit-time" value={time} onChange={(e) => setTime(e.target.value)}
-                className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
+                className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all">
                 <option>10:00 AM - 11:00 AM</option>
                 <option>11:30 AM - 12:30 PM</option>
                 <option>02:00 PM - 03:00 PM</option>
@@ -66,7 +66,7 @@ export default function SiteVisitModal({ onClose }) {
             </div>
             <div>
               <label className="text-xs font-semibold text-slate-500">Pickup Location</label>
-              <select id="visit-pickup" className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
+              <select id="visit-pickup" className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all">
                 <option>Patia Square</option>
                 <option>Jaydev Vihar</option>
                 <option>Khandagiri Square</option>
@@ -77,7 +77,7 @@ export default function SiteVisitModal({ onClose }) {
           </div>
           <div>
             <label className="text-xs font-semibold text-slate-500">Preferred Sales Executive (Optional)</label>
-            <select id="visit-executive" className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all">
+            <select id="visit-executive" className="w-full border border-slate-200 px-4 py-2.5 rounded-xl mt-1 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all">
               <option value="">Any Available Executive</option>
               <option>Mr. Rajesh Patra (Senior)</option>
               <option>Ms. Ananya Mishra</option>

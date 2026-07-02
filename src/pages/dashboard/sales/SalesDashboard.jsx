@@ -8,14 +8,14 @@ import DataTable from '../../../components/common/DataTable';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColors = {
-  new: 'bg-blue-100 text-blue-700', contacted: 'bg-purple-100 text-purple-700',
-  interested: 'bg-amber-100 text-amber-700', site_visit_done: 'bg-indigo-100 text-indigo-700',
+  new: 'bg-orange-100 text-orange-700', contacted: 'bg-amber-100 text-amber-700',
+  interested: 'bg-amber-100 text-amber-700', site_visit_done: 'bg-amber-100 text-amber-700',
   negotiation: 'bg-orange-100 text-orange-700', booking_done: 'bg-green-100 text-green-700',
   lost: 'bg-red-100 text-red-700',
 };
 
 const scoreColors = {
-  Hot: 'bg-red-100 text-red-700', Warm: 'bg-amber-100 text-amber-700', Cold: 'bg-blue-100 text-blue-700',
+  Hot: 'bg-red-100 text-red-700', Warm: 'bg-amber-100 text-amber-700', Cold: 'bg-orange-100 text-orange-700',
 };
 
 export default function SalesDashboard() {

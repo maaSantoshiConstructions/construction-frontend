@@ -69,7 +69,7 @@ export default function InvestmentHeatmap() {
               <button
                 key={region.id}
                 onClick={() => setSelected(region)}
-                className={`p-4 rounded-xl border text-center transition-all ${selected.id === region.id ? 'border-blue-600 ring-2 ring-blue-200 bg-blue-50' : 'border-slate-200 hover:border-blue-300'}`}
+                className={`p-4 rounded-xl border text-center transition-all ${selected.id === region.id ? 'border-orange-600 ring-2 ring-orange-200 bg-orange-50' : 'border-slate-200 hover:border-orange-300'}`}
               >
                 <div className={`w-8 h-8 ${region.color} rounded-lg mx-auto mb-2 flex items-center justify-center`}>
                   <FaFire className="text-white text-xs" />
@@ -131,8 +131,8 @@ export default function InvestmentHeatmap() {
               <div className="grid grid-cols-2 gap-3">
                 {[
                   { label: '5-Year Appreciation', value: `${Math.round(selected.growth * 3.2)}%`, color: 'text-emerald-600' },
-                  { label: 'Rental Yield', value: `${(3 + selected.growth * 0.12).toFixed(1)}%`, color: 'text-blue-600' },
-                  { label: 'Infrastructure Score', value: `${Math.min(95, 60 + selected.growth * 2)}/100`, color: 'text-purple-600' },
+                  { label: 'Rental Yield', value: `${(3 + selected.growth * 0.12).toFixed(1)}%`, color: 'text-orange-600' },
+                  { label: 'Infrastructure Score', value: `${Math.min(95, 60 + selected.growth * 2)}/100`, color: 'text-amber-600' },
                   { label: 'Demand Index', value: `${Math.min(100, 50 + selected.growth * 2.5)}/100`, color: 'text-amber-600' },
                 ].map((item, i) => (
                   <div key={i} className="p-4 bg-slate-50 rounded-xl border border-slate-100">
@@ -142,7 +142,7 @@ export default function InvestmentHeatmap() {
                 ))}
               </div>
 
-              <div className="mt-4 p-4 bg-blue-50 border border-blue-100 rounded-xl text-xs text-blue-700 flex items-start gap-2">
+              <div className="mt-4 p-4 bg-orange-50 border border-orange-100 rounded-xl text-xs text-orange-700 flex items-start gap-2">
                 <FaInfoCircle className="mt-0.5 flex-shrink-0" />
                 <span>Data compiled from Odisha RERA, Bhubaneswar Development Authority & market research. Past performance does not guarantee future returns.</span>
               </div>

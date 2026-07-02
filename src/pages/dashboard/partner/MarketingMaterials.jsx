@@ -30,8 +30,8 @@ function MaterialCard({ icon: Icon, title, subtitle, onDownload }) {
       className="bg-white rounded-2xl border border-slate-200 p-5 flex items-start justify-between hover:shadow-sm transition-shadow"
     >
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
-          <Icon className="text-blue-600" />
+        <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
+          <Icon className="text-orange-600" />
         </div>
         <div>
           <p className="text-sm font-semibold text-slate-800">{title}</p>
@@ -40,7 +40,7 @@ function MaterialCard({ icon: Icon, title, subtitle, onDownload }) {
       </div>
       <button
         onClick={onDownload}
-        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
       >
         <FaDownload /> Download
       </button>
@@ -73,7 +73,7 @@ export default function MarketingMaterials() {
 
       <section>
         <h2 className="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
-          <FaImage className="text-purple-500" /> Company Logos
+          <FaImage className="text-amber-500" /> Company Logos
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {logos.map(l => (

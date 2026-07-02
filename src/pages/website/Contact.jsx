@@ -37,11 +37,11 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Contact Us</h1>
-            <p className="text-blue-100">We&apos;d love to hear from you. Get in touch with our team.</p>
+            <p className="text-orange-100">We&apos;d love to hear from you. Get in touch with our team.</p>
           </motion.div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function Contact() {
                     <input
                       type="text"
                       {...register('name', { required: 'Name is required' })}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm"
                       placeholder="Your name"
                     />
                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
@@ -71,7 +71,7 @@ export default function Contact() {
                         required: 'Email is required',
                         pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' },
                       })}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm"
                       placeholder="you@example.com"
                     />
                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
@@ -82,7 +82,7 @@ export default function Contact() {
                   <input
                     type="tel"
                     {...register('phone', { required: 'Phone is required', minLength: { value: 10, message: 'Min 10 digits' } })}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm"
                     placeholder="9876543210"
                   />
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
@@ -92,7 +92,7 @@ export default function Contact() {
                   <textarea
                     rows={5}
                     {...register('message', { required: 'Message is required' })}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm resize-none"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-sm resize-none"
                     placeholder="Tell us about your requirements..."
                   />
                   {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
@@ -100,7 +100,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition-colors flex items-center gap-2 text-sm"
+                  className="px-8 py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-medium rounded-lg transition-colors flex items-center gap-2 text-sm"
                 >
                   {loading ? 'Sending...' : <><FaPaperPlane /> Send Message</>}
                 </button>
@@ -111,8 +111,8 @@ export default function Contact() {
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
             {contactInfo.map((info, i) => (
               <div key={i} className="bg-white rounded-xl p-5 shadow-sm">
-                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-3">
-                  <info.icon className="text-blue-600" />
+                <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center mb-3">
+                  <info.icon className="text-orange-600" />
                 </div>
                 <h3 className="font-semibold text-slate-800 text-sm mb-1">{info.label}</h3>
                 <p className="text-sm text-slate-500">{info.value}</p>

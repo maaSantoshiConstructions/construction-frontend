@@ -54,11 +54,11 @@ export default function Blogs() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Our Blogs</h1>
-            <p className="text-blue-100">Insights, guides, and news about real estate</p>
+            <p className="text-orange-100">Insights, guides, and news about real estate</p>
           </motion.div>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default function Blogs() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search blogs..."
-                className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+                className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-sm"
               />
             </div>
           </form>
@@ -103,7 +103,7 @@ export default function Blogs() {
                       <span className="flex items-center gap-1"><FaCalendarAlt /> {formatDate(blog.date)}</span>
                     </div>
                     <Link to={`/blogs/${blog.slug}`}>
-                      <h3 className="text-lg font-bold text-slate-800 mb-2 line-clamp-2 hover:text-blue-600 transition-colors">{blog.title}</h3>
+                      <h3 className="text-lg font-bold text-slate-800 mb-2 line-clamp-2 hover:text-orange-600 transition-colors">{blog.title}</h3>
                     </Link>
                     <p className="text-sm text-slate-500 line-clamp-2 mb-4">{blog.excerpt}</p>
                     <div className="flex flex-wrap gap-2 mb-4">
@@ -111,7 +111,7 @@ export default function Blogs() {
                         <span key={ti} className="px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-full text-xs">{tag}</span>
                       ))}
                     </div>
-                    <Link to={`/blogs/${blog.slug}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1">
+                    <Link to={`/blogs/${blog.slug}`} className="text-orange-600 hover:text-orange-700 text-sm font-medium flex items-center gap-1">
                       Read More <FaArrowRight className="text-xs" />
                     </Link>
                   </div>
@@ -125,7 +125,7 @@ export default function Blogs() {
                   <button
                     key={p}
                     onClick={() => setPage(p)}
-                    className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${page === p ? 'bg-blue-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-300'}`}
+                    className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${page === p ? 'bg-orange-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-orange-300'}`}
                   >
                     {p}
                   </button>

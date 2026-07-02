@@ -7,7 +7,7 @@ import ErrorMessage from '../../../components/common/ErrorMessage';
 import { useAuth } from '../../../context/AuthContext';
 
 const referralStatusColors = {
-  new: 'bg-blue-100 text-blue-700', contacted: 'bg-purple-100 text-purple-700',
+  new: 'bg-orange-100 text-orange-700', contacted: 'bg-amber-100 text-amber-700',
   interested: 'bg-amber-100 text-amber-700', converted: 'bg-green-100 text-green-700',
   lost: 'bg-red-100 text-red-700',
 };
@@ -88,9 +88,9 @@ export default function MyReferrals() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-5 text-white"
+          className="bg-gradient-to-br from-orange-600 to-orange-800 rounded-2xl p-5 text-white"
         >
-          <p className="text-sm text-blue-200 mb-1">Your Referral Code</p>
+          <p className="text-sm text-orange-200 mb-1">Your Referral Code</p>
           <p className="text-3xl font-bold tracking-wider mb-3">{referralCode}</p>
           <button
             onClick={handleCopyCode}
@@ -119,7 +119,7 @@ export default function MyReferrals() {
       <div className="flex justify-end">
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors"
         >
           <FaUserFriends /> Refer a Friend
         </button>
@@ -139,19 +139,19 @@ export default function MyReferrals() {
             <form onSubmit={handleSubmit} className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Name *</label>
-                <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="Full name" required />
+                <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" placeholder="Full name" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Phone *</label>
-                <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="Phone number" required />
+                <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" placeholder="Phone number" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="Email address" />
+                <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" placeholder="Email address" />
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg">Submit Referral</button>
+                <button type="submit" className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg">Submit Referral</button>
               </div>
             </form>
           </motion.div>

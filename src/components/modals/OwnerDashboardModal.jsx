@@ -25,7 +25,7 @@ export default function OwnerDashboardModal({ onClose }) {
       <div onClick={(e) => e.stopPropagation()}
         className="modal bg-white w-full max-w-5xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
         style={{ maxHeight: '92vh' }}>
-        <div className="px-8 py-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-slate-900 via-slate-800 to-blue-900 text-white">
+        <div className="px-8 py-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 text-white">
           <div className="flex items-center gap-x-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
               <FaUserShield className="text-lg" />
@@ -42,7 +42,7 @@ export default function OwnerDashboardModal({ onClose }) {
         <div className="flex border-b border-slate-100 px-8">
           {tabs.map((tab) => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`dashboard-tab px-5 py-3 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors ${activeTab === tab.id ? 'active text-blue-600' : ''}`}>
+              className={`dashboard-tab px-5 py-3 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors ${activeTab === tab.id ? 'active text-orange-600' : ''}`}>
               {tab.label}
             </button>
           ))}
@@ -62,7 +62,7 @@ export default function OwnerDashboardModal({ onClose }) {
                     <div className="text-sm text-slate-400">{prop.size}</div>
                   </div>
                   <div className="text-right">
-                    <div className={`text-xs font-bold px-3 py-1 rounded-full ${prop.color === 'emerald' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`}>{prop.progress}</div>
+                    <div className={`text-xs font-bold px-3 py-1 rounded-full ${prop.color === 'emerald' ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>{prop.progress}</div>
                   </div>
                 </div>
               ))}
@@ -82,7 +82,7 @@ export default function OwnerDashboardModal({ onClose }) {
                     <div className="font-semibold text-slate-800">{item.label}</div>
                     <div className="text-sm text-slate-400">{item.desc}</div>
                   </div>
-                  <button className="text-xs font-semibold px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-500/20">{item.cta}</button>
+                  <button className="text-xs font-semibold px-4 py-2 bg-gradient-to-r from-orange-600 to-orange-700 text-white rounded-xl hover:from-orange-700 hover:to-orange-800 transition-all shadow-lg shadow-orange-500/20">{item.cta}</button>
                 </div>
               ))}
             </div>
@@ -97,7 +97,7 @@ export default function OwnerDashboardModal({ onClose }) {
                 { date: '01 Jun 2026', text: 'Road paving completed for main avenue.' },
               ].map((update, i) => (
                 <div key={i} className="flex gap-4 p-5 bg-gradient-to-br from-slate-50 to-white border border-slate-100 rounded-xl">
-                  <div className="w-2 h-2 mt-1.5 rounded-full bg-blue-500 flex-shrink-0" />
+                  <div className="w-2 h-2 mt-1.5 rounded-full bg-orange-500 flex-shrink-0" />
                   <div>
                     <div className="text-xs text-slate-400 font-medium">{update.date}</div>
                     <div className="text-sm text-slate-600 mt-0.5">{update.text}</div>

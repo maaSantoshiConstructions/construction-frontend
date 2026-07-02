@@ -43,7 +43,7 @@ export default function PropertyValuation() {
   if (result) {
     return (
       <div className="min-h-screen bg-slate-50">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-12">
+        <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-12">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
@@ -55,11 +55,11 @@ export default function PropertyValuation() {
         </div>
         <div className="max-w-2xl mx-auto px-4 -mt-6 pb-16">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-2xl shadow-sm p-8 text-center">
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
               <FaChartLine className="text-white text-3xl" />
             </div>
             <p className="text-sm text-slate-500 mb-2">Estimated Market Value</p>
-            <p className="text-4xl font-bold text-blue-600 mb-2">{formatCurrency(result.estimatedValue)}</p>
+            <p className="text-4xl font-bold text-orange-600 mb-2">{formatCurrency(result.estimatedValue)}</p>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 border border-green-200 rounded-full text-sm text-green-700 font-medium mb-6">
               <FaCheckCircle /> Confidence: {result.confidence}%
             </div>
@@ -74,7 +74,7 @@ export default function PropertyValuation() {
             </div>
             <button
               onClick={() => { setResult(null); setForm({ name: '', phone: '', email: '', propertyAddress: '', propertyType: 'plot', landArea: '' }); }}
-              className="mt-6 text-blue-600 hover:text-blue-700 text-sm font-medium"
+              className="mt-6 text-orange-600 hover:text-orange-700 text-sm font-medium"
             >
               Get Another Valuation
             </button>
@@ -86,14 +86,14 @@ export default function PropertyValuation() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
               <FaChartLine className="text-white text-3xl" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">AI Property Valuation</h1>
-            <p className="text-blue-100">Get instant market value estimate for your property</p>
+            <p className="text-orange-100">Get instant market value estimate for your property</p>
           </motion.div>
         </div>
       </div>
@@ -104,22 +104,22 @@ export default function PropertyValuation() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Your Name *</label>
-                <input value={form.name} onChange={(e) => handleChange('name', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Full name" />
+                <input value={form.name} onChange={(e) => handleChange('name', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" placeholder="Full name" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number *</label>
-                <input value={form.phone} onChange={(e) => handleChange('phone', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="+91 XXXXX XXXXX" />
+                <input value={form.phone} onChange={(e) => handleChange('phone', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" placeholder="+91 XXXXX XXXXX" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Email (Optional)</label>
-              <input value={form.email} onChange={(e) => handleChange('email', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="email@example.com" />
+              <input value={form.email} onChange={(e) => handleChange('email', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" placeholder="email@example.com" />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Property Address *</label>
-              <textarea value={form.propertyAddress} onChange={(e) => handleChange('propertyAddress', e.target.value)} rows={2} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Enter property address" />
+              <textarea value={form.propertyAddress} onChange={(e) => handleChange('propertyAddress', e.target.value)} rows={2} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" placeholder="Enter property address" />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -131,7 +131,7 @@ export default function PropertyValuation() {
                       key={type}
                       type="button"
                       onClick={() => handleChange('propertyType', type)}
-                      className={`flex-1 py-2.5 rounded-lg text-xs font-medium capitalize border transition-colors ${form.propertyType === type ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300'}`}
+                      className={`flex-1 py-2.5 rounded-lg text-xs font-medium capitalize border transition-colors ${form.propertyType === type ? 'bg-orange-600 text-white border-orange-600' : 'bg-white text-slate-600 border-slate-200 hover:border-orange-300'}`}
                     >
                       {type === 'commercial' ? 'Comm.' : type}
                     </button>
@@ -140,14 +140,14 @@ export default function PropertyValuation() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Land Area (sq.ft) *</label>
-                <input type="number" value={form.landArea} onChange={(e) => handleChange('landArea', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. 2400" min={100} />
+                <input type="number" value={form.landArea} onChange={(e) => handleChange('landArea', e.target.value)} className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" placeholder="e.g. 2400" min={100} />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               {loading ? (
                 <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Calculating...</>

@@ -8,8 +8,8 @@ import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColors = {
-  token: 'bg-purple-100 text-purple-700',
-  partial: 'bg-blue-100 text-blue-700',
+  token: 'bg-amber-100 text-amber-700',
+  partial: 'bg-orange-100 text-orange-700',
   completed: 'bg-green-100 text-green-700',
   cancelled: 'bg-red-100 text-red-700',
 };
@@ -50,7 +50,7 @@ export default function ManageBookings() {
   };
 
   const columns = [
-    { key: 'bookingId', label: 'Booking ID', render: r => <span className="font-medium text-blue-600">#{r.bookingId || r._id?.slice(-6)}</span> },
+    { key: 'bookingId', label: 'Booking ID', render: r => <span className="font-medium text-orange-600">#{r.bookingId || r._id?.slice(-6)}</span> },
     { key: 'customer', label: 'Customer', render: r => r.customer?.name || '-' },
     { key: 'plot', label: 'Plot #', render: r => r.plot?.plotNumber ? `#${r.plot.plotNumber}` : '-' },
     { key: 'project', label: 'Project', render: r => r.project?.name || r.plot?.project?.name || '-' },
@@ -59,7 +59,7 @@ export default function ManageBookings() {
     { key: 'date', label: 'Date', render: r => r.createdAt ? new Date(r.createdAt).toLocaleDateString() : '-' },
     { key: 'actions', label: 'Actions', render: r => (
       <div className="flex items-center gap-2">
-        <button onClick={() => setViewBooking(r)} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"><FaEye /></button>
+        <button onClick={() => setViewBooking(r)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg"><FaEye /></button>
         {r.status !== 'cancelled' && r.status !== 'completed' && (
           <button onClick={() => handleCancel(r._id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg"><FaBan /></button>
         )}
@@ -130,7 +130,7 @@ export default function ManageBookings() {
                   <h3 className="font-medium text-slate-700 mb-2">Documents</h3>
                   <div className="flex flex-wrap gap-2">
                     {viewBooking.documents.map((doc, i) => (
-                      <a key={i} href={doc.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg text-xs font-medium hover:bg-blue-100">{doc.name || `Doc ${i + 1}`}</a>
+                      <a key={i} href={doc.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-orange-50 text-orange-700 rounded-lg text-xs font-medium hover:bg-orange-100">{doc.name || `Doc ${i + 1}`}</a>
                     ))}
                   </div>
                 </div>

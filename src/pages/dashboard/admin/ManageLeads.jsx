@@ -9,20 +9,20 @@ import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColors = {
-  new: 'bg-blue-100 text-blue-700', contacted: 'bg-purple-100 text-purple-700',
-  interested: 'bg-amber-100 text-amber-700', site_visit_done: 'bg-indigo-100 text-indigo-700',
+  new: 'bg-orange-100 text-orange-700', contacted: 'bg-amber-100 text-amber-700',
+  interested: 'bg-amber-100 text-amber-700', site_visit_done: 'bg-amber-100 text-amber-700',
   negotiation: 'bg-orange-100 text-orange-700', booking_done: 'bg-green-100 text-green-700',
   lost: 'bg-red-100 text-red-700',
 };
 
 const scoreColors = {
-  Hot: 'bg-red-100 text-red-700', Warm: 'bg-amber-100 text-amber-700', Cold: 'bg-blue-100 text-blue-700',
+  Hot: 'bg-red-100 text-red-700', Warm: 'bg-amber-100 text-amber-700', Cold: 'bg-orange-100 text-orange-700',
 };
 
 const sourceColors = {
-  website: 'bg-blue-100 text-blue-700', referral: 'bg-green-100 text-green-700',
-  walk_in: 'bg-purple-100 text-purple-700', call: 'bg-orange-100 text-orange-700',
-  social_media: 'bg-pink-100 text-pink-700', partner: 'bg-indigo-100 text-indigo-700',
+  website: 'bg-orange-100 text-orange-700', referral: 'bg-green-100 text-green-700',
+  walk_in: 'bg-amber-100 text-amber-700', call: 'bg-orange-100 text-orange-700',
+  social_media: 'bg-pink-100 text-pink-700', partner: 'bg-amber-100 text-amber-700',
 };
 
 export default function ManageLeads() {
@@ -112,9 +112,9 @@ export default function ManageLeads() {
     { key: 'followUp', label: 'Follow-up', render: r => r.nextFollowUp ? new Date(r.nextFollowUp).toLocaleDateString() : '-' },
     { key: 'actions', label: 'Actions', render: r => (
       <div className="flex items-center gap-1">
-        <button onClick={() => { setStatusLead(r); setNewStatus(r.status || ''); setShowStatusModal(true); }} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg" title="Update Status"><FaEdit /></button>
+        <button onClick={() => { setStatusLead(r); setNewStatus(r.status || ''); setShowStatusModal(true); }} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg" title="Update Status"><FaEdit /></button>
         <div className="relative group">
-          <button className="p-1.5 text-purple-600 hover:bg-purple-50 rounded-lg" title="Assign"><FaUserCheck /></button>
+          <button className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg" title="Assign"><FaUserCheck /></button>
           <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-xl shadow-xl border py-1 z-50 hidden group-hover:block">
             {users.map(u => (
               <button key={u._id} onClick={() => handleAssign(r._id, u._id)} className="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50">{u.name}</button>
@@ -148,13 +148,13 @@ export default function ManageLeads() {
               <button onClick={() => setShowStatusModal(false)} className="p-1 hover:bg-slate-100 rounded-lg"><FaTimes /></button>
             </div>
             <div className="p-5 space-y-4">
-              <select value={newStatus} onChange={e => setNewStatus(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+              <select value={newStatus} onChange={e => setNewStatus(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500">
                 <option value="">Select Status</option>
                 {Object.keys(statusColors).map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
               </select>
               <div className="flex justify-end gap-3">
                 <button onClick={() => setShowStatusModal(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button onClick={handleStatusUpdate} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg">Update</button>
+                <button onClick={handleStatusUpdate} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg">Update</button>
               </div>
             </div>
           </motion.div>
@@ -169,10 +169,10 @@ export default function ManageLeads() {
               <button onClick={() => setShowNoteModal(false)} className="p-1 hover:bg-slate-100 rounded-lg"><FaTimes /></button>
             </div>
             <div className="p-5 space-y-4">
-              <textarea value={noteText} onChange={e => setNoteText(e.target.value)} rows={4} placeholder="Enter your note..." className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+              <textarea value={noteText} onChange={e => setNoteText(e.target.value)} rows={4} placeholder="Enter your note..." className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-500" />
               <div className="flex justify-end gap-3">
                 <button onClick={() => setShowNoteModal(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-                <button onClick={handleAddNote} disabled={!noteText.trim()} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium rounded-lg">Save Note</button>
+                <button onClick={handleAddNote} disabled={!noteText.trim()} className="px-4 py-2 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white text-sm font-medium rounded-lg">Save Note</button>
               </div>
             </div>
           </motion.div>

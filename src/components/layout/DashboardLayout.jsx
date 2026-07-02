@@ -104,7 +104,7 @@ export default function DashboardLayout() {
       <aside className={`fixed top-0 left-0 z-50 h-full w-64 bg-white border-r border-slate-200 shadow-sm transform transition-transform duration-300 lg:translate-x-0 lg:static lg:z-auto ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-700 to-slate-900 rounded-xl flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-700 to-slate-900 rounded-xl flex items-center justify-center">
               <span className="text-white text-sm font-bold">JSM</span>
             </div>
             <span className="font-semibold text-sm text-slate-800">Dashboard</span>
@@ -122,7 +122,7 @@ export default function DashboardLayout() {
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${
                 isActive(link.path)
-                  ? 'bg-blue-50 text-blue-700 font-medium'
+                  ? 'bg-orange-50 text-orange-700 font-medium'
                   : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -141,7 +141,7 @@ export default function DashboardLayout() {
             <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 hover:bg-slate-100 rounded-lg">
               <FaBars />
             </button>
-            <Link to="/" className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500 hover:text-blue-600 transition-colors">
+            <Link to="/" className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500 hover:text-orange-600 transition-colors">
               <FaHome />
               <span>Back to Site</span>
             </Link>
@@ -157,7 +157,7 @@ export default function DashboardLayout() {
             {/* User Dropdown */}
             <div className="relative">
               <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="flex items-center gap-2 p-1.5 hover:bg-slate-100 rounded-full transition-colors">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                   {user?.name?.charAt(0) || 'U'}
                 </div>
                 <div className="hidden sm:block text-left">
@@ -174,7 +174,7 @@ export default function DashboardLayout() {
                     <p className="text-xs text-slate-500">{user?.email}</p>
                   </div>
                   <Link to="/customer/profile" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50">
-                    <FaUser className="text-blue-600" /> Profile
+                    <FaUser className="text-orange-600" /> Profile
                   </Link>
                   <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 w-full text-left text-red-600">
                     <FaSignOutAlt /> Logout

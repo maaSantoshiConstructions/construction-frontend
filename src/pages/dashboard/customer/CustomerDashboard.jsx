@@ -80,8 +80,8 @@ export default function CustomerDashboard() {
                   transition={{ delay: i * 0.05 }}
                   className="bg-white rounded-xl border border-slate-200 p-4 flex items-start gap-3"
                 >
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <FaHardHat className="text-blue-600 text-xs" />
+                  <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                    <FaHardHat className="text-orange-600 text-xs" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-slate-800">{u.title || 'Update'}</p>
@@ -99,7 +99,7 @@ export default function CustomerDashboard() {
 
         <div>
           <h2 className="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
-            <FaBell className="text-blue-500" /> Recent Notifications
+            <FaBell className="text-orange-500" /> Recent Notifications
           </h2>
           {notifications.length > 0 ? (
             <div className="space-y-2">
@@ -111,8 +111,8 @@ export default function CustomerDashboard() {
                   transition={{ delay: i * 0.05 }}
                   className="bg-white rounded-xl border border-slate-200 p-4 flex items-start gap-3"
                 >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${n.read ? 'bg-slate-100' : 'bg-blue-100'}`}>
-                    <FaBell className={`text-xs ${n.read ? 'text-slate-400' : 'text-blue-600'}`} />
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${n.read ? 'bg-slate-100' : 'bg-orange-100'}`}>
+                    <FaBell className={`text-xs ${n.read ? 'text-slate-400' : 'text-orange-600'}`} />
                   </div>
                   <div>
                     <p className="text-sm text-slate-800">{n.message || n.title}</p>
@@ -133,7 +133,7 @@ export default function CustomerDashboard() {
         <h2 className="text-lg font-semibold text-slate-800 mb-3">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <Link to="/customer/bookings" className="bg-white rounded-2xl border border-slate-200 p-4 text-center hover:shadow-sm transition-shadow">
-            <FaBuilding className="text-blue-600 text-xl mx-auto mb-2" />
+            <FaBuilding className="text-orange-600 text-xl mx-auto mb-2" />
             <span className="text-sm font-medium text-slate-700">View Properties</span>
           </Link>
           <Link to="/customer/payments" className="bg-white rounded-2xl border border-slate-200 p-4 text-center hover:shadow-sm transition-shadow">
@@ -145,7 +145,7 @@ export default function CustomerDashboard() {
             <span className="text-sm font-medium text-slate-700">Track Construction</span>
           </Link>
           <a href="/book-visit" className="bg-white rounded-2xl border border-slate-200 p-4 text-center hover:shadow-sm transition-shadow">
-            <FaMapMarkerAlt className="text-purple-600 text-xl mx-auto mb-2" />
+            <FaMapMarkerAlt className="text-amber-600 text-xl mx-auto mb-2" />
             <span className="text-sm font-medium text-slate-700">Book a Visit</span>
           </a>
         </div>

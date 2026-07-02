@@ -50,10 +50,10 @@ function StatCounter({ value, suffix, label, icon: Icon }) {
   const { count, ref } = useCountUp(value);
   return (
     <div ref={ref} className="text-center p-6 rounded-2xl bg-white shadow-sm border border-slate-100">
-      <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-4">
-        <Icon className="text-blue-600 text-xl" />
+      <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+        <Icon className="text-orange-600 text-xl" />
       </div>
-      <p className="text-3xl sm:text-4xl font-bold text-blue-600">{count}{suffix}</p>
+      <p className="text-3xl sm:text-4xl font-bold text-orange-600">{count}{suffix}</p>
       <p className="text-sm text-slate-500 mt-1">{label}</p>
     </div>
   );
@@ -62,11 +62,11 @@ function StatCounter({ value, suffix, label, icon: Icon }) {
 export default function About() {
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-20">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">About Us</h1>
-            <p className="text-lg text-blue-100 max-w-2xl mx-auto">Building trust, shaping communities, and helping you find the perfect piece of land for over a decade.</p>
+            <p className="text-lg text-orange-100 max-w-2xl mx-auto">Building trust, shaping communities, and helping you find the perfect piece of land for over a decade.</p>
           </motion.div>
         </div>
       </div>
@@ -83,7 +83,7 @@ export default function About() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white rounded-2xl shadow-sm p-8 sm:p-12 mb-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Our Story</span>
+              <span className="text-orange-600 font-semibold text-sm uppercase tracking-wider">Our Story</span>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mt-2 mb-4">A Legacy of Trust & Excellence</h2>
               <div className="space-y-4 text-slate-600">
                 <p>Founded in 2010, Maa Santoshi Constructions started with a simple mission — to make plot buying transparent, simple, and rewarding for every Indian.</p>
@@ -94,7 +94,7 @@ export default function About() {
             <div className="relative">
               <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600" alt="Office" className="rounded-2xl w-full h-80 object-cover" />
               <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 hidden sm:block">
-                <p className="text-2xl font-bold text-blue-600">15+</p>
+                <p className="text-2xl font-bold text-orange-600">15+</p>
                 <p className="text-xs text-slate-500">Years of Excellence</p>
               </div>
             </div>
@@ -116,8 +116,8 @@ export default function About() {
               transition={{ delay: i * 0.1 }}
               className="bg-white rounded-xl p-6 shadow-sm border border-slate-100"
             >
-              <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
-                <item.icon className="text-blue-600 text-xl" />
+              <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4">
+                <item.icon className="text-orange-600 text-xl" />
               </div>
               <h3 className="text-lg font-bold text-slate-800 mb-2">{item.title}</h3>
               <p className="text-sm text-slate-600">{item.desc}</p>
@@ -127,7 +127,7 @@ export default function About() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white rounded-2xl shadow-sm p-8 sm:p-12 mb-8">
           <div className="text-center mb-10">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Leadership</span>
+            <span className="text-orange-600 font-semibold text-sm uppercase tracking-wider">Leadership</span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Meet Our Team</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -141,11 +141,11 @@ export default function About() {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 sm:p-12 text-center">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-gradient-to-r from-orange-600 to-amber-700 rounded-2xl p-8 sm:p-12 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Ready to Start Your Journey?</h2>
-          <p className="text-blue-100 mb-6 max-w-lg mx-auto">Let us help you find the perfect plot. Our team is just a call away.</p>
+          <p className="text-orange-100 mb-6 max-w-lg mx-auto">Let us help you find the perfect plot. Our team is just a call away.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="px-8 py-3 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-50 transition-all">
+            <Link to="/contact" className="px-8 py-3 bg-white text-orange-700 font-semibold rounded-full hover:bg-orange-50 transition-all">
               Contact Us
             </Link>
             <Link to="/projects" className="px-8 py-3 bg-white/10 text-white font-semibold rounded-full border border-white/30 hover:bg-white/20 transition-all">
