@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaPlay, FaVrCardboard, FaDrone, FaStreetView, FaMobileAlt } from 'react-icons/fa';
+import { FaPlay, FaVrCardboard, FaCamera, FaStreetView, FaMobileAlt } from 'react-icons/fa';
 
 export default function VirtualSiteTour() {
   return (
@@ -39,7 +39,7 @@ export default function VirtualSiteTour() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
-            { icon: FaDrone, title: 'Drone Overview', desc: 'Aerial view of the entire township, surrounding infrastructure and connectivity.' },
+            { icon: FaCamera, title: 'Drone Overview', desc: 'Aerial view of the entire township, surrounding infrastructure and connectivity.' },
             { icon: FaStreetView, title: 'Street View', desc: 'Walk through the roads, see the landscaping, approach roads and neighborhood.' },
             { icon: FaMobileAlt, title: 'Mobile Ready', desc: 'Experience the tour on any device. No app installation required.' },
           ].map((item, i) => (

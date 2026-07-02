@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import React from 'react';
-import { FaSchool, FaHospital, FaShoppingCart, FaBus, FaPlane, FaTrain, FaTemple, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaSchool, FaHospital, FaShoppingCart, FaBus, FaPlane, FaTrain, FaChurch, FaMapMarkerAlt } from 'react-icons/fa';
 
 const categories = [
   { id: 'schools', icon: FaSchool, label: 'Schools', color: 'text-blue-600' },
@@ -10,7 +10,7 @@ const categories = [
   { id: 'transport', icon: FaBus, label: 'Transport', color: 'text-emerald-600' },
   { id: 'airport', icon: FaPlane, label: 'Airport', color: 'text-amber-600' },
   { id: 'railway', icon: FaTrain, label: 'Railway', color: 'text-cyan-600' },
-  { id: 'temples', icon: FaTemple, label: 'Temples', color: 'text-orange-600' },
+  { id: 'temples', icon: FaChurch, label: 'Temples', color: 'text-orange-600' },
 ];
 
 const nearbyData = {
