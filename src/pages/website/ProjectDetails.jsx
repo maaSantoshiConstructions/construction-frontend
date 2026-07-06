@@ -1,19 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { getProject } from '../../api/projects';
-import { FaMapMarkerAlt, FaCheck, FaTimes, FaArrowRight, FaPhone, FaCalendarAlt, FaShareAlt, FaBed, FaBath, FaCar, FaTree, FaShieldAlt, FaWifi } from 'react-icons/fa';
 import Loader from '../../components/common/Loader';
 import ErrorMessage from '../../components/common/ErrorMessage';
 
-const amenitiesList = [
-  { icon: FaTree, label: 'Landscaped Gardens' },
-  { icon: FaCar, label: 'Car Parking' },
-  { icon: FaShieldAlt, label: '24/7 Security' },
-  { icon: FaWifi, label: 'Wi-Fi Connectivity' },
-  { icon: FaBed, label: 'Club House' },
-  { icon: FaBath, label: 'Modern Sanitation' },
-];
+const statusColors = {
+  upcoming: { bg: '#fff2e6', text: '#d99f36' },
+  ongoing: { bg: '#efeafe', text: '#5b4fe0' },
+  completed: { bg: '#eefcf3', text: '#2f9e5c' },
+};
 
 export default function ProjectDetails() {
   const { slug } = useParams();
@@ -44,125 +39,223 @@ export default function ProjectDetails() {
   if (!project) return <ErrorMessage message="Project not found" />;
 
   const images = project.images?.length > 0 ? project.images : ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200'];
-  const plotSummary = project.plotSummary || { total: 120, available: 45, reserved: 30, sold: 45 };
+  const rera = project.reraNumber || 'Applied / Pending';
+
+  // Format price
+  const formattedPrice = project.pricePerSqft
+    ? `₹${project.pricePerSqft} / Sq.ft`
+    : 'Contact for Price';
+
+  // Location string helper
+  const locationStr = typeof project.location === 'object'
+    ? `${project.location.address || ''}, ${project.location.city || ''}, ${project.location.state || ''}`.replace(/(^,\s*)|(,\s*$)/g, '')
+    : project.location || 'Bhubaneswar, Odisha';
+
+  const finalAmenities = project.amenities?.length > 0
+    ? project.amenities
+    : ['Landscaped Gardens', '24/7 Security', 'Electricity Connection', 'Water Supply', 'Concrete Roads', 'Street Lights'];
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success('Link copied to clipboard!'); // toast can be handled, but simple alert or copying is fine.
+    alert('Project link copied to clipboard!');
+  };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <nav className="text-sm text-slate-500 mb-4">
-            <Link to="/projects" className="hover:text-orange-600">Projects</Link>
-            <span className="mx-2">/</span>
-            <span className="text-slate-800 font-medium">{project.name}</span>
-          </nav>
+    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+      
+      {/* ===== BREADCRUMB ===== */}
+      <div className="wrap" style={{ paddingTop: '24px', paddingBottom: '16px' }}>
+        <div style={{ fontSize: '13px', color: 'var(--gray)', display: 'flex', gap: '8px' }}>
+          <Link to="/" style={{ color: 'var(--indigo)', fontWeight: 600 }}>Home</Link> /
+          <Link to="/projects" style={{ color: 'var(--indigo)', fontWeight: 600 }}>Projects</Link> /
+          <span style={{ color: 'var(--text)' }}>{project.name}</span>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-              <div className="relative rounded-2xl overflow-hidden h-72 sm:h-96 mb-3">
-                <img src={images[selectedImage]} alt={project.name} className="w-full h-full object-cover" />
+      {/* ===== MAIN COMPONENT ===== */}
+      <div className="wrap">
+        <div style={{
+          background: '#fff',
+          borderRadius: '16px',
+          border: '1px solid var(--line)',
+          boxShadow: '0 10px 30px rgba(20,20,60,.06)',
+          padding: '32px',
+          display: 'grid',
+          gridTemplateColumns: '1.2fr 1fr',
+          gap: '36px',
+          alignItems: 'start',
+          marginBottom: '32px',
+        }} className="project-detail-grid">
+          
+          {/* Left: Photos */}
+          <div>
+            <div style={{
+              borderRadius: '12px',
+              overflow: 'hidden',
+              height: '380px',
+              marginBottom: '12px',
+              border: '1px solid var(--line)',
+              background: '#f7f7fb',
+            }}>
+              <img src={images[selectedImage]} alt={project.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+            {images.length > 1 && (
+              <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '6px' }}>
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedImage(i)}
+                    style={{
+                      width: '74px', height: '56px', borderRadius: '6px', overflow: 'hidden',
+                      border: selectedImage === i ? '2px solid var(--indigo)' : '2px solid transparent',
+                      padding: '0', background: 'none', flexShrink: 0
+                    }}
+                  >
+                    <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </button>
+                ))}
               </div>
-              {images.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto pb-2">
-                  {images.map((img, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setSelectedImage(i)}
-                      className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${selectedImage === i ? 'border-orange-600' : 'border-transparent'}`}
-                    >
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </motion.div>
+            )}
+          </div>
 
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-              <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold capitalize mb-3 ${project.status === 'available' ? 'bg-green-100 text-green-700' : project.status === 'reserved' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>
+          {/* Right: Info */}
+          <div>
+            {project.status && (
+              <span className="tag" style={{
+                background: statusColors[project.status]?.bg || '#f0f0f6',
+                color: statusColors[project.status]?.text || 'var(--text)',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '.5px',
+                marginBottom: '12px',
+                display: 'inline-block',
+              }}>
                 {project.status}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">{project.name}</h1>
-              <p className="text-slate-500 flex items-center gap-1 mb-4"><FaMapMarkerAlt /> {project.location}</p>
-              <p className="text-slate-600 mb-6">{project.description || 'Premium residential plots with world-class amenities and excellent connectivity.'}</p>
+            )}
+            <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '32px', fontWeight: 800, color: 'var(--text)', margin: '4px 0 8px' }}>
+              {project.name}
+            </h1>
+            <div style={{ fontSize: '14px', color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
+              📍 {locationStr}
+            </div>
 
-              <div className="bg-slate-50 rounded-xl p-5 mb-6">
-                <p className="text-sm text-slate-500 mb-1">Starting Price</p>
-                <p className="text-3xl font-bold text-orange-600">{project.price || '₹35 Lakhs'}</p>
-              </div>
+            <p style={{ fontSize: '14.5px', color: 'var(--gray)', lineHeight: 1.65, marginBottom: '24px' }}>
+              {project.description || 'Premium residential plotting development featuring beautiful parks, clear titles, boundary walls, street lighting, and wide concrete roads.'}
+            </p>
 
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                <div className="text-center p-3 bg-green-50 rounded-xl">
-                  <p className="text-lg font-bold text-green-600">{plotSummary.available}</p>
-                  <p className="text-xs text-green-600">Available</p>
-                </div>
-                <div className="text-center p-3 bg-yellow-50 rounded-xl">
-                  <p className="text-lg font-bold text-yellow-600">{plotSummary.reserved}</p>
-                  <p className="text-xs text-yellow-600">Reserved</p>
-                </div>
-                <div className="text-center p-3 bg-red-50 rounded-xl">
-                  <p className="text-lg font-bold text-red-600">{plotSummary.sold}</p>
-                  <p className="text-xs text-red-600">Sold</p>
-                </div>
-              </div>
+            <div style={{
+              background: '#f7f7fb',
+              borderRadius: '12px',
+              padding: '20px 24px',
+              border: '1px solid var(--line)',
+              marginBottom: '24px',
+            }}>
+              <div style={{ fontSize: '12px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.3px', marginBottom: '4px' }}>Starting Price</div>
+              <div style={{ fontSize: '26px', fontWeight: 800, color: 'var(--indigo)' }}>{formattedPrice}</div>
+            </div>
 
-              <div className="flex flex-wrap gap-3">
-                <Link to={`/plot-map?project=${project.slug}`} className="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
-                  <FaMapMarkerAlt /> View on Map
-                </Link>
-                <Link to="/book-visit" className="px-5 py-2.5 border border-orange-600 text-orange-600 hover:bg-orange-50 font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
-                  <FaCalendarAlt /> Book Visit
-                </Link>
-                <button className="px-5 py-2.5 border border-slate-300 text-slate-600 hover:bg-slate-50 font-medium rounded-lg transition-colors text-sm flex items-center gap-2">
-                  <FaShareAlt /> Share
-                </button>
+            {/* Quick Stats Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '28px' }}>
+              <div style={{ border: '1px solid var(--line)', borderRadius: '10px', padding: '12px 16px' }}>
+                <span style={{ display: 'block', fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase' }}>RERA Status</span>
+                <span style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', marginTop: '2px', display: 'block' }}>{rera}</span>
               </div>
-            </motion.div>
+              <div style={{ border: '1px solid var(--line)', borderRadius: '10px', padding: '12px 16px' }}>
+                <span style={{ display: 'block', fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase' }}>Property Type</span>
+                <span style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', marginTop: '2px', display: 'block', textTransform: 'capitalize' }}>
+                  {project.type?.replace(/_/g, ' ') || 'Plotted Development'}
+                </span>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <Link to={`/plot-map?project=${project.slug}`} className="btn-gold" style={{ fontSize: '13.5px', padding: '12px 24px', border: 'none' }}>
+                🗺 View Live Plot Map
+              </Link>
+              <Link to="/book-visit" className="btn-outline" style={{ fontSize: '13.5px', padding: '12px 24px', color: 'var(--text)', borderColor: 'var(--line)', background: '#fff' }}>
+                📅 Schedule Site Visit
+              </Link>
+              <button onClick={handleShare} style={{ width: '42px', height: '42px', borderRadius: '8px', border: '1px solid var(--line)', background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }} title="Share project">
+                🔗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== BOTTOM DETAILS GRID ===== */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '32px' }} className="project-detail-grid">
+          {/* Amenities */}
+          <div style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '32px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
+            <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '20px' }}>
+              Project Amenities
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+              {finalAmenities.map((amenity, i) => (
+                <div key={i} className="trust-item" style={{ padding: '14px 18px', borderRadius: '10px', border: '1px solid var(--line)', background: '#fff', gap: '12px' }}>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#efeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--indigo)', fontSize: '16px', flexShrink: 0 }}>
+                    ✦
+                  </div>
+                  <span style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--text)' }}>{amenity}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Location Highlights & Contact */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            
+            {/* Highlights */}
+            <div style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '28px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
+              <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '18px', fontWeight: 800, color: 'var(--text)', marginBottom: '16px' }}>
+                Location Highlights
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {[
+                  'Direct access to National Highway',
+                  '15 minutes from nearest Railway Station',
+                  'Close proximity to top schools & engineering colleges',
+                  '5 km from upcoming IT parks & shopping centers',
+                  'Quiet residential area with high growth prospects',
+                ].map((item, i) => (
+                  <div key={i} style={{ fontSize: '13px', color: 'var(--gray)', display: 'flex', gap: '8px', alignItems: 'start' }}>
+                    <span style={{ color: '#2f9e5c', fontWeight: 'bold' }}>✓</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Premium CTA box */}
+            <div style={{
+              background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)',
+              borderRadius: '16px',
+              padding: '28px',
+              color: '#fff',
+            }}>
+              <h3 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '18px', fontWeight: 800, marginBottom: '8px' }}>
+                Interested in this project?
+              </h3>
+              <p style={{ fontSize: '13px', color: '#d8d4ff', marginBottom: '20px', lineHeight: 1.6 }}>
+                Our dedicated relationship managers will guide you through site visits, layout maps, and plot bookings.
+              </p>
+              <a href="tel:+917000012345" className="btn-gold" style={{ border: 'none', width: '100%', justifyContent: 'center', padding: '12px' }}>
+                📞 Call +91 70000 12345
+              </a>
+            </div>
+
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
-            <h2 className="text-xl font-bold text-slate-800 mb-4">Amenities</h2>
-            <div className="grid grid-cols-2 gap-3">
-              {amenitiesList.map((amenity, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-100">
-                  <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <amenity.icon className="text-orange-600" />
-                  </div>
-                  <span className="text-sm text-slate-700 font-medium">{amenity.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-slate-800 mb-4">Location Highlights</h2>
-            <div className="bg-white rounded-xl border border-slate-100 p-5 space-y-3">
-              {[
-                '5 min from Metro Station',
-                '2 km from Shopping Mall',
-                '500 m from School',
-                '3 km from Hospital',
-                'Direct access to National Highway',
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm text-slate-600">
-                  <FaCheck className="text-green-500 text-xs flex-shrink-0" />
-                  {item}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 bg-orange-50 rounded-xl p-5 border border-orange-100">
-              <h3 className="font-semibold text-slate-800 mb-2">Interested in this project?</h3>
-              <p className="text-sm text-slate-600 mb-4">Our sales team is ready to help you with more details.</p>
-              <a href="tel:+919876543210" className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-sm">
-                <FaPhone /> Call +91 98765 43210
-              </a>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+      <style>{`
+        @media(max-width:991px){
+          .project-detail-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+        }
+      `}</style>
     </div>
   );
 }

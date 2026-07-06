@@ -1,23 +1,29 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FaCheckCircle, FaUsers, FaProjectDiagram, FaAward, FaHandshake, FaBullseye, FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const stats = [
-  { value: 500, suffix: '+', label: 'Plots Sold', icon: FaCheckCircle },
-  { value: 50, suffix: '+', label: 'Projects Delivered', icon: FaProjectDiagram },
-  { value: 2000, suffix: '+', label: 'Happy Customers', icon: FaUsers },
-  { value: 15, suffix: '+', label: 'Years Experience', icon: FaAward },
+  { value: 500,  suffix: '+', label: 'Plots Sold',          ic: '▦' },
+  { value: 50,   suffix: '+', label: 'Projects Delivered',   ic: '🏗' },
+  { value: 2000, suffix: '+', label: 'Happy Customers',      ic: '☺' },
+  { value: 15,   suffix: '+', label: 'Years Experience',     ic: '⭐' },
 ];
 
 const team = [
-  { name: 'Mr. Suresh Kumar', role: 'Founder & CEO', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200' },
-  { name: 'Mrs. Anjali Sharma', role: 'Director of Operations', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200' },
-  { name: 'Mr. Rajesh Verma', role: 'Head of Sales', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200' },
-  { name: 'Mr. Vikram Patel', role: 'Chief Financial Officer', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200' },
+  { name: 'Mr. Suresh Kumar',   role: 'Founder & CEO',              image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200' },
+  { name: 'Mrs. Anjali Sharma', role: 'Director of Operations',     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200' },
+  { name: 'Mr. Rajesh Verma',   role: 'Head of Sales',              image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200' },
+  { name: 'Mr. Vikram Patel',   role: 'Chief Financial Officer',    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200' },
 ];
 
-function useCountUp(end, duration = 2000) {
+const values = [
+  { ic: '🎯', title: 'Our Mission',  desc: 'To provide every Indian with a hassle-free, transparent, and rewarding plot buying experience powered by technology and trust.' },
+  { ic: '👁', title: 'Our Vision',   desc: "To become India's most trusted real estate platform, enabling smart land investments for millions of families." },
+  { ic: '🤝', title: 'Our Values',   desc: 'Integrity, transparency, customer-first approach, and innovation are at the core of everything we do.' },
+  { ic: '🏅', title: 'Our Promise',  desc: '100% clear titles, RERA compliance, timely delivery, and complete legal support for every transaction.' },
+];
+
+/* Animated counter that fires when element enters viewport */
+function StatCounter({ value, suffix, label, ic }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const started = useRef(false);
@@ -27,11 +33,12 @@ function useCountUp(end, duration = 2000) {
       ([entry]) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
+          const duration = 1800;
           const startTime = Date.now();
           const tick = () => {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            setCount(Math.floor(progress * end));
+            setCount(Math.floor(progress * value));
             if (progress < 1) requestAnimationFrame(tick);
           };
           requestAnimationFrame(tick);
@@ -41,118 +48,160 @@ function useCountUp(end, duration = 2000) {
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [end, duration]);
+  }, [value]);
 
-  return { count, ref };
-}
-
-function StatCounter({ value, suffix, label, icon: Icon }) {
-  const { count, ref } = useCountUp(value);
   return (
-    <div ref={ref} className="text-center p-6 rounded-2xl bg-white shadow-sm border border-slate-100">
-      <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mx-auto mb-4">
-        <Icon className="text-orange-600 text-xl" />
+    <div ref={ref} className="trust-item" style={{
+      flexDirection: 'column', textAlign: 'center', padding: '28px 16px',
+      borderRadius: '14px', border: '1px solid var(--line)',
+      background: '#fff', boxShadow: '0 2px 10px rgba(20,20,60,.05)',
+      gap: '10px',
+    }}>
+      <div style={{
+        width: '48px', height: '48px', borderRadius: '12px',
+        background: '#efeafe', display: 'flex', alignItems: 'center',
+        justifyContent: 'center', fontSize: '22px', margin: '0 auto',
+      }}>
+        {ic}
       </div>
-      <p className="text-3xl sm:text-4xl font-bold text-orange-600">{count}{suffix}</p>
-      <p className="text-sm text-slate-500 mt-1">{label}</p>
+      <div style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '32px', fontWeight: 800, color: 'var(--indigo)', lineHeight: 1 }}>
+        {count}{suffix}
+      </div>
+      <div style={{ fontSize: '13px', color: 'var(--gray)' }}>{label}</div>
     </div>
   );
 }
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">About Us</h1>
-            <p className="text-lg text-orange-100 max-w-2xl mx-auto">Building trust, shaping communities, and helping you find the perfect piece of land for over a decade.</p>
-          </motion.div>
+    <div style={{ background: 'var(--white)', minHeight: '100vh' }}>
+
+      {/* ===== HERO HEADER ===== */}
+      <div style={{
+        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
+        padding: '64px 0 60px',
+        textAlign: 'center',
+      }}>
+        <div className="wrap">
+          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>OUR STORY</span>
+          <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '42px', fontWeight: 800, color: '#fff', margin: '12px 0 14px' }}>
+            About Us
+          </h1>
+          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '520px', margin: '0 auto', lineHeight: 1.6 }}>
+            Building trust, shaping communities, and helping you find the perfect piece of land for over a decade.
+          </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 pb-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-          {stats.map((stat, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
-              <StatCounter {...stat} />
-            </motion.div>
-          ))}
+      {/* ===== STATS ===== */}
+      <div className="wrap" style={{ paddingTop: '60px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '20px', marginBottom: '60px' }}>
+          {stats.map((s) => <StatCounter key={s.label} {...s} />)}
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white rounded-2xl shadow-sm p-8 sm:p-12 mb-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* ===== OUR STORY ===== */}
+        <div className="section" style={{ padding: '0 0 60px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'center' }}>
             <div>
-              <span className="text-orange-600 font-semibold text-sm uppercase tracking-wider">Our Story</span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mt-2 mb-4">A Legacy of Trust & Excellence</h2>
-              <div className="space-y-4 text-slate-600">
-                <p>Founded in 2010, Maa Santoshi Constructions started with a simple mission — to make plot buying transparent, simple, and rewarding for every Indian.</p>
-                <p>Over the past 15+ years, we have delivered over 50 projects and helped more than 2000 families find their dream plots across prime locations in India.</p>
+              <span className="eyebrow">OUR STORY</span>
+              <h2 style={{ fontSize: '30px', fontWeight: 800, color: 'var(--text)', margin: '8px 0 18px' }}>
+                A Legacy of Trust &amp; Excellence
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', color: 'var(--gray)', fontSize: '14.5px', lineHeight: 1.7 }}>
+                <p>Founded in 2010, Jai Santoshi Maa Infrastructure started with a simple mission — to make plot buying transparent, simple, and rewarding for every Indian.</p>
+                <p>Over the past 15+ years, we have delivered over 50 projects and helped more than 2000 families find their dream plots across prime locations in Odisha.</p>
                 <p>Our commitment to quality, legal transparency, and customer satisfaction has made us one of the most trusted names in the real estate industry.</p>
               </div>
             </div>
-            <div className="relative">
-              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600" alt="Office" className="rounded-2xl w-full h-80 object-cover" />
-              <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 hidden sm:block">
-                <p className="text-2xl font-bold text-orange-600">15+</p>
-                <p className="text-xs text-slate-500">Years of Excellence</p>
+            <div style={{ position: 'relative' }}>
+              <img
+                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80&auto=format&fit=crop"
+                alt="Office building"
+                style={{ borderRadius: '16px', width: '100%', height: '340px', objectFit: 'cover', boxShadow: '0 20px 50px rgba(20,20,60,.15)', display: 'block' }}
+              />
+              <div style={{
+                position: 'absolute', bottom: '-20px', left: '-20px',
+                background: '#fff', borderRadius: '12px', padding: '16px 20px',
+                boxShadow: '0 10px 30px rgba(0,0,0,.12)',
+                border: '1px solid var(--line)',
+              }}>
+                <div style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '26px', fontWeight: 800, color: 'var(--indigo)' }}>15+</div>
+                <div style={{ fontSize: '12px', color: 'var(--gray)' }}>Years of Excellence</div>
               </div>
             </div>
           </div>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {[
-            { icon: FaBullseye, title: 'Our Mission', desc: 'To provide every Indian with a hassle-free, transparent, and rewarding plot buying experience powered by technology and trust.' },
-            { icon: FaEye, title: 'Our Vision', desc: 'To become India\'s most trusted real estate platform, enabling smart land investments for millions of families.' },
-            { icon: FaHandshake, title: 'Our Values', desc: 'Integrity, transparency, customer-first approach, and innovation are at the core of everything we do.' },
-            { icon: FaAward, title: 'Our Promise', desc: '100% clear titles, RERA compliance, timely delivery, and complete legal support for every transaction.' },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-xl p-6 shadow-sm border border-slate-100"
-            >
-              <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4">
-                <item.icon className="text-orange-600 text-xl" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-800 mb-2">{item.title}</h3>
-              <p className="text-sm text-slate-600">{item.desc}</p>
-            </motion.div>
-          ))}
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white rounded-2xl shadow-sm p-8 sm:p-12 mb-8">
-          <div className="text-center mb-10">
-            <span className="text-orange-600 font-semibold text-sm uppercase tracking-wider">Leadership</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Meet Our Team</h2>
+        {/* ===== MISSION / VISION / VALUES ===== */}
+        <div style={{ marginBottom: '60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '38px' }}>
+            <span className="eyebrow">WHAT DRIVES US</span>
+            <h2 style={{ fontSize: '30px', fontWeight: 800, color: 'var(--text)', marginTop: '8px' }}>Mission, Vision &amp; Values</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {team.map((member, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center">
-                <img src={member.image} alt={member.name} className="w-24 h-24 rounded-full object-cover mx-auto mb-3 shadow-sm" />
-                <h4 className="font-semibold text-slate-800 text-sm">{member.name}</h4>
-                <p className="text-xs text-slate-500">{member.role}</p>
-              </motion.div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '22px' }}>
+            {values.map((v) => (
+              <div key={v.title} className="ccard" style={{ flexDirection: 'column', gap: '0' }}>
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{
+                    width: '48px', height: '48px', borderRadius: '12px',
+                    background: '#efeafe', display: 'flex', alignItems: 'center',
+                    justifyContent: 'center', fontSize: '22px', marginBottom: '14px',
+                  }}>
+                    {v.ic}
+                  </div>
+                  <h3 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--text)', marginBottom: '8px' }}>{v.title}</h3>
+                  <p style={{ fontSize: '13.5px', color: 'var(--gray)', lineHeight: 1.65 }}>{v.desc}</p>
+                </div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-gradient-to-r from-orange-600 to-amber-700 rounded-2xl p-8 sm:p-12 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Ready to Start Your Journey?</h2>
-          <p className="text-orange-100 mb-6 max-w-lg mx-auto">Let us help you find the perfect plot. Our team is just a call away.</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="px-8 py-3 bg-white text-orange-700 font-semibold rounded-full hover:bg-orange-50 transition-all">
-              Contact Us
-            </Link>
-            <Link to="/projects" className="px-8 py-3 bg-white/10 text-white font-semibold rounded-full border border-white/30 hover:bg-white/20 transition-all">
-              View Projects
-            </Link>
+        {/* ===== TEAM ===== */}
+        <div style={{ marginBottom: '60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '38px' }}>
+            <span className="eyebrow">LEADERSHIP</span>
+            <h2 style={{ fontSize: '30px', fontWeight: 800, color: 'var(--text)', marginTop: '8px' }}>Meet Our Team</h2>
           </div>
-        </motion.div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '22px' }}>
+            {team.map((m) => (
+              <div key={m.name} style={{
+                background: '#fff', border: '1px solid var(--line)', borderRadius: '14px',
+                padding: '28px 20px', textAlign: 'center',
+                boxShadow: '0 2px 10px rgba(20,20,60,.05)',
+                transition: '.25s',
+              }}
+                onMouseEnter={e => e.currentTarget.style.boxShadow = '0 16px 36px rgba(20,20,60,.12)'}
+                onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 10px rgba(20,20,60,.05)'}
+              >
+                <img
+                  src={m.image}
+                  alt={m.name}
+                  style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 14px', display: 'block', border: '3px solid #efeafe' }}
+                />
+                <h4 style={{ fontSize: '14.5px', fontWeight: 700, color: 'var(--text)', marginBottom: '4px' }}>{m.name}</h4>
+                <p style={{ fontSize: '12px', color: 'var(--gray)' }}>{m.role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===== CTA BANNER ===== */}
+        <div className="cta-banner" style={{ marginBottom: '90px' }}>
+          <div>
+            <h3>Ready to Start Your Journey?</h3>
+            <p>Let us help you find the perfect plot. Our team is just a call away.</p>
+          </div>
+          <div className="cta-stats">
+            <div><div className="num">500+</div><div className="lbl">Plots Sold</div></div>
+            <div><div className="num">2000+</div><div className="lbl">Happy Families</div></div>
+            <div><div className="num">15+</div><div className="lbl">Years Trust</div></div>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <Link to="/contact" className="btn-gold">Contact Us →</Link>
+            <Link to="/projects" className="btn-outline">View Projects</Link>
+          </div>
+        </div>
       </div>
     </div>
   );

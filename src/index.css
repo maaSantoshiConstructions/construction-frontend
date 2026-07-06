@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
 :root {
   --navy: #0b0f2e;
@@ -90,13 +90,27 @@ nav.links a.active { background: var(--indigo-light); color: #fff; }
 
 /* ===== HERO ===== */
 .hero {
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%),
-    linear-gradient(120deg, #0b0f2e 0%, #161b45 55%, #1c1450 100%);
   position: relative; overflow: hidden; padding: 64px 0 90px;
+  background: radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg, #0b0f2e 0%, #161b45 55%, #1c1450 100%);
 }
 
-.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.16;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero .wrap {
+  position: relative;
+  z-index: 2;
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center;
+}
 
 .badge {
   display: inline-flex; align-items: center; gap: 8px;

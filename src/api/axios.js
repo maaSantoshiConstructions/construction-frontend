@@ -22,9 +22,9 @@ API.interceptors.response.use(
         if (!refreshToken) throw new Error('No refresh token');
         
         const { data } = await axios.post('/api/auth/refresh-token', { refreshToken });
-        localStorage.setItem('token', data.data.accessToken);
+        localStorage.setItem('token', data.data.token);
         localStorage.setItem('refreshToken', data.data.refreshToken);
-        originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${data.data.token}`;
         return API(originalRequest);
       } catch {
         localStorage.removeItem('token');

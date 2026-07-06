@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { user, getRedirectPath } = useAuth();
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -12,6 +14,7 @@ export default function Navbar() {
   };
 
   const isActive = (path) => location.pathname === path;
+  const dashboardPath = user ? getRedirectPath(user.role) : '/login';
 
   return (
     <>
@@ -30,13 +33,11 @@ export default function Navbar() {
           <nav className="links">
             <Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link>
             <Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link>
-            <button onClick={() => scrollTo('features')} style={{ background: 'none', border: 'none', color: '#d7d9ec', fontSize: '14px', padding: '9px 16px', borderRadius: '20px', cursor: 'pointer', fontFamily: 'inherit', transition: '.2s' }}>
-              20 Smart Features
-            </button>
+            <Link to="/smart-features" className={isActive('/smart-features') ? 'active' : ''}>20 Smart Features</Link>
             <button onClick={() => scrollTo('calculators')} style={{ background: 'none', border: 'none', color: '#d7d9ec', fontSize: '14px', padding: '9px 16px', borderRadius: '20px', cursor: 'pointer', fontFamily: 'inherit', transition: '.2s' }}>
               Calculators
             </button>
-            <Link to="/customer/dashboard">Owner Portal</Link>
+            <Link to={dashboardPath}>Owner Portal</Link>
             <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>
             <Link to="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link>
           </nav>

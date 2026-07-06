@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaArrowRight, FaRupeeSign, FaHome, FaChartLine, FaCalculator, FaBuilding } from 'react-icons/fa';
 
 const tabs = [
-  { id: 'investment', label: 'Investment Return', icon: FaChartLine },
-  { id: 'loan', label: 'Loan Eligibility', icon: FaCalculator },
-  { id: 'construction', label: 'Construction Cost', icon: FaBuilding },
+  { id: 'investment', label: 'Investment Return', ic: '📊' },
+  { id: 'loan',         label: 'Loan Eligibility',  ic: '🏦' },
+  { id: 'construction', label: 'Construction Cost', ic: '🏗' },
 ];
 
 export default function Calculators() {
@@ -18,43 +16,78 @@ export default function Calculators() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-orange-600 to-amber-700 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Calculators</h1>
-            <p className="text-orange-100">Plan your investment with our smart tools</p>
-          </motion.div>
+    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+      
+      {/* ===== HEADER ===== */}
+      <div style={{
+        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
+        padding: '64px 0 60px',
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
+        <div className="wrap">
+          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>FINANCIAL TOOLS</span>
+          <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '42px', fontWeight: 800, color: '#fff', margin: '12px 0 14px' }}>
+            Smart Calculators
+          </h1>
+          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '520px', margin: '0 auto', lineHeight: 1.6 }}>
+            Estimate land values, calculate your compound appreciation rates, construction budgets, and loan eligibilities instantly.
+          </p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
-        <div className="bg-white rounded-2xl shadow-sm p-1 flex mb-8 overflow-x-auto">
+      {/* ===== TABS NAV ===== */}
+      <div className="wrap" style={{ position: 'relative', zIndex: 10, marginTop: '-28px' }}>
+        <div style={{
+          background: '#fff',
+          borderRadius: '16px',
+          border: '1px solid var(--line)',
+          boxShadow: '0 15px 40px rgba(20,20,60,.1)',
+          padding: '6px',
+          display: 'flex',
+          gap: '4px',
+          marginBottom: '32px',
+          overflowX: 'auto',
+        }}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${activeTab === tab.id ? 'bg-orange-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                transition: '.2s',
+                whiteSpace: 'nowrap',
+                background: activeTab === tab.id ? 'var(--indigo)' : 'transparent',
+                color: activeTab === tab.id ? '#fff' : 'var(--gray)',
+              }}
             >
-              <tab.icon /> {tab.label}
+              <span>{tab.ic}</span> {tab.label}
             </button>
           ))}
         </div>
 
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="pb-16"
-        >
+        {/* ===== ACTIVE CALCULATOR CONTENT ===== */}
+        <div style={{ transition: 'all .3s' }}>
           {tabsContent[activeTab]}
-        </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
+/* ===== 1. INVESTMENT RETURN CALCULATOR ===== */
 function InvestmentCalculator() {
   const [amount, setAmount] = useState(5000000);
   const [rate, setRate] = useState(12);
@@ -67,51 +100,72 @@ function InvestmentCalculator() {
   const formatCurrency = (val) => '₹ ' + Math.round(val).toLocaleString('en-IN');
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6 sm:p-8">
-      <h2 className="text-xl font-bold text-slate-800 mb-6">Investment Return Calculator</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-6">
+    <div style={{
+      background: '#fff', borderRadius: '16px', border: '1px solid var(--line)',
+      boxShadow: '0 10px 30px rgba(20,20,60,.04)', padding: '36px',
+    }}>
+      <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px' }}>
+        📈 Real Estate Appreciation &amp; Investment returns
+      </h2>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
+        
+        {/* Sliders */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Investment Amount: <span className="text-orange-600 font-bold">{formatCurrency(amount)}</span></label>
-            <input type="range" min={100000} max={50000000} step={100000} value={amount} onChange={(e) => setAmount(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
-            <div className="flex justify-between text-xs text-slate-400 mt-1"><span>₹1L</span><span>₹5Cr</span></div>
+            <div style={labelRow}>
+              <span style={labelStyle}>Investment Amount</span>
+              <span style={valStyle}>{formatCurrency(amount)}</span>
+            </div>
+            <input type="range" min={100000} max={50000000} step={100000} value={amount} onChange={(e) => setAmount(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>₹1 Lakh</span><span>₹5 Crore</span></div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Expected Appreciation Rate: <span className="text-orange-600 font-bold">{rate}%</span></label>
-            <input type="range" min={1} max={30} step={0.5} value={rate} onChange={(e) => setRate(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
-            <div className="flex justify-between text-xs text-slate-400 mt-1"><span>1%</span><span>30%</span></div>
+            <div style={labelRow}>
+              <span style={labelStyle}>Expected Appreciation (p.a.)</span>
+              <span style={valStyle}>{rate}%</span>
+            </div>
+            <input type="range" min={1} max={30} step={0.5} value={rate} onChange={(e) => setRate(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>1%</span><span>30%</span></div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Tenure: <span className="text-orange-600 font-bold">{years} years</span></label>
-            <input type="range" min={1} max={25} step={1} value={years} onChange={(e) => setYears(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
-            <div className="flex justify-between text-xs text-slate-400 mt-1"><span>1 yr</span><span>25 yrs</span></div>
+            <div style={labelRow}>
+              <span style={labelStyle}>Holding Tenure</span>
+              <span style={valStyle}>{years} Years</span>
+            </div>
+            <input type="range" min={1} max={25} step={1} value={years} onChange={(e) => setYears(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>1 Year</span><span>25 Years</span></div>
           </div>
         </div>
-        <div className="space-y-4">
-          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-5 border border-orange-100">
-            <p className="text-sm text-slate-500 mb-1">Future Value</p>
-            <p className="text-3xl font-bold text-orange-600">{formatCurrency(futureValue)}</p>
+
+        {/* Results */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)', borderRadius: '12px', padding: '22px', color: '#fff' }}>
+            <p style={{ fontSize: '12.5px', color: '#d8d4ff', textTransform: 'uppercase', fontWeight: 600 }}>Estimated Future Value</p>
+            <p style={{ fontSize: '30px', fontWeight: 800, marginTop: '4px' }}>{formatCurrency(futureValue)}</p>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-green-50 rounded-xl p-4 border border-green-100 text-center">
-              <p className="text-sm text-slate-500">Total Returns</p>
-              <p className="text-lg font-bold text-green-600">{formatCurrency(futureValue - amount)}</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div style={resCard}>
+              <span style={resCardLbl}>Wealth Gain</span>
+              <span style={{ ...resCardVal, color: '#2f9e5c' }}>{formatCurrency(futureValue - amount)}</span>
             </div>
-            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100 text-center">
-              <p className="text-sm text-slate-500">ROI</p>
-              <p className="text-lg font-bold text-amber-600">{roi.toFixed(1)}%</p>
+            <div style={resCard}>
+              <span style={resCardLbl}>ROI (Percentage)</span>
+              <span style={{ ...resCardVal, color: 'var(--indigo)' }}>{roi.toFixed(1)}%</span>
             </div>
           </div>
-          <div className="bg-amber-50 rounded-xl p-4 border border-amber-100 text-center">
-            <p className="text-sm text-slate-500">Estimated Rental Yield</p>
-            <p className="text-lg font-bold text-amber-600">{rentalYield}% p.a.</p>
+          <div style={resCard}>
+            <span style={resCardLbl}>Estimated Rental Yield</span>
+            <span style={{ ...resCardVal, color: 'var(--indigo)' }}>{rentalYield}% p.a.</span>
           </div>
         </div>
+
       </div>
+      <style>{calcMedia}</style>
     </div>
   );
 }
 
+/* ===== 2. LOAN ELIGIBILITY CALCULATOR ===== */
 function LoanCalculator() {
   const [income, setIncome] = useState(80000);
   const [existingEMI, setExistingEMI] = useState(0);
@@ -126,52 +180,79 @@ function LoanCalculator() {
   const formatCurrency = (val) => '₹ ' + Math.round(val).toLocaleString('en-IN');
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6 sm:p-8">
-      <h2 className="text-xl font-bold text-slate-800 mb-6">Loan Eligibility Calculator</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-5">
+    <div style={{
+      background: '#fff', borderRadius: '16px', border: '1px solid var(--line)',
+      boxShadow: '0 10px 30px rgba(20,20,60,.04)', padding: '36px',
+    }}>
+      <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px' }}>
+        🏦 Plot &amp; Housing Loan Eligibility
+      </h2>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
+        
+        {/* Sliders */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Monthly Income: <span className="text-orange-600 font-bold">{formatCurrency(income)}</span></label>
-            <input type="range" min={20000} max={500000} step={5000} value={income} onChange={(e) => setIncome(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
+            <div style={labelRow}>
+              <span style={labelStyle}>Monthly Income</span>
+              <span style={valStyle}>{formatCurrency(income)}</span>
+            </div>
+            <input type="range" min={20000} max={500000} step={5000} value={income} onChange={(e) => setIncome(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>₹20k</span><span>₹5L</span></div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Existing EMI: <span className="text-orange-600 font-bold">{formatCurrency(existingEMI)}</span></label>
-            <input type="range" min={0} max={100000} step={1000} value={existingEMI} onChange={(e) => setExistingEMI(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
+            <div style={labelRow}>
+              <span style={labelStyle}>Existing Monthly EMIs</span>
+              <span style={valStyle}>{formatCurrency(existingEMI)}</span>
+            </div>
+            <input type="range" min={0} max={100000} step={1000} value={existingEMI} onChange={(e) => setExistingEMI(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>₹0</span><span>₹1L</span></div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Age: <span className="text-orange-600 font-bold">{age} yrs</span></label>
-            <input type="range" min={21} max={60} step={1} value={age} onChange={(e) => setAge(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
+            <div style={labelRow}>
+              <span style={labelStyle}>Age of Applicant</span>
+              <span style={valStyle}>{age} Years</span>
+            </div>
+            <input type="range" min={21} max={60} step={1} value={age} onChange={(e) => setAge(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>21 yrs</span><span>60 yrs</span></div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Loan Tenure: <span className="text-orange-600 font-bold">{tenure} yrs</span></label>
-            <input type="range" min={5} max={30} step={1} value={tenure} onChange={(e) => setTenure(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
+            <div style={labelRow}>
+              <span style={labelStyle}>Loan Tenure</span>
+              <span style={valStyle}>{tenure} Years</span>
+            </div>
+            <input type="range" min={5} max={30} step={1} value={tenure} onChange={(e) => setTenure(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>5 yrs</span><span>30 yrs</span></div>
           </div>
         </div>
-        <div className="space-y-4">
-          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-5 border border-orange-100">
-            <p className="text-sm text-slate-500 mb-1">Maximum Loan Amount</p>
-            <p className="text-3xl font-bold text-orange-600">{maxLoanAmount > 0 ? formatCurrency(maxLoanAmount) : '₹ 0'}</p>
+
+        {/* Results */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)', borderRadius: '12px', padding: '22px', color: '#fff' }}>
+            <p style={{ fontSize: '12.5px', color: '#d8d4ff', textTransform: 'uppercase', fontWeight: 600 }}>Maximum Loan Amount Eligible</p>
+            <p style={{ fontSize: '30px', fontWeight: 800, marginTop: '4px' }}>{maxLoanAmount > 0 ? formatCurrency(maxLoanAmount) : '₹ 0'}</p>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-green-50 rounded-xl p-4 border border-green-100 text-center">
-              <p className="text-sm text-slate-500">Estimated EMI</p>
-              <p className="text-lg font-bold text-green-600">{formatCurrency(emi)}</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div style={resCard}>
+              <span style={resCardLbl}>Estimated Monthly EMI</span>
+              <span style={{ ...resCardVal, color: '#2f9e5c' }}>{formatCurrency(emi > 0 ? emi : 0)}</span>
             </div>
-            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100 text-center">
-              <p className="text-sm text-slate-500">Interest Rate</p>
-              <p className="text-lg font-bold text-amber-600">{rate}%</p>
+            <div style={resCard}>
+              <span style={resCardLbl}>Expected Interest Rate</span>
+              <span style={{ ...resCardVal, color: 'var(--indigo)' }}>{rate}% p.a.</span>
             </div>
           </div>
-          <div className="bg-amber-50 rounded-xl p-4 border border-amber-100 text-center">
-            <p className="text-sm text-slate-500">Monthly Surplus</p>
-            <p className="text-lg font-bold text-amber-600">{formatCurrency(monthlyAvailable)}</p>
+          <div style={resCard}>
+            <span style={resCardLbl}>Monthly Cash Surplus</span>
+            <span style={{ ...resCardVal, color: 'var(--indigo)' }}>{formatCurrency(monthlyAvailable > 0 ? monthlyAvailable : 0)}</span>
           </div>
         </div>
+
       </div>
     </div>
   );
 }
 
+/* ===== 3. CONSTRUCTION COST CALCULATOR ===== */
 function ConstructionCalculator() {
   const [plotSize, setPlotSize] = useState(1200);
   const [floors, setFloors] = useState(2);
@@ -189,58 +270,117 @@ function ConstructionCalculator() {
   const formatCurrency = (val) => '₹ ' + Math.round(val).toLocaleString('en-IN');
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6 sm:p-8">
-      <h2 className="text-xl font-bold text-slate-800 mb-6">Construction Cost Calculator</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-5">
+    <div style={{
+      background: '#fff', borderRadius: '16px', border: '1px solid var(--line)',
+      boxShadow: '0 10px 30px rgba(20,20,60,.04)', padding: '36px',
+    }}>
+      <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px' }}>
+        🏗 Built Construction Estimator
+      </h2>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
+        
+        {/* Sliders */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Plot Size: <span className="text-orange-600 font-bold">{plotSize} sq ft</span></label>
-            <input type="range" min={500} max={5000} step={50} value={plotSize} onChange={(e) => setPlotSize(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
+            <div style={labelRow}>
+              <span style={labelStyle}>Plot Area Size</span>
+              <span style={valStyle}>{plotSize} Sq.ft</span>
+            </div>
+            <input type="range" min={500} max={5000} step={50} value={plotSize} onChange={(e) => setPlotSize(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>500 Sq.ft</span><span>5000 Sq.ft</span></div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Floors: <span className="text-orange-600 font-bold">{floors}</span></label>
-            <input type="range" min={1} max={5} step={1} value={floors} onChange={(e) => setFloors(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600" />
+            <div style={labelRow}>
+              <span style={labelStyle}>Total Floors</span>
+              <span style={valStyle}>{floors} Floors</span>
+            </div>
+            <input type="range" min={1} max={5} step={1} value={floors} onChange={(e) => setFloors(Number(e.target.value))} style={sliderStyle} />
+            <div style={rangeLimits}><span>1 Floor</span><span>5 Floors</span></div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Quality</label>
-            <div className="flex gap-3">
+            <span style={{ ...labelStyle, display: 'block', marginBottom: '8px' }}>Material Quality Selection</span>
+            <div style={{ display: 'flex', gap: '10px' }}>
               {Object.entries(qualityRates).map(([key, val]) => (
                 <button
                   key={key}
+                  type="button"
                   onClick={() => setQuality(key)}
-                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium capitalize transition-all border ${quality === key ? 'bg-orange-600 text-white border-orange-600' : 'bg-white text-slate-600 border-slate-200 hover:border-orange-300'}`}
+                  style={{
+                    flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid',
+                    cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center', transition: '.2s',
+                    borderColor: quality === key ? 'var(--indigo)' : 'var(--line)',
+                    background: quality === key ? 'var(--indigo)' : '#fff',
+                    color: quality === key ? '#fff' : 'var(--text)',
+                  }}
                 >
-                  {key}
-                  <span className="block text-xs mt-0.5 opacity-75">₹{val}/sq ft</span>
+                  <div style={{ fontSize: '13px', fontWeight: 700, textTransform: 'capitalize' }}>{key}</div>
+                  <div style={{ fontSize: '10.5px', marginTop: '2px', opacity: 0.85 }}>₹{val}/Sq.ft</div>
                 </button>
               ))}
             </div>
           </div>
         </div>
-        <div className="space-y-4">
-          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-5 border border-orange-100">
-            <p className="text-sm text-slate-500 mb-1">Total Construction Cost</p>
-            <p className="text-3xl font-bold text-orange-600">{formatCurrency(constructionCost)}</p>
-            <p className="text-xs text-slate-400 mt-1">Built-up area: {builtUpArea.toFixed(0)} sq ft</p>
+
+        {/* Results */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)', borderRadius: '12px', padding: '22px', color: '#fff' }}>
+            <p style={{ fontSize: '12.5px', color: '#d8d4ff', textTransform: 'uppercase', fontWeight: 600 }}>Total Construction Cost</p>
+            <p style={{ fontSize: '30px', fontWeight: 800, marginTop: '4px' }}>{formatCurrency(constructionCost)}</p>
+            <p style={{ fontSize: '11px', color: '#b7bade', marginTop: '6px' }}>Estimated Built-up area: {builtUpArea.toFixed(0)} Sq.ft (at 60% coverage)</p>
           </div>
-          <div className="space-y-2">
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {[
-              { label: 'Material Cost', value: materialCost, color: 'bg-orange-500' },
-              { label: 'Labor Cost', value: laborCost, color: 'bg-green-500' },
-              { label: 'Overheads', value: overheadCost, color: 'bg-amber-500' },
-              { label: 'Contingency', value: contingencyCost, color: 'bg-amber-500' },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between text-sm p-3 bg-slate-50 rounded-lg">
-                <div className="flex items-center gap-2">
-                  <span className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
-                  <span className="text-slate-600">{item.label}</span>
-                </div>
-                <span className="font-medium text-slate-800">{formatCurrency(item.value)}</span>
+              { label: 'Material Cost (55%)', value: materialCost, col: '#3a2fb8' },
+              { label: 'Labor Cost (25%)',    value: laborCost,    col: '#2f9e5c' },
+              { label: 'Overheads (10%)',     value: overheadCost, col: '#d99f36' },
+              { label: 'Contingency (10%)',   value: contingencyCost, col: '#7d7aa3' },
+            ].map((item, idx) => (
+              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderRadius: '8px', background: '#f7f7fb', fontSize: '13px' }}>
+                <span style={{ color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: item.col }} />
+                  {item.label}
+                </span>
+                <span style={{ fontWeight: 700, color: 'var(--text)' }}>{formatCurrency(item.value)}</span>
               </div>
             ))}
           </div>
         </div>
+
       </div>
     </div>
   );
 }
+
+/* ===== Styled components / CSS variables mapping helpers ===== */
+const labelRow = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' };
+const labelStyle = { fontSize: '13px', fontWeight: 600, color: 'var(--text)' };
+const valStyle = { fontSize: '14.5px', fontWeight: 700, color: 'var(--indigo)' };
+const rangeLimits = { display: 'flex', justifyContent: 'space-between', fontSize: '10.5px', color: '#9ea1c4', marginTop: '4px' };
+
+const sliderStyle = {
+  width: '100%',
+  height: '5px',
+  borderRadius: '3px',
+  background: '#e6e6f0',
+  outline: 'none',
+  accentColor: 'var(--indigo)',
+  cursor: 'pointer',
+};
+
+const resCard = {
+  background: '#f7f7fb',
+  border: '1px solid var(--line)',
+  borderRadius: '10px',
+  padding: '14px 16px',
+  display: 'flex',
+  flexDirection: 'column',
+};
+const resCardLbl = { fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.3px' };
+const resCardVal = { fontSize: '16px', fontWeight: 800, marginTop: '2px' };
+
+const calcMedia = `
+  @media(max-width: 991px) {
+    .calc-grid-el { grid-template-columns: 1fr !important; gap: 32px !important; }
+  }
+`;

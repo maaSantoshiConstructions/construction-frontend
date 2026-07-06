@@ -34,20 +34,28 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     const { data } = await loginUser(credentials);
-    localStorage.setItem('token', data.data.accessToken);
-    localStorage.setItem('refreshToken', data.data.refreshToken);
-    localStorage.setItem('user', JSON.stringify(data.data.user));
-    setUser(data.data.user);
-    return data.data.user;
+    const userObj = data.data;
+    const token = userObj.token;
+    const refreshToken = userObj.refreshToken;
+
+    localStorage.setItem('token', token);
+    if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('user', JSON.stringify(userObj));
+    setUser(userObj);
+    return userObj;
   };
 
   const register = async (formData) => {
     const { data } = await registerUser(formData);
-    localStorage.setItem('token', data.data.accessToken);
-    localStorage.setItem('refreshToken', data.data.refreshToken);
-    localStorage.setItem('user', JSON.stringify(data.data.user));
-    setUser(data.data.user);
-    return data.data.user;
+    const userObj = data.data;
+    const token = userObj.token;
+    const refreshToken = userObj.refreshToken;
+
+    localStorage.setItem('token', token);
+    if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('user', JSON.stringify(userObj));
+    setUser(userObj);
+    return userObj;
   };
 
   const logout = async () => {

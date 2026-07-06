@@ -27,6 +27,7 @@ import About from './pages/website/About';
 import FAQ from './pages/website/FAQ';
 import BookVisit from './pages/website/BookVisit';
 import AIRecommendation from './pages/website/AIRecommendation';
+import SmartFeatures from './pages/website/SmartFeatures';
 import AIChatbot from './pages/features/AIChatbot';
 import PropertyComparison from './pages/features/PropertyComparison';
 import PropertyValuation from './pages/features/PropertyValuation';
@@ -112,6 +113,7 @@ export default function App() {
       <Route path="/faq" element={<PublicLayout><FAQ /></PublicLayout>} />
       <Route path="/book-visit" element={<PublicLayout><BookVisit /></PublicLayout>} />
       <Route path="/ai-recommendation" element={<PublicLayout><AIRecommendation /></PublicLayout>} />
+      <Route path="/smart-features" element={<PublicLayout><SmartFeatures /></PublicLayout>} />
       <Route path="/ai-chatbot" element={<PublicLayout><AIChatbot /></PublicLayout>} />
       <Route path="/property-comparison" element={<PublicLayout><PropertyComparison /></PublicLayout>} />
       <Route path="/property-valuation" element={<PublicLayout><PropertyValuation /></PublicLayout>} />
