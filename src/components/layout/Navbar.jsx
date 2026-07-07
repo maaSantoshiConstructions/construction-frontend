@@ -34,9 +34,7 @@ export default function Navbar() {
             <Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link>
             <Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link>
             <Link to="/smart-features" className={isActive('/smart-features') ? 'active' : ''}>20 Smart Features</Link>
-            <button onClick={() => scrollTo('calculators')} style={{ background: 'none', border: 'none', color: '#d7d9ec', fontSize: '14px', padding: '9px 16px', borderRadius: '20px', cursor: 'pointer', fontFamily: 'inherit', transition: '.2s' }}>
-              Calculators
-            </button>
+            <Link to="/calculators" className={isActive('/calculators') ? 'active' : ''}>Calculators</Link>
             <Link to={dashboardPath}>Owner Portal</Link>
             <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>
             <Link to="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link>

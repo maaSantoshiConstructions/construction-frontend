@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaStar, FaQuoteLeft, FaUser, FaGoogle } from 'react-icons/fa';
+import { FaStar, FaQuoteLeft, FaGoogle } from 'react-icons/fa';
 
 const fallbackReviews = [
   { _id: '1', customer: { name: 'Rajesh Kumar', avatar: '' }, rating: 5, title: 'Excellent experience', comment: 'Very transparent process. The team guided us through every step. Highly recommended for anyone looking to invest in Bhubaneswar.', createdAt: '2026-03-15' },
@@ -12,15 +13,27 @@ const fallbackReviews = [
 ];
 
 const RatingStars = ({ rating }) => (
-  <div className="flex gap-0.5">
+  <div style={{ display: 'flex', gap: '3px' }}>
     {[1, 2, 3, 4, 5].map((star) => (
-      <FaStar key={star} className={star <= rating ? 'text-yellow-400' : 'text-slate-200'} />
+      <FaStar key={star} style={{ color: star <= rating ? 'var(--gold)' : 'var(--line)', fontSize: '13px' }} />
     ))}
   </div>
 );
 
 const Avatar = ({ name }) => (
-  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+  <div style={{
+    width: '44px',
+    height: '44px',
+    background: 'linear-gradient(135deg, var(--indigo), var(--indigo-light))',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#fff',
+    fontWeight: 700,
+    fontSize: '13.5px',
+    flexShrink: 0,
+  }}>
     {name?.split(' ').map(n => n[0]).join('').slice(0, 2) || 'U'}
   </div>
 );
@@ -35,88 +48,212 @@ export default function CustomerReviews() {
   reviews.forEach((r) => distribution[r.rating - 1]++);
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-slate-900 via-orange-900 to-amber-900 py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Customer Reviews</h1>
-            <p className="text-orange-200">Hear from our happy customers about their experience</p>
-          </motion.div>
+    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+      
+      {/* ===== PAGE HEADER ===== */}
+      <div style={{
+        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
+        padding: '64px 0 60px',
+        position: 'relative',
+        overflow: 'hidden',
+        textAlign: 'center',
+      }}>
+        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
+        <div className="wrap">
+          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>TESTIMONIALS</span>
+          <h1 style={{ fontFamily: 'Poppins, Inter, sans-serif', fontSize: '40px', fontWeight: 800, color: '#fff', marginTop: '8px', marginBottom: '14px' }}>
+            Customer Reviews
+          </h1>
+          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '480px', margin: '0 auto', lineHeight: 1.6 }}>
+            Hear from our homeowners and plot investors in Bhubaneswar &amp; Cuttack.
+          </p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 -mt-6 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            <div className="text-center md:text-left">
-              <p className="text-sm text-slate-500 mb-1">Overall Rating</p>
-              <p className="text-5xl font-bold text-slate-800">{avgRating.toFixed(1)}</p>
-              <div className="mt-2">
+      {/* ===== CONTENT WRAPPER ===== */}
+      <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10, maxWidth: '1000px' }}>
+        
+        {/* Overall Summary Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: '#fff',
+            borderRadius: '16px',
+            border: '1px solid var(--line)',
+            boxShadow: '0 15px 40px rgba(20,20,60,.1)',
+            padding: '36px',
+            marginBottom: '32px',
+          }}
+        >
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '32px',
+            alignItems: 'center',
+          }}>
+            {/* Overall Rating numbers */}
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: '13px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 6px' }}>
+                Overall Rating
+              </p>
+              <p style={{ fontSize: '56px', fontWeight: 800, color: 'var(--text)', margin: 0, lineHeight: 1 }}>
+                {avgRating.toFixed(1)}
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0 6px' }}>
                 <RatingStars rating={Math.round(avgRating)} />
               </div>
-              <p className="text-sm text-slate-500 mt-1">{reviews.length} reviews</p>
+              <p style={{ fontSize: '12px', color: 'var(--gray)', margin: 0, fontWeight: 500 }}>
+                Based on {reviews.length} verified reviews
+              </p>
             </div>
-            <div className="space-y-2">
-              {[5, 4, 3, 2, 1].map((star) => (
-                <div key={star} className="flex items-center gap-3 text-sm">
-                  <span className="w-12 text-right text-slate-600">{star} <FaStar className="inline text-yellow-400 -mt-0.5" /></span>
-                  <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-yellow-400 rounded-full transition-all" style={{ width: `${(distribution[star - 1] / reviews.length) * 100}%` }} />
+
+            {/* Distribution bars */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {[5, 4, 3, 2, 1].map((star) => {
+                const count = distribution[star - 1];
+                const pct = (count / reviews.length) * 100;
+                return (
+                  <div key={star} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px' }}>
+                    <span style={{ width: '40px', fontWeight: 600, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      {star} <FaStar style={{ color: 'var(--gold)', fontSize: '11px' }} />
+                    </span>
+                    <div style={{ flex: 1, height: '8px', background: '#f4f6fa', borderRadius: '4px', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', background: 'var(--gold)', borderRadius: '4px', width: `${pct}%`, transition: 'width 0.5s ease' }} />
+                    </div>
+                    <span style={{ width: '24px', textAlign: 'right', color: 'var(--gray)', fontWeight: 500 }}>
+                      {count}
+                    </span>
                   </div>
-                  <span className="w-8 text-slate-500 text-xs">{distribution[star - 1]}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
-            <div className="text-center md:text-right">
+
+            {/* Google review action */}
+            <div style={{ textAlign: 'center' }}>
               <a
                 href="https://g.co/kgs/demo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-xl transition-colors"
+                className="btn-gold"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 24px',
+                  border: 'none',
+                  textDecoration: 'none',
+                  fontSize: '14.5px',
+                  fontWeight: 700,
+                }}
               >
-                <FaGoogle /> Write a Review
+                <FaGoogle style={{ fontSize: '14px' }} /> Write a Google Review
               </a>
             </div>
           </div>
         </motion.div>
 
-        <div className="flex flex-wrap gap-2 mb-6">
-          <button onClick={() => setFilter(0)} className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === 0 ? 'bg-orange-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-orange-300'}`}>All</button>
-          {[5, 4, 3, 2, 1].map((star) => (
-            <button
-              key={star}
-              onClick={() => setFilter(filter === star ? 0 : star)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors flex items-center gap-1 ${filter === star ? 'bg-orange-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-orange-300'}`}
-            >
-              <FaStar /> {star}
-            </button>
-          ))}
+        {/* Filter buttons list */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
+          <button
+            onClick={() => setFilter(0)}
+            style={{
+              padding: '8px 20px',
+              borderRadius: '20px',
+              fontSize: '12.5px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              outline: 'none',
+              fontFamily: 'Inter, sans-serif',
+              transition: 'all 0.2s',
+              background: filter === 0 ? 'var(--indigo)' : '#fff',
+              color: filter === 0 ? '#fff' : 'var(--text)',
+              border: `1px solid ${filter === 0 ? 'transparent' : 'var(--line)'}`,
+            }}
+          >
+            All Reviews
+          </button>
+          {[5, 4, 3, 2, 1].map((star) => {
+            const isActive = filter === star;
+            return (
+              <button
+                key={star}
+                onClick={() => setFilter(isActive ? 0 : star)}
+                style={{
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  fontSize: '12.5px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  outline: 'none',
+                  fontFamily: 'Inter, sans-serif',
+                  transition: 'all 0.2s',
+                  background: isActive ? 'var(--indigo)' : '#fff',
+                  color: isActive ? '#fff' : 'var(--text)',
+                  border: `1px solid ${isActive ? 'transparent' : 'var(--line)'}`,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                <FaStar style={{ color: isActive ? '#fff' : 'var(--gold)', fontSize: '11px', marginTop: '-1px' }} /> {star} Star
+              </button>
+            );
+          })}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Reviews Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+          gap: '20px',
+        }}>
           {filteredReviews.map((review, i) => (
             <motion.div
               key={review._id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow"
+              style={{
+                background: '#fff',
+                borderRadius: '16px',
+                border: '1px solid var(--line)',
+                padding: '24px',
+                boxShadow: '0 4px 15px rgba(20,20,60,0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
             >
-              <FaQuoteLeft className="text-orange-200 text-xl mb-3" />
-              <RatingStars rating={review.rating} />
-              <h3 className="font-semibold text-slate-800 mt-2 mb-1">{review.title}</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">{review.comment}</p>
-              <div className="flex items-center gap-3 mt-4 pt-3 border-t border-slate-100">
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <FaQuoteLeft style={{ color: '#efeafe', fontSize: '20px' }} />
+                  <RatingStars rating={review.rating} />
+                </div>
+                <h3 style={{ fontSize: '15px', fontWeight: 800, color: 'var(--text)', marginBottom: '8px', fontFamily: 'Poppins, sans-serif' }}>
+                  {review.title}
+                </h3>
+                <p style={{ fontSize: '13.5px', color: 'var(--gray)', lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
+                  &ldquo;{review.comment}&rdquo;
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '20px', borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
                 <Avatar name={review.customer.name} />
                 <div>
-                  <p className="font-medium text-sm text-slate-800">{review.customer.name}</p>
-                  <p className="text-xs text-slate-400">{new Date(review.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}</p>
+                  <p style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+                    {review.customer.name}
+                  </p>
+                  <p style={{ fontSize: '11px', color: 'var(--gray)', marginTop: '2px', margin: 0 }}>
+                    {new Date(review.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}
+                  </p>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+
       </div>
     </div>
   );

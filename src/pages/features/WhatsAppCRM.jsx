@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaWhatsapp, FaCheckCircle, FaRobot, FaBell, FaUsers, FaChartBar, FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaWhatsapp, FaCheckCircle, FaRobot, FaBell, FaUsers, FaArrowRight } from 'react-icons/fa';
 
 export default function WhatsAppCRM() {
   const [phone, setPhone] = useState('');
@@ -14,100 +13,246 @@ export default function WhatsAppCRM() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-green-700 to-emerald-800 py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-              <FaWhatsapp className="text-white text-3xl" />
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">WhatsApp CRM Integration</h1>
-            <p className="text-green-100">Never lose a lead. Every inquiry routed instantly.</p>
-          </motion.div>
+    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+      
+      {/* ===== PAGE HEADER ===== */}
+      <div style={{
+        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
+        padding: '64px 0 60px',
+        position: 'relative',
+        overflow: 'hidden',
+        textAlign: 'center',
+      }}>
+        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
+        <div className="wrap">
+          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>CRM INTEGRATIONS</span>
+          <h1 style={{ fontFamily: 'Poppins, Inter, sans-serif', fontSize: '40px', fontWeight: 800, color: '#fff', marginTop: '8px', marginBottom: '14px' }}>
+            WhatsApp CRM Integration
+          </h1>
+          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '480px', margin: '0 auto', lineHeight: 1.6 }}>
+            Never lose a lead. Automated project alerts and routing sent instantly to your phone.
+          </p>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 -mt-6 pb-16 space-y-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-sm p-6 sm:p-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      {/* ===== CONTENT WRAPPER ===== */}
+      <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10, maxWidth: '1000px' }}>
+        
+        {/* Main Features & Demo Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: '#fff',
+            borderRadius: '16px',
+            border: '1px solid var(--line)',
+            boxShadow: '0 15px 40px rgba(20,20,60,.1)',
+            padding: '32px',
+            marginBottom: '32px',
+          }}
+        >
+          {/* Key pillars grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '32px' }}>
             {[
-              { icon: FaRobot, label: 'Auto Replies', desc: 'Instant WhatsApp responses for common queries 24/7' },
-              { icon: FaBell, label: 'Instant Alerts', desc: 'Every lead, booking & inquiry notified instantly on WhatsApp' },
-              { icon: FaUsers, label: 'Team Inbox', desc: 'Shared inbox for sales team with assignment & tracking' },
+              { icon: FaRobot, label: 'Auto Replies', desc: 'Instant WhatsApp responses for user queries 24/7' },
+              { icon: FaBell, label: 'Instant Alerts', desc: 'Every booking & inquiry notified instantly to you' },
+              { icon: FaUsers, label: 'Shared Team Inbox', desc: 'Collaborative inbox for sales team assignments' },
             ].map((item, i) => (
-              <div key={i} className="p-5 bg-slate-50 rounded-xl border border-slate-100">
-                <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-3"><item.icon className="text-green-600" /></div>
-                <h3 className="font-semibold text-slate-800 text-sm mb-1">{item.label}</h3>
-                <p className="text-xs text-slate-500">{item.desc}</p>
+              <div
+                key={i}
+                style={{
+                  padding: '20px',
+                  background: '#f8fafc',
+                  borderRadius: '12px',
+                  border: '1px solid var(--line)',
+                }}
+              >
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: '#e6f7ed',
+                  color: '#2ecc71',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '16px',
+                }}>
+                  <item.icon style={{ fontSize: '18px' }} />
+                </div>
+                <h3 style={{ fontSize: '14px', fontWeight: 800, color: 'var(--text)', marginBottom: '6px', fontFamily: 'Poppins, sans-serif' }}>
+                  {item.label}
+                </h3>
+                <p style={{ fontSize: '12.5px', color: 'var(--gray)', lineHeight: 1.5, margin: 0 }}>
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
 
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6">
-            <h3 className="font-bold text-slate-800 mb-4">Try WhatsApp Demo</h3>
-            <p className="text-sm text-slate-600 mb-4">Enter your phone number to receive a sample property alert via WhatsApp:</p>
-            <div className="flex gap-3 max-w-md">
+          {/* Try WhatsApp Demo Box */}
+          <div style={{
+            background: '#fafbfc',
+            border: '1.5px dashed var(--indigo)',
+            borderRadius: '16px',
+            padding: '24px 32px',
+          }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text)', margin: '0 0 6px', fontFamily: 'Poppins, sans-serif' }}>
+              Try WhatsApp Demo
+            </h3>
+            <p style={{ fontSize: '13.5px', color: 'var(--gray)', margin: '0 0 16px', fontWeight: 500 }}>
+              Enter your WhatsApp number to receive an active sample property alert:
+            </p>
+            
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', maxWidth: '500px' }}>
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+91 XXXXX XXXXX"
-                className="flex-1 px-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-green-500 outline-none"
+                style={{
+                  flex: 1,
+                  minWidth: '200px',
+                  padding: '12px 18px',
+                  borderRadius: '10px',
+                  border: '1px solid var(--line)',
+                  fontSize: '14px',
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                }}
               />
               <button
                 onClick={handleSendDemo}
-                className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-xl transition-colors text-sm flex items-center gap-2"
+                style={{
+                  background: '#2ecc71',
+                  color: '#fff',
+                  padding: '12px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  fontSize: '13.5px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'background 0.2s',
+                  outline: 'none',
+                }}
+                onMouseEnter={(e) => e.target.style.background = '#27ae60'}
+                onMouseLeave={(e) => e.target.style.background = '#2ecc71'}
               >
-                <FaWhatsapp /> {sent ? 'Sent!' : 'Send Demo'}
+                <FaWhatsapp style={{ fontSize: '16px' }} /> {sent ? 'Sent!' : 'Send Alert Demo'}
               </button>
             </div>
+            
             {sent && (
-              <div className="mt-3 flex items-center gap-2 text-sm text-emerald-600">
+              <div style={{ marginTop: '12px', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', color: '#2ecc71', fontWeight: 600 }}>
                 <FaCheckCircle /> Demo WhatsApp message sent! Check your phone.
               </div>
             )}
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-            <h3 className="font-bold text-slate-800 mb-4">How It Works</h3>
-            <ol className="space-y-3 text-sm">
+        {/* Detailed Guidelines Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+          
+          {/* How It Works */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            style={{
+              background: '#fff',
+              borderRadius: '16px',
+              border: '1px solid var(--line)',
+              padding: '24px 32px',
+              boxShadow: '0 4px 15px rgba(20,20,60,0.02)',
+            }}
+          >
+            <h3 style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text)', marginBottom: '20px', fontFamily: 'Poppins, sans-serif' }}>
+              How It Works
+            </h3>
+            <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {[
-                'Visitor submits inquiry on website',
-                'Lead auto-created in CRM with full details',
-                'Instant WhatsApp notification sent to sales team',
-                'Auto-reply sent to visitor with property info',
-                'Sales executive responds via WhatsApp dashboard',
-                'Follow-up reminders automated via WhatsApp',
+                'Visitor submits a booking form or inquiries on website.',
+                'The system auto-records details directly in CRM dashboard.',
+                'Instant alerts are sent straight to coordinates via WhatsApp.',
+                'Immediate brochures are sent to the visitor via automation.',
+                'Team can instantly chat with customers via single interface.',
               ].map((step, i) => (
-                <li key={i} className="flex gap-3">
-                  <span className="w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">{i + 1}</span>
-                  <span className="text-slate-600">{step}</span>
+                <li key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                  <span style={{
+                    width: '24px',
+                    height: '24px',
+                    background: '#e6f7ed',
+                    color: '#2ecc71',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    flexShrink: 0,
+                    marginTop: '2px',
+                  }}>
+                    {i + 1}
+                  </span>
+                  <span style={{ fontSize: '13.5px', color: 'var(--gray)', lineHeight: 1.5, fontWeight: 500 }}>{step}</span>
                 </li>
               ))}
             </ol>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-            <h3 className="font-bold text-slate-800 mb-4">Key Benefits</h3>
-            <div className="space-y-4">
+          {/* Key Benefits */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            style={{
+              background: '#fff',
+              borderRadius: '16px',
+              border: '1px solid var(--line)',
+              padding: '24px 32px',
+              boxShadow: '0 4px 15px rgba(20,20,60,0.02)',
+            }}
+          >
+            <h3 style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text)', marginBottom: '20px', fontFamily: 'Poppins, sans-serif' }}>
+              CRM Key Benefits
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {[
-                { label: 'Lead Leakage', before: '30-40%', after: '<2%', color: 'text-emerald-600' },
-                { label: 'Response Time', before: '4-6 hours', after: '<2 min', color: 'text-emerald-600' },
-                { label: 'Conversion Rate', before: '8-12%', after: '25-35%', color: 'text-orange-600' },
+                { label: 'Unchecked Lead Leakage', before: '35% Loss', after: '< 2% Loss', color: '#2ecc71' },
+                { label: 'Average Response Time', before: '5 Hours', after: '< 2 Mins', color: '#2ecc71' },
+                { label: 'Conversion Performance', before: '10% Avg', after: '32% High', color: '#2ecc71' },
               ].map((item, i) => (
-                <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
-                  <span className="text-sm text-slate-600">{item.label}</span>
-                  <div className="flex items-center gap-3 text-xs">
-                    <span className="text-slate-400 line-through">{item.before}</span>
-                    <FaArrowRight className="text-slate-300" />
-                    <span className={`font-bold ${item.color}`}>{item.after}</span>
+                <div
+                  key={i}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '16px',
+                    background: '#f8fafc',
+                    border: '1px solid var(--line)',
+                    borderRadius: '12px',
+                  }}
+                >
+                  <div>
+                    <span style={{ display: 'block', fontSize: '12.5px', fontWeight: 800, color: 'var(--text)' }}>
+                      {item.label}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', fontWeight: 600 }}>
+                    <span style={{ color: 'var(--gray)', textDecoration: 'line-through' }}>{item.before}</span>
+                    <FaArrowRight style={{ color: 'var(--line)', fontSize: '9px' }} />
+                    <span style={{ color: item.color, fontWeight: 800, fontSize: '12.5px' }}>{item.after}</span>
                   </div>
                 </div>
               ))}
             </div>
           </motion.div>
+
         </div>
+
       </div>
     </div>
   );

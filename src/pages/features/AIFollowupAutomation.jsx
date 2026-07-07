@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaRobot, FaEnvelope, FaWhatsapp, FaSms, FaUsers, FaChartLine, FaClock, FaCheckCircle } from 'react-icons/fa';
+import { FaRobot, FaEnvelope, FaWhatsapp, FaSms, FaUsers, FaChartLine, FaClock } from 'react-icons/fa';
 
 const sequences = [
   {
@@ -36,90 +37,209 @@ export default function AIFollowupAutomation() {
   const [active, setActive] = useState(sequences[0]);
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-amber-700 to-amber-800 py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-              <FaRobot className="text-white text-3xl" />
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">AI Follow-up Automation</h1>
-            <p className="text-amber-200">Intelligent nurturing sequences that convert leads into customers</p>
-          </motion.div>
+    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+      
+      {/* ===== PAGE HEADER ===== */}
+      <div style={{
+        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
+        padding: '64px 0 60px',
+        position: 'relative',
+        overflow: 'hidden',
+        textAlign: 'center',
+      }}>
+        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
+        <div className="wrap">
+          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>AI WORKFLOWS</span>
+          <h1 style={{ fontFamily: 'Poppins, Inter, sans-serif', fontSize: '40px', fontWeight: 800, color: '#fff', marginTop: '8px', marginBottom: '14px' }}>
+            AI Follow-up Automation
+          </h1>
+          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '480px', margin: '0 auto', lineHeight: 1.6 }}>
+            Intelligent multi-channel nurturing sequences that convert plot leads into bookings.
+          </p>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 -mt-6 pb-16 space-y-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-sm p-6 sm:p-8">
-          <div className="flex flex-wrap gap-3 mb-8">
-            {sequences.map((seq) => (
-              <button
-                key={seq.id}
-                onClick={() => setActive(seq)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                  active.id === seq.id ? 'bg-amber-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 border border-slate-200 hover:border-amber-300'
-                }`}
-              >
-                {seq.name}
-              </button>
-            ))}
+      {/* ===== CONTENT WRAPPER ===== */}
+      <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10, maxWidth: '800px' }}>
+        
+        {/* Main Workflows Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: '#fff',
+            borderRadius: '16px',
+            border: '1px solid var(--line)',
+            boxShadow: '0 15px 40px rgba(20,20,60,.1)',
+            padding: '32px',
+            marginBottom: '32px',
+          }}
+        >
+          {/* Workflow selection tabs */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '24px' }}>
+            {sequences.map((seq) => {
+              const isActive = active.id === seq.id;
+              return (
+                <button
+                  key={seq.id}
+                  onClick={() => setActive(seq)}
+                  style={{
+                    padding: '10px 20px',
+                    borderRadius: '12px',
+                    fontSize: '13.5px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    outline: 'none',
+                    fontFamily: 'Inter, sans-serif',
+                    transition: 'all 0.2s',
+                    background: isActive ? 'var(--indigo)' : '#fff',
+                    color: isActive ? '#fff' : 'var(--text)',
+                    border: `1.5px solid ${isActive ? 'transparent' : 'var(--line)'}`,
+                    boxShadow: isActive ? '0 4px 12px rgba(58, 47, 184, 0.15)' : 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.target.style.borderColor = 'var(--indigo)';
+                      e.target.style.color = 'var(--indigo)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.target.style.borderColor = 'var(--line)';
+                      e.target.style.color = 'var(--text)';
+                    }
+                  }}
+                >
+                  {seq.name}
+                </button>
+              );
+            })}
           </div>
 
-          <div className="mb-6">
-            <span className="text-xs text-slate-500 uppercase tracking-wider font-medium">Trigger: </span>
-            <span className="text-sm font-semibold text-slate-700">{active.trigger}</span>
+          {/* Trigger Detail */}
+          <div style={{ marginBottom: '28px', borderBottom: '1px solid var(--line)', paddingBottom: '16px' }}>
+            <span style={{ fontSize: '12px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              Sequence Trigger:
+            </span>
+            <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)', marginLeft: '8px' }}>
+              ⚡ {active.trigger}
+            </span>
           </div>
 
-          <div className="space-y-4">
-            {active.steps.map((step, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="relative flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100"
-              >
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-                    {step.channel === 'WhatsApp' ? <FaWhatsapp className="text-green-600" /> :
-                     step.channel === 'Email' ? <FaEnvelope className="text-orange-600" /> :
-                     <FaSms className="text-amber-600" />}
+          {/* Steps Timeline Grid */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {active.steps.map((step, i) => {
+              const isWhatsApp = step.channel === 'WhatsApp';
+              const isEmail = step.channel === 'Email';
+              
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -15 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  style={{
+                    display: 'flex',
+                    gap: '16px',
+                    padding: '16px 20px',
+                    background: '#f8fafc',
+                    borderRadius: '12px',
+                    border: '1px solid var(--line)',
+                    position: 'relative',
+                  }}
+                >
+                  {/* Left Icon Panel & Connector Line */}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: isWhatsApp ? '#e6f7ed' : isEmail ? '#efeafe' : '#fef9e7',
+                      color: isWhatsApp ? '#2ecc71' : isEmail ? 'var(--indigo)' : '#f1c40f',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                    }}>
+                      {isWhatsApp ? <FaWhatsapp style={{ fontSize: '18px' }} /> :
+                       isEmail ? <FaEnvelope style={{ fontSize: '16px' }} /> :
+                       <FaSms style={{ fontSize: '18px' }} />}
+                    </div>
                   </div>
-                  {i < active.steps.length - 1 && <div className="w-0.5 h-full bg-amber-200 mt-1" />}
-                </div>
-                <div className="flex-1 pb-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-medium rounded">{step.time}</span>
-                    <span className="text-xs font-medium text-slate-500">{step.channel}</span>
+
+                  {/* Right Content Panel */}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                      <span style={{
+                        padding: '4px 10px',
+                        background: '#f0effc',
+                        color: 'var(--indigo)',
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        borderRadius: '12px',
+                      }}>
+                        {step.time}
+                      </span>
+                      <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--gray)' }}>
+                        via {step.channel}
+                      </span>
+                    </div>
+                    <p style={{ fontSize: '13.5px', color: 'var(--text)', lineHeight: 1.5, margin: 0, fontWeight: 500 }}>
+                      &ldquo;{step.message}&rdquo;
+                    </p>
                   </div>
-                  <p className="text-sm text-slate-600">{step.message}</p>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {/* Stats Summary Panel */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
           {[
-            { icon: FaUsers, label: 'Lead Capture', value: '100%', sub: 'No lead leakage' },
-            { icon: FaChartLine, label: 'Conversion Rate', value: '35%', sub: 'Industry avg: 12%' },
-            { icon: FaClock, label: 'Response Time', value: '<2 min', sub: 'Auto-reply enabled' },
+            { icon: FaUsers, label: 'Lead Capture Rate', value: '100%', sub: 'Zero lead leakage guaranteed' },
+            { icon: FaChartLine, label: 'Conversion Rate', value: '35%', sub: 'vs Real estate avg: 12%' },
+            { icon: FaClock, label: 'Average Response', value: '< 2 Mins', sub: 'Instant chatbot handover' },
           ].map((stat, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * i }}
-              className="bg-white rounded-2xl shadow-sm p-5 border border-slate-100 text-center"
+              style={{
+                background: '#fff',
+                borderRadius: '16px',
+                border: '1px solid var(--line)',
+                padding: '20px',
+                boxShadow: '0 4px 15px rgba(20,20,60,0.02)',
+                textAlign: 'center',
+              }}
             >
-              <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <stat.icon className="text-amber-600" />
+              <div style={{
+                width: '40px',
+                height: '40px',
+                background: '#efeafe',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 12px',
+              }}>
+                <stat.icon style={{ color: 'var(--indigo)', fontSize: '16px' }} />
               </div>
-              <p className="text-2xl font-bold text-amber-600">{stat.value}</p>
-              <p className="text-xs text-slate-500 mt-1">{stat.sub}</p>
+              <h4 style={{ fontSize: '12px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                {stat.label}
+              </h4>
+              <p style={{ fontSize: '24px', fontWeight: 800, color: 'var(--text)', margin: '6px 0 2px' }}>
+                {stat.value}
+              </p>
+              <p style={{ fontSize: '11px', color: 'var(--gray)', margin: 0, fontWeight: 500 }}>
+                {stat.sub}
+              </p>
             </motion.div>
           ))}
         </div>
+
       </div>
     </div>
   );

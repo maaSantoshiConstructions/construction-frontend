@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const tabs = [
   { id: 'investment', label: 'Investment Return', ic: '📊' },
-  { id: 'loan',         label: 'Loan Eligibility',  ic: '🏦' },
+  { id: 'loan', label: 'Loan Eligibility', ic: '🏦' },
   { id: 'construction', label: 'Construction Cost', ic: '🏗' },
 ];
 
@@ -17,7 +17,7 @@ export default function Calculators() {
 
   return (
     <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
-      
+
       {/* ===== HEADER ===== */}
       <div style={{
         background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
@@ -108,7 +108,7 @@ function InvestmentCalculator() {
         📈 Real Estate Appreciation &amp; Investment returns
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
-        
+
         {/* Sliders */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div>
@@ -188,7 +188,7 @@ function LoanCalculator() {
         🏦 Plot &amp; Housing Loan Eligibility
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
-        
+
         {/* Sliders */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
@@ -278,7 +278,7 @@ function ConstructionCalculator() {
         🏗 Built Construction Estimator
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
-        
+
         {/* Sliders */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
@@ -328,13 +328,13 @@ function ConstructionCalculator() {
             <p style={{ fontSize: '30px', fontWeight: 800, marginTop: '4px' }}>{formatCurrency(constructionCost)}</p>
             <p style={{ fontSize: '11px', color: '#b7bade', marginTop: '6px' }}>Estimated Built-up area: {builtUpArea.toFixed(0)} Sq.ft (at 60% coverage)</p>
           </div>
-          
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {[
               { label: 'Material Cost (55%)', value: materialCost, col: '#3a2fb8' },
-              { label: 'Labor Cost (25%)',    value: laborCost,    col: '#2f9e5c' },
-              { label: 'Overheads (10%)',     value: overheadCost, col: '#d99f36' },
-              { label: 'Contingency (10%)',   value: contingencyCost, col: '#7d7aa3' },
+              { label: 'Labor Cost (25%)', value: laborCost, col: '#2f9e5c' },
+              { label: 'Overheads (10%)', value: overheadCost, col: '#d99f36' },
+              { label: 'Contingency (10%)', value: contingencyCost, col: '#7d7aa3' },
             ].map((item, idx) => (
               <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderRadius: '8px', background: '#f7f7fb', fontSize: '13px' }}>
                 <span style={{ color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '8px' }}>
