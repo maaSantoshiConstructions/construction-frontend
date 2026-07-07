@@ -41,7 +41,7 @@ export default function Home() {
             </div>
             <div className="hero-actions">
               <Link to="/projects" className="btn-gold">Explore Projects →</Link>
-              <Link to="/ai-recommendation" className="btn-outline">See 20 Features ▦</Link>
+              <Link to="/smart-features" className="btn-outline">See 20 Features ▦</Link>
             </div>
           </div>
 
