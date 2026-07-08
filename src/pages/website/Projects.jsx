@@ -42,6 +42,17 @@ export default function Projects() {
     fetchProjects();
   };
 
+  const getImageUrl = (img) => {
+    if (!img) return '';
+    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
+      return img;
+    }
+    const backendUrl = window.location.hostname === 'localhost'
+      ? 'http://localhost:5002'
+      : 'https://construction-backend-96b8.onrender.com';
+    return `${backendUrl}/${img.replace(/^\//, '')}`;
+  };
+
   const statusColors = {
     upcoming: { bg: '#fff2e6', text: '#d99f36' },
     ongoing: { bg: '#efeafe', text: '#5b4fe0' },
@@ -162,7 +173,7 @@ export default function Projects() {
               <div key={project._id} className="pcard" style={{ background: '#fff' }}>
                 <div className="thumb">
                   <img
-                    src={project.image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600'}
+                    src={getImageUrl(project.image || (project.images && project.images[0])) || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600'}
                     alt={project.name}
                     loading="lazy"
                     onError={(e) => {

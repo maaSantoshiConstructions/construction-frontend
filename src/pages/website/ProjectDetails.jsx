@@ -38,7 +38,20 @@ export default function ProjectDetails() {
   if (error) return <ErrorMessage message={error} onRetry={fetchProject} />;
   if (!project) return <ErrorMessage message="Project not found" />;
 
-  const images = project.images?.length > 0 ? project.images : ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200'];
+  const getImageUrl = (img) => {
+    if (!img) return '';
+    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
+      return img;
+    }
+    const backendUrl = window.location.hostname === 'localhost'
+      ? 'http://localhost:5002'
+      : 'https://construction-backend-96b8.onrender.com';
+    return `${backendUrl}/${img.replace(/^\//, '')}`;
+  };
+
+  const images = project.images?.length > 0 
+    ? project.images.map(img => getImageUrl(img)) 
+    : ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200'];
   const rera = project.reraNumber || 'Applied / Pending';
 
   // Format price

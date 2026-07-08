@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { getProjects, createProject, updateProject, deleteProject } from '../../../api/projects';
+import { getProjects, createProject, updateProject, deleteProject, uploadProjectImages } from '../../../api/projects';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColor = { upcoming: '#d99f36', ongoing: '#5b4fe0', completed: '#2f9e5c' };
@@ -15,6 +15,7 @@ export default function ManageProjects() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -32,13 +33,15 @@ export default function ManageProjects() {
 
   const openCreate = () => {
     setEditing(null);
-    reset({ name: '', type: 'plotted_development', description: '', location: '', city: '', state: '', status: 'upcoming', pricePerSqft: '', reraNumber: '', amenities: '' });
+    setSelectedFiles([]);
+    reset({ name: '', type: 'plotted_development', description: '', location: '', city: '', state: '', status: 'upcoming', pricePerSqft: '', reraNumber: '', amenities: '', layoutImage: '' });
     setShowModal(true);
   };
 
   const openEdit = (project) => {
     setEditing(project);
-    reset({ ...project, amenities: project.amenities?.join(', ') || '' });
+    setSelectedFiles([]);
+    reset({ ...project, amenities: project.amenities?.join(', ') || '', layoutImage: project.layoutImage || '' });
     setShowModal(true);
   };
 
@@ -46,8 +49,27 @@ export default function ManageProjects() {
     setSubmitting(true);
     try {
       const payload = { ...formData, amenities: formData.amenities ? formData.amenities.split(',').map(a => a.trim()) : [] };
-      if (editing) { await updateProject(editing._id, payload); toast.success('Project updated'); }
-      else { await createProject(payload); toast.success('Project created'); }
+      let savedProject;
+      if (editing) { 
+        const { data: res } = await updateProject(editing._id, payload);
+        savedProject = res?.data;
+        toast.success('Project updated');
+      }
+      else { 
+        const { data: res } = await createProject(payload);
+        savedProject = res?.data;
+        toast.success('Project created');
+      }
+
+      if (selectedFiles.length > 0 && savedProject?._id) {
+        const uploadData = new FormData();
+        selectedFiles.forEach((file) => {
+          uploadData.append('images', file);
+        });
+        await uploadProjectImages(savedProject._id, uploadData);
+        toast.success('Images uploaded successfully');
+      }
+
       setShowModal(false); fetchProjects();
     } catch (err) { toast.error(err?.response?.data?.message || 'Operation failed'); }
     finally { setSubmitting(false); }
@@ -206,6 +228,51 @@ export default function ManageProjects() {
 
               <FormField label="Amenities (comma-separated)">
                 <input {...register('amenities')} placeholder="e.g. Park, Clubhouse, Security, Gym" style={fi()} />
+              </FormField>
+
+              {editing && editing.images?.length > 0 && (
+                <div style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#171a35', marginBottom: '6px' }}>Existing Images</label>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    {editing.images.map((img, idx) => (
+                      <div key={idx} style={{ position: 'relative', width: '60px', height: '60px', borderRadius: '6px', overflow: 'hidden', border: '1px solid #e6e6f0' }}>
+                        <img src={img.startsWith('http') ? img : `http://localhost:5002/${img}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const newImages = editing.images.filter((_, i) => i !== idx);
+                            const updated = { ...editing, images: newImages };
+                            await updateProject(editing._id, { images: newImages });
+                            setEditing(updated);
+                            toast.success('Image removed');
+                            fetchProjects();
+                          }}
+                          style={{ position: 'absolute', top: '2px', right: '2px', background: 'rgba(231,76,60,0.9)', color: '#fff', border: 'none', borderRadius: '50%', width: '16px', height: '16px', fontSize: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <FormField label="Upload Project Images (Select multiple)">
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={(e) => setSelectedFiles(Array.from(e.target.files))}
+                  style={fi()}
+                />
+              </FormField>
+
+              <FormField label="Layout Plan Map Image URL">
+                <input
+                  {...register('layoutImage')}
+                  placeholder="e.g. https://images.unsplash.com/photo-..."
+                  style={fi()}
+                />
               </FormField>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '4px' }}>
