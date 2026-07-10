@@ -68,9 +68,18 @@ export default function ProjectDetails() {
     ? project.amenities
     : ['Landscaped Gardens', '24/7 Security', 'Electricity Connection', 'Water Supply', 'Concrete Roads', 'Street Lights'];
 
+  const finalHighlights = project.highlights?.length > 0
+    ? project.highlights
+    : [
+        'Direct access to National Highway',
+        '15 minutes from nearest Railway Station',
+        'Close proximity to top schools & engineering colleges',
+        '5 km from upcoming IT parks & shopping centers',
+        'Quiet residential area with high growth prospects',
+      ];
+
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
-    toast.success('Link copied to clipboard!'); // toast can be handled, but simple alert or copying is fine.
     alert('Project link copied to clipboard!');
   };
 
@@ -171,7 +180,7 @@ export default function ProjectDetails() {
             </div>
 
             {/* Quick Stats Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '28px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px', marginBottom: '28px' }}>
               <div style={{ border: '1px solid var(--line)', borderRadius: '10px', padding: '12px 16px' }}>
                 <span style={{ display: 'block', fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase' }}>RERA Status</span>
                 <span style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', marginTop: '2px', display: 'block' }}>{rera}</span>
@@ -182,6 +191,26 @@ export default function ProjectDetails() {
                   {project.type?.replace(/_/g, ' ') || 'Plotted Development'}
                 </span>
               </div>
+              {project.totalPlots && (
+                <div style={{ border: '1px solid var(--line)', borderRadius: '10px', padding: '12px 16px' }}>
+                  <span style={{ display: 'block', fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase' }}>Total Plots</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', marginTop: '2px', display: 'block' }}>{project.totalPlots} Units</span>
+                </div>
+              )}
+              {project.totalArea && (
+                <div style={{ border: '1px solid var(--line)', borderRadius: '10px', padding: '12px 16px' }}>
+                  <span style={{ display: 'block', fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase' }}>Total Area</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', marginTop: '2px', display: 'block' }}>{project.totalArea}</span>
+                </div>
+              )}
+              {project.possessionDate && (
+                <div style={{ border: '1px solid var(--line)', borderRadius: '10px', padding: '12px 16px' }}>
+                  <span style={{ display: 'block', fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase' }}>Possession</span>
+                  <span style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', marginTop: '2px', display: 'block' }}>
+                    {new Date(project.possessionDate).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Action buttons */}
@@ -227,13 +256,7 @@ export default function ProjectDetails() {
                 Location Highlights
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {[
-                  'Direct access to National Highway',
-                  '15 minutes from nearest Railway Station',
-                  'Close proximity to top schools & engineering colleges',
-                  '5 km from upcoming IT parks & shopping centers',
-                  'Quiet residential area with high growth prospects',
-                ].map((item, i) => (
+                {finalHighlights.map((item, i) => (
                   <div key={i} style={{ fontSize: '13px', color: 'var(--gray)', display: 'flex', gap: '8px', alignItems: 'start' }}>
                     <span style={{ color: '#2f9e5c', fontWeight: 'bold' }}>✓</span>
                     <span>{item}</span>
@@ -262,6 +285,38 @@ export default function ProjectDetails() {
 
           </div>
         </div>
+
+        {/* Layout Plan Map Section */}
+        {project.layoutImage && (
+          <div style={{
+            background: '#fff',
+            border: '1px solid var(--line)',
+            borderRadius: '16px',
+            padding: '32px',
+            boxShadow: '0 10px 30px rgba(20,20,60,.03)',
+            marginTop: '32px',
+          }}>
+            <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '12px' }}>
+              Master Layout Plan
+            </h2>
+            <p style={{ fontSize: '14px', color: 'var(--gray)', marginBottom: '20px' }}>
+              Official layout map configuration and boundary divisions for {project.name}.
+            </p>
+            <div style={{
+              borderRadius: '12px',
+              overflow: 'hidden',
+              border: '1px solid var(--line)',
+              background: '#f7f7fb',
+              maxHeight: '500px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '16px',
+            }}>
+              <img src={getImageUrl(project.layoutImage)} alt="Master Layout Plan" style={{ maxWidth: '100%', maxHeight: '468px', objectFit: 'contain' }} />
+            </div>
+          </div>
+        )}
       </div>
 
       <style>{`

@@ -34,21 +34,50 @@ export default function ManageProjects() {
   const openCreate = () => {
     setEditing(null);
     setSelectedFiles([]);
-    reset({ name: '', type: 'plotted_development', description: '', location: '', city: '', state: '', status: 'upcoming', pricePerSqft: '', reraNumber: '', amenities: '', layoutImage: '' });
+    reset({
+      name: '',
+      type: 'plotted_development',
+      description: '',
+      location: '',
+      city: '',
+      state: '',
+      status: 'upcoming',
+      pricePerSqft: '',
+      reraNumber: '',
+      amenities: '',
+      layoutImage: '',
+      totalPlots: '',
+      totalArea: '',
+      possessionDate: '',
+      highlights: '',
+    });
     setShowModal(true);
   };
 
   const openEdit = (project) => {
     setEditing(project);
     setSelectedFiles([]);
-    reset({ ...project, amenities: project.amenities?.join(', ') || '', layoutImage: project.layoutImage || '' });
+    reset({
+      ...project,
+      amenities: project.amenities?.join(', ') || '',
+      highlights: project.highlights?.join(', ') || '',
+      possessionDate: project.possessionDate ? new Date(project.possessionDate).toISOString().split('T')[0] : '',
+      layoutImage: project.layoutImage || '',
+    });
     setShowModal(true);
   };
 
   const onSubmit = async (formData) => {
     setSubmitting(true);
     try {
-      const payload = { ...formData, amenities: formData.amenities ? formData.amenities.split(',').map(a => a.trim()) : [] };
+      const payload = {
+        ...formData,
+        amenities: formData.amenities ? formData.amenities.split(',').map(a => a.trim()) : [],
+        highlights: formData.highlights ? formData.highlights.split(',').map(h => h.trim()) : [],
+        totalPlots: formData.totalPlots ? Number(formData.totalPlots) : null,
+        totalArea: formData.totalArea ? Number(formData.totalArea) : null,
+        possessionDate: formData.possessionDate || null,
+      };
       let savedProject;
       if (editing) { 
         const { data: res } = await updateProject(editing._id, payload);
@@ -222,12 +251,30 @@ export default function ManageProjects() {
                 </FormField>
               </div>
 
-              <FormField label="RERA Number">
-                <input {...register('reraNumber')} placeholder="e.g. OD/01/2023/01234" style={fi()} />
-              </FormField>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <FormField label="Total Plots">
+                  <input type="number" {...register('totalPlots')} placeholder="e.g. 150" style={fi()} />
+                </FormField>
+                <FormField label="Total Area (sq.ft / acres)">
+                  <input type="number" {...register('totalArea')} placeholder="e.g. 120000" style={fi()} />
+                </FormField>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <FormField label="RERA Number">
+                  <input {...register('reraNumber')} placeholder="e.g. OD/01/2023/01234" style={fi()} />
+                </FormField>
+                <FormField label="Possession Date">
+                  <input type="date" {...register('possessionDate')} style={fi()} />
+                </FormField>
+              </div>
 
               <FormField label="Amenities (comma-separated)">
                 <input {...register('amenities')} placeholder="e.g. Park, Clubhouse, Security, Gym" style={fi()} />
+              </FormField>
+
+              <FormField label="Location Highlights (comma-separated)">
+                <input {...register('highlights')} placeholder="e.g. Near National Highway, 10 min to station, Hospital close by" style={fi()} />
               </FormField>
 
               {editing && editing.images?.length > 0 && (

@@ -38,22 +38,22 @@ export default function MyCustomers() {
   useEffect(() => {
     const q = search.toLowerCase();
     setFiltered(customers.filter(c =>
-      c.name?.toLowerCase().includes(q) ||
-      c.phone?.includes(q) ||
-      c.email?.toLowerCase().includes(q) ||
+      c.user?.name?.toLowerCase().includes(q) ||
+      c.user?.phone?.includes(q) ||
+      c.user?.email?.toLowerCase().includes(q) ||
       c.project?.name?.toLowerCase().includes(q)
     ));
   }, [search, customers]);
 
   const columns = [
-    { key: 'name', label: 'Name', render: r => <span className="font-medium text-slate-800">{r.name}</span> },
-    { key: 'phone', label: 'Phone', render: r => r.phone || '-' },
-    { key: 'email', label: 'Email', render: r => r.email || '-' },
+    { key: 'name', label: 'Name', render: r => <span className="font-medium text-slate-800">{r.user?.name || '-'}</span> },
+    { key: 'phone', label: 'Phone', render: r => r.user?.phone || '-' },
+    { key: 'email', label: 'Email', render: r => r.user?.email || '-' },
     { key: 'project', label: 'Project', render: r => r.project?.name || r.projectName || '-' },
     { key: 'bookingStatus', label: 'Booking Status', render: r => (
-      r.bookingStatus ? (
-        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${bookingStatusColors[r.bookingStatus] || 'bg-slate-100 text-slate-600'}`}>
-          {r.bookingStatus?.replace(/_/g, ' ')}
+      r.booking?.status ? (
+        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${bookingStatusColors[r.booking.status] || 'bg-slate-100 text-slate-600'}`}>
+          {r.booking.status}
         </span>
       ) : <span className="text-xs text-slate-400">No booking</span>
     )},
