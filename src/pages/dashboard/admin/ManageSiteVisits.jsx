@@ -8,8 +8,9 @@ import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const statusColors = {
-  scheduled: 'bg-orange-100 text-orange-700', confirmed: 'bg-green-100 text-green-700',
-  completed: 'bg-slate-100 text-slate-700', cancelled: 'bg-red-100 text-red-700',
+  pending: 'bg-orange-100 text-orange-700', scheduled: 'bg-orange-100 text-orange-700',
+  confirmed: 'bg-green-100 text-green-700', completed: 'bg-slate-100 text-slate-700',
+  cancelled: 'bg-red-100 text-red-700',
 };
 
 export default function ManageSiteVisits() {
@@ -77,13 +78,13 @@ export default function ManageSiteVisits() {
   const columns = [
     { key: 'customer', label: 'Customer', render: r => r.customer?.name || r.name || '-' },
     { key: 'plot', label: 'Plot', render: r => r.plot?.plotNumber ? `#${r.plot.plotNumber}` : '-' },
-    { key: 'date', label: 'Date', render: r => r.date ? new Date(r.date).toLocaleDateString() : '-' },
-    { key: 'time', label: 'Time', render: r => r.time || r.slot || '-' },
+    { key: 'date', label: 'Date', render: r => r.preferredDate ? new Date(r.preferredDate).toLocaleDateString() : r.date ? new Date(r.date).toLocaleDateString() : '-' },
+    { key: 'time', label: 'Time', render: r => r.preferredTime || r.time || r.slot || '-' },
     { key: 'executive', label: 'Executive', render: r => r.assignedTo?.name || r.executive?.name || <span className="text-slate-400 text-xs">Unassigned</span> },
     { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status}</span> },
     { key: 'actions', label: 'Actions', render: r => (
       <div className="flex items-center gap-1">
-        {r.status === 'scheduled' && (
+        {(r.status === 'pending' || r.status === 'scheduled') && (
           <button onClick={() => handleConfirm(r._id)} className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg" title="Confirm"><FaCalendarCheck /></button>
         )}
         {r.status === 'confirmed' && (

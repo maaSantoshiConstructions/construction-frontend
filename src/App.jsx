@@ -83,6 +83,7 @@ import MyReferrals from './pages/dashboard/customer/MyReferrals';
 import SupportTickets from './pages/dashboard/customer/SupportTickets';
 import Profile from './pages/dashboard/customer/Profile';
 import Wishlist from './pages/dashboard/customer/Wishlist';
+import MySiteVisits from './pages/dashboard/customer/MySiteVisits';
 
 const PublicLayout = ({ children }) => (
   <>
@@ -195,6 +196,7 @@ export default function App() {
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<CustomerDashboard />} />
         <Route path="bookings" element={<MyBookings />} />
+        <Route path="site-visits" element={<MySiteVisits />} />
         <Route path="payments" element={<MyPayments />} />
         <Route path="documents" element={<MyDocuments />} />
         <Route path="construction-updates" element={<ConstructionUpdates />} />

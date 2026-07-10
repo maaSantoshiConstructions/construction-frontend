@@ -48,9 +48,11 @@ export default function CustomerDashboard() {
 
   if (error) return <ErrorMessage message={error} onRetry={fetchDashboard} />;
 
-  const stats = data?.stats || {};
+  const stats = data || {};
   const updates = data?.recentUpdates || [];
-  const notifications = data?.recentNotifications || [];
+  const notifications = data?.notifications || [];
+  const upcomingPaymentsList = data?.upcomingPayments || [];
+  const upcomingPaymentsSum = upcomingPaymentsList.reduce((sum, b) => sum + Math.max(0, (b.totalAmount || 0) - (b.paidAmount || 0)), 0);
 
   return (
     <div className="space-y-6">
@@ -61,7 +63,7 @@ export default function CustomerDashboard() {
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <StatsCard title="My Properties" value={stats.myProperties || stats.totalBookings || 0} icon={FaBuilding} color="blue" />
-        <StatsCard title="Upcoming Payments" value={'₹' + ((stats.upcomingPayments || 0).toLocaleString())} icon={FaCalendarCheck} color="yellow" />
+        <StatsCard title="Upcoming Payments" value={'₹' + (upcomingPaymentsSum.toLocaleString('en-IN'))} icon={FaCalendarCheck} color="yellow" />
         <StatsCard title="Referral Earnings" value={'₹' + ((stats.referralEarnings || 0).toLocaleString())} icon={FaHandHoldingUsd} color="green" />
       </div>
 
@@ -111,8 +113,8 @@ export default function CustomerDashboard() {
                   transition={{ delay: i * 0.05 }}
                   className="bg-white rounded-xl border border-slate-200 p-4 flex items-start gap-3"
                 >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${n.read ? 'bg-slate-100' : 'bg-orange-100'}`}>
-                    <FaBell className={`text-xs ${n.read ? 'text-slate-400' : 'text-orange-600'}`} />
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${n.isRead ? 'bg-slate-100' : 'bg-orange-100'}`}>
+                    <FaBell className={`text-xs ${n.isRead ? 'text-slate-400' : 'text-orange-600'}`} />
                   </div>
                   <div>
                     <p className="text-sm text-slate-800">{n.message || n.title}</p>

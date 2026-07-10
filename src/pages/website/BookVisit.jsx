@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { createSiteVisit } from '../../api/siteVisits';
 import { getProjects } from '../../api/projects';
+import { useAuth } from '../../context/AuthContext';
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaCheckCircle, FaWhatsapp } from 'react-icons/fa';
 
 const timeSlots = [
@@ -18,6 +20,8 @@ const timeSlots = [
 ];
 
 export default function BookVisit() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -29,6 +33,13 @@ export default function BookVisit() {
     reset,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (!user) {
+      toast.error('Please log in to schedule a site visit.');
+      navigate('/login?redirect=/book-visit');
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -49,12 +60,18 @@ export default function BookVisit() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
+      const selectedProj = projects.find(p => p._id === data.project);
       const visitData = {
-        ...data,
-        date: new Date(data.date).toISOString(),
+        project: data.project,
+        preferredDate: new Date(data.date).toISOString(),
+        preferredTime: data.timeSlot,
+        pickupLocation: data.pickupLocation,
       };
       await createSiteVisit(visitData);
-      setVisitDetails(data);
+      setVisitDetails({
+        ...data,
+        projectName: selectedProj ? selectedProj.name : 'Selected Project',
+      });
       setSuccess(true);
       toast.success('Site visit booked successfully!');
       reset();
@@ -137,7 +154,7 @@ export default function BookVisit() {
             }}>
               <div>
                 <span style={{ fontSize: '12px', color: 'var(--gray)', fontWeight: 600, display: 'block', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Project</span>
-                <span style={{ fontSize: '15px', color: 'var(--text)', fontWeight: 700 }}>{visitDetails.project}</span>
+                <span style={{ fontSize: '15px', color: 'var(--text)', fontWeight: 700 }}>{visitDetails.projectName}</span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -162,7 +179,7 @@ export default function BookVisit() {
             </p>
 
             <a
-              href={`https://wa.me/919876543210?text=Hi! I have booked a site visit for project "${visitDetails.project}" on ${visitDetails.date} at ${visitDetails.timeSlot}. Please confirm.`}
+              href={`https://wa.me/919142328629?text=Hi! I have booked a site visit for project "${visitDetails.projectName}" on ${visitDetails.date} at ${visitDetails.timeSlot}. Please confirm.`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold"
@@ -249,7 +266,7 @@ export default function BookVisit() {
                   style={inputStyle(!!errors.project)}
                 >
                   <option value="">Choose a project</option>
-                  {projects.map((p) => <option key={p._id} value={p.name}>{p.name}</option>)}
+                  {projects.map((p) => <option key={p._id} value={p._id}>{p.name}</option>)}
                 </select>
                 {errors.project && <p style={errStyle}>{errors.project.message}</p>}
               </div>

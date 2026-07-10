@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
@@ -7,6 +7,8 @@ import { useAuth } from '../../context/AuthContext';
 export default function Login() {
   const { login, getRedirectPath } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectParam = searchParams.get('redirect');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -17,7 +19,7 @@ export default function Login() {
     try {
       const user = await login(data);
       toast.success('Welcome back!');
-      navigate(getRedirectPath(user.role));
+      navigate(redirectParam || getRedirectPath(user.role));
     } catch (err) {
       toast.error(err?.response?.data?.message || 'Login failed. Please try again.');
     } finally {

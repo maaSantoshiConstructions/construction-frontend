@@ -57,7 +57,7 @@ export default function AdminDashboard() {
 
   if (error) return <ErrorMessage message={error} onRetry={fetchDashboard} />;
 
-  const stats = data?.stats || {};
+  const stats = data || {};
   const monthlySales = data?.monthlySales || [];
   const recentLeads = data?.recentLeads || [];
   const recentBookings = data?.recentBookings || [];

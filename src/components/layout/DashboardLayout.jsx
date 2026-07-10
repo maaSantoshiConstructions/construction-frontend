@@ -55,6 +55,7 @@ const roleSidebarLinks = {
   customer: [
     { label: 'Dashboard',            path: '/customer/dashboard',              ic: '▦' },
     { label: 'My Bookings',          path: '/customer/bookings',               ic: '📅' },
+    { label: 'My Site Visits',       path: '/customer/site-visits',            ic: '📍' },
     { label: 'My Payments',          path: '/customer/payments',               ic: '💳' },
     { label: 'My Documents',         path: '/customer/documents',              ic: '📄' },
     { label: 'Construction Updates', path: '/customer/construction-updates',   ic: '👷' },
@@ -82,7 +83,7 @@ export default function DashboardLayout() {
   const handleLogout = () => { logout(); navigate('/login'); };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f7f7fb', display: 'flex' }}>
+    <div style={{ height: '100vh', overflow: 'hidden', background: '#f7f7fb', display: 'flex' }}>
 
       {/* Mobile overlay */}
       {sidebarOpen && (
@@ -99,6 +100,7 @@ export default function DashboardLayout() {
         transition: 'transform .3s ease',
         display: 'flex', flexDirection: 'column',
         borderRight: '1px solid rgba(255,255,255,.06)',
+        flexShrink: 0,
       }} className="sidebar-el">
         {/* Logo */}
         <div style={{ padding: '18px 20px 16px', borderBottom: '1px solid rgba(255,255,255,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -143,7 +145,7 @@ export default function DashboardLayout() {
       </aside>
 
       {/* ===== MAIN CONTENT ===== */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }} className="main-content-el">
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%', overflow: 'hidden' }} className="main-content-el">
 
         {/* Top header */}
         <header style={{
@@ -155,6 +157,7 @@ export default function DashboardLayout() {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <button onClick={() => setSidebarOpen(true)}
+              className="menu-toggle-btn"
               style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#6b6f8a', display: 'flex', alignItems: 'center' }}>
               ☰
             </button>
@@ -205,7 +208,7 @@ export default function DashboardLayout() {
         </header>
 
         {/* Page content */}
-        <main style={{ flex: 1, padding: '28px 28px', overflowAuto: 'auto' }}>
+        <main style={{ flex: 1, padding: '28px 28px', overflowY: 'auto' }}>
           <Outlet />
         </main>
       </div>
@@ -215,6 +218,7 @@ export default function DashboardLayout() {
           .sidebar-el { transform: translateX(0) !important; position: static !important; }
           .sidebar-close-btn { display: none !important; }
           .user-name-el { display: block !important; }
+          .menu-toggle-btn { display: none !important; }
         }
       `}</style>
     </div>
