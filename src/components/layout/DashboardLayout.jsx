@@ -1,60 +1,80 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { 
+  FaTachometerAlt, 
+  FaBuilding, 
+  FaMap, 
+  FaCalendarAlt, 
+  FaUsers, 
+  FaChartLine, 
+  FaCreditCard, 
+  FaFileAlt, 
+  FaMapMarkerAlt, 
+  FaHardHat, 
+  FaHandshake, 
+  FaCog, 
+  FaUser, 
+  FaGift, 
+  FaBullhorn, 
+  FaTicketAlt, 
+  FaHeart,
+  FaSignOutAlt
+} from 'react-icons/fa';
 
 const roleSidebarLinks = {
   super_admin: [
-    { label: 'Dashboard',            path: '/admin/dashboard',             ic: '▦' },
-    { label: 'Projects',             path: '/admin/projects',              ic: '🏗' },
-    { label: 'Plots',                path: '/admin/plots',                 ic: '▤' },
-    { label: 'Bookings',             path: '/admin/bookings',              ic: '📅' },
-    { label: 'Customers',            path: '/admin/customers',             ic: '☺' },
-    { label: 'Leads',                path: '/admin/leads',                 ic: '📈' },
-    { label: 'Payments',             path: '/admin/payments',              ic: '💳' },
-    { label: 'Documents',            path: '/admin/documents',             ic: '📄' },
-    { label: 'Site Visits',          path: '/admin/site-visits',           ic: '📍' },
-    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: '👷' },
-    { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: '🤝' },
-    { label: 'Settings',             path: '/admin/settings',              ic: '⚙' },
-    { label: 'Users',                path: '/admin/users',                 ic: '👤' },
+    { label: 'Dashboard',            path: '/admin/dashboard',             ic: FaTachometerAlt },
+    { label: 'Projects',             path: '/admin/projects',              ic: FaBuilding },
+    { label: 'Plots',                path: '/admin/plots',                 ic: FaMap },
+    { label: 'Bookings',             path: '/admin/bookings',              ic: FaCalendarAlt },
+    { label: 'Customers',            path: '/admin/customers',             ic: FaUsers },
+    { label: 'Leads',                path: '/admin/leads',                 ic: FaChartLine },
+    { label: 'Payments',             path: '/admin/payments',              ic: FaCreditCard },
+    { label: 'Documents',            path: '/admin/documents',             ic: FaFileAlt },
+    { label: 'Site Visits',          path: '/admin/site-visits',           ic: FaMapMarkerAlt },
+    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: FaHardHat },
+    { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: FaHandshake },
+    { label: 'Settings',             path: '/admin/settings',              ic: FaCog },
+    { label: 'Users',                path: '/admin/users',                 ic: FaUser },
   ],
   company_admin: [
-    { label: 'Dashboard',            path: '/admin/dashboard',             ic: '▦' },
-    { label: 'Projects',             path: '/admin/projects',              ic: '🏗' },
-    { label: 'Plots',                path: '/admin/plots',                 ic: '▤' },
-    { label: 'Bookings',             path: '/admin/bookings',              ic: '📅' },
-    { label: 'Customers',            path: '/admin/customers',             ic: '☺' },
-    { label: 'Leads',                path: '/admin/leads',                 ic: '📈' },
-    { label: 'Payments',             path: '/admin/payments',              ic: '💳' },
-    { label: 'Documents',            path: '/admin/documents',             ic: '📄' },
-    { label: 'Site Visits',          path: '/admin/site-visits',           ic: '📍' },
-    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: '👷' },
-    { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: '🤝' },
-    { label: 'Settings',             path: '/admin/settings',              ic: '⚙' },
+    { label: 'Dashboard',            path: '/admin/dashboard',             ic: FaTachometerAlt },
+    { label: 'Projects',             path: '/admin/projects',              ic: FaBuilding },
+    { label: 'Plots',                path: '/admin/plots',                 ic: FaMap },
+    { label: 'Bookings',             path: '/admin/bookings',              ic: FaCalendarAlt },
+    { label: 'Customers',            path: '/admin/customers',             ic: FaUsers },
+    { label: 'Leads',                path: '/admin/leads',                 ic: FaChartLine },
+    { label: 'Payments',             path: '/admin/payments',              ic: FaCreditCard },
+    { label: 'Documents',            path: '/admin/documents',             ic: FaFileAlt },
+    { label: 'Site Visits',          path: '/admin/site-visits',           ic: FaMapMarkerAlt },
+    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: FaHardHat },
+    { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: FaHandshake },
+    { label: 'Settings',             path: '/admin/settings',              ic: FaCog },
   ],
   sales_executive: [
-    { label: 'Dashboard',   path: '/sales/dashboard',    ic: '▦' },
-    { label: 'My Leads',    path: '/sales/leads',        ic: '📈' },
-    { label: 'Site Visits', path: '/sales/site-visits',  ic: '📍' },
-    { label: 'Customers',   path: '/sales/customers',    ic: '☺' },
+    { label: 'Dashboard',   path: '/sales/dashboard',    ic: FaTachometerAlt },
+    { label: 'My Leads',    path: '/sales/leads',        ic: FaChartLine },
+    { label: 'Site Visits', path: '/sales/site-visits',  ic: FaMapMarkerAlt },
+    { label: 'Customers',   path: '/sales/customers',    ic: FaUsers },
   ],
   channel_partner: [
-    { label: 'Dashboard',            path: '/partner/dashboard',    ic: '▦' },
-    { label: 'My Commissions',       path: '/partner/commissions',  ic: '💳' },
-    { label: 'My Referrals',         path: '/partner/referrals',    ic: '🎁' },
-    { label: 'Marketing Materials',  path: '/partner/materials',    ic: '📣' },
+    { label: 'Dashboard',            path: '/partner/dashboard',    ic: FaTachometerAlt },
+    { label: 'My Commissions',       path: '/partner/commissions',  ic: FaCreditCard },
+    { label: 'My Referrals',         path: '/partner/referrals',    ic: FaGift },
+    { label: 'Marketing Materials',  path: '/partner/materials',    ic: FaBullhorn },
   ],
   customer: [
-    { label: 'Dashboard',            path: '/customer/dashboard',              ic: '▦' },
-    { label: 'My Bookings',          path: '/customer/bookings',               ic: '📅' },
-    { label: 'My Site Visits',       path: '/customer/site-visits',            ic: '📍' },
-    { label: 'My Payments',          path: '/customer/payments',               ic: '💳' },
-    { label: 'My Documents',         path: '/customer/documents',              ic: '📄' },
-    { label: 'Construction Updates', path: '/customer/construction-updates',   ic: '👷' },
-    { label: 'My Referrals',         path: '/customer/referrals',              ic: '🎁' },
-    { label: 'Support Tickets',      path: '/customer/support-tickets',        ic: '🎫' },
-    { label: 'Profile',              path: '/customer/profile',                ic: '👤' },
-    { label: 'Wishlist',             path: '/customer/wishlist',               ic: '❤' },
+    { label: 'Dashboard',            path: '/customer/dashboard',              ic: FaTachometerAlt },
+    { label: 'My Bookings',          path: '/customer/bookings',               ic: FaCalendarAlt },
+    { label: 'My Site Visits',       path: '/customer/site-visits',            ic: FaMapMarkerAlt },
+    { label: 'My Payments',          path: '/customer/payments',               ic: FaCreditCard },
+    { label: 'My Documents',         path: '/customer/documents',              ic: FaFileAlt },
+    { label: 'Construction Updates', path: '/customer/construction-updates',   ic: FaHardHat },
+    { label: 'My Referrals',         path: '/customer/referrals',              ic: FaGift },
+    { label: 'Support Tickets',      path: '/customer/support-tickets',        ic: FaTicketAlt },
+    { label: 'Profile',              path: '/customer/profile',                ic: FaUser },
+    { label: 'Wishlist',             path: '/customer/wishlist',               ic: FaHeart },
   ],
 };
 
@@ -109,29 +129,32 @@ export default function DashboardLayout() {
 
         {/* Nav links */}
         <nav style={{ flex: 1, overflowY: 'auto', padding: '12px 10px' }}>
-          {links.map(link => (
-            <Link key={link.path} to={link.path} onClick={() => setSidebarOpen(false)}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '10px',
-                padding: '9px 12px', borderRadius: '10px', marginBottom: '2px',
-                fontSize: '13px', fontWeight: isActive(link.path) ? 600 : 400,
-                background: isActive(link.path) ? 'rgba(91,79,224,.35)' : 'transparent',
-                color: isActive(link.path) ? '#fff' : '#b7bade',
-                transition: '.15s',
-                textDecoration: 'none',
-                borderLeft: isActive(link.path) ? '3px solid #e8b355' : '3px solid transparent',
-              }}>
-              <span style={{ fontSize: '15px', flexShrink: 0 }}>{link.ic}</span>
-              <span>{link.label}</span>
-            </Link>
-          ))}
+          {links.map(link => {
+            const IconComponent = link.ic;
+            return (
+              <Link key={link.path} to={link.path} onClick={() => setSidebarOpen(false)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '10px',
+                  padding: '9px 12px', borderRadius: '10px', marginBottom: '2px',
+                  fontSize: '13px', fontWeight: isActive(link.path) ? 600 : 400,
+                  background: isActive(link.path) ? 'rgba(91,79,224,.35)' : 'transparent',
+                  color: isActive(link.path) ? '#fff' : '#b7bade',
+                  transition: '.15s',
+                  textDecoration: 'none',
+                  borderLeft: isActive(link.path) ? '3px solid #e8b355' : '3px solid transparent',
+                }}>
+                {IconComponent && <IconComponent style={{ fontSize: '14px', flexShrink: 0 }} />}
+                <span>{link.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Logout at bottom */}
         <div style={{ padding: '12px 10px', borderTop: '1px solid rgba(255,255,255,.06)' }}>
           <button onClick={handleLogout}
             style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '9px 12px', borderRadius: '10px', background: 'none', border: 'none', cursor: 'pointer', color: '#9ea1c4', fontSize: '13px', fontFamily: 'Inter,sans-serif', transition: '.15s' }}>
-            🚪 <span>Logout</span>
+            <FaSignOutAlt style={{ fontSize: '14px', flexShrink: 0 }} /> <span>Logout</span>
           </button>
         </div>
       </aside>

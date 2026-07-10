@@ -19,19 +19,14 @@ import Projects from './pages/website/Projects';
 import ProjectDetails from './pages/website/ProjectDetails';
 import PlotMap from './pages/website/PlotMap';
 import Calculators from './pages/website/Calculators';
-import Blogs from './pages/website/Blogs';
-import BlogDetails from './pages/website/BlogDetails';
-import Gallery from './pages/website/Gallery';
 import Contact from './pages/website/Contact';
 import About from './pages/website/About';
-import FAQ from './pages/website/FAQ';
 import BookVisit from './pages/website/BookVisit';
 import AIRecommendation from './pages/website/AIRecommendation';
 import SmartFeatures from './pages/website/SmartFeatures';
 import AIChatbot from './pages/features/AIChatbot';
 import PropertyComparison from './pages/features/PropertyComparison';
 import PropertyValuation from './pages/features/PropertyValuation';
-import CustomerReviews from './pages/features/CustomerReviews';
 import VirtualSiteTour from './pages/features/VirtualSiteTour';
 import PriceTimer from './pages/features/PriceTimer';
 import InteriorVisualizer from './pages/features/InteriorVisualizer';
@@ -54,10 +49,6 @@ import ManageDocuments from './pages/dashboard/admin/ManageDocuments';
 import ManageSiteVisits from './pages/dashboard/admin/ManageSiteVisits';
 import ManageConstructionUpdates from './pages/dashboard/admin/ManageConstructionUpdates';
 import ManageChannelPartners from './pages/dashboard/admin/ManageChannelPartners';
-import ManageReviews from './pages/dashboard/admin/ManageReviews';
-import ManageBlogs from './pages/dashboard/admin/ManageBlogs';
-import ManageGallery from './pages/dashboard/admin/ManageGallery';
-import ManageFAQs from './pages/dashboard/admin/ManageFAQs';
 import ManageSettings from './pages/dashboard/admin/ManageSettings';
 import ManageUsers from './pages/dashboard/admin/ManageUsers';
 
@@ -106,19 +97,14 @@ export default function App() {
       <Route path="/projects/:slug" element={<PublicLayout><ProjectDetails /></PublicLayout>} />
       <Route path="/plot-map" element={<PublicLayout><PlotMap /></PublicLayout>} />
       <Route path="/calculators" element={<PublicLayout><Calculators /></PublicLayout>} />
-      <Route path="/blogs" element={<PublicLayout><Blogs /></PublicLayout>} />
-      <Route path="/blogs/:slug" element={<PublicLayout><BlogDetails /></PublicLayout>} />
-      <Route path="/gallery" element={<PublicLayout><Gallery /></PublicLayout>} />
       <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
-      <Route path="/faq" element={<PublicLayout><FAQ /></PublicLayout>} />
       <Route path="/book-visit" element={<PublicLayout><BookVisit /></PublicLayout>} />
       <Route path="/ai-recommendation" element={<PublicLayout><AIRecommendation /></PublicLayout>} />
       <Route path="/smart-features" element={<PublicLayout><SmartFeatures /></PublicLayout>} />
       <Route path="/ai-chatbot" element={<PublicLayout><AIChatbot /></PublicLayout>} />
       <Route path="/property-comparison" element={<PublicLayout><PropertyComparison /></PublicLayout>} />
       <Route path="/property-valuation" element={<PublicLayout><PropertyValuation /></PublicLayout>} />
-      <Route path="/reviews" element={<PublicLayout><CustomerReviews /></PublicLayout>} />
       <Route path="/virtual-tour" element={<PublicLayout><VirtualSiteTour /></PublicLayout>} />
       <Route path="/price-timer" element={<PublicLayout><PriceTimer /></PublicLayout>} />
       <Route path="/interior-visualizer" element={<PublicLayout><InteriorVisualizer /></PublicLayout>} />
@@ -153,10 +139,6 @@ export default function App() {
         <Route path="site-visits" element={<ManageSiteVisits />} />
         <Route path="construction-updates" element={<ManageConstructionUpdates />} />
         <Route path="channel-partners" element={<ManageChannelPartners />} />
-        <Route path="reviews" element={<ManageReviews />} />
-        <Route path="blogs" element={<ManageBlogs />} />
-        <Route path="gallery" element={<ManageGallery />} />
-        <Route path="faqs" element={<ManageFAQs />} />
         <Route path="settings" element={<ManageSettings />} />
         <Route path="users" element={<ManageUsers />} />
       </Route>

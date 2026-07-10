@@ -5,18 +5,28 @@ import { getAdminDashboard } from '../../../api/dashboard';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import { 
+  FaBuilding, 
+  FaMap, 
+  FaCheckCircle, 
+  FaTimesCircle, 
+  FaLock, 
+  FaRupeeSign, 
+  FaChartLine, 
+  FaMapMarkerAlt 
+} from 'react-icons/fa';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const statCards = [
-  { key: 'totalProjects',      label: 'Projects',        ic: '🏗', color: '#3a2fb8' },
-  { key: 'totalPlots',         label: 'Total Plots',     ic: '▤',  color: '#5b4fe0' },
-  { key: 'availablePlots',     label: 'Available',       ic: '✅', color: '#2f9e5c' },
-  { key: 'soldPlots',          label: 'Sold',            ic: '🔴', color: '#c0392b' },
-  { key: 'reservedPlots',      label: 'Reserved',        ic: '🔒', color: '#d99f36' },
-  { key: 'revenue',            label: 'Revenue',         ic: '₹',  color: '#2f9e5c', money: true },
-  { key: 'totalLeads',         label: 'Leads',           ic: '📈', color: '#7a3fd6' },
-  { key: 'siteVisitsThisMonth',label: 'Site Visits',     ic: '📍', color: '#3a2fb8' },
+  { key: 'totalProjects',      label: 'Projects',        ic: FaBuilding, color: '#3a2fb8' },
+  { key: 'totalPlots',         label: 'Total Plots',     ic: FaMap,  color: '#5b4fe0' },
+  { key: 'availablePlots',     label: 'Available',       ic: FaCheckCircle, color: '#2f9e5c' },
+  { key: 'soldPlots',          label: 'Sold',            ic: FaTimesCircle, color: '#c0392b' },
+  { key: 'reservedPlots',      label: 'Reserved',        ic: FaLock, color: '#d99f36' },
+  { key: 'revenue',            label: 'Revenue',         ic: FaRupeeSign,  color: '#2f9e5c', money: true },
+  { key: 'totalLeads',         label: 'Leads',           ic: FaChartLine, color: '#7a3fd6' },
+  { key: 'siteVisitsThisMonth',label: 'Site Visits',     ic: FaMapMarkerAlt, color: '#3a2fb8' },
 ];
 
 export default function AdminDashboard() {
@@ -93,15 +103,15 @@ export default function AdminDashboard() {
 
       {/* Stat cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '28px' }}>
-        {statCards.map(({ key, label, ic, color, money }) => (
+        {statCards.map(({ key, label, ic: IconComponent, color, money }) => (
           <div key={key} style={{
             background: '#fff', borderRadius: '14px',
             border: '1px solid #e6e6f0', padding: '20px',
             boxShadow: '0 2px 10px rgba(20,20,60,.05)',
             transition: '.2s',
           }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', marginBottom: '12px' }}>
-              {ic}
+            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', marginBottom: '12px', color: color }}>
+              {IconComponent && <IconComponent />}
             </div>
             <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '22px', fontWeight: 800, color: color, lineHeight: 1 }}>
               {money ? '₹' + ((stats[key] || 0) / 100000).toFixed(1) + 'L' : (stats[key] || 0)}

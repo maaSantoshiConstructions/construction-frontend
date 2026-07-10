@@ -37,8 +37,9 @@ export default function ManageSiteVisits() {
 
   const fetchUsers = async () => {
     try {
-      const { data: res } = await getUsers({ role: 'sales_executive', limit: 100 });
-      setUsers(res?.data || []);
+      const { data: res } = await getUsers({ limit: 100 });
+      const staff = (res?.data || []).filter(u => ['super_admin', 'company_admin', 'sales_executive'].includes(u.role));
+      setUsers(staff);
     } catch {}
   };
 
@@ -47,7 +48,7 @@ export default function ManageSiteVisits() {
 
   const handleAssign = async (visitId, userId) => {
     try {
-      await updateSiteVisit(visitId, { assignedTo: userId });
+      await updateSiteVisit(visitId, { salesExecutive: userId });
       toast.success('Executive assigned');
       fetchVisits();
     } catch (err) {
@@ -80,7 +81,7 @@ export default function ManageSiteVisits() {
     { key: 'plot', label: 'Plot', render: r => r.plot?.plotNumber ? `#${r.plot.plotNumber}` : '-' },
     { key: 'date', label: 'Date', render: r => r.preferredDate ? new Date(r.preferredDate).toLocaleDateString() : r.date ? new Date(r.date).toLocaleDateString() : '-' },
     { key: 'time', label: 'Time', render: r => r.preferredTime || r.time || r.slot || '-' },
-    { key: 'executive', label: 'Executive', render: r => r.assignedTo?.name || r.executive?.name || <span className="text-slate-400 text-xs">Unassigned</span> },
+    { key: 'executive', label: 'Executive', render: r => r.salesExecutive?.name || <span className="text-slate-400 text-xs">Unassigned</span> },
     { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status}</span> },
     { key: 'actions', label: 'Actions', render: r => (
       <div className="flex items-center gap-1">

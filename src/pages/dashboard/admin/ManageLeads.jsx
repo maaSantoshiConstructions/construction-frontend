@@ -20,7 +20,7 @@ const scoreColors = {
 };
 
 const sourceColors = {
-  website: 'bg-orange-100 text-orange-700', referral: 'bg-green-100 text-green-700',
+  website: 'bg-orange-100 text-orange-700', website_contact: 'bg-orange-100 text-orange-700', referral: 'bg-green-100 text-green-700',
   walk_in: 'bg-amber-100 text-amber-700', call: 'bg-orange-100 text-orange-700',
   social_media: 'bg-pink-100 text-pink-700', partner: 'bg-amber-100 text-amber-700',
 };
@@ -55,8 +55,9 @@ export default function ManageLeads() {
 
   const fetchUsers = async () => {
     try {
-      const { data: res } = await getUsers({ role: 'sales_executive', limit: 100 });
-      setUsers(res?.data || []);
+      const { data: res } = await getUsers({ limit: 100 });
+      const staff = (res?.data || []).filter(u => ['super_admin', 'company_admin', 'sales_executive'].includes(u.role));
+      setUsers(staff);
     } catch {}
   };
 
@@ -141,7 +142,7 @@ export default function ManageLeads() {
       )}
 
       {showStatusModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" onClick={() => setShowStatusModal(false)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-2xl shadow-xl w-full max-w-sm" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between p-5 border-b border-slate-200">
               <h2 className="text-lg font-semibold text-slate-800">Update Status</h2>
@@ -162,8 +163,8 @@ export default function ManageLeads() {
       )}
 
       {showNoteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" onClick={() => setShowNoteModal(false)}>
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-2xl shadow-xl w-full max-w-sm" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-2xl shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between p-5 border-b border-slate-200">
               <h2 className="text-lg font-semibold text-slate-800">Add Note</h2>
               <button onClick={() => setShowNoteModal(false)} className="p-1 hover:bg-slate-100 rounded-lg"><FaTimes /></button>

@@ -466,12 +466,11 @@ export default function ManagePlots() {
 
       {/* Add / Edit Plot Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs" onClick={() => setShowModal(false)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden"
-            onClick={e => e.stopPropagation()}
           >
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col max-h-[85vh] overflow-hidden">
               {/* Sticky Header */}
