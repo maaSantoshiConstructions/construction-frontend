@@ -66,7 +66,7 @@ export default function ManagePlots() {
     try {
       const { data: res } = await getProjects({ limit: 100 });
       setProjects(res?.data || []);
-    } catch {}
+    } catch { }
   };
 
   useEffect(() => {
@@ -470,26 +470,29 @@ export default function ManagePlots() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden"
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden"
           >
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col max-h-[85vh] overflow-hidden">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col max-h-[90vh] overflow-hidden">
               {/* Sticky Header */}
-              <div className="flex items-center justify-between px-6 py-4.5 border-b border-slate-100 shrink-0">
-                <h2 className="text-lg font-bold text-slate-800">{editing ? 'Edit Plot Inventory' : 'Add New Plot'}</h2>
-                <button type="button" onClick={() => setShowModal(false)} className="p-1.5 hover:bg-slate-100 rounded-xl transition-colors text-slate-500 hover:text-slate-700">
+              <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 shrink-0">
+                <div>
+                  <h2 className="text-xl font-bold text-slate-800">{editing ? 'Edit Plot Inventory' : 'Add New Plot'}</h2>
+                  <p className="text-xs text-slate-400 mt-0.5">{editing ? 'Update the details of this plot' : 'Fill in the details to add a new plot'}</p>
+                </div>
+                <button type="button" onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400 hover:text-slate-700">
                   <FaTimes />
                 </button>
               </div>
 
               {/* Scrollable Form Body */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              <div className="flex-1 overflow-y-auto px-7 py-6 space-y-8">
                 {/* Section 1: Basic Info */}
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 mb-4 flex items-center gap-2">
-                    <span className="w-1.5 h-3.5 bg-amber-500 rounded-full" />
+                  <h3 className="text-sm font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
+                    <span className="w-1.5 h-4 bg-amber-500 rounded-full" />
                     Basic Information
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
                     <div>
                       <label className="block text-xs font-semibold text-slate-600 mb-1.5">Plot Number *</label>
                       <input
@@ -515,11 +518,11 @@ export default function ManagePlots() {
 
                 {/* Section 2: Dimensions & Specs */}
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 mb-4 flex items-center gap-2">
-                    <span className="w-1.5 h-3.5 bg-amber-500 rounded-full" />
-                    Dimensions & Specifications
+                  <h3 className="text-sm font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
+                    <span className="w-1.5 h-4 bg-amber-500 rounded-full" />
+                    Dimensions &amp; Specifications
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-6 gap-x-5 gap-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-6 gap-x-5 gap-y-5">
                     <div className="md:col-span-2">
                       <label className="block text-xs font-semibold text-slate-600 mb-1.5">Size (sq.ft)</label>
                       <input
@@ -582,11 +585,11 @@ export default function ManagePlots() {
 
                 {/* Section 3: Pricing & Location */}
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-800 border-b border-slate-100 pb-2 mb-4 flex items-center gap-2">
-                    <span className="w-1.5 h-3.5 bg-amber-500 rounded-full" />
-                    Pricing & Location Coordinates
+                  <h3 className="text-sm font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
+                    <span className="w-1.5 h-4 bg-amber-500 rounded-full" />
+                    Pricing &amp; Location Coordinates
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
                     <div>
                       <label className="block text-xs font-semibold text-slate-600 mb-1.5">Total Price (₹)</label>
                       <input
@@ -622,20 +625,20 @@ export default function ManagePlots() {
               </div>
 
               {/* Sticky Footer */}
-              <div className="flex justify-end gap-3 px-6 py-4.5 bg-slate-50 border-t border-slate-100 shrink-0">
+              <div className="flex justify-end gap-3 px-7 py-5 bg-slate-50/80 border-t border-slate-100 shrink-0">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4.5 py-2 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 rounded-xl transition-all shadow-xs active:scale-[0.98]"
+                  className="px-5 py-2.5 bg-white hover:bg-slate-100 text-slate-600 text-sm font-semibold border border-slate-200 rounded-xl transition-all shadow-sm active:scale-[0.98]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-750 text-slate-950 font-bold text-xs rounded-xl flex items-center gap-2 shadow-md shadow-amber-500/10 active:scale-[0.98] transition-all disabled:opacity-50"
+                  className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-sm rounded-xl flex items-center gap-2 shadow-md shadow-amber-500/20 active:scale-[0.98] transition-all disabled:opacity-50"
                 >
-                  {submitting && <span className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />}
+                  {submitting && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                   <span>{editing ? 'Save Changes' : 'Create Plot'}</span>
                 </button>
               </div>
