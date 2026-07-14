@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { createRecommendation } from '../../api/aiRecommendations';
 import {
   FaArrowRight, FaArrowLeft, FaMapMarkerAlt, FaHome, FaStar,
-  FaCheckCircle, FaPhone, FaCompass, FaRegBuilding, FaSeedling,
+  FaCheckCircle, FaPhone, FaCompass, FaRegBuilding,
   FaChartLine, FaBuilding, FaRoad, FaStarHalfAlt, FaRulerCombined,
   FaShieldAlt, FaAsterisk, FaRedo, FaMapPin,
 } from 'react-icons/fa';
@@ -19,9 +19,10 @@ const steps = [
 
 const budgetRanges = [
   { label: 'Under ₹10 Lakhs', value: '0-1000000', icon: '🏠', desc: 'Affordable plots to get started' },
-  { label: '₹10 – ₹15 Lakhs', value: '1000000-1500000', icon: '🏡', desc: 'Mid-range residential options' },
-  { label: '₹15 – ₹20 Lakhs', value: '1500000-2000000', icon: '🏘️', desc: 'Premium plots in prime areas' },
-  { label: 'Above ₹20 Lakhs', value: '2000000+', icon: '🏰', desc: 'Luxury & investment-grade land' },
+  { label: '₹10 – ₹25 Lakhs', value: '1000000-2500000', icon: '🏡', desc: 'Value residential plots' },
+  { label: '₹25 – ₹40 Lakhs', value: '2500000-4000000', icon: '🏘️', desc: 'Mid-range premium options' },
+  { label: '₹40 – ₹60 Lakhs', value: '4000000-6000000', icon: '🏢', desc: 'Premium investment plots' },
+  { label: 'Above ₹60 Lakhs', value: '6000000+', icon: '🏰', desc: 'Luxury & investment-grade land' },
 ];
 
 const locations = [
@@ -32,10 +33,10 @@ const locations = [
 ];
 
 const propertyTypes = [
-  { name: 'Residential Plot', desc: 'Build your dream home', icon: FaHome },
-  { name: 'Commercial Plot', desc: 'Shops, offices & more', icon: FaBuilding },
-  { name: 'Villa', desc: 'Luxury villa plots', icon: FaRegBuilding },
-  { name: 'Farm Land', desc: 'Agricultural & farm plots', icon: FaSeedling },
+  { name: 'Plotted Development', desc: 'Residential plots & land', icon: FaHome },
+  { name: 'Villas', desc: 'Premium villa projects', icon: FaRegBuilding },
+  { name: 'Apartments', desc: 'Flat & apartment units', icon: FaBuilding },
+  { name: 'Commercial', desc: 'Shops, offices & more', icon: FaCompass },
 ];
 
 const purposes = [
