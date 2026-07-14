@@ -35,6 +35,7 @@ import NearbyLocations from './pages/features/NearbyLocations';
 import WhatsAppCRM from './pages/features/WhatsAppCRM';
 import AIFollowupAutomation from './pages/features/AIFollowupAutomation';
 import InvestmentHeatmap from './pages/features/InvestmentHeatmap';
+import ConstructionTracker from './pages/website/ConstructionTracker';
 import NotFound from './pages/website/NotFound';
 
 // Admin Dashboard
@@ -96,6 +97,7 @@ export default function App() {
       <Route path="/projects" element={<PublicLayout><Projects /></PublicLayout>} />
       <Route path="/projects/:slug" element={<PublicLayout><ProjectDetails /></PublicLayout>} />
       <Route path="/plot-map" element={<PublicLayout><PlotMap /></PublicLayout>} />
+      <Route path="/construction-tracker" element={<PublicLayout><ConstructionTracker /></PublicLayout>} />
       <Route path="/calculators" element={<PublicLayout><Calculators /></PublicLayout>} />
       <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />

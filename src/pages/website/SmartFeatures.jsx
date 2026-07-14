@@ -5,7 +5,7 @@ const features = [
   { ic: '📊', title: 'Investment Calculator', desc: 'Predict future land appreciation rates and evaluate your compound investment growth.', path: '/calculators' },
   { ic: '🗺', title: 'Live Plot Map', desc: 'View plot availability, dimensions, and reservations live in real-time.', path: '/plot-map' },
   { ic: '👓', title: 'Virtual Site Visit', desc: 'Tour developments from home with immersive 3D walkthroughs.', path: '/virtual-tour' },
-  { ic: '👷', title: 'Construction Tracker', desc: 'Get live progress updates, photos, and engineering updates directly on your dashboard.', path: '/customer/construction-updates' },
+  { ic: '👷', title: 'Construction Tracker', desc: 'Get live progress updates, photos, and engineering updates directly on your dashboard.', path: '/construction-tracker' },
   { ic: '💬', title: 'AI Sales Assistant', desc: 'Instant 24/7 answers to your pricing, zoning, and project questions.', path: '/ai-chatbot' },
   { ic: '📅', title: 'Smart Booking', desc: 'Reserve plots instantly with a secure online token payment gateway.', path: '/book-visit' },
   { ic: '🎁', title: 'Referral Program', desc: 'Invite friends to invest and earn attractive cash rewards on successful referrals.', path: '/customer/referrals' },
