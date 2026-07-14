@@ -150,7 +150,7 @@ export default function ManageProjects() {
                     <td style={td}>{(page - 1) * 10 + i + 1}</td>
                     <td style={td}><span style={{ fontWeight: 600, color: '#171a35', fontSize: '13.5px' }}>{r.name}</span></td>
                     <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px', textTransform: 'capitalize' }}>{r.type?.replace(/_/g,' ')}</span></td>
-                    <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.location || r.city || '-'}</span></td>
+                    <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.location?.city || r.location?.address || '-'}</span></td>
                     <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.totalPlots || r.plots?.length || 0}</span></td>
                     <td style={td}>
                       <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', background: (statusColor[r.status] || '#3a2fb8') + '18', color: statusColor[r.status] || '#3a2fb8' }}>
