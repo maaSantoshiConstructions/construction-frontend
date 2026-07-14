@@ -1,85 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { createRecommendation } from '../../api/aiRecommendations';
-import {
-  FaArrowRight, FaArrowLeft, FaMapMarkerAlt, FaHome, FaStar,
-  FaCheckCircle, FaPhone, FaCompass, FaRegBuilding,
-  FaChartLine, FaBuilding, FaRoad, FaStarHalfAlt, FaRulerCombined,
-  FaShieldAlt, FaAsterisk, FaRedo, FaMapPin,
-} from 'react-icons/fa';
 
-const steps = [
-  { id: 1, title: 'Budget', description: 'What is your budget range?' },
-  { id: 2, title: 'Location', description: 'Preferred location or city' },
-  { id: 3, title: 'Property Type', description: 'Type of property you need' },
-  { id: 4, title: 'Purpose', description: 'Purpose of purchase' },
-];
-
-const budgetRanges = [
-  { label: 'Under ₹10 Lakhs', value: '0-1000000', icon: '🏠', desc: 'Affordable plots to get started' },
-  { label: '₹10 – ₹25 Lakhs', value: '1000000-2500000', icon: '🏡', desc: 'Value residential plots' },
-  { label: '₹25 – ₹40 Lakhs', value: '2500000-4000000', icon: '🏘️', desc: 'Mid-range premium options' },
-  { label: '₹40 – ₹60 Lakhs', value: '4000000-6000000', icon: '🏢', desc: 'Premium investment plots' },
-  { label: 'Above ₹60 Lakhs', value: '6000000+', icon: '🏰', desc: 'Luxury & investment-grade land' },
-];
-
-const locations = [
-  { name: 'Bhubaneswar', desc: 'Capital city — top appreciation', icon: FaMapPin },
-  { name: 'Cuttack', desc: 'Historic city — growing fast', icon: FaMapMarkerAlt },
-  { name: 'Puri', desc: 'Coastal town — tourism hub', icon: FaMapMarkerAlt },
-  { name: 'Khordha', desc: 'Emerging corridor — great value', icon: FaMapMarkerAlt },
-];
-
-const propertyTypes = [
-  { name: 'Plotted Development', desc: 'Residential plots & land', icon: FaHome },
-  { name: 'Villas', desc: 'Premium villa projects', icon: FaRegBuilding },
-  { name: 'Apartments', desc: 'Flat & apartment units', icon: FaBuilding },
-  { name: 'Commercial', desc: 'Shops, offices & more', icon: FaCompass },
-];
-
-const purposes = [
-  { name: 'Investment', desc: 'High future value appreciation', icon: FaChartLine },
-  { name: 'Self Use', desc: 'Build your own home or office', icon: FaHome },
-  { name: 'Both', desc: 'Utility + investment growth', icon: FaAsterisk },
-];
-
-const PROJECT_IMAGES = [
-  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80',
-  'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
-  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',
-  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80',
-  'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&q=80',
-  'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=600&q=80',
-];
-
-const formatCurrency = (val) => {
-  if (!val) return '—';
-  return '₹ ' + Number(val).toLocaleString('en-IN');
-};
-
-/* ===== Score Ring SVG ===== */
-const ScoreRing = ({ score }) => {
-  const r = 26;
-  const circ = 2 * Math.PI * r;
-  const offset = circ - (score / 100) * circ;
-  const color = score >= 75 ? '#2ecc71' : score >= 50 ? '#f39c12' : '#e74c3c';
-  return (
-    <div className="score-ring-wrap">
-      <svg width="64" height="64" style={{ transform: 'rotate(-90deg)' }}>
-        <circle cx="32" cy="32" r={r} fill="none" stroke="#e6e6f0" strokeWidth="5" />
-        <circle cx="32" cy="32" r={r} fill="none" stroke={color} strokeWidth="5"
-          strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
-          style={{ transition: 'stroke-dashoffset 1s ease' }} />
-      </svg>
-      <div className="score-ring-inner">
-        <span className="score-ring-num" style={{ color }}>{score}</span>
-        <span className="score-ring-lbl">% MATCH</span>
-      </div>
-    </div>
-  );
-};
+// Import refactored modular components
+import RecommendationLoading from '../../components/ai-recommendation/RecommendationLoading';
+import RecommendationResults from '../../components/ai-recommendation/RecommendationResults';
+import RecommendationWizard from '../../components/ai-recommendation/RecommendationWizard';
 
 export default function AIRecommendation() {
   const [step, setStep] = useState(1);
@@ -92,17 +18,26 @@ export default function AIRecommendation() {
   const getFieldForStep = (s) => ({ 1: 'budget', 2: 'location', 3: 'propertyType', 4: 'purpose' })[s];
 
   const handleNext = () => {
-    if (!formData[getFieldForStep(step)]) { toast.error('Please select an option to continue'); return; }
-    if (step < 4) setStep(step + 1); else handleSubmit();
+    if (!formData[getFieldForStep(step)]) {
+      toast.error('Please select an option to continue');
+      return;
+    }
+    if (step < 4) setStep(step + 1);
+    else handleSubmit();
   };
 
-  const handleBack = () => { if (step > 1) setStep(step - 1); };
+  const handleBack = () => {
+    if (step > 1) setStep(step - 1);
+  };
 
   useEffect(() => {
     if (!loading) return;
     let i = 0;
     setAnalyzingStep(0);
-    const iv = setInterval(() => { i++; if (i < 4) setAnalyzingStep(i); }, 600);
+    const iv = setInterval(() => {
+      i++;
+      if (i < 4) setAnalyzingStep(i);
+    }, 600);
     return () => clearInterval(iv);
   }, [loading]);
 
@@ -125,271 +60,40 @@ export default function AIRecommendation() {
   };
 
   const resetWizard = () => {
-    setResults(null); setStep(1);
+    setResults(null);
+    setStep(1);
     setFormData({ budget: '', location: '', propertyType: '', purpose: '' });
   };
 
   /* ===== LOADING STATE ===== */
   if (loading) {
-    return (
-      <div className="ai-page">
-        <div className="ai-loading-card">
-          <motion.div className="ai-loading-spinner" animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }} />
-          <h3 className="ai-loading-title">Finding Your Perfect Plot</h3>
-          <p className="ai-loading-sub">Our intelligent engine is analyzing hundreds of plots to match your preferences.</p>
-          <div className="ai-loading-steps">
-            {['Scanning available plots...', 'Analyzing location data...', 'Calculating price matches...', 'Ranking best options...'].map((msg, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: analyzingStep >= i ? 1 : 0.35, x: 0 }} transition={{ delay: i * 0.15 }}
-                className={`ai-loading-step ${analyzingStep >= i ? 'active' : ''}`}>
-                {analyzingStep > i ? <FaCheckCircle className="ai-loading-step-icon done" />
-                  : analyzingStep === i ? <motion.div className="ai-loading-step-spinner" animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }} />
-                    : <div className="ai-loading-step-dot" />}
-                {msg}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
+    return <RecommendationLoading analyzingStep={analyzingStep} />;
   }
 
   /* ===== RESULTS STATE ===== */
   if (results) {
-    const plots = results.recommendedPlots || [];
     return (
-      <div className="ai-page">
-        {/* Header */}
-        <div className="ai-header">
-          <div className="ai-header-orb" />
-          <div className="wrap" style={{ textAlign: 'center' }}>
-            <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>AI POWERED ANALYSIS</span>
-            <h1 className="ai-header-title">Your Matched Properties</h1>
-            <p className="ai-header-desc">
-              {plots.length > 0
-                ? `Found ${results.totalResults || plots.length} plots — showing top ${plots.length} matches ranked by compatibility.`
-                : 'No plots matched your exact criteria. Try adjusting your preferences.'}
-            </p>
-          </div>
-        </div>
-
-        <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10 }}>
-          <div className="ai-results-container">
-            {/* Preference pills */}
-            <div className="ai-prefs-bar">
-              <span className="ai-prefs-label">Your Preferences:</span>
-              <span className="ai-pill">{budgetRanges.find((b) => b.value === formData.budget)?.label || formData.budget}</span>
-              <span className="ai-pill">{formData.location}</span>
-              <span className="ai-pill">{formData.propertyType}</span>
-              <span className="ai-pill">{formData.purpose}</span>
-            </div>
-
-            {plots.length === 0 ? (
-              <div className="ai-empty-card">
-                <div className="ai-empty-icon">🔍</div>
-                <h3 className="ai-empty-title">No Matching Plots Found</h3>
-                <p className="ai-empty-desc">We couldn't find plots matching your exact preferences. Try adjusting your budget range or exploring a different location.</p>
-                <button onClick={resetWizard} className="ai-retry-btn"><FaRedo /> Adjust Preferences</button>
-              </div>
-            ) : (
-              <div className="ai-results-list">
-                {plots.map((rec, i) => {
-                  const plot = rec.plot || {};
-                  const project = rec.project || plot.project || {};
-                  const image = project.images?.[0] || PROJECT_IMAGES[i % PROJECT_IMAGES.length];
-                  return (
-                    <motion.div key={rec.plot?._id || i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
-                      className="ai-result-card">
-                      {i === 0 && <div className="ai-top-badge"><FaStar /> TOP MATCH</div>}
-                      <div className="ai-result-img-wrap">
-                        <img src={image} alt={plot.plotNumber || 'Plot'} className="ai-result-img" />
-                        <div className="ai-result-plot-tag">Plot {plot.plotNumber || 'N/A'}</div>
-                      </div>
-                      <div className="ai-result-body">
-                        <div className="ai-result-head">
-                          <div className="ai-result-head-text">
-                            <h3 className="ai-result-name">{project.name || 'Recommended Plot'}</h3>
-                            <p className="ai-result-loc">
-                              <FaMapMarkerAlt />
-                              {project.location?.city || ''}{project.location?.state ? `, ${project.location.state}` : ''}
-                            </p>
-                          </div>
-                          <ScoreRing score={rec.score} />
-                        </div>
-
-                        <div className="ai-result-meta">
-                          <span className="ai-meta-badge"><FaRulerCombined /> {plot.size ? `${plot.size} sq.ft` : '—'}</span>
-                          {plot.facing && <span className="ai-meta-badge"><FaCompass /> {plot.facing}</span>}
-                          {plot.corner && <span className="ai-meta-badge ai-meta-green"><FaStarHalfAlt /> Corner</span>}
-                          {plot.roadWidth && <span className="ai-meta-badge"><FaRoad /> {plot.roadWidth}ft road</span>}
-                        </div>
-
-                        {rec.matchReasons?.length > 0 && (
-                          <div className="ai-reasons">
-                            {rec.matchReasons.slice(0, 3).map((reason, ri) => (
-                              <div key={ri} className="ai-reason"><FaCheckCircle className="ai-reason-icon" />{reason}</div>
-                            ))}
-                          </div>
-                        )}
-
-                        {rec.scoreBreakdown?.length > 0 && (
-                          <div className="ai-breakdown">
-                            {rec.scoreBreakdown.slice(0, 4).map((item, bi) => (
-                              <span key={bi} className="ai-breakdown-tag">{item.label} +{item.points}</span>
-                            ))}
-                          </div>
-                        )}
-
-                        <div className="ai-result-foot">
-                          <div className="ai-result-price-col">
-                            <span className="ai-result-price">{formatCurrency(plot.price)}</span>
-                            {plot.pricePerSqft && <span className="ai-result-psf">@ ₹{plot.pricePerSqft.toLocaleString('en-IN')}/sq.ft</span>}
-                          </div>
-                          <div className="ai-result-actions">
-                            <Link to="/book-visit" className="btn-gold ai-visit-btn">Schedule Visit <FaArrowRight /></Link>
-                            <a href="tel:+917000012345" className="ai-call-btn"><FaPhone /> Call</a>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            )}
-
-            <div className="ai-reset-row">
-              <button onClick={resetWizard} className="ai-reset-link"><FaRedo /> Start New Search</button>
-            </div>
-          </div>
-        </div>
-
-        <style>{resultStyles}</style>
-      </div>
+      <RecommendationResults
+        results={results}
+        formData={formData}
+        resetWizard={resetWizard}
+        resultStyles={resultStyles}
+      />
     );
   }
 
   /* ===== WIZARD STATE ===== */
   return (
-    <div className="ai-page">
-      {/* Header */}
-      <div className="ai-header">
-        <div className="ai-header-orb" />
-        <div className="wrap" style={{ textAlign: 'center' }}>
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>AI PROPERTY FINDER</span>
-          <h1 className="ai-header-title">Find Your Perfect Plot</h1>
-          <p className="ai-header-desc">Answer 4 quick questions and our intelligent engine will match you with the best available plots.</p>
-        </div>
-      </div>
-
-      <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10 }}>
-        <div className="ai-wizard-container">
-          <div className="ai-wizard-card">
-            {/* Stepper */}
-            <div className="ai-stepper">
-              {steps.map((s) => (
-                <div key={s.id} className="ai-stepper-item">
-                  <div className={`ai-stepper-circle ${step > s.id ? 'done' : step === s.id ? 'active' : ''}`}>
-                    {step > s.id ? <FaCheckCircle /> : s.id}
-                  </div>
-                  <span className={`ai-stepper-title ${step >= s.id ? 'active' : ''}`}>{s.title}</span>
-                  {s.id < 4 && <div className={`ai-stepper-line ${step > s.id ? 'done' : ''}`} />}
-                </div>
-              ))}
-            </div>
-
-            <div className="ai-step-counter">Step {step} of 4</div>
-
-            <AnimatePresence mode="wait">
-              <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
-                {step === 1 && (
-                  <div>
-                    <h2 className="ai-form-title">What's your budget?</h2>
-                    <p className="ai-form-sub">Select the range that works best for you.</p>
-                    <div className="ai-wizard-grid">
-                      {budgetRanges.map((r) => (
-                        <button key={r.value} type="button" onClick={() => updateField('budget', r.value)}
-                          className={`ai-option-card ${formData.budget === r.value ? 'selected' : ''}`}>
-                          <span className="ai-option-emoji">{r.icon}</span>
-                          <span className="ai-option-label">{r.label}</span>
-                          <span className="ai-option-desc">{r.desc}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {step === 2 && (
-                  <div>
-                    <h2 className="ai-form-title">Preferred Location</h2>
-                    <p className="ai-form-sub">Where are you looking to buy or invest?</p>
-                    <div className="ai-wizard-grid">
-                      {locations.map((loc) => (
-                        <button key={loc.name} type="button" onClick={() => updateField('location', loc.name)}
-                          className={`ai-option-card ${formData.location === loc.name ? 'selected' : ''}`}>
-                          <loc.icon className={`ai-option-icon ${formData.location === loc.name ? 'active' : ''}`} />
-                          <span className="ai-option-label">{loc.name}</span>
-                          <span className="ai-option-desc">{loc.desc}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {step === 3 && (
-                  <div>
-                    <h2 className="ai-form-title">Property Type</h2>
-                    <p className="ai-form-sub">What kind of property are you looking for?</p>
-                    <div className="ai-wizard-grid">
-                      {propertyTypes.map((t) => (
-                        <button key={t.name} type="button" onClick={() => updateField('propertyType', t.name)}
-                          className={`ai-option-card ${formData.propertyType === t.name ? 'selected' : ''}`}>
-                          <t.icon className={`ai-option-icon ${formData.propertyType === t.name ? 'active' : ''}`} />
-                          <span className="ai-option-label">{t.name}</span>
-                          <span className="ai-option-desc">{t.desc}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {step === 4 && (
-                  <div>
-                    <h2 className="ai-form-title">Purpose of Purchase</h2>
-                    <p className="ai-form-sub">What's your primary goal?</p>
-                    <div className="ai-purpose-list">
-                      {purposes.map((p) => (
-                        <button key={p.name} type="button" onClick={() => updateField('purpose', p.name)}
-                          className={`ai-purpose-card ${formData.purpose === p.name ? 'selected' : ''}`}>
-                          <div className={`ai-purpose-icon-box ${formData.purpose === p.name ? 'active' : ''}`}>
-                            <p.icon />
-                          </div>
-                          <div className="ai-purpose-text">
-                            <span className="ai-purpose-name">{p.name}</span>
-                            <span className="ai-purpose-desc">{p.desc}</span>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Actions */}
-            <div className="ai-form-actions">
-              <button type="button" onClick={handleBack} disabled={step === 1}
-                className={`ai-back-btn ${step === 1 ? 'disabled' : ''}`}>
-                <FaArrowLeft /> Back
-              </button>
-              <button type="button" onClick={handleNext} disabled={loading}
-                className={`btn-gold ai-next-btn ${!formData[getFieldForStep(step)] ? 'dim' : ''}`}>
-                {step === 4 ? <>Get Recommendations <FaArrowRight /></> : <>Continue <FaArrowRight /></>}
-              </button>
-            </div>
-          </div>
-
-          <p className="ai-privacy-note"><FaShieldAlt /> Your preferences are secure and never shared with third parties.</p>
-        </div>
-      </div>
-
-      <style>{wizardStyles}</style>
-    </div>
+    <RecommendationWizard
+      step={step}
+      formData={formData}
+      updateField={updateField}
+      getFieldForStep={getFieldForStep}
+      handleBack={handleBack}
+      handleNext={handleNext}
+      loading={loading}
+      wizardStyles={wizardStyles}
+    />
   );
 }
 
