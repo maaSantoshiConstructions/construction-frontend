@@ -54,7 +54,7 @@ export default function AIChatbot() {
         setSessionId(data.data.sessionId);
         localStorage.setItem('chatSessionId', data.data.sessionId);
       }
-      const botReply = data?.data?.botResponse || "Thank you! A relationship manager will contact you within 10 minutes.";
+      const botReply = data?.data?.botMessage?.content || data?.data?.botResponse || "Thank you! A relationship manager will contact you within 10 minutes.";
       setTimeout(() => {
         addMessage('bot', botReply);
         setLoading(false);
