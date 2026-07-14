@@ -150,11 +150,11 @@ export default function ManagePlots() {
       key: 'plotNumber',
       label: 'Plot #',
       render: r => (
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-slate-900 text-sm">#{r.plotNumber}</span>
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-slate-900 text-[14px] tracking-tight">#{r.plotNumber}</span>
             {r.corner && (
-              <span className="px-1.5 py-0.5 text-[9px] font-extrabold bg-amber-50 text-amber-750 border border-amber-200 rounded uppercase tracking-wider">
+              <span className="px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full uppercase tracking-wide">
                 Corner
               </span>
             )}
@@ -164,9 +164,9 @@ export default function ManagePlots() {
               href={`https://www.google.com/maps/search/?api=1&query=${r.coordinates.lat},${r.coordinates.lng}`}
               target="_blank"
               rel="noreferrer"
-              className="text-[10px] text-amber-600 hover:text-amber-750 flex items-center gap-0.5 font-medium underline"
+              className="text-[11px] text-amber-600 hover:text-amber-700 flex items-center gap-1 font-semibold transition-colors duration-200"
             >
-              <FaMapMarkerAlt className="text-[9px]" /> View Map
+              <FaMapMarkerAlt className="text-[10px]" /> View Map
             </a>
           )}
         </div>
@@ -176,10 +176,10 @@ export default function ManagePlots() {
       key: 'project',
       label: 'Project Details',
       render: r => (
-        <div className="flex flex-col">
-          <span className="font-medium text-slate-900">{r.project?.name || '-'}</span>
+        <div className="flex flex-col gap-0.5">
+          <span className="font-semibold text-slate-900 text-[14px] leading-snug">{r.project?.name || '-'}</span>
           {r.project?.type && (
-            <span className="text-[11px] text-slate-500 capitalize">
+            <span className="text-[12px] text-slate-400 capitalize font-medium">
               {r.project.type.replace(/_/g, ' ')}
             </span>
           )}
@@ -190,13 +190,13 @@ export default function ManagePlots() {
       key: 'size',
       label: 'Dimensions & Size',
       render: r => (
-        <div className="flex flex-col">
-          <div className="font-medium text-slate-900 flex items-center gap-1">
-            <FaRulerCombined className="text-[11px] text-slate-400" />
+        <div className="flex flex-col gap-0.5">
+          <div className="font-semibold text-slate-900 text-[14px] flex items-center gap-1.5">
+            <FaRulerCombined className="text-[11px] text-slate-400 shrink-0" />
             <span>{r.size ? `${r.size.toLocaleString('en-IN')} sq.ft` : '-'}</span>
           </div>
           {r.length && r.width && (
-            <span className="text-[11px] text-slate-500 pl-4">
+            <span className="text-[12px] text-slate-400 font-medium pl-5">
               {r.length} × {r.width} ft
             </span>
           )}
@@ -207,14 +207,14 @@ export default function ManagePlots() {
       key: 'facing',
       label: 'Facing & Road',
       render: r => (
-        <div className="flex flex-col">
-          <div className="font-medium text-slate-900 flex items-center gap-1">
-            <FaCompass className="text-[11px] text-slate-400" />
+        <div className="flex flex-col gap-0.5">
+          <div className="font-semibold text-slate-900 text-[14px] flex items-center gap-1.5">
+            <FaCompass className="text-[11px] text-slate-400 shrink-0" />
             <span>{r.facing || '-'}</span>
           </div>
           {r.roadWidth && (
-            <span className="text-[11px] text-slate-500 pl-4 flex items-center gap-0.5">
-              <FaRoad className="text-[9px]" /> {r.roadWidth} ft road
+            <span className="text-[12px] text-slate-400 font-medium pl-5 flex items-center gap-1">
+              <FaRoad className="text-[10px]" /> {r.roadWidth} ft road
             </span>
           )}
         </div>
@@ -241,15 +241,15 @@ export default function ManagePlots() {
             label: 'SOLD'
           },
           blocked: {
-            bg: 'bg-slate-50 text-slate-600 border-slate-200',
-            dot: 'bg-slate-500',
+            bg: 'bg-slate-100 text-slate-600 border-slate-200',
+            dot: 'bg-slate-400',
             label: 'BLOCKED'
           },
         };
         const st = config[r.status] || config.available;
         return (
-          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold border ${st.bg}`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${st.dot}`} />
+          <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold border ${st.bg}`}>
+            <span className={`w-2 h-2 rounded-full ${st.dot}`} />
             {st.label}
           </span>
         );
@@ -259,12 +259,12 @@ export default function ManagePlots() {
       key: 'price',
       label: 'Pricing Details',
       render: r => (
-        <div className="flex flex-col">
-          <span className="font-semibold text-slate-900">
+        <div className="flex flex-col gap-0.5">
+          <span className="font-bold text-slate-900 text-[14px]">
             {r.price ? `₹${r.price.toLocaleString('en-IN')}` : '-'}
           </span>
           {r.price && r.size && (
-            <span className="text-[10px] text-slate-500 font-medium">
+            <span className="text-[12px] text-slate-400 font-medium">
               ₹{Math.round(r.price / r.size).toLocaleString('en-IN')}/sq.ft
             </span>
           )}
@@ -275,12 +275,12 @@ export default function ManagePlots() {
       key: 'owner',
       label: 'Owner / Booking',
       render: r => r.owner ? (
-        <div className="flex flex-col">
-          <span className="font-medium text-slate-900 text-sm">{r.owner.name}</span>
-          <span className="text-[11px] text-slate-500">{r.owner.phone || r.owner.email}</span>
+        <div className="flex flex-col gap-0.5">
+          <span className="font-semibold text-slate-900 text-[14px]">{r.owner.name}</span>
+          <span className="text-[12px] text-slate-400 font-medium">{r.owner.phone || r.owner.email}</span>
         </div>
       ) : (
-        <span className="text-slate-400 text-xs font-medium">Not Assigned</span>
+        <span className="inline-flex items-center px-2.5 py-1 bg-slate-50 text-slate-400 text-[12px] font-semibold rounded-lg border border-slate-100">Not Assigned</span>
       )
     },
     {
@@ -290,17 +290,17 @@ export default function ManagePlots() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => openEdit(r)}
-            className="p-1.5 text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-lg transition-colors"
+            className="w-8 h-8 flex items-center justify-center text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-full border border-transparent hover:border-amber-200 transition-all duration-200"
             title="Edit Plot"
           >
-            <FaEdit className="text-base" />
+            <FaEdit className="text-[13px]" />
           </button>
           <button
             onClick={() => handleDelete(r._id)}
-            className="p-1.5 text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors"
+            className="w-8 h-8 flex items-center justify-center text-rose-500 hover:text-rose-600 hover:bg-rose-50 rounded-full border border-transparent hover:border-rose-200 transition-all duration-200"
             title="Delete Plot"
           >
-            <FaTrash className="text-sm" />
+            <FaTrash className="text-[12px]" />
           </button>
         </div>
       )
@@ -308,126 +308,128 @@ export default function ManagePlots() {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-7">
+      {/* ─── Page Header ─── */}
+      <div className="flex items-center justify-between" style={{ marginBottom: '4px' }}>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 font-display">Manage Plots</h1>
-          <p className="text-slate-500 text-sm">Real-time plot inventory, pricing, and specs</p>
+          <h1 style={{ fontSize: '32px', fontWeight: 800, color: '#0f172a', lineHeight: 1.2, letterSpacing: '-0.5px', margin: 0 }}>Manage Plots</h1>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginTop: '6px', fontWeight: 500, margin: '6px 0 0 0' }}>Real-time plot inventory, pricing, and specs</p>
         </div>
         <button
           onClick={openCreate}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-750 text-slate-950 text-sm font-bold rounded-xl shadow-md shadow-amber-500/10 active:scale-[0.98] transition-all"
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 22px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff', fontSize: '14px', fontWeight: 700, borderRadius: '12px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 15px rgba(245,158,11,0.3)', transition: 'all 0.2s ease', fontFamily: 'inherit' }}
+          onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(245,158,11,0.4)'; }}
+          onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(245,158,11,0.3)'; }}
         >
-          <FaPlus className="text-xs" /> Add Plot
+          <FaPlus style={{ fontSize: '11px' }} /> Add Plot
         </button>
       </div>
 
-      {/* Stats Cards Section */}
+      {/* ─── Stats Cards ─── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {/* Total Plots */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl border border-slate-200 p-4.5 shadow-sm relative overflow-hidden group flex items-center gap-3.5"
+
+        {/* Total */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+          style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px', minHeight: '88px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
+          onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
+          onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
         >
-          <div className="absolute top-0 left-0 w-1.5 h-full bg-slate-400" />
-          <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 shrink-0">
-            <FaRulerCombined className="text-base" />
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#94a3b8', borderRadius: '12px 0 0 12px' }} />
+          <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', flexShrink: 0 }}>
+            <FaRulerCombined style={{ fontSize: '16px' }} />
           </div>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-slate-500">Total Plots</p>
-            <h3 className="text-xl font-bold text-slate-800 mt-0.5 leading-none">{stats.total}</h3>
+          <div>
+            <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Total Plots</p>
+            <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#1e293b', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.total}</h3>
           </div>
         </motion.div>
 
-        {/* Available Plots */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.03 }}
-          className="bg-white rounded-2xl border border-slate-200 p-4.5 shadow-sm relative overflow-hidden group flex items-center gap-3.5"
+        {/* Available */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+          style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px', minHeight: '88px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
+          onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
+          onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
         >
-          <div className="absolute top-0 left-0 w-1.5 h-full bg-emerald-500" />
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
-            <FaCheckCircle className="text-base" />
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#10b981', borderRadius: '12px 0 0 12px' }} />
+          <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#ecfdf5', border: '1px solid #d1fae5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669', flexShrink: 0 }}>
+            <FaCheckCircle style={{ fontSize: '16px' }} />
           </div>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-slate-500">Available</p>
-            <h3 className="text-xl font-bold text-emerald-600 mt-0.5 leading-none">{stats.available}</h3>
+          <div>
+            <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Available</p>
+            <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#059669', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.available}</h3>
           </div>
         </motion.div>
 
-        {/* Reserved Plots */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.06 }}
-          className="bg-white rounded-2xl border border-slate-200 p-4.5 shadow-sm relative overflow-hidden group flex items-center gap-3.5"
+        {/* Reserved */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px', minHeight: '88px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
+          onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
+          onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
         >
-          <div className="absolute top-0 left-0 w-1.5 h-full bg-amber-500" />
-          <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
-            <FaLock className="text-base" />
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#f59e0b', borderRadius: '12px 0 0 12px' }} />
+          <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#fffbeb', border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', flexShrink: 0 }}>
+            <FaLock style={{ fontSize: '16px' }} />
           </div>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-slate-500">Reserved</p>
-            <h3 className="text-xl font-bold text-amber-600 mt-0.5 leading-none">{stats.reserved}</h3>
+          <div>
+            <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Reserved</p>
+            <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#d97706', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.reserved}</h3>
           </div>
         </motion.div>
 
-        {/* Sold Plots */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.09 }}
-          className="bg-white rounded-2xl border border-slate-200 p-4.5 shadow-sm relative overflow-hidden group flex items-center gap-3.5"
+        {/* Sold */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+          style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px', minHeight: '88px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
+          onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
+          onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
         >
-          <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-500" />
-          <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
-            <FaCheckDouble className="text-base" />
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#f43f5e', borderRadius: '12px 0 0 12px' }} />
+          <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#fff1f2', border: '1px solid #fecdd3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#e11d48', flexShrink: 0 }}>
+            <FaCheckDouble style={{ fontSize: '16px' }} />
           </div>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-slate-500">Sold</p>
-            <h3 className="text-xl font-bold text-rose-600 mt-0.5 leading-none">{stats.sold}</h3>
+          <div>
+            <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Sold</p>
+            <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#e11d48', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.sold}</h3>
           </div>
         </motion.div>
 
-        {/* Blocked Plots */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.12 }}
-          className="bg-white rounded-2xl border border-slate-200 p-4.5 shadow-sm relative overflow-hidden group flex items-center gap-3.5"
+        {/* Blocked */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+          style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px', minHeight: '88px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
+          onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
+          onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
         >
-          <div className="absolute top-0 left-0 w-1.5 h-full bg-slate-500" />
-          <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 shrink-0">
-            <FaTimes className="text-base" />
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#64748b', borderRadius: '12px 0 0 12px' }} />
+          <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', flexShrink: 0 }}>
+            <FaTimes style={{ fontSize: '16px' }} />
           </div>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-slate-500">Blocked</p>
-            <h3 className="text-xl font-bold text-slate-750 mt-0.5 leading-none">{stats.blocked}</h3>
+          <div>
+            <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Blocked</p>
+            <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#475569', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.blocked}</h3>
           </div>
         </motion.div>
+
       </div>
 
-      {/* Search and Filters Section */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="relative flex-1 max-w-md">
-          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
+      {/* ─── Search & Filters Bar ─── */}
+      <div style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', padding: '14px 18px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+        <div style={{ position: 'relative', flex: 1, minWidth: '220px', maxWidth: '380px' }}>
+          <FaSearch style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', fontSize: '13px', pointerEvents: 'none' }} />
           <input
             type="text"
             placeholder="Search by Plot Number (e.g. 104)..."
             value={searchTerm}
             onChange={e => { setSearchTerm(e.target.value); setPage(1); }}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-2 focus:ring-amber-500/25 focus:border-amber-500 transition-all placeholder-slate-400"
+            style={{ width: '100%', height: '44px', paddingLeft: '40px', paddingRight: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', color: '#334155', outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box', transition: 'border-color 0.2s, box-shadow 0.2s' }}
+            onFocus={e => { e.target.style.borderColor = '#f59e0b'; e.target.style.boxShadow = '0 0 0 3px rgba(245,158,11,0.15)'; e.target.style.background = '#fff'; }}
+            onBlur={e => { e.target.style.borderColor = '#e2e8f0'; e.target.style.boxShadow = 'none'; e.target.style.background = '#f8fafc'; }}
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
           <select
             value={filters.project}
             onChange={e => { setFilters(f => ({ ...f, project: e.target.value })); setPage(1); }}
-            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-500/25 focus:border-amber-500 transition-all font-semibold text-slate-700 min-w-[140px]"
+            style={{ height: '44px', padding: '0 14px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', fontWeight: 600, color: '#334155', outline: 'none', cursor: 'pointer', minWidth: '148px', fontFamily: 'inherit' }}
           >
             <option value="">All Projects</option>
             {projects.map(p => <option key={p._id} value={p._id}>{p.name}</option>)}
@@ -436,7 +438,7 @@ export default function ManagePlots() {
           <select
             value={filters.status}
             onChange={e => { setFilters(f => ({ ...f, status: e.target.value })); setPage(1); }}
-            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-500/25 focus:border-amber-500 transition-all font-semibold text-slate-700 min-w-[130px]"
+            style={{ height: '44px', padding: '0 14px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', fontWeight: 600, color: '#334155', outline: 'none', cursor: 'pointer', minWidth: '140px', fontFamily: 'inherit' }}
           >
             <option value="">All Statuses</option>
             <option value="available">Available</option>
@@ -448,7 +450,7 @@ export default function ManagePlots() {
           <select
             value={filters.facing}
             onChange={e => { setFilters(f => ({ ...f, facing: e.target.value })); setPage(1); }}
-            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-500/25 focus:border-amber-500 transition-all font-semibold text-slate-700 min-w-[130px]"
+            style={{ height: '44px', padding: '0 14px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', fontWeight: 600, color: '#334155', outline: 'none', cursor: 'pointer', minWidth: '140px', fontFamily: 'inherit' }}
           >
             <option value="">All Facings</option>
             {facings.map(f => <option key={f} value={f}>{f}</option>)}
@@ -456,7 +458,7 @@ export default function ManagePlots() {
         </div>
       </div>
 
-      {/* Error / Data table */}
+      {/* ─── Table / Error ─── */}
       {error ? <ErrorMessage message={error} onRetry={() => fetchPlots()} /> : (
         <>
           <DataTable columns={columns} data={plots} loading={loading} />
@@ -464,23 +466,24 @@ export default function ManagePlots() {
         </>
       )}
 
-      {/* Add / Edit Plot Modal */}
+      {/* ─── Add / Edit Plot Modal ─── */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden"
+            initial={{ opacity: 0, scale: 0.96, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-100"
           >
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col max-h-[90vh] overflow-hidden">
-              {/* Sticky Header */}
+              {/* Modal Header */}
               <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 shrink-0">
                 <div>
-                  <h2 className="text-xl font-bold text-slate-800">{editing ? 'Edit Plot Inventory' : 'Add New Plot'}</h2>
-                  <p className="text-xs text-slate-400 mt-0.5">{editing ? 'Update the details of this plot' : 'Fill in the details to add a new plot'}</p>
+                  <h2 className="text-[20px] font-bold text-slate-900 leading-tight">{editing ? 'Edit Plot Inventory' : 'Add New Plot'}</h2>
+                  <p className="text-[13px] text-slate-400 font-medium mt-0.5">{editing ? 'Update the details of this plot' : 'Fill in the details to add a new plot'}</p>
                 </div>
-                <button type="button" onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400 hover:text-slate-700">
-                  <FaTimes />
+                <button type="button" onClick={() => setShowModal(false)} className="w-9 h-9 flex items-center justify-center hover:bg-slate-100 rounded-xl transition-all duration-200 text-slate-400 hover:text-slate-700">
+                  <FaTimes className="text-[14px]" />
                 </button>
               </div>
 
@@ -488,90 +491,90 @@ export default function ManagePlots() {
               <div className="flex-1 overflow-y-auto px-7 py-6 space-y-8">
                 {/* Section 1: Basic Info */}
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
-                    <span className="w-1.5 h-4 bg-amber-500 rounded-full" />
+                  <h3 className="text-[13px] font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2 uppercase tracking-wide">
+                    <span className="w-1 h-4 bg-amber-500 rounded-full" />
                     Basic Information
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Plot Number *</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Plot Number *</label>
                       <input
                         placeholder="e.g. 104"
                         {...register('plotNumber', { required: 'Plot number is required' })}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium placeholder:text-slate-400"
                       />
-                      {errors.plotNumber && <p className="text-rose-500 text-xs mt-1">{errors.plotNumber.message}</p>}
+                      {errors.plotNumber && <p className="text-rose-500 text-[12px] mt-1.5">{errors.plotNumber.message}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Project *</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Project *</label>
                       <select
                         {...register('project', { required: 'Project is required' })}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium"
                       >
                         <option value="">Select Project</option>
                         {projects.map(p => <option key={p._id} value={p._id}>{p.name}</option>)}
                       </select>
-                      {errors.project && <p className="text-rose-500 text-xs mt-1">{errors.project.message}</p>}
+                      {errors.project && <p className="text-rose-500 text-[12px] mt-1.5">{errors.project.message}</p>}
                     </div>
                   </div>
                 </div>
 
                 {/* Section 2: Dimensions & Specs */}
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
-                    <span className="w-1.5 h-4 bg-amber-500 rounded-full" />
+                  <h3 className="text-[13px] font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2 uppercase tracking-wide">
+                    <span className="w-1 h-4 bg-amber-500 rounded-full" />
                     Dimensions &amp; Specifications
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-6 gap-x-5 gap-y-5">
                     <div className="md:col-span-2">
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Size (sq.ft)</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Size (sq.ft)</label>
                       <input
                         type="number"
                         placeholder="e.g. 1200"
                         {...register('size')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium placeholder:text-slate-400"
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Length (ft)</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Length (ft)</label>
                       <input
                         type="number"
                         placeholder="e.g. 40"
                         {...register('length')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium placeholder:text-slate-400"
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Width (ft)</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Width (ft)</label>
                       <input
                         type="number"
                         placeholder="e.g. 30"
                         {...register('width')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium placeholder:text-slate-400"
                       />
                     </div>
 
                     <div className="md:col-span-3">
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Facing Direction</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Facing Direction</label>
                       <select
                         {...register('facing')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium"
                       >
                         {facings.map(f => <option key={f} value={f}>{f}</option>)}
                       </select>
                     </div>
                     <div className="md:col-span-3">
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Road Width (ft)</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Road Width (ft)</label>
                       <input
                         type="number"
                         placeholder="e.g. 30"
                         {...register('roadWidth')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium placeholder:text-slate-400"
                       />
                     </div>
 
                     <div className="md:col-span-6 mt-1">
-                      <label className="flex items-center gap-2.5 text-xs font-semibold text-slate-600 cursor-pointer select-none">
+                      <label className="flex items-center gap-3 text-[13px] font-semibold text-slate-700 cursor-pointer select-none hover:text-slate-900 transition-colors duration-200">
                         <input
                           type="checkbox"
                           {...register('corner')}
@@ -585,25 +588,25 @@ export default function ManagePlots() {
 
                 {/* Section 3: Pricing & Location */}
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
-                    <span className="w-1.5 h-4 bg-amber-500 rounded-full" />
+                  <h3 className="text-[13px] font-semibold text-slate-700 border-b border-slate-100 pb-3 mb-5 flex items-center gap-2 uppercase tracking-wide">
+                    <span className="w-1 h-4 bg-amber-500 rounded-full" />
                     Pricing &amp; Location Coordinates
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Total Price (₹)</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Total Price (₹)</label>
                       <input
                         type="number"
                         placeholder="e.g. 1500000"
                         {...register('price')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium placeholder:text-slate-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Plot Status</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Plot Status</label>
                       <select
                         {...register('status')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium"
                       >
                         <option value="available">Available</option>
                         <option value="reserved">Reserved</option>
@@ -612,31 +615,31 @@ export default function ManagePlots() {
                       </select>
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Coordinates (latitude,longitude)</label>
+                      <label className="block text-[12px] font-semibold text-slate-600 mb-2">Coordinates (latitude,longitude)</label>
                       <input
                         placeholder="e.g. 20.2961,85.8245"
                         {...register('coordinates')}
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[14px] outline-none focus:bg-white focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all duration-200 text-slate-800 font-medium placeholder:text-slate-400"
                       />
-                      <p className="text-[10px] text-slate-400 mt-1.5 leading-normal">Comma-separated GPS coordinates for plotting on the master plan layout.</p>
+                      <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">Comma-separated GPS coordinates for plotting on the master plan layout.</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Sticky Footer */}
-              <div className="flex justify-end gap-3 px-7 py-5 bg-slate-50/80 border-t border-slate-100 shrink-0">
+              {/* Modal Footer */}
+              <div className="flex justify-end gap-3 px-7 py-4.5 bg-slate-50 border-t border-slate-100 shrink-0">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-5 py-2.5 bg-white hover:bg-slate-100 text-slate-600 text-sm font-semibold border border-slate-200 rounded-xl transition-all shadow-sm active:scale-[0.98]"
+                  className="px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-600 text-[14px] font-semibold border border-slate-200 rounded-xl transition-all duration-200 shadow-sm active:scale-[0.98]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-sm rounded-xl flex items-center gap-2 shadow-md shadow-amber-500/20 active:scale-[0.98] transition-all disabled:opacity-50"
+                  className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-[14px] rounded-xl flex items-center gap-2 shadow-md shadow-amber-500/25 hover:shadow-amber-500/40 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                 >
                   {submitting && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                   <span>{editing ? 'Save Changes' : 'Create Plot'}</span>

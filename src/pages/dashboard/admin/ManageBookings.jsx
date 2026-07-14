@@ -229,9 +229,9 @@ export default function ManageBookings() {
                 <div><span className="text-slate-500">Customer:</span><p className="font-medium text-slate-800">{viewBooking.customer?.name || '-'}</p></div>
                 <div><span className="text-slate-500">Email:</span><p className="text-slate-700">{viewBooking.customer?.email || '-'}</p></div>
                 <div><span className="text-slate-500">Phone:</span><p className="text-slate-700">{viewBooking.customer?.phone || '-'}</p></div>
-                <div><span className="text-slate-500">Plot #:</span><p className="font-semibold text-slate-850">{viewBooking.plot?.plotNumber ? `#${viewBooking.plot.plotNumber}` : '-'}</p></div>
-                <div><span className="text-slate-500">Project:</span><p className="text-slate-750">{viewBooking.project?.name || viewBooking.plot?.project?.name || '-'}</p></div>
-                <div><span className="text-slate-500">Total Amount:</span><p className="font-bold text-indigo-650">₹{(viewBooking.totalAmount || viewBooking.amount || 0).toLocaleString('en-IN')}</p></div>
+                <div><span className="text-slate-500">Plot #:</span><p className="font-semibold text-slate-900">{viewBooking.plot?.plotNumber ? `#${viewBooking.plot.plotNumber}` : '-'}</p></div>
+                <div><span className="text-slate-500">Project:</span><p className="text-slate-700">{viewBooking.project?.name || viewBooking.plot?.project?.name || '-'}</p></div>
+                <div><span className="text-slate-500">Total Amount:</span><p className="font-bold text-indigo-700">₹{(viewBooking.totalAmount || viewBooking.amount || 0).toLocaleString('en-IN')}</p></div>
                 <div><span className="text-slate-500">Token Amount:</span><p className="font-semibold text-slate-800">₹{(viewBooking.tokenAmount || 0).toLocaleString('en-IN')}</p></div>
                 <div><span className="text-slate-500">Payment Plan:</span><p className="capitalize text-slate-700">{viewBooking.paymentPlan?.replace(/_/g, ' ')}</p></div>
                 <div><span className="text-slate-500">Date:</span><p className="text-slate-700">{viewBooking.createdAt ? new Date(viewBooking.createdAt).toLocaleDateString() : '-'}</p></div>
