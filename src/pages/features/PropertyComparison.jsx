@@ -1,16 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaPlus, FaTimes, FaArrowRight, FaCheck } from 'react-icons/fa';
-
-const allProperties = [
-  { id: 1, name: 'Plot A-42', project: 'Santoshi Enclave Phase 1', location: 'Patia, Bhubaneswar', size: 2400, price: 5880000, facing: 'North', road: 40, status: 'available', image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400' },
-  { id: 2, name: 'Plot C-19', project: 'Santoshi Greens', location: 'Khandagiri, Bhubaneswar', size: 1800, price: 3510000, facing: 'South-East', road: 30, status: 'available', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56b08?w=400' },
-  { id: 3, name: 'Villa B-07', project: 'Santoshi Villas', location: 'Chandrasekharpur, Bhubaneswar', size: 3200, price: 15520000, facing: 'East', road: 50, status: 'reserved', image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400' },
-  { id: 4, name: 'Plot B-12', project: 'Santoshi Enclave Phase 1', location: 'Patia, Bhubaneswar', size: 1500, price: 3675000, facing: 'West', road: 30, status: 'sold', image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400' },
-  { id: 5, name: 'Plot D-05', project: 'Santoshi Greens', location: 'Khandagiri, Bhubaneswar', size: 2100, price: 4095000, facing: 'North-East', road: 40, status: 'available', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56b08?w=400' },
-  { id: 6, name: 'Villa A-03', project: 'Santoshi Villas', location: 'Chandrasekharpur, Bhubaneswar', size: 2800, price: 13580000, facing: 'North', road: 60, status: 'available', image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400' },
-];
+import { getPlots } from '../../api/plots';
 
 const attributes = [
   { key: 'project', label: 'Project' },
@@ -23,7 +14,58 @@ const attributes = [
 ];
 
 export default function PropertyComparison() {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [projectFilter, setProjectFilter] = useState('');
+
+  const uniqueProjects = Array.from(new Set(properties.map((p) => p.project))).filter(Boolean);
+
+  const filtered = properties.filter((p) => {
+    const matchesProject = !projectFilter || p.project === projectFilter;
+    const matchesSearch = !searchQuery || 
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      p.facing.toLowerCase().includes(searchQuery.toLowerCase());
+    const isNotSelected = !selected.find((s) => s.id === p.id);
+    return matchesProject && matchesSearch && isNotSelected;
+  });
+
+  useEffect(() => {
+    const fetchPlots = async () => {
+      try {
+        setLoading(true);
+        const response = await getPlots({ limit: 100 });
+        const plotsList = response.data?.data || [];
+        
+        const mappedProperties = plotsList.map((plot) => ({
+          id: plot._id,
+          name: `Plot ${plot.plotNumber}`,
+          project: plot.project?.name || 'N/A',
+          location: [
+            plot.project?.location?.city,
+            plot.project?.location?.state
+          ].filter(Boolean).join(', ') || plot.project?.location?.address || 'Bhubaneswar',
+          size: plot.size || 0,
+          price: plot.price || 0,
+          facing: plot.facing || 'N/A',
+          road: plot.roadWidth || 0,
+          status: plot.status || 'available'
+        }));
+        
+        setProperties(mappedProperties);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching properties:', err);
+        setError('Failed to load properties for comparison. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchPlots();
+  }, []);
 
   const addProperty = (prop) => {
     if (selected.length < 4 && !selected.find((s) => s.id === prop.id)) {
@@ -60,6 +102,54 @@ export default function PropertyComparison() {
 
       {/* ===== MAIN CONTENT WRAPPER ===== */}
       <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10 }}>
+        
+        {loading && (
+          <div style={{ textAlign: 'center', padding: '60px 40px', background: '#fff', borderRadius: '16px', border: '1px solid var(--line)', boxShadow: '0 15px 40px rgba(20,20,60,.1)' }}>
+            <div style={{
+              width: '40px',
+              height: '40px',
+              border: '3px solid #f3f3f3',
+              borderTop: '3px solid var(--indigo)',
+              borderRadius: '50%',
+              margin: '0 auto 16px',
+              animation: 'spin 1s linear infinite'
+            }} />
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+            <p style={{ fontSize: '14px', color: 'var(--gray)', margin: 0, fontWeight: 500 }}>Fetching live property listings...</p>
+          </div>
+        )}
+
+        {error && (
+          <div style={{ textAlign: 'center', padding: '60px 40px', background: '#fff', borderRadius: '16px', border: '1px solid #f8d7da', boxShadow: '0 15px 40px rgba(20,20,60,.1)' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#fdf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+              <FaTimes style={{ color: '#e74c3c', fontSize: '18px' }} />
+            </div>
+            <h3 style={{ fontSize: '17px', fontWeight: 800, color: '#c0392b', margin: '0 0 4px', fontFamily: 'Poppins, sans-serif' }}>Error Loading Properties</h3>
+            <p style={{ fontSize: '13.5px', color: '#c0392b', margin: 0 }}>{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && properties.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '80px 40px', background: '#fff', borderRadius: '16px', border: '1px solid var(--line)', boxShadow: '0 15px 40px rgba(20,20,60,.1)' }}>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f0effc', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+              <FaPlus style={{ color: 'var(--indigo)', fontSize: '20px' }} />
+            </div>
+            <h3 style={{ fontSize: '19px', fontWeight: 800, color: 'var(--text)', margin: '0 0 6px', fontFamily: 'Poppins, sans-serif' }}>
+              No Properties Available
+            </h3>
+            <p style={{ fontSize: '14px', color: 'var(--gray)', margin: 0 }}>
+              There are currently no active properties or plots available for comparison.
+            </p>
+          </div>
+        )}
+
+        {!loading && !error && properties.length > 0 && (
+          <>
         
         {/* Selection Controller Card */}
         <motion.div
@@ -129,41 +219,128 @@ export default function PropertyComparison() {
 
           {selected.length < 4 && (
             <div>
-              <p style={{ fontSize: '12.5px', color: 'var(--gray)', fontWeight: 600, marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <p style={{ fontSize: '12.5px', color: 'var(--gray)', fontWeight: 600, marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 Add properties to compare list:
               </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {allProperties.filter((p) => !selected.find((s) => s.id === p.id)).map((prop) => (
-                  <button
-                    key={prop.id}
-                    onClick={() => addProperty(prop)}
+
+              {/* Filters Row */}
+              <div style={{
+                display: 'flex',
+                gap: '12px',
+                marginBottom: '20px',
+                flexWrap: 'wrap'
+              }}>
+                <div style={{ flex: '1 1 200px', position: 'relative' }}>
+                  <input
+                    type="text"
+                    placeholder="Search by plot number or facing..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
-                      fontSize: '12px',
-                      fontWeight: 600,
+                      width: '100%',
+                      padding: '10px 16px',
+                      borderRadius: '10px',
                       border: '1px solid var(--line)',
-                      cursor: 'pointer',
-                      background: '#fff',
-                      color: 'var(--text)',
-                      transition: 'all 0.2s',
+                      fontSize: '13.5px',
                       outline: 'none',
+                      transition: 'border-color 0.2s, box-shadow 0.2s',
+                      background: '#fafafd'
                     }}
-                    onMouseEnter={(e) => {
+                    onFocus={(e) => {
                       e.target.style.borderColor = 'var(--indigo)';
-                      e.target.style.color = 'var(--indigo)';
+                      e.target.style.boxShadow = '0 0 0 3px rgba(91, 79, 224, 0.1)';
+                      e.target.style.background = '#fff';
                     }}
-                    onMouseLeave={(e) => {
+                    onBlur={(e) => {
                       e.target.style.borderColor = 'var(--line)';
-                      e.target.style.color = 'var(--text)';
+                      e.target.style.boxShadow = 'none';
+                      e.target.style.background = '#fafafd';
+                    }}
+                  />
+                </div>
+                <div style={{ flex: '1 1 200px' }}>
+                  <select
+                    value={projectFilter}
+                    onChange={(e) => setProjectFilter(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '10px 16px',
+                      borderRadius: '10px',
+                      border: '1px solid var(--line)',
+                      fontSize: '13.5px',
+                      outline: 'none',
+                      transition: 'border-color 0.2s, box-shadow 0.2s',
+                      background: '#fafafd',
+                      color: 'var(--text)',
+                      cursor: 'pointer'
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = 'var(--indigo)';
+                      e.target.style.boxShadow = '0 0 0 3px rgba(91, 79, 224, 0.1)';
+                      e.target.style.background = '#fff';
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = 'var(--line)';
+                      e.target.style.boxShadow = 'none';
+                      e.target.style.background = '#fafafd';
                     }}
                   >
-                    <FaPlus style={{ fontSize: '9px', color: 'var(--gray)' }} /> {prop.name} — {prop.project}
-                  </button>
-                ))}
+                    <option value="">All Projects</option>
+                    {uniqueProjects.map((proj) => (
+                      <option key={proj} value={proj}>{proj}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Scrollable grid/list of pills */}
+              <div style={{
+                maxHeight: '220px',
+                overflowY: 'auto',
+                border: '1px solid var(--line)',
+                borderRadius: '12px',
+                padding: '16px',
+                background: '#fcfcfd'
+              }}>
+                {filtered.length > 0 ? (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {filtered.map((prop) => (
+                      <button
+                        key={prop.id}
+                        onClick={() => addProperty(prop)}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '8px 16px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          border: '1px solid var(--line)',
+                          cursor: 'pointer',
+                          background: '#fff',
+                          color: 'var(--text)',
+                          transition: 'all 0.2s',
+                          outline: 'none',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.borderColor = 'var(--indigo)';
+                          e.target.style.color = 'var(--indigo)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.borderColor = 'var(--line)';
+                          e.target.style.color = 'var(--text)';
+                        }}
+                      >
+                        <FaPlus style={{ fontSize: '9px', color: 'var(--gray)' }} /> {prop.name} — {prop.project}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '24px 0', color: 'var(--gray)', fontSize: '13.5px' }}>
+                    No matching properties found. Try adjusting your search query or project filter.
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -271,6 +448,8 @@ export default function PropertyComparison() {
               Add up to 4 plots or villas from the listing above to run a side-by-side spec comparison.
             </p>
           </div>
+        )}
+          </>
         )}
 
       </div>

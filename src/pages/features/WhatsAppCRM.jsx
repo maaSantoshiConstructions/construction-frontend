@@ -1,13 +1,129 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaWhatsapp, FaCheckCircle, FaRobot, FaBell, FaUsers, FaArrowRight } from 'react-icons/fa';
+import { getPlots } from '../../api/plots';
 
 export default function WhatsAppCRM() {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [phone, setPhone] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [template, setTemplate] = useState('property_alert');
+  const [selectedProject, setSelectedProject] = useState('');
+  const [selectedPlotId, setSelectedPlotId] = useState('');
+  const [customMessage, setCustomMessage] = useState('');
   const [sent, setSent] = useState(false);
 
+  useEffect(() => {
+    const fetchPlots = async () => {
+      try {
+        setLoading(true);
+        const response = await getPlots({ limit: 100 });
+        const plotsList = response.data?.data || [];
+        
+        const mappedProperties = plotsList.map((plot) => ({
+          id: plot._id,
+          plotNumber: plot.plotNumber,
+          project: plot.project?.name || 'N/A',
+          size: plot.size || 1800,
+          price: plot.price ? (plot.price / 100000).toFixed(1) : '35.0',
+          facing: plot.facing || 'East',
+          status: plot.status || 'available'
+        }));
+        
+        setProperties(mappedProperties);
+        
+        if (mappedProperties.length > 0) {
+          setSelectedProject(mappedProperties[0].project);
+          setSelectedPlotId(mappedProperties[0].id);
+        }
+      } catch (err) {
+        console.error('Error fetching properties:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchPlots();
+  }, []);
+
+  const uniqueProjects = Array.from(new Set(properties.map((p) => p.project))).filter(Boolean);
+  const filteredPlots = properties.filter((p) => p.project === selectedProject);
+
+  useEffect(() => {
+    if (filteredPlots.length > 0) {
+      const exists = filteredPlots.some((p) => p.id === selectedPlotId);
+      if (!exists) {
+        setSelectedPlotId(filteredPlots[0].id);
+      }
+    } else {
+      setSelectedPlotId('');
+    }
+  }, [selectedProject, properties]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const activePlot = properties.find((p) => p.id === selectedPlotId);
+    const greetingName = customerName.trim() || 'Valued Customer';
+    let messageText = '';
+    
+    if (template === 'property_alert') {
+      const projName = activePlot?.project || selectedProject || 'Green City Phase II';
+      const plotNum = activePlot?.plotNumber || 'GC-01';
+      const plotSize = activePlot?.size || 1800;
+      const plotFacing = activePlot?.facing || 'East';
+      const plotPrice = activePlot?.price || '35.0';
+      
+      messageText = `🏡 *Maa Santoshi Constructions - Property Alert* 🏡\n\n` +
+        `Hi ${greetingName}!\n\n` +
+        `Here are the details of a premium property matching your preference:\n` +
+        `📍 *Project*: ${projName}\n` +
+        `📐 *Unit*: Plot ${plotNum}\n` +
+        `📏 *Size*: ${plotSize} sq.ft\n` +
+        `🧭 *Facing*: ${plotFacing}\n` +
+        `💰 *Price*: ₹${plotPrice} Lakh\n\n` +
+        `Reply to this chat to connect with our sales executive and schedule a visit!`;
+    } else if (template === 'site_visit') {
+      const projName = activePlot?.project || selectedProject || 'Green City Phase II';
+      
+      messageText = `📅 *Maa Santoshi Constructions - Guided Site Visit* 📅\n\n` +
+        `Hi ${greetingName}!\n\n` +
+        `We invite you to join us for a guided tour of our premium project: *${projName}*.\n\n` +
+        `🚗 *Transportation*: Complementary pickup and drop-off service is available.\n` +
+        `📞 Please reply with your preferred date and time slot to confirm your booking.`;
+    } else if (template === 'payment_reminder') {
+      const projName = activePlot?.project || selectedProject || 'Green City Phase II';
+      const plotNum = activePlot?.plotNumber || 'GC-01';
+      
+      messageText = `💰 *Maa Santoshi Constructions - Installment Update* 💰\n\n` +
+        `Dear ${greetingName},\n\n` +
+        `This is a friendly update regarding your booking at *${projName}*.\n` +
+        `🔖 *Unit*: Plot ${plotNum}\n` +
+        `🗓 *Status*: Next installment is due shortly.\n\n` +
+        `Please contact your relationship manager for online payment links or receipt updates. Thank you!`;
+    }
+    
+    setCustomMessage(messageText);
+  }, [template, selectedPlotId, selectedProject, customerName, properties]);
+
   const handleSendDemo = () => {
-    if (!phone) return;
+    if (!phone) {
+      alert('Please enter a phone number.');
+      return;
+    }
+    
+    let cleaned = phone.replace(/\D/g, '');
+    if (cleaned.length === 10) {
+      cleaned = '91' + cleaned;
+    }
+    
+    if (!cleaned) {
+      alert('Please enter a valid phone number.');
+      return;
+    }
+    
+    const whatsappUrl = `https://wa.me/${cleaned}?text=${encodeURIComponent(customMessage)}`;
+    window.open(whatsappUrl, '_blank');
+    
     setSent(true);
     setTimeout(() => setSent(false), 3000);
   };
@@ -95,60 +211,209 @@ export default function WhatsAppCRM() {
             background: '#fafbfc',
             border: '1.5px dashed var(--indigo)',
             borderRadius: '16px',
-            padding: '24px 32px',
+            padding: '28px 32px',
           }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text)', margin: '0 0 6px', fontFamily: 'Poppins, sans-serif' }}>
-              Try WhatsApp Demo
+            <h3 style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text)', margin: '0 0 6px', fontFamily: 'Poppins, sans-serif' }}>
+              Smart Message Composer (WhatsApp CRM Demo)
             </h3>
-            <p style={{ fontSize: '13.5px', color: 'var(--gray)', margin: '0 0 16px', fontWeight: 500 }}>
-              Enter your WhatsApp number to receive an active sample property alert:
+            <p style={{ fontSize: '13.5px', color: 'var(--gray)', margin: '0 0 20px', fontWeight: 500 }}>
+              Test and customize dynamic templates powered by actual property records before opening WhatsApp:
             </p>
-            
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', maxWidth: '500px' }}>
-              <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="+91 XXXXX XXXXX"
+
+            {/* Step 1: Template Toggles */}
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+                1. Select Communication Template:
+              </label>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {[
+                  { id: 'property_alert', label: '🏡 Property Alert' },
+                  { id: 'site_visit', label: '📅 Site Visit Invitation' },
+                  { id: 'payment_reminder', label: '💰 Payment Reminder' }
+                ].map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setTemplate(t.id)}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      border: '1px solid',
+                      borderColor: template === t.id ? 'var(--indigo)' : 'var(--line)',
+                      background: template === t.id ? '#f1eefe' : '#fff',
+                      color: template === t.id ? 'var(--indigo)' : 'var(--text)',
+                      transition: 'all 0.2s',
+                      outline: 'none',
+                    }}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Step 2: Property Filter Dropdowns */}
+            {(template === 'property_alert' || template === 'payment_reminder') && (
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+                  2. Select Property Details:
+                </label>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  <div style={{ flex: '1 1 200px' }}>
+                    <select
+                      value={selectedProject}
+                      onChange={(e) => setSelectedProject(e.target.value)}
+                      disabled={loading || uniqueProjects.length === 0}
+                      style={{
+                        width: '100%',
+                        padding: '10px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid var(--line)',
+                        fontSize: '13px',
+                        background: '#fff',
+                        outline: 'none',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {uniqueProjects.map((p) => (
+                        <option key={p} value={p}>{p}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div style={{ flex: '1 1 200px' }}>
+                    <select
+                      value={selectedPlotId}
+                      onChange={(e) => setSelectedPlotId(e.target.value)}
+                      disabled={loading || filteredPlots.length === 0}
+                      style={{
+                        width: '100%',
+                        padding: '10px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid var(--line)',
+                        fontSize: '13px',
+                        background: '#fff',
+                        outline: 'none',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {filteredPlots.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          Plot {p.plotNumber} — {p.size} sq.ft (₹{p.price} L)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Recipient Personalization */}
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+                {template === 'property_alert' || template === 'payment_reminder' ? '3.' : '2.'} Customer Personalization & Recipient:
+              </label>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <div style={{ flex: '1 1 200px' }}>
+                  <input
+                    type="text"
+                    placeholder="Customer Name (e.g. Rahul)"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '10px 14px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--line)',
+                      fontSize: '13px',
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+                <div style={{ flex: '1 1 200px' }}>
+                  <input
+                    type="text"
+                    placeholder="Recipient Phone (+91 XXXXX XXXXX)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '10px 14px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--line)',
+                      fontSize: '13px',
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Step 4: Editable Message Preview Area */}
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+                Message Preview (Directly editable text):
+              </label>
+              <textarea
+                value={customMessage}
+                onChange={(e) => setCustomMessage(e.target.value)}
                 style={{
-                  flex: 1,
-                  minWidth: '200px',
-                  padding: '12px 18px',
+                  width: '100%',
+                  height: '180px',
+                  padding: '14px 18px',
                   borderRadius: '10px',
-                  border: '1px solid var(--line)',
-                  fontSize: '14px',
+                  border: '1px solid var(--indigo)',
+                  fontSize: '13.5px',
+                  fontFamily: 'Inter, sans-serif',
+                  lineHeight: 1.5,
                   outline: 'none',
                   boxSizing: 'border-box',
+                  background: '#fcfcfd',
+                  color: 'var(--text)',
+                  resize: 'vertical'
                 }}
               />
+            </div>
+
+            {/* Step 5: Send Redirection */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
               <button
                 onClick={handleSendDemo}
+                disabled={loading || !phone}
                 style={{
-                  background: '#2ecc71',
+                  background: loading || !phone ? '#bdc3c7' : '#2ecc71',
                   color: '#fff',
-                  padding: '12px 24px',
-                  borderRadius: '10px',
+                  padding: '12px 28px',
+                  borderRadius: '8px',
                   border: 'none',
-                  cursor: 'pointer',
+                  cursor: loading || !phone ? 'not-allowed' : 'pointer',
                   fontWeight: 700,
-                  fontSize: '13.5px',
+                  fontSize: '14px',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
                   transition: 'background 0.2s',
                   outline: 'none',
                 }}
-                onMouseEnter={(e) => e.target.style.background = '#27ae60'}
-                onMouseLeave={(e) => e.target.style.background = '#2ecc71'}
+                onMouseEnter={(e) => {
+                  if (!loading && phone) e.target.style.background = '#27ae60';
+                }}
+                onMouseLeave={(e) => {
+                  if (!loading && phone) e.target.style.background = '#2ecc71';
+                }}
               >
-                <FaWhatsapp style={{ fontSize: '16px' }} /> {sent ? 'Sent!' : 'Send Alert Demo'}
+                <FaWhatsapp style={{ fontSize: '18px' }} /> Send Custom Alert on WhatsApp
               </button>
+
+              {sent && (
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', color: '#2ecc71', fontWeight: 600 }}>
+                  <FaCheckCircle /> Demo WhatsApp redirect triggered!
+                </div>
+              )}
             </div>
-            
-            {sent && (
-              <div style={{ marginTop: '12px', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', color: '#2ecc71', fontWeight: 600 }}>
-                <FaCheckCircle /> Demo WhatsApp message sent! Check your phone.
-              </div>
-            )}
           </div>
         </motion.div>
 
