@@ -35,6 +35,7 @@ import NearbyLocations from './pages/features/NearbyLocations';
 import WhatsAppCRM from './pages/features/WhatsAppCRM';
 import AIFollowupAutomation from './pages/features/AIFollowupAutomation';
 import InvestmentHeatmap from './pages/features/InvestmentHeatmap';
+import CustomerReviews from './pages/features/CustomerReviews';
 import ConstructionTracker from './pages/website/ConstructionTracker';
 import NotFound from './pages/website/NotFound';
 
@@ -115,6 +116,7 @@ export default function App() {
       <Route path="/whatsapp-crm" element={<PublicLayout><WhatsAppCRM /></PublicLayout>} />
       <Route path="/ai-followup" element={<PublicLayout><AIFollowupAutomation /></PublicLayout>} />
       <Route path="/investment-heatmap" element={<PublicLayout><InvestmentHeatmap /></PublicLayout>} />
+      <Route path="/reviews" element={<PublicLayout><CustomerReviews /></PublicLayout>} />
 
       {/* Auth Routes */}
       <Route path="/login" element={<Login />} />

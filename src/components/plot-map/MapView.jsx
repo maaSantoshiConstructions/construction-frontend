@@ -73,44 +73,49 @@ export default function MapView({
   getProjectCity,
   getProjectName,
 }) {
+  // Get unique landmarks for the cities present in filtered plots
+  const uniqueCities = Array.from(new Set(filteredPlots.map(p => getProjectCity(p)).filter(Boolean)));
+  const allLandmarks = uniqueCities.flatMap(city => getLandmarks(city));
+
   return (
     <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e5e7eb', overflow: 'hidden', height: '600px' }}>
       <MapContainer center={mapCenter} zoom={12} style={{ width: '100%', height: '100%' }} scrollWheelZoom={true}>
         <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/">OSM</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapRecenter center={mapCenter} />
+
         {filteredPlots.filter((p) => {
           const proj = getProjectObj(p);
-          return proj?.location?.coordinates?.lat;
+          return p.coordinates?.lat || proj?.location?.coordinates?.lat;
         }).map((plot) => {
           const proj = getProjectObj(plot);
-          const center = proj.location.coordinates;
-          const city = getProjectCity(plot);
-          const landmarks = getLandmarks(city);
+          const pos = plot.coordinates?.lat && plot.coordinates?.lng 
+            ? plot.coordinates 
+            : proj.location.coordinates;
           const sel = selectedPlot?._id === plot._id;
           return (
-            <React.Fragment key={plot._id}>
-              <Marker
-                position={[center.lat, center.lng]}
-                icon={sel ? selectedIcon : makeIcon}
-                eventHandlers={{ click: () => setSelectedPlot(plot) }}
-              >
-                <Popup>
-                  <div style={{ fontFamily: 'Inter, sans-serif', minWidth: '180px' }}>
-                    <strong style={{ fontSize: '14px' }}>Plot {plot.plotNumber}</strong><br />
-                    <span style={{ color: '#64748b', fontSize: '12px' }}>{getProjectName(plot)}</span><br />
-                    <span style={{ fontSize: '12px' }}>{formatSize(plot.size)} sqft &middot; {plot.facing}</span><br />
-                    <strong style={{ color: '#d97706' }}>{formatCurrency(plot.price)}</strong>
-                  </div>
-                </Popup>
-              </Marker>
-              {landmarks.map((lm, li) => (
-                <Marker key={li} position={[lm.lat, lm.lng]} icon={makeLandmarkIcon(lm.emoji)}>
-                  <Popup><span style={{ fontFamily: 'Inter, sans-serif' }}><strong>{lm.name}</strong><br />{lm.type}</span></Popup>
-                </Marker>
-              ))}
-            </React.Fragment>
+            <Marker
+              key={plot._id}
+              position={[pos.lat, pos.lng]}
+              icon={sel ? selectedIcon : makeIcon}
+              eventHandlers={{ click: () => setSelectedPlot(plot) }}
+            >
+              <Popup>
+                <div style={{ fontFamily: 'Inter, sans-serif', minWidth: '180px' }}>
+                  <strong style={{ fontSize: '14px' }}>Plot {plot.plotNumber}</strong><br />
+                  <span style={{ color: '#64748b', fontSize: '12px' }}>{getProjectName(plot)}</span><br />
+                  <span style={{ fontSize: '12px' }}>{formatSize(plot.size)} sqft &middot; {plot.facing}</span><br />
+                  <strong style={{ color: '#d97706' }}>{formatCurrency(plot.price)}</strong>
+                </div>
+              </Popup>
+            </Marker>
           );
         })}
+
+        {allLandmarks.map((lm, li) => (
+          <Marker key={`lm-${li}`} position={[lm.lat, lm.lng]} icon={makeLandmarkIcon(lm.emoji)}>
+            <Popup><span style={{ fontFamily: 'Inter, sans-serif' }}><strong>{lm.name}</strong><br />{lm.type}</span></Popup>
+          </Marker>
+        ))}
       </MapContainer>
     </div>
   );

@@ -137,10 +137,12 @@ export default function PlotMap() {
   const mapCenter = useMemo(() => {
     if (!selectedPlot && filteredPlots.length === 0) return [20.2961, 85.8245];
     if (selectedPlot) {
+      if (selectedPlot.coordinates?.lat) return [selectedPlot.coordinates.lat, selectedPlot.coordinates.lng];
       const proj = getProjectObj(selectedPlot);
       if (proj?.location?.coordinates?.lat) return [proj.location.coordinates.lat, proj.location.coordinates.lng];
     }
     for (const p of filteredPlots) {
+      if (p.coordinates?.lat) return [p.coordinates.lat, p.coordinates.lng];
       const proj = getProjectObj(p);
       if (proj?.location?.coordinates?.lat) return [proj.location.coordinates.lat, proj.location.coordinates.lng];
     }

@@ -309,7 +309,7 @@ nav.links a.active { background: var(--indigo-light); color: #fff; }
   border-radius: 12px; padding: 16px 8px; text-align: center; transition: .2s; cursor: pointer;
 }
 .fcard:hover { background: rgba(255,255,255,.09); transform: translateY(-3px); }
-.fcard .ic { font-size: 20px; margin-bottom: 8px; }
+.fcard .ic { font-size: 20px; margin-bottom: 8px; color: var(--gold); display: flex; justify-content: center; }
 .fcard span { font-size: 11px; color: #d3d5ee; font-weight: 600; line-height: 1.3; display: block; }
 
 /* ===== CALCULATORS ===== */
