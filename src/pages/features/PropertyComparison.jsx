@@ -78,71 +78,53 @@ export default function PropertyComparison() {
   };
 
   return (
-    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+    <div className="bg-slate-50 min-h-screen pb-24">
       
       {/* ===== PAGE HEADER ===== */}
-      <div style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
-        padding: '64px 0 60px',
-        position: 'relative',
-        overflow: 'hidden',
-        textAlign: 'center',
-      }}>
-        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
-        <div className="wrap">
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>COMPARE TOOLS</span>
-          <h1 style={{ fontFamily: 'Poppins, Inter, sans-serif', fontSize: '40px', fontWeight: 800, color: '#fff', marginTop: '8px', marginBottom: '14px' }}>
+      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-slate-900 to-indigo-950">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10" />
+        <div className="max-w-7xl mx-auto px-8 relative z-10">
+          <span className="inline-block bg-white/10 text-[#e8b355] font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full mb-3.5">
+            COMPARE TOOLS
+          </span>
+          <h1 className="font-poppins text-white text-3xl md:text-4xl font-extrabold mt-2 mb-3">
             Property Comparison
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '480px', margin: '0 auto', lineHeight: 1.6 }}>
-            Select and compare up to 4 plots or villas side-by-side to make the right choice.
+          <p className="text-indigo-200 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+            Select and compare up to 4 plots side-by-side to make the right choice.
           </p>
         </div>
       </div>
 
       {/* ===== MAIN CONTENT WRAPPER ===== */}
-      <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10 }}>
+      <div className="max-w-6xl mx-auto px-6 -mt-7 relative z-10">
         
         {loading && (
-          <div style={{ textAlign: 'center', padding: '60px 40px', background: '#fff', borderRadius: '16px', border: '1px solid var(--line)', boxShadow: '0 15px 40px rgba(20,20,60,.1)' }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              border: '3px solid #f3f3f3',
-              borderTop: '3px solid var(--indigo)',
-              borderRadius: '50%',
-              margin: '0 auto 16px',
-              animation: 'spin 1s linear infinite'
-            }} />
-            <style>{`
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}</style>
-            <p style={{ fontSize: '14px', color: 'var(--gray)', margin: 0, fontWeight: 500 }}>Fetching live property listings...</p>
+          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-xl">
+            <div className="w-10 h-10 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-sm font-semibold text-slate-400">Fetching live property listings...</p>
           </div>
         )}
 
         {error && (
-          <div style={{ textAlign: 'center', padding: '60px 40px', background: '#fff', borderRadius: '16px', border: '1px solid #f8d7da', boxShadow: '0 15px 40px rgba(20,20,60,.1)' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#fdf2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-              <FaTimes style={{ color: '#e74c3c', fontSize: '18px' }} />
+          <div className="text-center py-16 bg-white rounded-2xl border border-red-200 shadow-xl px-4">
+            <div className="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-4">
+              <FaTimes className="text-lg" />
             </div>
-            <h3 style={{ fontSize: '17px', fontWeight: 800, color: '#c0392b', margin: '0 0 4px', fontFamily: 'Poppins, sans-serif' }}>Error Loading Properties</h3>
-            <p style={{ fontSize: '13.5px', color: '#c0392b', margin: 0 }}>{error}</p>
+            <h3 className="text-base font-bold text-red-600 mb-1 font-poppins">Error Loading Properties</h3>
+            <p className="text-xs text-red-500">{error}</p>
           </div>
         )}
 
         {!loading && !error && properties.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '80px 40px', background: '#fff', borderRadius: '16px', border: '1px solid var(--line)', boxShadow: '0 15px 40px rgba(20,20,60,.1)' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f0effc', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-              <FaPlus style={{ color: 'var(--indigo)', fontSize: '20px' }} />
+          <div className="text-center py-20 bg-white rounded-2xl border border-slate-200 shadow-xl px-4">
+            <div className="w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4">
+              <FaPlus className="text-xl" />
             </div>
-            <h3 style={{ fontSize: '19px', fontWeight: 800, color: 'var(--text)', margin: '0 0 6px', fontFamily: 'Poppins, sans-serif' }}>
+            <h3 className="text-lg font-bold text-slate-800 mb-1 font-poppins">
               No Properties Available
             </h3>
-            <p style={{ fontSize: '14px', color: 'var(--gray)', margin: 0 }}>
+            <p className="text-sm text-slate-400">
               There are currently no active properties or plots available for comparison.
             </p>
           </div>
@@ -150,305 +132,177 @@ export default function PropertyComparison() {
 
         {!loading && !error && properties.length > 0 && (
           <>
-        
-        {/* Selection Controller Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{
-            background: '#fff',
-            borderRadius: '16px',
-            border: '1px solid var(--line)',
-            boxShadow: '0 15px 40px rgba(20,20,60,.1)',
-            padding: '32px',
-            marginBottom: '32px',
-          }}
-        >
-          <h2 style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text)', marginBottom: '20px', fontFamily: 'Poppins, sans-serif' }}>
-            Select Properties to Compare ({selected.length}/4)
-          </h2>
+            {/* Selection Controller Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-2xl border border-slate-200 shadow-xl p-8 mb-8"
+            >
+              <h2 className="text-base font-bold text-slate-800 mb-5 font-poppins">
+                Select Properties to Compare ({selected.length}/4)
+              </h2>
 
-          {selected.length > 0 && (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: `repeat(auto-fit, minmax(140px, 1fr))`,
-              gap: '12px',
-              marginBottom: '24px',
-            }}>
-              {selected.map((prop) => (
-                <div
-                  key={prop.id}
-                  style={{
-                    position: 'relative',
-                    border: '1px solid var(--indigo)',
-                    background: '#f1eefe',
-                    borderRadius: '12px',
-                    padding: '14px 16px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <button
-                    onClick={() => removeProperty(prop.id)}
-                    style={{
-                      position: 'absolute',
-                      top: '-6px',
-                      right: '-6px',
-                      width: '22px',
-                      height: '22px',
-                      background: '#e74c3c',
-                      color: '#fff',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '10px',
-                      border: 'none',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <FaTimes />
-                  </button>
-                  <p style={{ fontWeight: 800, color: 'var(--text)', fontSize: '13.5px', margin: 0 }}>{prop.name}</p>
-                  <p style={{ fontSize: '11px', color: 'var(--gray)', marginTop: '2px', margin: '2px 0 0' }}>{prop.project}</p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {selected.length < 4 && (
-            <div>
-              <p style={{ fontSize: '12.5px', color: 'var(--gray)', fontWeight: 600, marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Add properties to compare list:
-              </p>
-
-              {/* Filters Row */}
-              <div style={{
-                display: 'flex',
-                gap: '12px',
-                marginBottom: '20px',
-                flexWrap: 'wrap'
-              }}>
-                <div style={{ flex: '1 1 200px', position: 'relative' }}>
-                  <input
-                    type="text"
-                    placeholder="Search by plot number or facing..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '10px 16px',
-                      borderRadius: '10px',
-                      border: '1px solid var(--line)',
-                      fontSize: '13.5px',
-                      outline: 'none',
-                      transition: 'border-color 0.2s, box-shadow 0.2s',
-                      background: '#fafafd'
-                    }}
-                    onFocus={(e) => {
-                      e.target.style.borderColor = 'var(--indigo)';
-                      e.target.style.boxShadow = '0 0 0 3px rgba(91, 79, 224, 0.1)';
-                      e.target.style.background = '#fff';
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = 'var(--line)';
-                      e.target.style.boxShadow = 'none';
-                      e.target.style.background = '#fafafd';
-                    }}
-                  />
-                </div>
-                <div style={{ flex: '1 1 200px' }}>
-                  <select
-                    value={projectFilter}
-                    onChange={(e) => setProjectFilter(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '10px 16px',
-                      borderRadius: '10px',
-                      border: '1px solid var(--line)',
-                      fontSize: '13.5px',
-                      outline: 'none',
-                      transition: 'border-color 0.2s, box-shadow 0.2s',
-                      background: '#fafafd',
-                      color: 'var(--text)',
-                      cursor: 'pointer'
-                    }}
-                    onFocus={(e) => {
-                      e.target.style.borderColor = 'var(--indigo)';
-                      e.target.style.boxShadow = '0 0 0 3px rgba(91, 79, 224, 0.1)';
-                      e.target.style.background = '#fff';
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = 'var(--line)';
-                      e.target.style.boxShadow = 'none';
-                      e.target.style.background = '#fafafd';
-                    }}
-                  >
-                    <option value="">All Projects</option>
-                    {uniqueProjects.map((proj) => (
-                      <option key={proj} value={proj}>{proj}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Scrollable grid/list of pills */}
-              <div style={{
-                maxHeight: '220px',
-                overflowY: 'auto',
-                border: '1px solid var(--line)',
-                borderRadius: '12px',
-                padding: '16px',
-                background: '#fcfcfd'
-              }}>
-                {filtered.length > 0 ? (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                    {filtered.map((prop) => (
+              {selected.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                  {selected.map((prop) => (
+                    <div
+                      key={prop.id}
+                      className="relative border border-indigo-600 bg-indigo-50/50 rounded-xl px-4 py-3.5 flex flex-col justify-center"
+                    >
                       <button
-                        key={prop.id}
-                        onClick={() => addProperty(prop)}
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          padding: '8px 16px',
-                          borderRadius: '20px',
-                          fontSize: '12px',
-                          fontWeight: 600,
-                          border: '1px solid var(--line)',
-                          cursor: 'pointer',
-                          background: '#fff',
-                          color: 'var(--text)',
-                          transition: 'all 0.2s',
-                          outline: 'none',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.borderColor = 'var(--indigo)';
-                          e.target.style.color = 'var(--indigo)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.borderColor = 'var(--line)';
-                          e.target.style.color = 'var(--text)';
-                        }}
+                        onClick={() => removeProperty(prop.id)}
+                        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-[10px] cursor-pointer shadow-sm hover:bg-red-600 transition"
                       >
-                        <FaPlus style={{ fontSize: '9px', color: 'var(--gray)' }} /> {prop.name} — {prop.project}
+                        <FaTimes />
                       </button>
-                    ))}
-                  </div>
-                ) : (
-                  <div style={{ textAlign: 'center', padding: '24px 0', color: 'var(--gray)', fontSize: '13.5px' }}>
-                    No matching properties found. Try adjusting your search query or project filter.
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </motion.div>
-
-        {/* Side-by-side Table Comparison Board */}
-        {selected.length >= 2 && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{
-              background: '#fff',
-              borderRadius: '16px',
-              border: '1px solid var(--line)',
-              boxShadow: '0 15px 40px rgba(20,20,60,.06)',
-              overflow: 'hidden',
-            }}
-          >
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', fontFamily: 'Inter, sans-serif' }}>
-                <thead>
-                  <tr style={{ background: '#f8fafc', borderBottom: '1px solid var(--line)' }}>
-                    <th style={{ textAlign: 'left', padding: '16px 24px', fontWeight: 700, color: 'var(--gray)', width: '160px' }}>
-                      Specification
-                    </th>
-                    {selected.map((prop) => (
-                      <th key={prop.id} style={{ padding: '16px 24px', textAlign: 'center', fontWeight: 800, color: 'var(--text)', minWidth: '180px' }}>
-                        {prop.name}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {attributes.map((attr, idx) => (
-                    <tr key={attr.key} style={{ borderBottom: '1px solid var(--line)', background: idx % 2 === 0 ? '#fff' : '#fcfcfd' }}>
-                      <td style={{ padding: '16px 24px', fontWeight: 600, color: 'var(--gray)' }}>{attr.label}</td>
-                      {selected.map((prop) => {
-                        const values = selected.map((s) => s[attr.key]);
-                        const best = attr.key === 'price' ? Math.min(...values) : attr.key === 'size' ? Math.max(...values) : null;
-                        const isBest = best !== null && prop[attr.key] === best;
-                        return (
-                          <td
-                            key={prop.id}
-                            style={{
-                              padding: '16px 24px',
-                              textAlign: 'center',
-                              background: isBest ? '#e6f7ed' : 'transparent',
-                              transition: 'background 0.2s',
-                            }}
-                          >
-                            <span style={{
-                              fontWeight: isBest ? 700 : 500,
-                              color: isBest ? '#27ae60' : 'var(--text)',
-                              display: 'block',
-                            }}>
-                              {attr.format ? attr.format(prop[attr.key]) : prop[attr.key]}
-                            </span>
-                            {isBest && attr.key === 'price' && (
-                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '9.5px', color: '#27ae60', fontWeight: 700, textTransform: 'uppercase', marginTop: '4px' }}>
-                                <FaCheck style={{ fontSize: '8px' }} /> Best Value
-                              </span>
-                            )}
-                            {isBest && attr.key === 'size' && (
-                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '9.5px', color: '#27ae60', fontWeight: 700, textTransform: 'uppercase', marginTop: '4px' }}>
-                                <FaCheck style={{ fontSize: '8px' }} /> Largest Size
-                              </span>
-                            )}
-                          </td>
-                        );
-                      })}
-                    </tr>
+                      <p className="font-bold text-slate-800 text-xs truncate">{prop.name}</p>
+                      <p className="text-[10px] text-slate-400 mt-0.5 truncate">{prop.project}</p>
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </div>
+              )}
 
-            <div style={{ padding: '16px', background: '#f8fafc', borderTop: '1px solid var(--line)', textAlign: 'center' }}>
-              <p style={{ fontSize: '12px', color: 'var(--gray)', margin: 0, fontWeight: 500 }}>
-                💡 Tip: Look for the green highlighted options representing optimal budget and layout sizing specifications.
-              </p>
-            </div>
-          </motion.div>
-        )}
+              {selected.length < 4 && (
+                <div>
+                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-4 font-poppins">
+                    Add properties to compare list:
+                  </p>
 
-        {/* Dynamic Fallback views if less than 2 properties selected */}
-        {selected.length < 2 && selected.length > 0 && (
-          <div style={{ textAlign: 'center', padding: '60px 40px', background: '#fff', borderRadius: '16px', border: '1px solid var(--line)', boxShadow: '0 4px 15px rgba(0,0,0,0.02)' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#fef9e7', display: 'flex', alignItems: 'center', justifyContents: 'center', margin: '0 auto 16px', justifyContent: 'center' }}>
-              <FaArrowRight style={{ text: '#f1c40f', color: '#f1c40f', fontSize: '18px' }} />
-            </div>
-            <h3 style={{ fontSize: '17px', fontWeight: 800, color: 'var(--text)', margin: '0 0 4px' }}>Select Another Property</h3>
-            <p style={{ fontSize: '13.5px', color: 'var(--gray)', margin: 0 }}>Add at least one more plot or villa above to view comparison specifications.</p>
-          </div>
-        )}
+                  {/* Filters Row */}
+                  <div className="flex flex-wrap gap-3 mb-5">
+                    <div className="flex-1 min-w-[200px]">
+                      <input
+                        type="text"
+                        placeholder="Search by plot number or facing..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-slate-50/50 text-slate-800 outline-none focus:border-indigo-600 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-[200px]">
+                      <select
+                        value={projectFilter}
+                        onChange={(e) => setProjectFilter(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-slate-50/50 text-slate-700 outline-none focus:border-indigo-600 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition cursor-pointer"
+                      >
+                        <option value="">All Projects</option>
+                        {uniqueProjects.map((proj) => (
+                          <option key={proj} value={proj}>{proj}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
 
-        {selected.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '80px 40px', background: '#fff', borderRadius: '16px', border: '1px solid var(--line)', boxShadow: '0 4px 15px rgba(0,0,0,0.02)' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f0effc', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-              <FaPlus style={{ color: 'var(--indigo)', fontSize: '20px' }} />
-            </div>
-            <h3 style={{ fontSize: '19px', fontWeight: 800, color: 'var(--text)', margin: '0 0 6px', fontFamily: 'Poppins, sans-serif' }}>
-              No Properties Selected
-            </h3>
-            <p style={{ fontSize: '14px', color: 'var(--gray)', margin: 0 }}>
-              Add up to 4 plots or villas from the listing above to run a side-by-side spec comparison.
-            </p>
-          </div>
-        )}
+                  {/* Scrollable list of pills */}
+                  <div className="max-h-[220px] overflow-y-auto border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+                    {filtered.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {filtered.map((prop) => (
+                          <button
+                            key={prop.id}
+                            onClick={() => addProperty(prop)}
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-700 transition hover:border-indigo-600 hover:text-indigo-600 hover:shadow-sm"
+                          >
+                            <FaPlus className="text-[8px] text-indigo-600" /> {prop.name} — {prop.project}
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-6 text-slate-400 text-xs">
+                        No matching properties found. Try adjusting your search query or project filter.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+
+            {/* Side-by-side Table Comparison Board */}
+            {selected.length >= 2 && (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden"
+              >
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse text-sm text-slate-700">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider w-40 font-poppins">
+                          Specification
+                        </th>
+                        {selected.map((prop) => (
+                          <th key={prop.id} className="text-center px-6 py-4 text-xs font-bold text-slate-800 min-w-[180px] font-poppins">
+                            {prop.name}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {attributes.map((attr, idx) => (
+                        <tr key={attr.key} className={`border-b border-slate-100 transition ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
+                          <td className="px-6 py-4 font-semibold text-slate-500">{attr.label}</td>
+                          {selected.map((prop) => {
+                            const values = selected.map((s) => s[attr.key]);
+                            const best = attr.key === 'price' ? Math.min(...values) : attr.key === 'size' ? Math.max(...values) : null;
+                            const isBest = best !== null && prop[attr.key] === best;
+                            return (
+                              <td
+                                key={prop.id}
+                                className={`text-center px-6 py-4 transition ${isBest ? 'bg-emerald-50/60' : ''}`}
+                              >
+                                <span className={`block ${isBest ? 'font-bold text-emerald-600' : 'text-slate-800'}`}>
+                                  {attr.format ? attr.format(prop[attr.key]) : prop[attr.key]}
+                                </span>
+                                {isBest && attr.key === 'price' && (
+                                  <span className="inline-flex items-center gap-1 text-[9px] text-emerald-600 font-bold uppercase tracking-wider mt-1">
+                                    <FaCheck className="text-[7px]" /> Best Value
+                                  </span>
+                                )}
+                                {isBest && attr.key === 'size' && (
+                                  <span className="inline-flex items-center gap-1 text-[9px] text-emerald-600 font-bold uppercase tracking-wider mt-1">
+                                    <FaCheck className="text-[7px]" /> Largest Size
+                                  </span>
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 text-center text-xs font-medium text-slate-400">
+                  💡 Tip: Look for the green highlighted options representing optimal budget and layout sizing specifications.
+                </div>
+              </motion.div>
+            )}
+
+            {/* Dynamic Fallback views if less than 2 properties selected */}
+            {selected.length < 2 && selected.length > 0 && (
+              <div className="text-center py-16 px-8 bg-white rounded-2xl border border-slate-200 shadow-md">
+                <div className="w-12 h-12 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mx-auto mb-4">
+                  <FaArrowRight className="text-lg animate-pulse" />
+                </div>
+                <h3 className="text-base font-bold text-slate-800 mb-1.5 font-poppins">Select Another Property</h3>
+                <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">Add at least one more plot or villa above to view comparison specifications.</p>
+              </div>
+            )}
+
+            {selected.length === 0 && (
+              <div className="text-center py-20 px-8 bg-white rounded-2xl border border-slate-200 shadow-md">
+                <div className="w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4">
+                  <FaPlus className="text-xl" />
+                </div>
+                <h3 className="text-base font-bold text-slate-800 mb-1.5 font-poppins">
+                  No Properties Selected
+                </h3>
+                <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+                  Add up to 4 plots or villas from the listing above to run a side-by-side spec comparison.
+                </p>
+              </div>
+            )}
           </>
         )}
 
