@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Footer() {
+  const { user, getRedirectPath } = useAuth();
+  const dashboardPath = user ? getRedirectPath(user.role) : '/login';
   return (
     <footer>
       <div className="wrap">
@@ -31,7 +34,7 @@ export default function Footer() {
               <li><Link to="/projects">Projects</Link></li>
               <li><Link to="/#features">20 Smart Features</Link></li>
               <li><Link to="/calculators">Calculators</Link></li>
-              <li><Link to="/customer/dashboard">Owner Portal</Link></li>
+              <li><Link to={dashboardPath}>Owner Portal</Link></li>
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/contact">Contact Us</Link></li>
             </ul>

@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaWhatsapp, FaCheckCircle, FaRobot, FaBell, FaUsers, FaArrowRight } from 'react-icons/fa';
 import { getPlots } from '../../api/plots';
+
+// Import sub-components
+import CRMFeatures from '../../components/crm/CRMFeatures';
+import CRMComposer from '../../components/crm/CRMComposer';
+import CRMWorkflow from '../../components/crm/CRMWorkflow';
 
 export default function WhatsAppCRM() {
   const [properties, setProperties] = useState([]);
@@ -130,7 +134,6 @@ export default function WhatsAppCRM() {
 
   return (
     <div className="bg-slate-50 min-h-screen pb-24">
-      
       {/* ===== PAGE HEADER ===== */}
       <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-slate-900 to-indigo-950">
         <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10" />
@@ -157,226 +160,32 @@ export default function WhatsAppCRM() {
           className="bg-white rounded-2xl border border-slate-200 shadow-xl p-8 mb-8"
         >
           {/* Key pillars grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-            {[
-              { icon: FaRobot, label: 'Auto Replies', desc: 'Instant WhatsApp responses for user queries 24/7' },
-              { icon: FaBell, label: 'Instant Alerts', desc: 'Every booking & inquiry notified instantly to you' },
-              { icon: FaUsers, label: 'Shared Team Inbox', desc: 'Collaborative inbox for sales team assignments' },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="p-5 bg-slate-50 border border-slate-200 rounded-xl"
-              >
-                <div className="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-lg flex items-center justify-center mb-4">
-                  <item.icon className="text-lg" />
-                </div>
-                <h3 className="text-slate-800 text-sm font-bold mb-1.5 font-poppins">
-                  {item.label}
-                </h3>
-                <p className="text-slate-500 text-xs leading-relaxed m-0">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+          <CRMFeatures />
 
           {/* Try WhatsApp Demo Box */}
-          <div className="bg-slate-50 border border-dashed border-indigo-200 rounded-2xl p-6 md:p-8">
-            <h3 className="text-base font-bold text-slate-800 mb-1.5 font-poppins">
-              Smart Message Composer (WhatsApp CRM)
-            </h3>
-            <p className="text-slate-500 text-xs md:text-sm font-medium mb-5">
-              Test and customize dynamic templates powered by actual property records before opening WhatsApp:
-            </p>
-
-            {/* Step 1: Template Toggles */}
-            <div className="mb-5">
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 font-poppins">
-                1. Select Communication Template:
-              </label>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { id: 'property_alert', label: '🏡 Property Alert' },
-                  { id: 'site_visit', label: '📅 Site Visit Invitation' },
-                  { id: 'payment_reminder', label: '💰 Payment Reminder' }
-                ].map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => setTemplate(t.id)}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold transition duration-200 outline-none ${
-                      template === t.id
-                        ? 'bg-indigo-50 border border-indigo-600 text-indigo-600'
-                        : 'bg-white border border-slate-200 text-slate-700 hover:border-indigo-600 hover:text-indigo-600'
-                    }`}
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Step 2: Property Filter Dropdowns */}
-            {(template === 'property_alert' || template === 'payment_reminder') && (
-              <div className="mb-5">
-                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 font-poppins">
-                  2. Select Property Details:
-                </label>
-                <div className="flex flex-wrap gap-3">
-                  <div className="flex-1 min-w-[200px]">
-                    <select
-                      value={selectedProject}
-                      onChange={(e) => setSelectedProject(e.target.value)}
-                      disabled={loading || uniqueProjects.length === 0}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none cursor-pointer focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
-                    >
-                      {uniqueProjects.map((p) => (
-                        <option key={p} value={p}>{p}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="flex-1 min-w-[200px]">
-                    <select
-                      value={selectedPlotId}
-                      onChange={(e) => setSelectedPlotId(e.target.value)}
-                      disabled={loading || filteredPlots.length === 0}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none cursor-pointer focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
-                    >
-                      {filteredPlots.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          Plot {p.plotNumber} — {p.size} sq.ft (₹{p.price} L)
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Recipient Personalization */}
-            <div className="mb-5">
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 font-poppins">
-                {template === 'property_alert' || template === 'payment_reminder' ? '3.' : '2.'} Customer Personalization & Recipient:
-              </label>
-              <div className="flex flex-wrap gap-3">
-                <div className="flex-1 min-w-[200px]">
-                  <input
-                    type="text"
-                    placeholder="Customer Name (e.g. Rahul)"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
-                  />
-                </div>
-                <div className="flex-1 min-w-[200px]">
-                  <input
-                    type="text"
-                    placeholder="Recipient Phone (+91 XXXXX XXXXX)"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Step 4: Editable Message Preview Area */}
-            <div className="mb-5">
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 font-poppins">
-                Message Preview (Directly editable text):
-              </label>
-              <textarea
-                value={customMessage}
-                onChange={(e) => setCustomMessage(e.target.value)}
-                className="w-full h-44 px-4 py-3.5 rounded-xl border border-indigo-600 text-xs md:text-sm font-sans leading-relaxed outline-none bg-slate-50 text-slate-800 resize-y focus:bg-white transition"
-              />
-            </div>
-
-            {/* Step 5: Send Redirection */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <button
-                onClick={handleSendDemo}
-                disabled={loading || !phone}
-                className="px-6 py-3 rounded-lg text-white font-bold text-xs md:text-sm flex items-center gap-2 transition duration-200 bg-emerald-500 hover:bg-emerald-600 active:scale-95 disabled:bg-slate-300 disabled:cursor-not-allowed"
-              >
-                <FaWhatsapp className="text-base md:text-lg" /> Send Custom Alert on WhatsApp
-              </button>
-
-              {sent && (
-                <div className="flex items-center gap-2 text-xs md:text-sm text-emerald-500 font-semibold">
-                  <FaCheckCircle /> WhatsApp redirect triggered!
-                </div>
-              )}
-            </div>
-          </div>
+          <CRMComposer
+            phone={phone}
+            setPhone={setPhone}
+            customerName={customerName}
+            setCustomerName={setCustomerName}
+            template={template}
+            setTemplate={setTemplate}
+            selectedProject={selectedProject}
+            setSelectedProject={setSelectedProject}
+            selectedPlotId={selectedPlotId}
+            setSelectedPlotId={setSelectedPlotId}
+            customMessage={customMessage}
+            setCustomMessage={setCustomMessage}
+            loading={loading}
+            uniqueProjects={uniqueProjects}
+            filteredPlots={filteredPlots}
+            onSend={handleSendDemo}
+            sent={sent}
+          />
         </motion.div>
 
         {/* Detailed Guidelines Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          
-          {/* How It Works */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm"
-          >
-            <h3 className="text-sm font-bold text-slate-800 mb-5 font-poppins">
-              How It Works
-            </h3>
-            <ol className="flex flex-col gap-4">
-              {[
-                'Visitor submits a booking form or inquiries on website.',
-                'The system auto-records details directly in CRM dashboard.',
-                'Instant alerts are sent straight to coordinates via WhatsApp.',
-                'Immediate brochures are sent to the visitor via automation.',
-                'Team can instantly chat with customers via single interface.',
-              ].map((step, i) => (
-                <li key={i} className="flex gap-3 items-start">
-                  <span className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-500 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5 font-poppins">
-                    {i + 1}
-                  </span>
-                  <span className="text-slate-500 text-xs md:text-sm leading-relaxed font-medium">{step}</span>
-                </li>
-              ))}
-            </ol>
-          </motion.div>
-
-          {/* Key Benefits */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm"
-          >
-            <h3 className="text-sm font-bold text-slate-800 mb-5 font-poppins">
-              CRM Key Benefits
-            </h3>
-            <div className="flex flex-col gap-3">
-              {[
-                { label: 'Unchecked Lead Leakage', before: '35% Loss', after: '< 2% Loss' },
-                { label: 'Average Response Time', before: '5 Hours', after: '< 2 Mins' },
-                { label: 'Conversion Performance', before: '10% Avg', after: '32% High' },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="flex justify-between items-center p-4 bg-slate-50 border border-slate-200 rounded-xl"
-                >
-                  <div>
-                    <span className="block text-xs font-bold text-slate-800 font-poppins">
-                      {item.label}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[10px] md:text-xs font-semibold">
-                    <span className="text-slate-400 line-through">{item.before}</span>
-                    <FaArrowRight className="text-slate-300 text-[9px]" />
-                    <span className="text-emerald-500 font-extrabold text-xs md:text-sm">{item.after}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-        </div>
+        <CRMWorkflow />
 
       </div>
     </div>

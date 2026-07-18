@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const features = [
   { ic: '🤖', title: 'AI Property Recommendation', desc: 'Answer a few simple questions and let our AI match you with the perfect plot choice.', path: '/ai-recommendation' },
@@ -24,6 +25,9 @@ const features = [
 ];
 
 export default function SmartFeatures() {
+  const { user, getRedirectPath } = useAuth();
+  const dashboardPath = user ? getRedirectPath(user.role) : '/login';
+
   return (
     <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
 
@@ -53,7 +57,7 @@ export default function SmartFeatures() {
           {features.map((f, i) => (
             <Link
               key={i}
-              to={f.path}
+              to={f.title === 'Owner Dashboard' ? dashboardPath : f.path}
               className="ccard"
               style={{
                 flexDirection: 'column',
