@@ -76,12 +76,28 @@ export default function ManageProjects() {
     setSubmitting(true);
     try {
       const payload = {
-        ...formData,
-        amenities: formData.amenities ? formData.amenities.split(',').map(a => a.trim()) : [],
-        highlights: formData.highlights ? formData.highlights.split(',').map(h => h.trim()) : [],
+        name: formData.name,
+        slug: formData.slug || formData.name
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)+/g, ''),
+        type: formData.type,
+        status: formData.status,
+        description: formData.description,
+        location: {
+          address: formData.location || '',
+          city: formData.city || '',
+          state: formData.state || '',
+        },
+        pricePerSqft: formData.pricePerSqft ? Number(formData.pricePerSqft) : null,
         totalPlots: formData.totalPlots ? Number(formData.totalPlots) : null,
         totalArea: formData.totalArea ? Number(formData.totalArea) : null,
         possessionDate: formData.possessionDate || null,
+        reraNumber: formData.reraNumber || '',
+        layoutImage: formData.layoutImage || '',
+        amenities: formData.amenities ? formData.amenities.split(',').map(a => a.trim()) : [],
+        highlights: formData.highlights ? formData.highlights.split(',').map(h => h.trim()) : [],
       };
       let savedProject;
       if (editing) { 
