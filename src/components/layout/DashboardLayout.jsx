@@ -34,8 +34,8 @@ const roleSidebarLinks = {
     { label: 'Documents',            path: '/admin/documents',             ic: FaFileAlt },
     { label: 'Site Visits',          path: '/admin/site-visits',           ic: FaMapMarkerAlt },
     { label: 'Construction Updates', path: '/admin/construction-updates',  ic: FaHardHat },
-    { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: FaHandshake },
-    { label: 'Settings',             path: '/admin/settings',              ic: FaCog },
+    // { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: FaHandshake },
+    // { label: 'Settings',             path: '/admin/settings',              ic: FaCog },
     { label: 'Users',                path: '/admin/users',                 ic: FaUser },
   ],
   company_admin: [
@@ -49,8 +49,8 @@ const roleSidebarLinks = {
     { label: 'Documents',            path: '/admin/documents',             ic: FaFileAlt },
     { label: 'Site Visits',          path: '/admin/site-visits',           ic: FaMapMarkerAlt },
     { label: 'Construction Updates', path: '/admin/construction-updates',  ic: FaHardHat },
-    { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: FaHandshake },
-    { label: 'Settings',             path: '/admin/settings',              ic: FaCog },
+    // { label: 'Channel Partners',     path: '/admin/channel-partners',      ic: FaHandshake },
+    // { label: 'Settings',             path: '/admin/settings',              ic: FaCog },
   ],
   sales_executive: [
     { label: 'Dashboard',   path: '/sales/dashboard',    ic: FaTachometerAlt },

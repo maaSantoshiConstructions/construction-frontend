@@ -4,6 +4,16 @@ import toast from 'react-hot-toast';
 import { FaHeart, FaTrash, FaBookmark, FaRupeeSign, FaMapMarkerAlt, FaBuilding } from 'react-icons/fa';
 import EmptyState from '../../../components/common/EmptyState';
 
+const getLocationString = (loc) => {
+  if (!loc) return '-';
+  if (typeof loc === 'string') return loc;
+  if (typeof loc === 'object') {
+    const parts = [loc.address, loc.city, loc.state].filter(Boolean);
+    return parts.length > 0 ? parts.join(', ') : '-';
+  }
+  return '-';
+};
+
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
 
@@ -64,7 +74,7 @@ export default function Wishlist() {
                     <div>
                       <h3 className="text-lg font-semibold text-slate-800">{item.project?.name || item.projectName || item.title || 'Property'}</h3>
                       <p className="text-sm text-slate-500 flex items-center gap-1 mt-0.5">
-                        <FaMapMarkerAlt className="text-xs" /> {item.project?.location || item.location || '-'}
+                        <FaMapMarkerAlt className="text-xs" /> {getLocationString(item.project?.location || item.location)}
                       </p>
                     </div>
                     <button

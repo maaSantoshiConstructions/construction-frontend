@@ -194,7 +194,11 @@ export default function Projects() {
                 </div>
                 <div className="body">
                   <h4>{project.name}</h4>
-                  <div className="loc">{project.location?.city ? `${project.location.address || ''}, ${project.location.city}` : project.location || '-'}</div>
+                  <div className="loc">
+                    {typeof project.location === 'object' && project.location !== null
+                      ? ([project.location.address, project.location.city, project.location.state].filter(Boolean).join(', ') || '-')
+                      : (project.location || '-')}
+                  </div>
                   <p style={{ fontSize: '13px', color: 'var(--gray)', minHeight: '38px', lineHeight: 1.5, margin: '8px 0 16px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {project.description || 'Premium real estate development with smart features, green parks, security, and electricity connectivity.'}
                   </p>

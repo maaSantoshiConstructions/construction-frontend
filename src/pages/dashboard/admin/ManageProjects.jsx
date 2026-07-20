@@ -65,8 +65,17 @@ export default function ManageProjects() {
     setSelectedFiles([]);
     reset({
       ...project,
-      amenities: project.amenities?.join(', ') || '',
-      highlights: project.highlights?.join(', ') || '',
+      location: typeof project.location === 'object' && project.location !== null
+        ? (project.location.address || '')
+        : (typeof project.location === 'string' ? project.location : ''),
+      city: typeof project.location === 'object' && project.location !== null
+        ? (project.location.city || '')
+        : (project.city || ''),
+      state: typeof project.location === 'object' && project.location !== null
+        ? (project.location.state || '')
+        : (project.state || ''),
+      amenities: Array.isArray(project.amenities) ? project.amenities.join(', ') : (project.amenities || ''),
+      highlights: Array.isArray(project.highlights) ? project.highlights.join(', ') : (project.highlights || ''),
       possessionDate: project.possessionDate ? new Date(project.possessionDate).toISOString().split('T')[0] : '',
       layoutImage: project.layoutImage || '',
       featured: !!project.featured,
@@ -88,6 +97,7 @@ export default function ManageProjects() {
         status: formData.status,
         description: formData.description,
         location: {
+          ...(typeof editing?.location === 'object' && editing.location !== null ? editing.location : {}),
           address: formData.location || '',
           city: formData.city || '',
           state: formData.state || '',

@@ -20,6 +20,16 @@ const paymentStatusColors = {
   overdue: 'bg-red-100 text-red-700',
 };
 
+const getLocationString = (loc) => {
+  if (!loc) return '-';
+  if (typeof loc === 'string') return loc;
+  if (typeof loc === 'object') {
+    const parts = [loc.address, loc.city, loc.state].filter(Boolean);
+    return parts.length > 0 ? parts.join(', ') : '-';
+  }
+  return '-';
+};
+
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,7 +91,7 @@ export default function MyBookings() {
                         {b.project?.name || b.projectName} - Plot {b.plot?.plotNumber || b.plotNumber}
                       </h3>
                       <p className="text-sm text-slate-500 flex items-center gap-1 mt-0.5">
-                        <FaMapMarkerAlt className="text-xs" /> {b.project?.location || b.location || '-'}
+                        <FaMapMarkerAlt className="text-xs" /> {getLocationString(b.project?.location || b.location)}
                       </p>
                     </div>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${bookingStatusColors[b.status] || 'bg-slate-100 text-slate-600'}`}>
