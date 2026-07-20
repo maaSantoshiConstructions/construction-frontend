@@ -25,11 +25,11 @@ export default function ProjectMainInfo({
         gap: '36px',
         alignItems: 'start',
         marginBottom: '32px',
-      }} className="project-detail-grid">
+      }} className="project-detail-grid project-main-card">
         
         {/* Left: Photos */}
         <div>
-          <div style={{
+          <div className="project-main-photo" style={{
             borderRadius: '12px',
             overflow: 'hidden',
             height: '380px',
@@ -74,7 +74,7 @@ export default function ProjectMainInfo({
               {project.status}
             </span>
           )}
-          <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '32px', fontWeight: 800, color: 'var(--text)', margin: '4px 0 8px' }}>
+          <h1 className="project-main-title">
             {project.name}
           </h1>
           <div style={{ fontSize: '14px', color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
@@ -97,7 +97,7 @@ export default function ProjectMainInfo({
           </div>
 
           {/* Quick Stats Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px', marginBottom: '28px' }}>
+          <div className="project-stats-grid">
             <div style={{ border: '1px solid var(--line)', borderRadius: '10px', padding: '12px 16px' }}>
               <span style={{ display: 'block', fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase' }}>RERA Status</span>
               <span style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text)', marginTop: '2px', display: 'block' }}>{rera}</span>
@@ -131,7 +131,7 @@ export default function ProjectMainInfo({
           </div>
 
           {/* Action buttons */}
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div className="project-action-btns">
             <Link to={`/plot-map?project=${project.slug}`} className="btn-gold" style={{ fontSize: '13.5px', padding: '12px 24px', border: 'none' }}>
               🗺 View Live Plot Map
             </Link>

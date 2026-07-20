@@ -610,3 +610,111 @@ footer { background: var(--navy); color: #c7cae0; padding: 70px 0 0; margin-top:
     gap: 10px;
   }
 }
+
+/* ===== PROJECT DETAILS RESPONSIVE STYLES ===== */
+
+.project-detail-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.project-main-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(20,20,60,.06);
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.project-section-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(20,20,60,.03);
+}
+
+.project-main-photo {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 380px;
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  background: #f7f7fb;
+}
+
+.project-main-title {
+  font-family: Poppins, Inter, sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 4px 0 8px;
+}
+
+.project-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.project-action-btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.amenities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 991px) {
+  .project-detail-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-main-card,
+  .project-section-card {
+    padding: 20px 16px !important;
+    border-radius: 14px !important;
+  }
+  .project-main-photo {
+    height: 250px !important;
+  }
+  .project-main-title {
+    font-size: 24px !important;
+  }
+  .amenities-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .project-action-btns {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .project-action-btns .btn-gold,
+  .project-action-btns .btn-outline {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .amenities-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+}

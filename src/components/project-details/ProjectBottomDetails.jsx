@@ -10,11 +10,11 @@ export default function ProjectBottomDetails({
     <div className="wrap">
       <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '32px' }} className="project-detail-grid">
         {/* Amenities */}
-        <div style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '32px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
+        <div className="project-section-card" style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '32px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
           <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '20px' }}>
             Project Amenities
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+          <div className="amenities-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
             {finalAmenities.map((amenity, i) => (
               <div key={i} className="trust-item" style={{ padding: '14px 18px', borderRadius: '10px', border: '1px solid var(--line)', background: '#fff', gap: '12px' }}>
                 <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#efeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--indigo)', fontSize: '16px', flexShrink: 0 }}>
@@ -30,7 +30,7 @@ export default function ProjectBottomDetails({
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           {/* Highlights */}
-          <div style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '28px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
+          <div className="project-section-card" style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '28px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
             <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '18px', fontWeight: 800, color: 'var(--text)', marginBottom: '16px' }}>
               Location Highlights
             </h2>
@@ -67,7 +67,7 @@ export default function ProjectBottomDetails({
 
       {/* Layout Plan Map Section */}
       {project.layoutImage && (
-        <div style={{
+        <div className="project-section-card" style={{
           background: '#fff',
           border: '1px solid var(--line)',
           borderRadius: '16px',
