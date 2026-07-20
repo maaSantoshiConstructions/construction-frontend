@@ -15,14 +15,19 @@ export default function ChatMessageList({
   showQuickReplies = true,
   handleQuickReply
 }) {
-  const messagesEndRef = useRef(null);
+  const listRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (listRef.current) {
+      listRef.current.scrollTo({
+        top: listRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [messages, loading]);
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', padding: '24px', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div ref={listRef} style={{ flex: 1, overflowY: 'auto', padding: '24px', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '16px' }}>
       {messages.map((msg, i) => {
         const isUser = msg.role === 'user';
         return (
@@ -126,7 +131,6 @@ export default function ChatMessageList({
           ))}
         </div>
       )}
-      <div ref={messagesEndRef} />
     </div>
   );
 }

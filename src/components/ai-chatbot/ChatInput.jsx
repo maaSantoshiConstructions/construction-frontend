@@ -28,6 +28,7 @@ export default function ChatInput({
           }}
         />
         <button
+          type="button"
           onClick={() => handleSend()}
           disabled={loading || !input.trim()}
           style={{
