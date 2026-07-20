@@ -163,7 +163,7 @@ export default function DashboardLayout() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%', overflow: 'hidden' }} className="main-content-el">
 
         {/* Top header */}
-        <header style={{
+        <header className="dashboard-top-header" style={{
           height: '60px', background: '#fff',
           borderBottom: '1px solid #e6e6f0',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -223,7 +223,7 @@ export default function DashboardLayout() {
         </header>
 
         {/* Page content */}
-        <main style={{ flex: 1, padding: '28px 28px', overflowY: 'auto' }}>
+        <main className="dashboard-main-content">
           <Outlet />
         </main>
       </div>

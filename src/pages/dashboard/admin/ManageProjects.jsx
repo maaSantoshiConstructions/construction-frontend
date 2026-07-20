@@ -150,7 +150,7 @@ export default function ManageProjects() {
       <ProjectsHeader openCreate={openCreate} />
 
       {error ? <ErrorMessage message={error} onRetry={() => fetchProjects()} /> : (
-        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', boxShadow: '0 2px 10px rgba(20,20,60,.05)', overflow: 'hidden' }}>
+        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', boxShadow: '0 2px 10px rgba(20,20,60,.05)', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           {loading ? (
             <div style={{ padding: '40px', textAlign: 'center', color: '#9ea1c4' }}>Loading projects...</div>
           ) : projects.length === 0 ? (
@@ -160,7 +160,7 @@ export default function ManageProjects() {
               <button onClick={openCreate} className="btn-gold" style={{ fontSize: '13px', padding: '10px 20px', border: 'none' }}>+ Add Project</button>
             </div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: '#f7f7fb', borderBottom: '1px solid #e6e6f0' }}>
                   {['#','Name','Type','Location','Plots','Status','Featured','Actions'].map(h => (

@@ -52,7 +52,7 @@ export default function AdminDashboard() {
         <div style={{ height: '28px', width: '200px', background: '#e6e6f0', borderRadius: '6px', marginBottom: '8px' }} className="pulse-skeleton" />
         <div style={{ height: '16px', width: '280px', background: '#f0f0f6', borderRadius: '6px' }} className="pulse-skeleton" />
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '28px' }}>
+      <div className="admin-stat-grid">
         {Array.from({ length: 8 }).map((_, i) => (
           <div key={i} style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '20px' }}>
             <div style={{ width: '40px', height: '40px', background: '#f0f0f6', borderRadius: '10px', marginBottom: '12px' }} className="pulse-skeleton" />
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Stat cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '16px', marginBottom: '28px' }}>
+      <div className="admin-stat-grid">
         {statCards.map(({ key, label, ic: IconComponent, color, money }) => (
           <div key={key} style={{
             background: '#fff', borderRadius: '14px',
@@ -122,7 +122,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Chart + Tables */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: '24px', marginBottom: '28px' }}>
+      <div className="admin-two-col">
         {/* Bar chart */}
         <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '22px', boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
           <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: 700, color: '#171a35', marginBottom: '18px' }}>Monthly Revenue</h2>
@@ -155,7 +155,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Leads + Bookings */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+      <div className="admin-two-col equal">
         {/* Recent Leads */}
         <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '22px', boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>

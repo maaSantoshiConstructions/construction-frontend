@@ -54,7 +54,7 @@ export default function ProjectFormModal({
             <input {...register('name', { required: 'Name is required' })} placeholder="e.g. Green City Phase 2" style={fi(!!errors.name)} />
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="form-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <FormField label="Type">
               <select {...register('type')} style={fi()}>
                 <option value="plotted_development">Plotted Development</option>
@@ -76,7 +76,7 @@ export default function ProjectFormModal({
             <textarea {...register('description')} rows={3} placeholder="Short description of the project..." style={{ ...fi(), resize: 'none' }} />
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="form-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <FormField label="Location / Area">
               <input {...register('location')} placeholder="e.g. Patia" style={fi()} />
             </FormField>
@@ -85,7 +85,7 @@ export default function ProjectFormModal({
             </FormField>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="form-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <FormField label="State">
               <input {...register('state')} placeholder="e.g. Odisha" style={fi()} />
             </FormField>
@@ -94,7 +94,7 @@ export default function ProjectFormModal({
             </FormField>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="form-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <FormField label="Total Plots">
               <input type="number" {...register('totalPlots')} placeholder="e.g. 150" style={fi()} />
             </FormField>
@@ -103,7 +103,7 @@ export default function ProjectFormModal({
             </FormField>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="form-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <FormField label="RERA Number">
               <input {...register('reraNumber')} placeholder="e.g. OD/01/2023/01234" style={fi()} />
             </FormField>
