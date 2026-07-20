@@ -33,6 +33,7 @@ export default function BookVisit() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
 
@@ -67,7 +68,8 @@ export default function BookVisit() {
         project: data.project,
         preferredDate: new Date(data.date).toISOString(),
         preferredTime: data.timeSlot,
-        pickupLocation: data.pickupLocation,
+        pickupLocation: data.visitType === 'vr' ? undefined : data.pickupLocation,
+        visitType: data.visitType || 'physical',
       };
       await createSiteVisit(visitData);
       setVisitDetails({
@@ -106,6 +108,7 @@ export default function BookVisit() {
       timeSlots={timeSlots}
       getMinDate={getMinDate}
       register={register}
+      watch={watch}
       handleSubmitForm={handleSubmit}
       errors={errors}
       onSubmit={onSubmit}

@@ -8,8 +8,12 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        // target: 'http://localhost:5002',
-        target: 'https://construction-backend-96b8.onrender.com',
+        target: 'http://localhost:5002',
+        // target: 'https://construction-backend-96b8.onrender.com',
+        changeOrigin: true
+      },
+      '/uploads': {
+        target: 'http://localhost:5002',
         changeOrigin: true
       }
     }

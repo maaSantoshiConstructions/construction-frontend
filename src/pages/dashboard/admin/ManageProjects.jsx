@@ -55,6 +55,7 @@ export default function ManageProjects() {
       totalArea: '',
       possessionDate: '',
       highlights: '',
+      featured: false,
     });
     setShowModal(true);
   };
@@ -68,6 +69,7 @@ export default function ManageProjects() {
       highlights: project.highlights?.join(', ') || '',
       possessionDate: project.possessionDate ? new Date(project.possessionDate).toISOString().split('T')[0] : '',
       layoutImage: project.layoutImage || '',
+      featured: !!project.featured,
     });
     setShowModal(true);
   };
@@ -98,6 +100,7 @@ export default function ManageProjects() {
         layoutImage: formData.layoutImage || '',
         amenities: formData.amenities ? formData.amenities.split(',').map(a => a.trim()) : [],
         highlights: formData.highlights ? formData.highlights.split(',').map(h => h.trim()) : [],
+        featured: !!formData.featured,
       };
       let savedProject;
       if (editing) { 
@@ -150,7 +153,7 @@ export default function ManageProjects() {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: '#f7f7fb', borderBottom: '1px solid #e6e6f0' }}>
-                  {['#','Name','Type','Location','Plots','Status','Actions'].map(h => (
+                  {['#','Name','Type','Location','Plots','Status','Featured','Actions'].map(h => (
                     <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '11.5px', fontWeight: 700, color: '#6b6f8a', letterSpacing: '.5px', textTransform: 'uppercase' }}>{h}</th>
                   ))}
                 </tr>
@@ -169,6 +172,23 @@ export default function ManageProjects() {
                       <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', background: (statusColor[r.status] || '#3a2fb8') + '18', color: statusColor[r.status] || '#3a2fb8' }}>
                         {r.status}
                       </span>
+                    </td>
+                    <td style={td}>
+                      <button
+                        onClick={async () => {
+                          try {
+                            await updateProject(r._id, { featured: !r.featured });
+                            toast.success(r.featured ? 'Removed from featured' : 'Marked as featured');
+                            fetchProjects();
+                          } catch (err) {
+                            toast.error('Failed to update featured status');
+                          }
+                        }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: r.featured ? '#f39c12' : '#ccc', outline: 'none' }}
+                        title={r.featured ? "Remove from featured" : "Mark as featured"}
+                      >
+                        {r.featured ? '★' : '☆'}
+                      </button>
                     </td>
                     <td style={td}>
                       <div style={{ display: 'flex', gap: '6px' }}>

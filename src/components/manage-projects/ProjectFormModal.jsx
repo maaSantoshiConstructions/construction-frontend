@@ -165,6 +165,18 @@ export default function ProjectFormModal({
             />
           </FormField>
 
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0' }}>
+            <input
+              type="checkbox"
+              id="featured"
+              {...register('featured')}
+              style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+            />
+            <label htmlFor="featured" style={{ fontSize: '13.5px', fontWeight: 600, color: '#171a35', cursor: 'pointer' }}>
+              Featured Project (Show on Homepage)
+            </label>
+          </div>
+
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '4px' }}>
             <button type="button" onClick={() => setShowModal(false)}
               style={{ padding: '10px 20px', borderRadius: '8px', border: '1px solid #e6e6f0', background: '#fff', color: '#6b6f8a', fontSize: '13.5px', fontWeight: 600, cursor: 'pointer' }}>

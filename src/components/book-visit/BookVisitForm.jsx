@@ -36,11 +36,14 @@ export default function BookVisitForm({
   timeSlots,
   getMinDate,
   register,
+  watch,
   handleSubmitForm,
   errors,
   onSubmit,
   loading,
 }) {
+  const visitType = watch ? watch('visitType', 'physical') : 'physical';
+
   return (
     <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
       {/* ===== PAGE HEADER ===== */}
@@ -92,6 +95,18 @@ export default function BookVisitForm({
                 {errors.project && <p style={errStyle}>{errors.project.message}</p>}
               </div>
 
+              <div>
+                <label style={labelStyle}>Visit Type</label>
+                <select
+                  {...register('visitType', { required: 'Please select a visit type' })}
+                  style={inputStyle(!!errors.visitType)}
+                >
+                  <option value="physical">Physical Visit (on-site with executive)</option>
+                  <option value="vr">VR Visit (online virtual reality tour)</option>
+                </select>
+                {errors.visitType && <p style={errStyle}>{errors.visitType.message}</p>}
+              </div>
+
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
                 <div>
                   <label style={labelStyle}>Preferred Date</label>
@@ -123,19 +138,27 @@ export default function BookVisitForm({
                 </div>
               </div>
 
-              <div>
-                <label style={labelStyle}>Pickup Location</label>
-                <div style={{ position: 'relative' }}>
-                  <FaMapMarkerAlt style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--gray)', fontSize: '14px' }} />
-                  <input
-                    type="text"
-                    {...register('pickupLocation', { required: 'Pickup location is required' })}
-                    style={{ ...inputStyle(!!errors.pickupLocation), paddingLeft: '38px' }}
-                    placeholder="Enter your pickup address"
-                  />
+              {visitType === 'physical' && (
+                <div>
+                  <label style={labelStyle}>Pickup Location</label>
+                  <div style={{ position: 'relative' }}>
+                    <FaMapMarkerAlt style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--gray)', fontSize: '14px' }} />
+                    <input
+                      type="text"
+                      {...register('pickupLocation', { required: visitType === 'physical' ? 'Pickup location is required' : false })}
+                      style={{ ...inputStyle(!!errors.pickupLocation), paddingLeft: '38px' }}
+                      placeholder="Enter your pickup address"
+                    />
+                  </div>
+                  {errors.pickupLocation && <p style={errStyle}>{errors.pickupLocation.message}</p>}
                 </div>
-                {errors.pickupLocation && <p style={errStyle}>{errors.pickupLocation.message}</p>}
-              </div>
+              )}
+
+              {visitType === 'vr' && (
+                <div style={{ padding: '14px', borderRadius: '8px', border: '1px solid #d5d1fb', background: '#f0effd', fontSize: '13px', color: '#3a2fb8', lineHeight: 1.5 }}>
+                  <strong>Virtual Reality Tour:</strong> You will join an online meeting. We will provide a 3D VR walkthrough of the project and plots. No pickup or physical travel is required!
+                </div>
+              )}
 
               <button
                 type="submit"

@@ -68,6 +68,11 @@ export default function SiteVisits() {
     { key: 'project', label: 'Project', render: r => r.project?.name || r.projectName || '-' },
     { key: 'date', label: 'Date', render: r => new Date(r.date || r.scheduledDate).toLocaleDateString() },
     { key: 'time', label: 'Time', render: r => r.time || r.slot || '-' },
+    { key: 'visitType', label: 'Type', render: r => (
+      <span className={`px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${r.visitType === 'vr' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+        {r.visitType === 'vr' ? 'VR' : 'Physical'}
+      </span>
+    )},
     { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status?.replace(/_/g, ' ')}</span> },
     { key: 'actions', label: 'Actions', render: r => (
       r.status === 'scheduled' || r.status === 'confirmed' ? (

@@ -81,6 +81,11 @@ export default function ManageSiteVisits() {
     { key: 'plot', label: 'Plot', render: r => r.plot?.plotNumber ? `#${r.plot.plotNumber}` : '-' },
     { key: 'date', label: 'Date', render: r => r.preferredDate ? new Date(r.preferredDate).toLocaleDateString() : r.date ? new Date(r.date).toLocaleDateString() : '-' },
     { key: 'time', label: 'Time', render: r => r.preferredTime || r.time || r.slot || '-' },
+    { key: 'visitType', label: 'Type', render: r => (
+      <span className={`px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${r.visitType === 'vr' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+        {r.visitType === 'vr' ? 'VR' : 'Physical'}
+      </span>
+    )},
     { key: 'executive', label: 'Executive', render: r => r.salesExecutive?.name || <span className="text-slate-400 text-xs">Unassigned</span> },
     { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status}</span> },
     { key: 'actions', label: 'Actions', render: r => (

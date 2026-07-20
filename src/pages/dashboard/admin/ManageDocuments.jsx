@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { FaUpload, FaCheckCircle, FaTrash, FaTimes } from 'react-icons/fa';
+import { FaUpload, FaCheckCircle, FaTrash, FaTimes, FaEye } from 'react-icons/fa';
 import { getDocuments, uploadDocument, verifyDocument, deleteDocument } from '../../../api/documents';
 import DataTable from '../../../components/common/DataTable';
 import Pagination from '../../../components/common/Pagination';
@@ -82,20 +82,30 @@ export default function ManageDocuments() {
     }
   };
 
+  const handleView = (doc) => {
+    if (doc.fileUrl) {
+      const path = doc.fileUrl.startsWith('http') ? doc.fileUrl : `/${doc.fileUrl}`;
+      window.open(path, '_blank');
+    } else {
+      toast.error('File not available');
+    }
+  };
+
   const columns = [
     { key: 'title', label: 'Title', render: r => <span className="font-medium text-slate-800">{r.title}</span> },
     { key: 'type', label: 'Type', render: r => <span className="capitalize">{r.type || 'Other'}</span> },
     { key: 'customer', label: 'Customer', render: r => r.customer?.name || '-' },
     { key: 'plot', label: 'Plot', render: r => r.plot?.plotNumber ? `#${r.plot.plotNumber}` : '-' },
-    { key: 'verified', label: 'Verified', render: r => (
-      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${r.verified ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-        {r.verified ? 'Verified' : 'Pending'}
+    { key: 'isVerified', label: 'Verified', render: r => (
+      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${r.isVerified ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+        {r.isVerified ? 'Verified' : 'Pending'}
       </span>
     )},
     { key: 'actions', label: 'Actions', render: r => (
       <div className="flex items-center gap-2">
-        {!r.verified && <button onClick={() => handleVerify(r._id)} className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg"><FaCheckCircle /></button>}
-        <button onClick={() => handleDelete(r._id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg"><FaTrash /></button>
+        <button onClick={() => handleView(r)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg" title="View"><FaEye /></button>
+        {!r.isVerified && <button onClick={() => handleVerify(r._id)} className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg" title="Verify"><FaCheckCircle /></button>}
+        <button onClick={() => handleDelete(r._id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg" title="Delete"><FaTrash /></button>
       </div>
     )},
   ];

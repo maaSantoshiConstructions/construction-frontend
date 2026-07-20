@@ -69,8 +69,10 @@ export default function MyDocuments() {
   };
 
   const handleView = (doc) => {
-    if (doc.fileUrl || doc.url) {
-      window.open(doc.fileUrl || doc.url, '_blank');
+    const url = doc.fileUrl || doc.url;
+    if (url) {
+      const path = url.startsWith('http') || url.startsWith('/') ? url : `/${url}`;
+      window.open(path, '_blank');
     } else {
       toast.error('File not available');
     }
@@ -126,8 +128,8 @@ export default function MyDocuments() {
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${docTypeColors[doc.type] || 'bg-slate-100 text-slate-600'}`}>
                       {doc.type?.replace(/_/g, ' ')}
                     </span>
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${verificationColors[doc.verificationStatus || doc.status] || 'bg-slate-100 text-slate-600'}`}>
-                      {doc.verificationStatus || doc.status || 'unknown'}
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${verificationColors[doc.isVerified ? 'verified' : 'pending'] || 'bg-slate-100 text-slate-600'}`}>
+                      {doc.isVerified ? 'Verified' : 'Pending'}
                     </span>
                   </div>
                 </div>

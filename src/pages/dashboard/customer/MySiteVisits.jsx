@@ -83,6 +83,9 @@ export default function MySiteVisits() {
                     <h3 className="text-lg font-bold text-slate-800 font-poppins">
                       {v.project?.name || 'Jai Santoshi Maa Site Visit'}
                     </h3>
+                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${v.visitType === 'vr' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                      {v.visitType === 'vr' ? 'VR Visit' : 'Physical Visit'}
+                    </span>
                     <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${visitStatusColors[v.status] || 'bg-slate-100 text-slate-600'}`}>
                       {v.status}
                     </span>
@@ -101,7 +104,9 @@ export default function MySiteVisits() {
                     </div>
                     <div className="flex items-center gap-2">
                       <FaMapMarkerAlt className="text-slate-400" />
-                      <span>Pickup: {v.pickupLocation || 'Directly at site'}</span>
+                      <span>
+                        {v.visitType === 'vr' ? 'Virtual Reality Tour (Online)' : `Pickup: ${v.pickupLocation || 'Directly at site'}`}
+                      </span>
                     </div>
                   </div>
                 </div>

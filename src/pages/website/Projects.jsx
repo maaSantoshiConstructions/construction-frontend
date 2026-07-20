@@ -201,7 +201,7 @@ export default function Projects() {
                   <div className="price-row" style={{ marginTop: '0', paddingTop: '12px', borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <div className="from">Starting From</div>
-                      <div className="price" style={{ fontSize: '18px', color: 'var(--indigo)' }}>
+                      <div className="price" style={{ fontSize: '18px', fontWeight: 800, color: 'var(--gold-dark)' }}>
                         {project.pricePerSqft ? `₹${project.pricePerSqft}/Sq.ft` : 'Contact for Price'}
                       </div>
                     </div>
