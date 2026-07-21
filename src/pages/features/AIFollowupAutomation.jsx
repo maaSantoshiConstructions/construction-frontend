@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getLeads, updateLead } from '../../api/leads';
+import { getLeads, updateLead, sendLeadEmail } from '../../api/leads';
 import toast from 'react-hot-toast';
 
 import FollowupHeader from '../../components/ai-followup/FollowupHeader';
 import LeadSelector from '../../components/ai-followup/LeadSelector';
 import SequenceCard from '../../components/ai-followup/SequenceCard';
 import FollowupStats from '../../components/ai-followup/FollowupStats';
+import SendEmailModal from '../../components/ai-followup/SendEmailModal';
 
 const sequences = [
   {
@@ -44,6 +45,10 @@ export default function AIFollowupAutomation() {
   const [loadingLeads, setLoadingLeads] = useState(true);
   const [triggeringIndex, setTriggeringIndex] = useState(null);
 
+  // Email Modal state
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [selectedStep, setSelectedStep] = useState(null);
+
   useEffect(() => {
     const fetchLeads = async () => {
       try {
@@ -74,18 +79,19 @@ export default function AIFollowupAutomation() {
     const lead = leads.find((l) => l._id === selectedLeadId);
     if (!lead) return;
 
+    if (step.channel === 'Email') {
+      if (!lead.email) {
+        toast.error(`Cannot send Email: No email address registered for ${lead.name}`);
+        return;
+      }
+      setSelectedStep({ ...step, index });
+      setEmailModalOpen(true);
+      return;
+    }
+
     try {
       setTriggeringIndex(index);
       
-      const updatedNotes = [...(lead.notes || [])];
-      updatedNotes.push(`[AI Follow-up: ${step.channel}] Triggered "${step.time}" step: "${step.message}"`);
-      
-      const updatedLog = [...(lead.conversationLog || [])];
-      updatedLog.push({
-        message: `[AI Follow-up: ${step.channel}] Sent: "${step.message}"`,
-        date: new Date()
-      });
-
       let nextStatus = lead.status;
       if (active.id === 1) {
         nextStatus = 'contacted';
@@ -96,6 +102,15 @@ export default function AIFollowupAutomation() {
       }
 
       const nextScore = Math.min((lead.score || 0) + 15, 100);
+
+      const updatedNotes = [...(lead.notes || [])];
+      updatedNotes.push(`[AI Follow-up: ${step.channel}] Triggered "${step.time}" step: "${step.message}"`);
+      
+      const updatedLog = [...(lead.conversationLog || [])];
+      updatedLog.push({
+        message: `[AI Follow-up: ${step.channel}] Sent: "${step.message}"`,
+        date: new Date()
+      });
 
       await updateLead(selectedLeadId, {
         notes: updatedNotes,
@@ -110,7 +125,7 @@ export default function AIFollowupAutomation() {
           : l
       ));
 
-      toast.success(`Successfully sent ${step.channel} follow-up to ${lead.name}!`);
+      toast.success(`Successfully triggered ${step.channel} follow-up for ${lead.name}!`);
 
       if (step.channel === 'WhatsApp') {
         if (!lead.phone) {
@@ -130,7 +145,73 @@ export default function AIFollowupAutomation() {
       }
     } catch (err) {
       console.error('Error triggering follow-up:', err);
-      toast.error('Failed to trigger follow-up step.');
+      toast.error(err.response?.data?.message || 'Failed to trigger follow-up step.');
+    } finally {
+      setTriggeringIndex(null);
+    }
+  };
+
+  const handleConfirmSendEmail = async ({ subject, message, selectedFile, presetFile }) => {
+    if (!selectedLeadId) return;
+
+    const lead = leads.find((l) => l._id === selectedLeadId);
+    if (!lead) return;
+
+    try {
+      if (selectedStep) {
+        setTriggeringIndex(selectedStep.index);
+      }
+
+      let nextStatus = lead.status;
+      if (active.id === 1) {
+        nextStatus = 'contacted';
+      } else if (active.id === 2) {
+        nextStatus = 'site_visit_done';
+      } else if (active.id === 3) {
+        nextStatus = 'booking_done';
+      }
+
+      const nextScore = Math.min((lead.score || 0) + 15, 100);
+
+      let payload;
+      if (selectedFile) {
+        payload = new FormData();
+        payload.append('subject', subject);
+        payload.append('message', message);
+        payload.append('channel', 'Email');
+        payload.append('file', selectedFile);
+      } else {
+        payload = {
+          subject,
+          message,
+          channel: 'Email',
+          presetFile,
+        };
+      }
+
+      const emailRes = await sendLeadEmail(selectedLeadId, payload);
+
+      await updateLead(selectedLeadId, {
+        status: nextStatus,
+        score: nextScore,
+      });
+
+      const updatedLead = emailRes.data?.data || lead;
+      setLeads(leads.map((l) => 
+        l._id === selectedLeadId 
+          ? { ...l, ...updatedLead, status: nextStatus, score: nextScore } 
+          : l
+      ));
+
+      const attachedName = emailRes.data?.attachedFileName;
+      toast.success(
+        attachedName
+          ? `Email with attached "${attachedName}" sent via Nodemailer to ${lead.email}!`
+          : `Email sent via Nodemailer to ${lead.email}!`
+      );
+    } catch (err) {
+      console.error('Error sending email:', err);
+      toast.error(err.response?.data?.message || 'Failed to send email.');
     } finally {
       setTriggeringIndex(null);
     }
@@ -168,6 +249,17 @@ export default function AIFollowupAutomation() {
         <FollowupStats />
 
       </div>
+
+      {/* Send Email Attachment Modal */}
+      <SendEmailModal
+        isOpen={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+        lead={selectedLead}
+        step={selectedStep}
+        sequenceName={active.name}
+        onSendEmail={handleConfirmSendEmail}
+      />
     </div>
   );
 }
+

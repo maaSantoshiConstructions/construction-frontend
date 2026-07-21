@@ -19,17 +19,25 @@ export default function ComparisonTable({ selected = [] }) {
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden"
+      className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden mb-8"
     >
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-sm text-slate-700">
+      {/* Mobile Scroll Indicator Banner */}
+      <div className="md:hidden bg-indigo-50 border-b border-indigo-100 px-4 py-2.5 flex items-center justify-between text-xs font-semibold text-indigo-700">
+        <span>👈 Swipe horizontally to compare 👉</span>
+        <span className="text-[10px] bg-indigo-200/60 px-2 py-0.5 rounded-full font-bold">
+          {selected.length} Selected
+        </span>
+      </div>
+
+      <div className="overflow-x-auto touch-pan-x w-full">
+        <table className="min-w-[640px] w-full border-collapse text-sm text-slate-700">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider w-40 font-poppins">
+              <th className="sticky left-0 bg-slate-50 z-20 text-left px-4 md:px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider w-36 md:w-40 font-poppins shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
                 Specification
               </th>
               {selected.map((prop) => (
-                <th key={prop.id} className="text-center px-6 py-4 text-xs font-bold text-slate-800 min-w-[180px] font-poppins">
+                <th key={prop.id} className="text-center px-4 md:px-6 py-4 text-xs font-bold text-slate-800 min-w-[160px] md:min-w-[180px] font-poppins">
                   {prop.name}
                 </th>
               ))}
@@ -37,8 +45,10 @@ export default function ComparisonTable({ selected = [] }) {
           </thead>
           <tbody>
             {attributes.map((attr, idx) => (
-              <tr key={attr.key} className={`border-b border-slate-100 transition ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
-                <td className="px-6 py-4 font-semibold text-slate-500">{attr.label}</td>
+              <tr key={attr.key} className={`border-b border-slate-100 transition ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}>
+                <td className={`sticky left-0 z-10 px-4 md:px-6 py-4 font-semibold text-slate-700 shadow-[2px_0_5px_rgba(0,0,0,0.05)] ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                  {attr.label}
+                </td>
                 {selected.map((prop) => {
                   const values = selected.map((s) => s[attr.key]);
                   const best = attr.key === 'price' ? Math.min(...values) : attr.key === 'size' ? Math.max(...values) : null;
@@ -46,7 +56,7 @@ export default function ComparisonTable({ selected = [] }) {
                   return (
                     <td
                       key={prop.id}
-                      className={`text-center px-6 py-4 transition ${isBest ? 'bg-emerald-50/60' : ''}`}
+                      className={`text-center px-4 md:px-6 py-4 transition ${isBest ? 'bg-emerald-50/60' : ''}`}
                     >
                       <span className={`block ${isBest ? 'font-bold text-emerald-600' : 'text-slate-800'}`}>
                         {attr.format ? attr.format(prop[attr.key]) : prop[attr.key]}
@@ -76,3 +86,4 @@ export default function ComparisonTable({ selected = [] }) {
     </motion.div>
   );
 }
+

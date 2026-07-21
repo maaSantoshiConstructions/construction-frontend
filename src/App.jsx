@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Loader from './components/common/Loader';
+import ScrollToTop from './components/common/ScrollToTop';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ProtectedRoute from './components/layout/ProtectedRoute';
@@ -92,7 +93,10 @@ export default function App() {
   if (loading) return <Loader />;
 
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+
       {/* Public Routes */}
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
       <Route path="/projects" element={<PublicLayout><Projects /></PublicLayout>} />
@@ -195,5 +199,7 @@ export default function App() {
       {/* 404 */}
       <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />
     </Routes>
+    </>
   );
 }
+

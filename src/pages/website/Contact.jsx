@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { createLead } from '../../api/leads';
+import { Link } from 'react-router-dom';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock, FaPaperPlane } from 'react-icons/fa';
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
@@ -27,58 +29,58 @@ export default function Contact() {
   };
 
   return (
-    <div style={{ background: 'var(--white)', minHeight: '100vh' }}>
-
+    <div className="bg-slate-50 min-h-screen">
       {/* ===== PAGE HEADER ===== */}
-      <div style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
-        padding: '64px 0 60px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div className="wrap" style={{ textAlign: 'center' }}>
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>GET IN TOUCH</span>
-          <h1 style={{ fontFamily: 'Poppins, Inter, sans-serif', fontSize: '40px', fontWeight: 800, color: '#fff', marginTop: '8px', marginBottom: '14px' }}>
+      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-14 md:py-20 text-center relative overflow-hidden px-4">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-600/20 via-transparent to-transparent pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <span className="inline-block px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-bold text-[11px] md:text-xs uppercase tracking-widest mb-3 border border-white/10">
+            GET IN TOUCH
+          </span>
+          <h1 className="font-poppins text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
             Contact Us
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '480px', margin: '0 auto', lineHeight: 1.6 }}>
+          <p className="text-slate-300 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-normal px-2">
             We&apos;d love to hear from you. Get in touch with our team and we&apos;ll respond within 24 hours.
           </p>
         </div>
       </div>
 
-      {/* ===== CONTENT ===== */}
-      <div className="wrap" style={{ paddingTop: '60px', paddingBottom: '90px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '28px', alignItems: 'start' }}>
-
+      {/* ===== CONTENT WRAPPER ===== */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 pt-10 md:pt-14 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
           {/* ===== FORM CARD ===== */}
-          <div style={{
-            background: '#fff',
-            borderRadius: '16px',
-            border: '1px solid var(--line)',
-            boxShadow: '0 15px 40px rgba(20,20,60,.1)',
-            padding: '36px',
-          }}>
-            <span className="eyebrow">SEND A MESSAGE</span>
-            <h2 style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px' }}>
+          <div className="lg:col-span-7 xl:col-span-8 bg-white rounded-3xl border border-slate-200/80 shadow-xl p-6 sm:p-8 md:p-10">
+            <span className="text-xs font-bold text-amber-600 uppercase tracking-widest font-poppins">
+              SEND A MESSAGE
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 mb-6 font-poppins">
               How Can We Help You?
             </h2>
 
-            <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {/* Name + Email row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-5">
+              {/* Name + Email Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                 <div>
-                  <label style={labelStyle}>Full Name</label>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Full Name
+                  </label>
                   <input
                     type="text"
                     {...register('name', { required: 'Name is required' })}
                     placeholder="Your name"
-                    style={inputStyle(!!errors.name)}
+                    className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${
+                      errors.name ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                    }`}
                   />
-                  {errors.name && <p style={errStyle}>{errors.name.message}</p>}
+                  {errors.name && <p className="text-red-500 text-xs mt-1 font-medium">{errors.name.message}</p>}
                 </div>
+
                 <div>
-                  <label style={labelStyle}>Email Address</label>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Email Address
+                  </label>
                   <input
                     type="email"
                     {...register('email', {
@@ -86,118 +88,109 @@ export default function Contact() {
                       pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' },
                     })}
                     placeholder="you@example.com"
-                    style={inputStyle(!!errors.email)}
+                    className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${
+                      errors.email ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                    }`}
                   />
-                  {errors.email && <p style={errStyle}>{errors.email.message}</p>}
+                  {errors.email && <p className="text-red-500 text-xs mt-1 font-medium">{errors.email.message}</p>}
                 </div>
               </div>
 
               {/* Phone */}
               <div>
-                <label style={labelStyle}>Phone Number</label>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
                   {...register('phone', { required: 'Phone is required', minLength: { value: 10, message: 'Min 10 digits' } })}
                   placeholder="9876543210"
-                  style={inputStyle(!!errors.phone)}
+                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${
+                    errors.phone ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                  }`}
                 />
-                {errors.phone && <p style={errStyle}>{errors.phone.message}</p>}
+                {errors.phone && <p className="text-red-500 text-xs mt-1 font-medium">{errors.phone.message}</p>}
               </div>
 
               {/* Message */}
               <div>
-                <label style={labelStyle}>Message</label>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Message
+                </label>
                 <textarea
                   rows={5}
                   {...register('message', { required: 'Message is required' })}
                   placeholder="Tell us about your requirements..."
-                  style={{ ...inputStyle(!!errors.message), resize: 'none' }}
+                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition resize-none bg-white ${
+                    errors.message ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                  }`}
                 />
-                {errors.message && <p style={errStyle}>{errors.message.message}</p>}
+                {errors.message && <p className="text-red-500 text-xs mt-1 font-medium">{errors.message.message}</p>}
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-gold"
-                style={{ alignSelf: 'flex-start', opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer', border: 'none' }}
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm shadow-md transition duration-200 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Sending...' : '✉ Send Message'}
+                <FaPaperPlane className="text-xs" />
+                {loading ? 'Sending Message...' : 'Send Message'}
               </button>
             </form>
           </div>
 
           {/* ===== RIGHT SIDEBAR ===== */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-
+          <div className="lg:col-span-5 xl:col-span-4 space-y-4">
+            
             {/* Contact info cards */}
             {[
-              { ic: '📍', label: 'Address', value: 'Bhubaneswar, Odisha, India 751029' },
-              { ic: '📞', label: 'Phone', value: '+91 70000 12345' },
-              { ic: '✉', label: 'Email', value: 'info@jsminfra.com' },
-              { ic: '🕐', label: 'Office Hours', value: 'Mon – Sat: 9:00 AM – 7:00 PM' },
+              { icon: <FaMapMarkerAlt />, label: 'Address', value: 'Bhubaneswar, Odisha, India 751029' },
+              { icon: <FaPhoneAlt />, label: 'Phone', value: '+91 70000 12345' },
+              { icon: <FaEnvelope />, label: 'Email', value: 'info@jsminfra.com' },
+              { icon: <FaClock />, label: 'Office Hours', value: 'Mon – Sat: 9:00 AM – 7:00 PM' },
             ].map((item) => (
-              <div key={item.label} className="trust-item" style={{ borderRadius: '12px', border: '1px solid var(--line)', boxShadow: '0 2px 10px rgba(20,20,60,.05)', background: '#fff' }}>
-                <div className="trust-item ic" style={{ fontSize: '19px', width: '44px', height: '44px', borderRadius: '12px', background: '#efeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  {item.ic}
+              <div
+                key={item.label}
+                className="bg-white border border-slate-200/80 rounded-2xl p-4 flex items-start gap-4 shadow-sm hover:shadow-md transition duration-300"
+              >
+                <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg flex-shrink-0">
+                  {item.icon}
                 </div>
                 <div>
-                  <h5 style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)', marginBottom: '2px' }}>{item.label}</h5>
-                  <p style={{ fontSize: '13px', color: 'var(--gray)' }}>{item.value}</p>
+                  <h5 className="text-sm font-bold text-slate-800 mb-0.5 font-poppins">
+                    {item.label}
+                  </h5>
+                  <p className="text-xs font-semibold text-slate-500 leading-relaxed">
+                    {item.value}
+                  </p>
                 </div>
               </div>
             ))}
 
             {/* CTA mini banner */}
-            <div style={{
-              background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)',
-              borderRadius: '14px',
-              padding: '24px',
-              color: '#fff',
-              marginTop: '4px',
-            }}>
-              <h4 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>
-                Ready to Book a Site Visit?
-              </h4>
-              <p style={{ fontSize: '12.5px', color: '#d8d4ff', marginBottom: '18px', lineHeight: 1.5 }}>
-                Our team will personally take you through our projects. Schedule your visit today.
-              </p>
-              <a href="/book-visit" className="btn-gold" style={{ fontSize: '13px', padding: '10px 20px' }}>
+            <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 rounded-2xl p-6 text-white shadow-xl space-y-4">
+              <div>
+                <h4 className="font-poppins text-lg font-bold text-white mb-1">
+                  Ready to Book a Site Visit?
+                </h4>
+                <p className="text-xs text-indigo-100 leading-relaxed">
+                  Our team will personally take you through our projects. Schedule your visit today.
+                </p>
+              </div>
+
+              <Link
+                to="/book-visit"
+                className="inline-block px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs shadow-md transition duration-200 text-center"
+              >
                 Book a Visit →
-              </a>
+              </Link>
             </div>
+
           </div>
+
         </div>
       </div>
     </div>
   );
 }
-
-/* ===== Style helpers ===== */
-const labelStyle = {
-  display: 'block',
-  fontSize: '13px',
-  fontWeight: 600,
-  color: 'var(--text)',
-  marginBottom: '6px',
-};
-
-const inputStyle = (hasError) => ({
-  width: '100%',
-  padding: '11px 14px',
-  border: `1px solid ${hasError ? '#e55' : 'var(--line)'}`,
-  borderRadius: '8px',
-  fontSize: '14px',
-  color: 'var(--text)',
-  outline: 'none',
-  transition: 'border-color .2s',
-  background: '#fff',
-  fontFamily: 'Inter, sans-serif',
-  boxSizing: 'border-box',
-});
-
-const errStyle = {
-  color: '#c0392b',
-  fontSize: '11.5px',
-  marginTop: '4px',
-};

@@ -78,7 +78,8 @@ export default function PropertyComparison() {
       <ComparisonHeader />
 
       {/* ===== MAIN CONTENT WRAPPER ===== */}
-      <div className="max-w-6xl mx-auto px-6 -mt-7 relative z-10">
+      <div className="max-w-6xl mx-auto px-3 md:px-6 -mt-7 relative z-10">
+
         
         {loading && (
           <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-xl">

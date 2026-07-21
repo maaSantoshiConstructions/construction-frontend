@@ -44,164 +44,187 @@ function StatCounter({ value, suffix, label, ic }) {
           requestAnimationFrame(tick);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [value]);
 
   return (
-    <div ref={ref} className="trust-item" style={{
-      flexDirection: 'column', textAlign: 'center', padding: '28px 16px',
-      borderRadius: '14px', border: '1px solid var(--line)',
-      background: '#fff', boxShadow: '0 2px 10px rgba(20,20,60,.05)',
-      gap: '10px',
-    }}>
-      <div style={{
-        width: '48px', height: '48px', borderRadius: '12px',
-        background: '#efeafe', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', fontSize: '22px', margin: '0 auto',
-      }}>
+    <div
+      ref={ref}
+      className="bg-white rounded-2xl border border-slate-200/80 p-5 md:p-7 text-center shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center justify-center gap-2"
+    >
+      <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl md:text-2xl font-bold">
         {ic}
       </div>
-      <div style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '32px', fontWeight: 800, color: 'var(--indigo)', lineHeight: 1 }}>
+      <div className="font-poppins text-2xl md:text-3xl font-extrabold text-indigo-600 tracking-tight">
         {count}{suffix}
       </div>
-      <div style={{ fontSize: '13px', color: 'var(--gray)' }}>{label}</div>
+      <div className="text-xs md:text-sm font-semibold text-slate-500">{label}</div>
     </div>
   );
 }
 
 export default function About() {
   return (
-    <div style={{ background: 'var(--white)', minHeight: '100vh' }}>
-
+    <div className="bg-slate-50 min-h-screen">
       {/* ===== HERO HEADER ===== */}
-      <div style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
-        padding: '64px 0 60px',
-        textAlign: 'center',
-      }}>
-        <div className="wrap">
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>OUR STORY</span>
-          <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '42px', fontWeight: 800, color: '#fff', margin: '12px 0 14px' }}>
+      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-14 md:py-20 text-center relative overflow-hidden px-4">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-600/20 via-transparent to-transparent pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <span className="inline-block px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-bold text-[11px] md:text-xs uppercase tracking-widest mb-3 border border-white/10">
+            OUR STORY
+          </span>
+          <h1 className="font-poppins text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
             About Us
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '520px', margin: '0 auto', lineHeight: 1.6 }}>
+          <p className="text-slate-300 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-normal px-2">
             Building trust, shaping communities, and helping you find the perfect piece of land for over a decade.
           </p>
         </div>
       </div>
 
-      {/* ===== STATS ===== */}
-      <div className="wrap" style={{ paddingTop: '60px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '20px', marginBottom: '60px' }}>
-          {stats.map((s) => <StatCounter key={s.label} {...s} />)}
+      {/* ===== MAIN CONTAINER ===== */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 pt-10 md:pt-14 pb-20">
+        
+        {/* ===== STATS GRID ===== */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 mb-14 md:mb-20">
+          {stats.map((s) => (
+            <StatCounter key={s.label} {...s} />
+          ))}
         </div>
 
         {/* ===== OUR STORY ===== */}
-        <div className="section" style={{ padding: '0 0 60px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'center' }}>
+        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl p-6 md:p-12 mb-14 md:mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
-              <span className="eyebrow">OUR STORY</span>
-              <h2 style={{ fontSize: '30px', fontWeight: 800, color: 'var(--text)', margin: '8px 0 18px' }}>
+              <span className="text-xs font-bold text-amber-600 uppercase tracking-widest font-poppins">
+                OUR STORY
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 mb-4 font-poppins leading-snug">
                 A Legacy of Trust &amp; Excellence
               </h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', color: 'var(--gray)', fontSize: '14.5px', lineHeight: 1.7 }}>
-                <p>Founded in 2010, Jai Santoshi Maa Infrastructure started with a simple mission — to make plot buying transparent, simple, and rewarding for every Indian.</p>
-                <p>Over the past 15+ years, we have delivered over 50 projects and helped more than 2000 families find their dream plots across prime locations in Odisha.</p>
-                <p>Our commitment to quality, legal transparency, and customer satisfaction has made us one of the most trusted names in the real estate industry.</p>
+              <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed font-normal">
+                <p>
+                  Founded in 2010, Jai Santoshi Maa Infrastructure started with a simple mission — to make plot buying transparent, simple, and rewarding for every Indian.
+                </p>
+                <p>
+                  Over the past 15+ years, we have delivered over 50 projects and helped more than 2000 families find their dream plots across prime locations in Odisha.
+                </p>
+                <p>
+                  Our commitment to quality, legal transparency, and customer satisfaction has made us one of the most trusted names in the real estate industry.
+                </p>
               </div>
             </div>
-            <div style={{ position: 'relative' }}>
+
+            <div className="relative">
               <img
                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80&auto=format&fit=crop"
                 alt="Office building"
-                style={{ borderRadius: '16px', width: '100%', height: '340px', objectFit: 'cover', boxShadow: '0 20px 50px rgba(20,20,60,.15)', display: 'block' }}
+                className="rounded-2xl w-full h-64 sm:h-80 lg:h-96 object-cover shadow-lg"
               />
-              <div style={{
-                position: 'absolute', bottom: '-20px', left: '-20px',
-                background: '#fff', borderRadius: '12px', padding: '16px 20px',
-                boxShadow: '0 10px 30px rgba(0,0,0,.12)',
-                border: '1px solid var(--line)',
-              }}>
-                <div style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '26px', fontWeight: 800, color: 'var(--indigo)' }}>15+</div>
-                <div style={{ fontSize: '12px', color: 'var(--gray)' }}>Years of Excellence</div>
+              <div className="absolute -bottom-4 left-4 bg-white rounded-2xl p-4 sm:p-5 shadow-xl border border-slate-200/80">
+                <div className="font-poppins text-2xl sm:text-3xl font-extrabold text-indigo-600">
+                  15+
+                </div>
+                <div className="text-xs font-semibold text-slate-500">Years of Excellence</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* ===== MISSION / VISION / VALUES ===== */}
-        <div style={{ marginBottom: '60px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '38px' }}>
-            <span className="eyebrow">WHAT DRIVES US</span>
-            <h2 style={{ fontSize: '30px', fontWeight: 800, color: 'var(--text)', marginTop: '8px' }}>Mission, Vision &amp; Values</h2>
+        <div className="mb-14 md:mb-20">
+          <div className="text-center mb-8 md:mb-12">
+            <span className="text-xs font-bold text-amber-600 uppercase tracking-widest font-poppins">
+              WHAT DRIVES US
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 font-poppins">
+              Mission, Vision &amp; Values
+            </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '22px' }}>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
             {values.map((v) => (
-              <div key={v.title} className="ccard" style={{ flexDirection: 'column', gap: '0' }}>
-                <div style={{ marginBottom: '14px' }}>
-                  <div style={{
-                    width: '48px', height: '48px', borderRadius: '12px',
-                    background: '#efeafe', display: 'flex', alignItems: 'center',
-                    justifyContent: 'center', fontSize: '22px', marginBottom: '14px',
-                  }}>
-                    {v.ic}
-                  </div>
-                  <h3 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--text)', marginBottom: '8px' }}>{v.title}</h3>
-                  <p style={{ fontSize: '13.5px', color: 'var(--gray)', lineHeight: 1.65 }}>{v.desc}</p>
+              <div
+                key={v.title}
+                className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition duration-300"
+              >
+                <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-4">
+                  {v.ic}
                 </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2 font-poppins">
+                  {v.title}
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  {v.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* ===== TEAM ===== */}
-        <div style={{ marginBottom: '60px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '38px' }}>
-            <span className="eyebrow">LEADERSHIP</span>
-            <h2 style={{ fontSize: '30px', fontWeight: 800, color: 'var(--text)', marginTop: '8px' }}>Meet Our Team</h2>
+        {/* ===== LEADERSHIP TEAM ===== */}
+        <div className="mb-14 md:mb-20">
+          <div className="text-center mb-8 md:mb-12">
+            <span className="text-xs font-bold text-amber-600 uppercase tracking-widest font-poppins">
+              LEADERSHIP
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 font-poppins">
+              Meet Our Team
+            </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '22px' }}>
+
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             {team.map((m) => (
-              <div key={m.name} style={{
-                background: '#fff', border: '1px solid var(--line)', borderRadius: '14px',
-                padding: '28px 20px', textAlign: 'center',
-                boxShadow: '0 2px 10px rgba(20,20,60,.05)',
-                transition: '.25s',
-              }}
-                onMouseEnter={e => e.currentTarget.style.boxShadow = '0 16px 36px rgba(20,20,60,.12)'}
-                onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 10px rgba(20,20,60,.05)'}
+              <div
+                key={m.name}
+                className="bg-white border border-slate-200/80 rounded-2xl p-5 md:p-6 text-center shadow-sm hover:shadow-lg transition duration-300"
               >
                 <img
                   src={m.image}
                   alt={m.name}
-                  style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 14px', display: 'block', border: '3px solid #efeafe' }}
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover mx-auto mb-3 border-4 border-indigo-50 shadow-sm"
                 />
-                <h4 style={{ fontSize: '14.5px', fontWeight: 700, color: 'var(--text)', marginBottom: '4px' }}>{m.name}</h4>
-                <p style={{ fontSize: '12px', color: 'var(--gray)' }}>{m.role}</p>
+                <h4 className="text-xs md:text-sm font-bold text-slate-800 mb-1 font-poppins">
+                  {m.name}
+                </h4>
+                <p className="text-[11px] md:text-xs font-semibold text-slate-400">
+                  {m.role}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
         {/* ===== CTA BANNER ===== */}
-        <div className="cta-banner" style={{ marginBottom: '90px' }}>
-          <div>
-            <h3>Ready to Start Your Journey?</h3>
-            <p>Let us help you find the perfect plot. Our team is just a call away.</p>
+        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-10 md:p-12 text-white shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="space-y-2 text-center lg:text-left">
+            <h3 className="text-2xl sm:text-3xl font-extrabold font-poppins">
+              Ready to Start Your Journey?
+            </h3>
+            <p className="text-slate-300 text-sm max-w-lg">
+              Let us help you find the perfect plot. Our team is just a call away.
+            </p>
           </div>
-          <div className="cta-stats">
-            <div><div className="num">500+</div><div className="lbl">Plots Sold</div></div>
-            <div><div className="num">2000+</div><div className="lbl">Happy Families</div></div>
-            <div><div className="num">15+</div><div className="lbl">Years Trust</div></div>
-          </div>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Link to="/contact" className="btn-gold">Contact Us →</Link>
-            <Link to="/projects" className="btn-outline">View Projects</Link>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 w-full lg:w-auto">
+            <Link
+              to="/contact"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm shadow-md transition duration-200 text-center min-w-[140px]"
+            >
+              Contact Us →
+            </Link>
+            <Link
+              to="/projects"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm transition duration-200 text-center min-w-[140px]"
+            >
+              View Projects
+            </Link>
           </div>
         </div>
+
       </div>
     </div>
   );
