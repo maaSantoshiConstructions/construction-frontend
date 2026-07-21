@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getLeads, updateLead, sendLeadEmail } from '../../api/leads';
+import { useAuth } from '../../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import FollowupHeader from '../../components/ai-followup/FollowupHeader';
@@ -39,6 +41,13 @@ const sequences = [
 ];
 
 export default function AIFollowupAutomation() {
+  const { user } = useAuth();
+
+  // Restrict customer role from accessing AI Follow-up Lead Automation
+  if (user?.role === 'customer') {
+    return <Navigate to="/" replace />;
+  }
+
   const [active, setActive] = useState(sequences[0]);
   const [leads, setLeads] = useState([]);
   const [selectedLeadId, setSelectedLeadId] = useState('');
@@ -48,6 +57,7 @@ export default function AIFollowupAutomation() {
   // Email Modal state
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [selectedStep, setSelectedStep] = useState(null);
+
 
   useEffect(() => {
     const fetchLeads = async () => {

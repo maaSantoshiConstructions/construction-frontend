@@ -49,19 +49,24 @@ export default function SmartFeatures() {
     { to: dashboardPath, icon: LuUser, label: 'Owner Dashboard' },
   ];
 
+  const visibleFeatures = features.filter((f) => {
+    if (user?.role === 'customer' && f.to === '/ai-followup') return false;
+    return true;
+  });
+
   return (
     <section className="features" id="features">
       <div className="wrap">
         <span className="eyebrow">POWERED BY INNOVATION</span>
         <div className="sec-head">
           <div>
-            <h2>20 Smart Features</h2>
+            <h2>{visibleFeatures.length} Smart Features</h2>
             <p>Experience the future of real estate with our AI-powered platform.</p>
           </div>
-          <Link to="/ai-recommendation" className="btn-line">Explore All Features →</Link>
+          <Link to="/smart-features" className="btn-line">Explore All Features →</Link>
         </div>
         <div className="feat-grid">
-          {features.map((f, i) => (
+          {visibleFeatures.map((f, i) => (
             <Link key={i} to={f.to} className="fcard">
               <div className="ic"><f.icon /></div>
               <span>{f.label}</span>
@@ -71,4 +76,5 @@ export default function SmartFeatures() {
       </div>
     </section>
   );
+
 }

@@ -28,6 +28,11 @@ export default function SmartFeatures() {
   const { user, getRedirectPath } = useAuth();
   const dashboardPath = user ? getRedirectPath(user.role) : '/login';
 
+  const visibleFeatures = features.filter((f) => {
+    if (user?.role === 'customer' && f.path === '/ai-followup') return false;
+    return true;
+  });
+
   return (
     <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
 
@@ -43,7 +48,7 @@ export default function SmartFeatures() {
         <div className="wrap">
           <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>POWERED BY INNOVATION</span>
           <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '42px', fontWeight: 800, color: '#fff', margin: '12px 0 14px' }}>
-            20 Smart Features
+            {visibleFeatures.length} Smart Features
           </h1>
           <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '540px', margin: '0 auto', lineHeight: 1.6 }}>
             Experience the future of real estate investing. Explore our intelligent, AI-powered toolkit designed to make plot buying seamless.
@@ -54,10 +59,11 @@ export default function SmartFeatures() {
       {/* ===== FEATURES GRID ===== */}
       <div className="wrap" style={{ marginTop: '48px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '22px' }}>
-          {features.map((f, i) => (
+          {visibleFeatures.map((f, i) => (
             <Link
               key={i}
               to={f.title === 'Owner Dashboard' ? dashboardPath : f.path}
+
               className="ccard"
               style={{
                 flexDirection: 'column',
