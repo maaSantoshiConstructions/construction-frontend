@@ -1,9 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { getProjects } from '../../api/projects';
 
 export default function Footer() {
   const { user, getRedirectPath } = useAuth();
   const dashboardPath = user ? getRedirectPath(user.role) : '/login';
+
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    getProjects({ limit: 4 })
+      .then(({ data: res }) => {
+        if (isMounted && Array.isArray(res?.data)) {
+          setProjects(res.data);
+        }
+      })
+      .catch((err) => console.error('Failed to load footer projects:', err));
+    return () => { isMounted = false; };
+  }, []);
+
   return (
     <footer>
       <div className="wrap">
@@ -21,7 +38,7 @@ export default function Footer() {
             <div className="socials">
               <a href="#" aria-label="Facebook">f</a>
               <a href="#" aria-label="Instagram">◎</a>
-              <a href="#" aria-label="Phone">☎</a>
+              <a href="tel:+919142328629" aria-label="Phone">☎</a>
               <a href="#" aria-label="YouTube">▶</a>
             </div>
           </div>
@@ -40,15 +57,26 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Projects */}
+          {/* Real Projects */}
           <div>
             <h5>Projects</h5>
             <ul>
-              <li>Green City</li>
-              <li>Royal Enclave</li>
-              <li>Silver Spring</li>
-              <li>Sunrise Meadows</li>
-              <li><Link to="/projects">All Projects</Link></li>
+              {projects.length > 0 ? (
+                projects.slice(0, 4).map((p) => (
+                  <li key={p._id || p.slug}>
+                    <Link to={`/projects/${p.slug || p._id}`}>{p.name}</Link>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <li><Link to="/projects">Ongoing Developments</Link></li>
+                  <li><Link to="/projects">Completed Projects</Link></li>
+                  <li><Link to="/projects">Plotted Estates</Link></li>
+                </>
+              )}
+              <li>
+                <Link to="/projects" style={{ color: '#e8b355', fontWeight: 600 }}>All Projects →</Link>
+              </li>
             </ul>
           </div>
 
@@ -67,14 +95,14 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h5>Contact Us</h5>
-            <div className="contact-line">📞 +91 70000 12345</div>
-            <div className="contact-line">✉ info@jsminfra.com</div>
-            <div className="contact-line">📍 Bhubaneswar, Odisha, India 751029</div>
+            <div className="contact-line">📞 +91 91423 28629</div>
+            <div className="contact-line">✉ support@maasantoshiconstructions.com</div>
+            <div className="contact-line">📍 Bhubaneswar, Odisha, India</div>
           </div>
         </div>
 
         <div className="foot-bottom">
-          <span>© 2025 Jai Santoshi Maa Infrastructure Pvt. Ltd. All Rights Reserved.</span>
+          <span>© {new Date().getFullYear()} Jai Santoshi Maa Infrastructure Pvt. Ltd. All Rights Reserved.</span>
           <span>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms &amp; Conditions</a>

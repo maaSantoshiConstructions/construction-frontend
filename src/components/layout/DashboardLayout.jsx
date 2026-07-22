@@ -2,79 +2,82 @@ import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
-  FaTachometerAlt, 
-  FaBuilding, 
-  FaMap, 
-  FaCalendarAlt, 
-  FaUsers, 
-  FaChartLine, 
-  FaCreditCard, 
-  FaFileAlt, 
-  FaMapMarkerAlt, 
-  FaHardHat, 
-  FaHandshake, 
-  FaCog, 
-  FaUser, 
-  FaGift, 
-  FaBullhorn, 
-  FaTicketAlt, 
-  FaHeart,
-  FaSignOutAlt
-} from 'react-icons/fa';
+  LuLayoutDashboard, 
+  LuBuilding, 
+  LuMap, 
+  LuCalendar, 
+  LuUsers, 
+  LuTrendingUp, 
+  LuBot, 
+  LuCreditCard, 
+  LuFileText, 
+  LuMapPin, 
+  LuHardHat, 
+  LuGift, 
+  LuMegaphone, 
+  LuTicket, 
+  LuHeart, 
+  LuLogOut, 
+  LuUser, 
+  LuMenu, 
+  LuArrowLeft, 
+  LuChevronDown, 
+  LuX 
+} from 'react-icons/lu';
 
 const roleSidebarLinks = {
   super_admin: [
-    { label: 'Dashboard',            path: '/admin/dashboard',             ic: FaTachometerAlt },
-    { label: 'Projects',             path: '/admin/projects',              ic: FaBuilding },
-    { label: 'Plots',                path: '/admin/plots',                 ic: FaMap },
-    { label: 'Bookings',             path: '/admin/bookings',              ic: FaCalendarAlt },
-    { label: 'Customers',            path: '/admin/customers',             ic: FaUsers },
-    { label: 'Leads',                path: '/admin/leads',                 ic: FaChartLine },
-    { label: 'AI Follow-up',         path: '/ai-followup',                ic: FaChartLine },
-    { label: 'Payments',             path: '/admin/payments',              ic: FaCreditCard },
-    { label: 'Documents',            path: '/admin/documents',             ic: FaFileAlt },
-    { label: 'Site Visits',          path: '/admin/site-visits',           ic: FaMapMarkerAlt },
-    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: FaHardHat },
-    { label: 'Users',                path: '/admin/users',                 ic: FaUser },
+    { label: 'Dashboard',            path: '/admin/dashboard',             ic: LuLayoutDashboard },
+    { label: 'Projects',             path: '/admin/projects',              ic: LuBuilding },
+    { label: 'Plots',                path: '/admin/plots',                 ic: LuMap },
+    { label: 'Bookings',             path: '/admin/bookings',              ic: LuCalendar },
+    { label: 'Customers',            path: '/admin/customers',             ic: LuUsers },
+    { label: 'Leads',                path: '/admin/leads',                 ic: LuTrendingUp },
+    { label: 'AI Follow-up',         path: '/ai-followup',                ic: LuBot },
+    { label: 'Payments',             path: '/admin/payments',              ic: LuCreditCard },
+    { label: 'Documents',            path: '/admin/documents',             ic: LuFileText },
+    { label: 'Site Visits',          path: '/admin/site-visits',           ic: LuMapPin },
+    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: LuHardHat },
+    { label: 'Users',                path: '/admin/users',                 ic: LuUsers },
   ],
   company_admin: [
-    { label: 'Dashboard',            path: '/admin/dashboard',             ic: FaTachometerAlt },
-    { label: 'Projects',             path: '/admin/projects',              ic: FaBuilding },
-    { label: 'Plots',                path: '/admin/plots',                 ic: FaMap },
-    { label: 'Bookings',             path: '/admin/bookings',              ic: FaCalendarAlt },
-    { label: 'Customers',            path: '/admin/customers',             ic: FaUsers },
-    { label: 'Leads',                path: '/admin/leads',                 ic: FaChartLine },
-    { label: 'AI Follow-up',         path: '/ai-followup',                ic: FaChartLine },
-    { label: 'Payments',             path: '/admin/payments',              ic: FaCreditCard },
-    { label: 'Documents',            path: '/admin/documents',             ic: FaFileAlt },
-    { label: 'Site Visits',          path: '/admin/site-visits',           ic: FaMapMarkerAlt },
-    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: FaHardHat },
+    { label: 'Dashboard',            path: '/admin/dashboard',             ic: LuLayoutDashboard },
+    { label: 'Projects',             path: '/admin/projects',              ic: LuBuilding },
+    { label: 'Plots',                path: '/admin/plots',                 ic: LuMap },
+    { label: 'Bookings',             path: '/admin/bookings',              ic: LuCalendar },
+    { label: 'Customers',            path: '/admin/customers',             ic: LuUsers },
+    { label: 'Leads',                path: '/admin/leads',                 ic: LuTrendingUp },
+    { label: 'AI Follow-up',         path: '/ai-followup',                ic: LuBot },
+    { label: 'Payments',             path: '/admin/payments',              ic: LuCreditCard },
+    { label: 'Documents',            path: '/admin/documents',             ic: LuFileText },
+    { label: 'Site Visits',          path: '/admin/site-visits',           ic: LuMapPin },
+    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: LuHardHat },
   ],
   sales_executive: [
-    { label: 'Dashboard',   path: '/sales/dashboard',    ic: FaTachometerAlt },
-    { label: 'My Leads',    path: '/sales/leads',        ic: FaChartLine },
-    { label: 'AI Follow-up',path: '/ai-followup',        ic: FaChartLine },
-    { label: 'Site Visits', path: '/sales/site-visits',  ic: FaMapMarkerAlt },
-    { label: 'Customers',   path: '/sales/customers',    ic: FaUsers },
+    { label: 'Dashboard',   path: '/sales/dashboard',    ic: LuLayoutDashboard },
+    { label: 'My Leads',    path: '/sales/leads',        ic: LuTrendingUp },
+    { label: 'AI Follow-up',path: '/ai-followup',        ic: LuBot },
+    { label: 'Site Visits', path: '/sales/site-visits',  ic: LuMapPin },
+    { label: 'Customers',   path: '/sales/customers',    ic: LuUsers },
   ],
   channel_partner: [
-    { label: 'Dashboard',            path: '/partner/dashboard',    ic: FaTachometerAlt },
-    { label: 'AI Follow-up',         path: '/ai-followup',          ic: FaChartLine },
-    { label: 'My Commissions',       path: '/partner/commissions',  ic: FaCreditCard },
-    { label: 'My Referrals',         path: '/partner/referrals',    ic: FaGift },
-    { label: 'Marketing Materials',  path: '/partner/materials',    ic: FaBullhorn },
+    { label: 'Dashboard',            path: '/partner/dashboard',    ic: LuLayoutDashboard },
+    { label: 'AI Follow-up',         path: '/ai-followup',          ic: LuBot },
+    { label: 'My Commissions',       path: '/partner/commissions',  ic: LuCreditCard },
+    { label: 'My Referrals',         path: '/partner/referrals',    ic: LuGift },
+    { label: 'Marketing Materials',  path: '/partner/materials',    ic: LuMegaphone },
   ],
   customer: [
-    { label: 'Dashboard',            path: '/customer/dashboard',              ic: FaTachometerAlt },
-    { label: 'My Bookings',          path: '/customer/bookings',               ic: FaCalendarAlt },
-    { label: 'My Site Visits',       path: '/customer/site-visits',            ic: FaMapMarkerAlt },
-    { label: 'My Payments',          path: '/customer/payments',               ic: FaCreditCard },
-    { label: 'My Documents',         path: '/customer/documents',              ic: FaFileAlt },
-    { label: 'Construction Updates', path: '/customer/construction-updates',   ic: FaHardHat },
-    { label: 'My Referrals',         path: '/customer/referrals',              ic: FaGift },
-    { label: 'Support Tickets',      path: '/customer/support-tickets',        ic: FaTicketAlt },
-    { label: 'Profile',              path: '/customer/profile',                ic: FaUser },
-    { label: 'Wishlist',             path: '/customer/wishlist',               ic: FaHeart },
+    { label: 'Dashboard',            path: '/customer/dashboard',              ic: LuLayoutDashboard },
+    { label: 'My Bookings',          path: '/customer/bookings',               ic: LuCalendar },
+    { label: 'My Site Visits',       path: '/customer/site-visits',            ic: LuMapPin },
+    { label: 'My Payments',          path: '/customer/payments',               ic: LuCreditCard },
+    { label: 'My Documents',         path: '/customer/documents',              ic: LuFileText },
+    { label: 'Construction Updates', path: '/customer/construction-updates',   ic: LuHardHat },
+    { label: 'My Referrals',         path: '/customer/referrals',              ic: LuGift },
+    { label: 'Support Tickets',      path: '/customer/support-tickets',        ic: LuTicket },
+    { label: 'Profile',              path: '/customer/profile',                ic: LuUser },
+    { label: 'Wishlist',             path: '/customer/wishlist',               ic: LuHeart },
   ],
 };
 
@@ -124,7 +127,9 @@ export default function DashboardLayout() {
             </div>
           </Link>
           <button onClick={() => setSidebarOpen(false)} className="sidebar-close-btn"
-            style={{ background: 'none', border: 'none', color: '#9ea1c4', cursor: 'pointer', fontSize: '16px', padding: '4px' }}>✕</button>
+            style={{ background: 'none', border: 'none', color: '#9ea1c4', cursor: 'pointer', fontSize: '16px', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <LuX style={{ fontSize: '18px' }} />
+          </button>
         </div>
 
         {/* Nav links */}
@@ -143,7 +148,7 @@ export default function DashboardLayout() {
                   textDecoration: 'none',
                   borderLeft: isActive(link.path) ? '3px solid #e8b355' : '3px solid transparent',
                 }}>
-                {IconComponent && <IconComponent style={{ fontSize: '14px', flexShrink: 0 }} />}
+                {IconComponent && <IconComponent style={{ fontSize: '16px', flexShrink: 0 }} />}
                 <span>{link.label}</span>
               </Link>
             );
@@ -154,7 +159,7 @@ export default function DashboardLayout() {
         <div style={{ padding: '12px 10px', borderTop: '1px solid rgba(255,255,255,.06)' }}>
           <button onClick={handleLogout}
             style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '9px 12px', borderRadius: '10px', background: 'none', border: 'none', cursor: 'pointer', color: '#9ea1c4', fontSize: '13px', fontFamily: 'Inter,sans-serif', transition: '.15s' }}>
-            <FaSignOutAlt style={{ fontSize: '14px', flexShrink: 0 }} /> <span>Logout</span>
+            <LuLogOut style={{ fontSize: '16px', flexShrink: 0 }} /> <span>Logout</span>
           </button>
         </div>
       </aside>
@@ -174,20 +179,14 @@ export default function DashboardLayout() {
             <button onClick={() => setSidebarOpen(true)}
               className="menu-toggle-btn"
               style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#6b6f8a', display: 'flex', alignItems: 'center' }}>
-              ☰
+              <LuMenu style={{ fontSize: '20px' }} />
             </button>
-            <Link to="/" style={{ fontSize: '12px', color: '#6b6f8a', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              ← Back to Site
+            <Link to="/" style={{ fontSize: '13px', color: '#6b6f8a', display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontWeight: 500 }}>
+              <LuArrowLeft style={{ fontSize: '15px' }} /> Back to Site
             </Link>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            {/* Bell */}
-            <button style={{ position: 'relative', background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#6b6f8a' }}>
-              🔔
-              <span style={{ position: 'absolute', top: '1px', right: '1px', width: '8px', height: '8px', borderRadius: '50%', background: '#e55', border: '1.5px solid #fff' }} />
-            </button>
-
             {/* User menu */}
             <div style={{ position: 'relative' }}>
               <button onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -199,7 +198,7 @@ export default function DashboardLayout() {
                   <div style={{ fontSize: '13px', fontWeight: 600, color: '#171a35', lineHeight: 1.2 }}>{user?.name || 'User'}</div>
                   <div style={{ fontSize: '10px', color: '#6b6f8a', textTransform: 'capitalize' }}>{user?.role?.replace(/_/g,' ') || ''}</div>
                 </div>
-                <span style={{ color: '#6b6f8a', fontSize: '10px' }}>▾</span>
+                <LuChevronDown style={{ color: '#6b6f8a', fontSize: '14px' }} />
               </button>
 
               {userMenuOpen && (
@@ -209,12 +208,14 @@ export default function DashboardLayout() {
                     <div style={{ fontSize: '11px', color: '#6b6f8a' }}>{user?.email}</div>
                   </div>
                   <Link to="/customer/profile" onClick={() => setUserMenuOpen(false)}
-                    style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', fontSize: '13px', color: '#171a35', textDecoration: 'none' }}>
-                    👤 Profile
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 16px', fontSize: '13px', color: '#171a35', textDecoration: 'none', transition: '.15s' }}>
+                    <LuUser style={{ fontSize: '16px', color: '#6b6f8a' }} />
+                    <span>Profile</span>
                   </Link>
                   <button onClick={handleLogout}
-                    style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', padding: '10px 16px', fontSize: '13px', color: '#c0392b', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Inter,sans-serif', textAlign: 'left' }}>
-                    🚪 Logout
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '11px 16px', fontSize: '13px', color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Inter,sans-serif', textAlign: 'left', transition: '.15s' }}>
+                    <LuLogOut style={{ fontSize: '16px', color: '#dc2626' }} />
+                    <span>Logout</span>
                   </button>
                 </div>
               )}

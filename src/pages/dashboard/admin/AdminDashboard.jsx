@@ -6,27 +6,27 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 import { 
-  FaBuilding, 
-  FaMap, 
-  FaCheckCircle, 
-  FaTimesCircle, 
-  FaLock, 
-  FaRupeeSign, 
-  FaChartLine, 
-  FaMapMarkerAlt 
-} from 'react-icons/fa';
+  LuBuilding2, 
+  LuMap, 
+  LuCircleCheck, 
+  LuCircleX, 
+  LuLock, 
+  LuIndianRupee, 
+  LuTrendingUp, 
+  LuMapPin 
+} from 'react-icons/lu';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const statCards = [
-  { key: 'totalProjects',      label: 'Projects',        ic: FaBuilding, color: '#3a2fb8' },
-  { key: 'totalPlots',         label: 'Total Plots',     ic: FaMap,  color: '#5b4fe0' },
-  { key: 'availablePlots',     label: 'Available',       ic: FaCheckCircle, color: '#2f9e5c' },
-  { key: 'soldPlots',          label: 'Sold',            ic: FaTimesCircle, color: '#c0392b' },
-  { key: 'reservedPlots',      label: 'Reserved',        ic: FaLock, color: '#d99f36' },
-  { key: 'revenue',            label: 'Revenue',         ic: FaRupeeSign,  color: '#2f9e5c', money: true },
-  { key: 'totalLeads',         label: 'Leads',           ic: FaChartLine, color: '#7a3fd6' },
-  { key: 'siteVisitsThisMonth',label: 'Site Visits',     ic: FaMapMarkerAlt, color: '#3a2fb8' },
+  { key: 'totalProjects',      label: 'Projects',        ic: LuBuilding2, color: '#3a2fb8' },
+  { key: 'totalPlots',         label: 'Total Plots',     ic: LuMap,  color: '#5b4fe0' },
+  { key: 'availablePlots',     label: 'Available',       ic: LuCircleCheck, color: '#2f9e5c' },
+  { key: 'soldPlots',          label: 'Sold',            ic: LuCircleX, color: '#c0392b' },
+  { key: 'reservedPlots',      label: 'Reserved',        ic: LuLock, color: '#d99f36' },
+  { key: 'revenue',            label: 'Revenue',         ic: LuIndianRupee, color: '#2f9e5c', money: true },
+  { key: 'totalLeads',         label: 'Leads',           ic: LuTrendingUp, color: '#7a3fd6' },
+  { key: 'siteVisitsThisMonth',label: 'Site Visits',     ic: LuMapPin, color: '#3a2fb8' },
 ];
 
 export default function AdminDashboard() {
@@ -190,7 +190,7 @@ export default function AdminDashboard() {
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: i < 4 ? '1px solid #f0f0f6' : 'none' }}>
                 <div>
                   <div style={{ fontSize: '13px', fontWeight: 600, color: '#171a35' }}>#{b.bookingId || b._id?.slice(-6)}</div>
-                  <div style={{ fontSize: '11.5px', color: '#6b6f8a' }}>{b.customer?.name || '-'} · ₹{b.amount?.toLocaleString() || '0'}</div>
+                  <div style={{ fontSize: '11.5px', color: '#6b6f8a' }}>{b.customer?.name || b.name || '-'} · ₹{(b.totalAmount || b.amount || b.paidAmount || 0).toLocaleString()}</div>
                 </div>
                 <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', background: (bookingStatusColor[b.status] || '#3a2fb8') + '18', color: bookingStatusColor[b.status] || '#3a2fb8' }}>
                   {b.status || '-'}
