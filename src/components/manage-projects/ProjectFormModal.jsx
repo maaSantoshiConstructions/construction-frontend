@@ -1,5 +1,6 @@
 import React from 'react';
 import toast from 'react-hot-toast';
+import { getAssetUrl } from '../../config';
 
 function FormField({ label, error, children }) {
   return (
@@ -126,7 +127,7 @@ export default function ProjectFormModal({
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {editing.images.map((img, idx) => (
                   <div key={idx} style={{ position: 'relative', width: '60px', height: '60px', borderRadius: '6px', overflow: 'hidden', border: '1px solid #e6e6f0' }}>
-                    <img src={img.startsWith('http') ? img : `http://localhost:5002/${img}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={getAssetUrl(img)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     <button
                       type="button"
                       onClick={async () => {

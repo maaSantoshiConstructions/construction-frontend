@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { FaHeart, FaTrash, FaBookmark, FaRupeeSign, FaMapMarkerAlt, FaBuilding } from 'react-icons/fa';
 import EmptyState from '../../../components/common/EmptyState';
+import { getAssetUrl } from '../../../config';
 
 const getLocationString = (loc) => {
   if (!loc) return '-';
@@ -64,7 +65,7 @@ export default function Wishlist() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-48 h-40 bg-slate-200 flex items-center justify-center flex-shrink-0">
                   {item.images?.[0] || item.image ? (
-                    <img src={item.images?.[0] || item.image} alt={item.plotNumber || item.title} className="w-full h-full object-cover" />
+                    <img src={getAssetUrl(item.images?.[0] || item.image)} alt={item.plotNumber || item.title} className="w-full h-full object-cover" />
                   ) : (
                     <FaBuilding className="text-slate-400 text-3xl" />
                   )}

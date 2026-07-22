@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getProject } from '../../api/projects';
 import Loader from '../../components/common/Loader';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import config, { getAssetUrl } from '../../config';
 
 // Import modular subcomponents
 import ProjectBreadcrumb from '../../components/project-details/ProjectBreadcrumb';
@@ -43,20 +44,9 @@ export default function ProjectDetails() {
   if (error) return <ErrorMessage message={error} onRetry={fetchProject} />;
   if (!project) return <ErrorMessage message="Project not found" />;
 
-  const getImageUrl = (img) => {
-    if (!img) return '';
-    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
-      return img;
-    }
-    const backendUrl = window.location.hostname === 'localhost'
-      ? 'http://localhost:5002'
-      : 'https://construction-backend-96b8.onrender.com';
-    return `${backendUrl}/${img.replace(/^\//, '')}`;
-  };
-
   const images = project.images?.length > 0 
-    ? project.images.map(img => getImageUrl(img)) 
-    : ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200'];
+    ? project.images.map(img => getAssetUrl(img)) 
+    : [config.fallbackImageUrl];
   const rera = project.reraNumber || 'Applied / Pending';
 
   // Format price
@@ -112,7 +102,7 @@ export default function ProjectDetails() {
         project={project}
         finalAmenities={finalAmenities}
         finalHighlights={finalHighlights}
-        getImageUrl={getImageUrl}
+        getImageUrl={getAssetUrl}
       />
 
       <style>{`

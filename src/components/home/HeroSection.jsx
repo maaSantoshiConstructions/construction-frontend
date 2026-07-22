@@ -9,6 +9,7 @@ import {
   LuMapPin,
   LuFileText
 } from 'react-icons/lu';
+import config from '../../config';
 
 export default function HeroSection() {
   return (
@@ -85,7 +86,7 @@ export default function HeroSection() {
             <a href="tel:+917000012345" className="item" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="ic"><LuPhone size={18} /></div><span>Call Us</span>
             </a>
-            <a href="https://wa.me/917000012345?text=Hello%20Jai%20Santoshi%20Maa%20Infrastructure,%20I%20am%20interested%20in%20your%20properties." target="_blank" rel="noopener noreferrer" className="item" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <a href={`https://wa.me/${config.supportWhatsapp}?text=Hello%20Jai%20Santoshi%20Maa%20Infrastructure,%20I%20am%20interested%20in%20your%20properties.`} target="_blank" rel="noopener noreferrer" className="item" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="ic"><LuMessageCircle size={18} /></div><span>WhatsApp</span>
             </a>
             <Link to="/book-visit" className="item" style={{ textDecoration: 'none', color: 'inherit' }}>

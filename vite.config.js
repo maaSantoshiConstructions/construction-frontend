@@ -1,22 +1,25 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    port: 5173,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5002',
-        // target: 'https://construction-backend-96b8.onrender.com',
-        changeOrigin: true
-      },
-      '/uploads': {
-        target: 'http://localhost:5002',
-        // target: 'https://construction-backend-96b8.onrender.com',
-        changeOrigin: true
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const backendTarget = env.VITE_BACKEND_URL || 'http://localhost:5002';
+
+  return {
+    plugins: [react(), tailwindcss()],
+    server: {
+      port: 5173,
+      proxy: {
+        '/api': {
+          target: backendTarget,
+          changeOrigin: true
+        },
+        '/uploads': {
+          target: backendTarget,
+          changeOrigin: true
+        }
       }
     }
-  }
-})
+  };
+});

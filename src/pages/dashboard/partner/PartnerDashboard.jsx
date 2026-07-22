@@ -7,6 +7,7 @@ import { useAuth } from '../../../context/AuthContext';
 import StatsCard from '../../../components/common/StatsCard';
 import DataTable from '../../../components/common/DataTable';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import config from '../../../config';
 
 const referralStatusColors = {
   new: 'bg-orange-100 text-orange-700', contacted: 'bg-amber-100 text-amber-700',
@@ -57,7 +58,7 @@ export default function PartnerDashboard() {
 
   const stats = data?.stats || {};
   const recentReferrals = data?.recentReferrals || [];
-  const referralLink = `https://maasantoshiconstructions.com/ref/${user?.partnerCode || user?._id?.slice(-6)}`;
+  const referralLink = `${config.appSiteUrl}/ref/${user?.partnerCode || user?._id?.slice(-6)}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(referralLink);

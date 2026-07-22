@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaCheckCircle, FaWhatsapp } from 'react-icons/fa';
+import config from '../../config';
 
 export default function BookVisitSuccess({ visitDetails, setSuccess, setVisitDetails }) {
   return (
@@ -93,7 +94,7 @@ export default function BookVisitSuccess({ visitDetails, setSuccess, setVisitDet
           </p>
 
           <a
-            href={`https://wa.me/919142328629?text=Hi! I have booked a site visit for project "${visitDetails.projectName}" on ${visitDetails.date} at ${visitDetails.timeSlot}. Please confirm.`}
+            href={`https://wa.me/${config.supportWhatsapp}?text=Hi! I have booked a site visit for project "${visitDetails.projectName}" on ${visitDetails.date} at ${visitDetails.timeSlot}. Please confirm.`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"

@@ -5,6 +5,7 @@ import { FaEye, FaRupeeSign, FaFileDownload, FaBuilding, FaMapMarkerAlt } from '
 import { getMyBookings } from '../../../api/bookings';
 import Loader from '../../../components/common/Loader';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import { getAssetUrl } from '../../../config';
 
 const bookingStatusColors = {
   token: 'bg-amber-100 text-amber-700',
@@ -79,7 +80,7 @@ export default function MyBookings() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-48 h-40 bg-slate-200 flex items-center justify-center flex-shrink-0">
                   {b.plot?.images?.[0] ? (
-                    <img src={b.plot.images[0]} alt={b.plot.plotNumber} className="w-full h-full object-cover" />
+                    <img src={getAssetUrl(b.plot.images[0])} alt={b.plot.plotNumber} className="w-full h-full object-cover" />
                   ) : (
                     <FaBuilding className="text-slate-400 text-3xl" />
                   )}

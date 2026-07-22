@@ -1,14 +1,15 @@
 import axios from 'axios';
+import config from '../config';
 
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: config.apiBaseUrl,
   headers: { 'Content-Type': 'application/json' }
 });
 
-API.interceptors.request.use((config) => {
+API.interceptors.request.use((reqConfig) => {
   const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
+  if (token) reqConfig.headers.Authorization = `Bearer ${token}`;
+  return reqConfig;
 });
 
 API.interceptors.response.use(
@@ -26,7 +27,7 @@ API.interceptors.response.use(
         const refreshToken = localStorage.getItem('refreshToken');
         if (!refreshToken) throw new Error('No refresh token');
 
-        const { data } = await axios.post('/api/auth/refresh-token', { refreshToken });
+        const { data } = await axios.post(`${config.apiBaseUrl}/auth/refresh-token`, { refreshToken });
         localStorage.setItem('token', data.data.token);
         localStorage.setItem('refreshToken', data.data.refreshToken);
         originalRequest.headers.Authorization = `Bearer ${data.data.token}`;

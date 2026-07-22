@@ -4,6 +4,7 @@ import { getProjects } from '../../api/projects';
 import Loader from '../../components/common/Loader';
 import ErrorMessage from '../../components/common/ErrorMessage';
 import EmptyState from '../../components/common/EmptyState';
+import config, { getAssetUrl } from '../../config';
 
 const statusFilters = ['all', 'upcoming', 'ongoing', 'completed'];
 const typeFilters = ['all', 'plotted_development', 'villas', 'apartments'];
@@ -40,17 +41,6 @@ export default function Projects() {
   const handleSearch = (e) => {
     e.preventDefault();
     fetchProjects();
-  };
-
-  const getImageUrl = (img) => {
-    if (!img) return '';
-    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
-      return img;
-    }
-    const backendUrl = window.location.hostname === 'localhost'
-      ? 'http://localhost:5002'
-      : 'https://construction-backend-96b8.onrender.com';
-    return `${backendUrl}/${img.replace(/^\//, '')}`;
   };
 
   const statusColors = {
@@ -173,7 +163,7 @@ export default function Projects() {
               <div key={project._id} className="pcard" style={{ background: '#fff' }}>
                 <div className="thumb">
                   <img
-                    src={getImageUrl(project.image || (project.images && project.images[0])) || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600'}
+                    src={getAssetUrl(project.image || (project.images && project.images[0])) || config.fallbackImageUrl}
                     alt={project.name}
                     loading="lazy"
                     onError={(e) => {

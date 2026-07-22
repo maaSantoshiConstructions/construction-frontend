@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaHardHat, FaImage, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { getMyPlotUpdates } from '../../../api/constructionUpdates';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import { getAssetUrl } from '../../../config';
 
 const stageColor = { planning: '#3a2fb8', foundation: '#d99f36', structure: '#5b4fe0', roofing: '#7a3fd6', finishing: '#2f9e5c', completed: '#2f9e5c' };
 
@@ -159,7 +160,7 @@ export default function ConstructionUpdates() {
                               {u.images.map((img, j) => (
                                 <img
                                   key={j}
-                                  src={img}
+                                  src={getAssetUrl(img)}
                                   alt={`Update ${i + 1} - ${j + 1}`}
                                   className="w-full h-24 object-cover rounded-lg"
                                 />

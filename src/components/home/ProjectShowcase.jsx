@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LuHouse, LuRuler } from 'react-icons/lu';
 import { getProjects } from '../../api/projects';
+import { getAssetUrl } from '../../config';
 
 export default function ProjectShowcase() {
   const [projects, setProjects] = useState([]);
@@ -85,9 +86,7 @@ export default function ProjectShowcase() {
         <div className="projects-grid">
           {projects.map((p) => {
             const tagInfo = getStatusTag(p.status);
-            const imageSrc = p.images?.[0]
-              ? (p.images[0].startsWith('http') ? p.images[0] : `/${p.images[0]}`)
-              : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80&auto=format&fit=crop';
+            const imageSrc = getAssetUrl(p.image || p.images?.[0]);
 
             return (
               <div key={p._id} className="pcard">

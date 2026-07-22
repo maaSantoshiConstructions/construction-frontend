@@ -4,6 +4,7 @@ import {
   FaHardHat, FaCalendarAlt, FaImage, FaChevronDown, FaChevronUp,
   FaCheckCircle, FaBuilding, FaHome,
 } from 'react-icons/fa';
+import { getAssetUrl } from '../../config';
 
 export default function TrackerTimeline({
   filteredUpdates,
@@ -164,7 +165,7 @@ export default function TrackerTimeline({
                                         {update.images?.length > 0 && (
                                           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: '8px' }}>
                                             {update.images.map((img, j) => (
-                                              <img key={j} src={img} alt={`Update ${j + 1}`}
+                                              <img key={j} src={getAssetUrl(img)} alt={`Update ${j + 1}`}
                                                 style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #e5e7eb' }} />
                                             ))}
                                           </div>
