@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LuHouse, LuRuler } from 'react-icons/lu';
 import { getProjects } from '../../api/projects';
-import { getAssetUrl } from '../../config';
+import config, { getAssetUrl } from '../../config';
 
 export default function ProjectShowcase() {
   const [projects, setProjects] = useState([]);
@@ -29,15 +29,15 @@ export default function ProjectShowcase() {
   }, []);
 
   const getStatusTag = (status) => {
-    switch (status) {
+    switch (status?.toLowerCase()) {
       case 'upcoming':
-        return { text: 'New Launch', className: 'new' };
+        return { text: 'Upcoming', className: 'new' };
       case 'ongoing':
         return { text: 'Ongoing', className: 'premium' };
       case 'completed':
-        return { text: 'Ready to Move', className: 'luxury' };
+        return { text: 'Completed', className: 'luxury' };
       default:
-        return { text: 'Featured', className: 'best' };
+        return { text: status ? status.replace(/_/g, ' ') : 'Featured', className: 'best' };
     }
   };
 
@@ -95,6 +95,11 @@ export default function ProjectShowcase() {
                     src={imageSrc}
                     alt={`${p.name} project visual`}
                     loading="lazy"
+                    onError={(e) => {
+                      if (e.target.src !== config.fallbackImageUrl) {
+                        e.target.src = config.fallbackImageUrl;
+                      }
+                    }}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                   <span className={`tag ${tagInfo.className}`}>{tagInfo.text}</span>
