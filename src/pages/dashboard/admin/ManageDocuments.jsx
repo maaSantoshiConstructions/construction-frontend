@@ -6,6 +6,7 @@ import { getDocuments, uploadDocument, verifyDocument, deleteDocument } from '..
 import DataTable from '../../../components/common/DataTable';
 import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import { getAssetUrl } from '../../../config';
 
 export default function ManageDocuments() {
   const [documents, setDocuments] = useState([]);
@@ -83,9 +84,9 @@ export default function ManageDocuments() {
   };
 
   const handleView = (doc) => {
-    if (doc.fileUrl) {
-      const path = doc.fileUrl.startsWith('http') ? doc.fileUrl : `/${doc.fileUrl}`;
-      window.open(path, '_blank');
+    const rawUrl = doc.fileUrl || doc.url;
+    if (rawUrl) {
+      window.open(getAssetUrl(rawUrl), '_blank');
     } else {
       toast.error('File not available');
     }

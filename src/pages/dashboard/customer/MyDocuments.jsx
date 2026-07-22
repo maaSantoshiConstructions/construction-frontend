@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { FaDownload, FaEye, FaUpload, FaFileAlt, FaTimes } from 'react-icons/fa';
 import { getMyDocuments, uploadDocument } from '../../../api/documents';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import { getAssetUrl } from '../../../config';
 
 const docTypeColors = {
   agreement: 'bg-orange-100 text-orange-700',
@@ -69,10 +70,9 @@ export default function MyDocuments() {
   };
 
   const handleView = (doc) => {
-    const url = doc.fileUrl || doc.url;
-    if (url) {
-      const path = url.startsWith('http') || url.startsWith('/') ? url : `/${url}`;
-      window.open(path, '_blank');
+    const rawUrl = doc.fileUrl || doc.url;
+    if (rawUrl) {
+      window.open(getAssetUrl(rawUrl), '_blank');
     } else {
       toast.error('File not available');
     }
