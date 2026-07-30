@@ -1,19 +1,70 @@
 import React, { useRef, useEffect } from 'react';
-import { FaRobot, FaUser } from 'react-icons/fa';
+import { LuMapPin, LuPlane, LuGraduationCap, LuShoppingBag, LuExternalLink, LuBuilding2 } from 'react-icons/lu';
 
-const quickReplies = [
-  'What is the price of plots?',
-  'Is the project RERA approved?',
-  'How does loan financing work?',
-  'Book a site visit',
-  'Are plots still available?',
-];
+function PropertyCard({ prop }) {
+  if (!prop) return null;
+
+  return (
+    <div className="mt-3 p-4 bg-white border border-teal-200/80 rounded-2xl shadow-sm text-slate-800 space-y-3">
+      <h4 className="text-base font-bold text-teal-800 flex items-center gap-1.5">
+        <span>🏠</span> {prop.name}
+      </h4>
+      
+      <div className="text-xs font-medium text-slate-500 flex items-center gap-1">
+        <LuMapPin className="text-teal-600 flex-shrink-0" />
+        <span>{prop.location} <strong className="text-slate-700">({prop.district})</strong></span>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5 pt-1">
+        {prop.bhks?.map((bhk, idx) => (
+          <span
+            key={idx}
+            className="px-2.5 py-0.5 text-xs font-semibold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200"
+          >
+            {bhk}
+          </span>
+        ))}
+      </div>
+
+      <div className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-100">
+        <div className="flex items-start gap-2">
+          <LuBuilding2 className="text-slate-400 mt-0.5 flex-shrink-0 text-sm" />
+          <div><strong className="text-slate-700">Railway:</strong> {prop.railway}</div>
+        </div>
+        <div className="flex items-start gap-2">
+          <LuPlane className="text-slate-400 mt-0.5 flex-shrink-0 text-sm" />
+          <div><strong className="text-slate-700">Airport:</strong> {prop.airport}</div>
+        </div>
+        <div className="flex items-start gap-2">
+          <LuGraduationCap className="text-slate-400 mt-0.5 flex-shrink-0 text-sm" />
+          <div><strong className="text-slate-700">Schools:</strong> {prop.schools}</div>
+        </div>
+        <div className="flex items-start gap-2">
+          <LuShoppingBag className="text-slate-400 mt-0.5 flex-shrink-0 text-sm" />
+          <div><strong className="text-slate-700">Markets:</strong> {prop.markets}</div>
+        </div>
+      </div>
+
+      {prop.maps && (
+        <a
+          href={prop.maps}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-1.5 w-full mt-2 py-2 px-3 bg-teal-700 hover:bg-teal-800 text-white font-medium text-xs rounded-xl transition-colors shadow-sm"
+        >
+          <LuMapPin size={14} />
+          <span>Open in Google Maps</span>
+          <LuExternalLink size={12} className="ml-0.5 opacity-80" />
+        </a>
+      )}
+    </div>
+  );
+}
 
 export default function ChatMessageList({
   messages = [],
   loading = false,
-  showQuickReplies = true,
-  handleQuickReply
+  onQuickReply
 }) {
   const listRef = useRef(null);
 
@@ -27,108 +78,77 @@ export default function ChatMessageList({
   }, [messages, loading]);
 
   return (
-    <div ref={listRef} style={{ flex: 1, overflowY: 'auto', padding: '24px', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div
+      ref={listRef}
+      className="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50 flex flex-col gap-4 scroll-smooth"
+    >
+      {/* Welcome Banner */}
+      <div className="text-center text-xs font-semibold text-slate-500 pb-2">
+        Secure chat • Real Odisha locations • Premium Projects
+      </div>
+
       {messages.map((msg, i) => {
         const isUser = msg.role === 'user';
+
         return (
-          <div key={i} style={{ display: 'flex', justifyContent: isUser ? 'flex-end' : 'flex-start' }}>
-            <div style={{ maxWidth: '80%', display: 'flex', gap: '12px', flexDirection: isUser ? 'row-reverse' : 'row' }}>
-              <div style={{
-                width: '34px',
-                height: '34px',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                marginTop: '4px',
-                background: isUser ? 'var(--indigo)' : '#12173f',
-              }}>
-                {isUser ? <FaUser style={{ color: '#fff', fontSize: '12px' }} /> : <FaRobot style={{ color: '#fff', fontSize: '13px' }} />}
-              </div>
-              <div style={{
-                padding: '12px 18px',
-                borderRadius: '16px',
-                fontSize: '14px',
-                lineHeight: 1.5,
-                color: isUser ? '#fff' : 'var(--text)',
-                background: isUser ? 'var(--indigo)' : '#fff',
-                border: isUser ? 'none' : '1px solid var(--line)',
-                borderBottomRightRadius: isUser ? '4px' : '16px',
-                borderBottomLeftRadius: isUser ? '16px' : '4px',
-                boxShadow: isUser ? 'none' : '0 2px 8px rgba(0,0,0,0.02)',
-              }}>
-                {msg.content}
-              </div>
+          <div
+            key={i}
+            className={`flex flex-col max-w-[88%] md:max-w-[80%] ${
+              isUser ? 'self-end items-end' : 'self-start items-start'
+            } animate-fadeIn`}
+          >
+            {/* Bubble */}
+            <div
+              className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                isUser
+                  ? 'bg-teal-700 text-white rounded-br-sm shadow-md'
+                  : 'bg-white text-slate-800 border border-slate-200/90 rounded-bl-sm shadow-sm'
+              }`}
+            >
+              {msg.html ? (
+                <div
+                  className="text-slate-800 leading-relaxed [&_strong]:font-bold [&_strong]:text-slate-900"
+                  dangerouslySetInnerHTML={{ __html: msg.content }}
+                />
+              ) : (
+                <span className="text-slate-800 font-medium">{msg.content}</span>
+              )}
+
+              {/* Render property card if attached */}
+              {msg.propertyCard && <PropertyCard prop={msg.propertyCard} />}
             </div>
+
+            {/* Time */}
+            {msg.time && (
+              <span className="text-[10px] text-slate-400 px-1 mt-1 font-medium">
+                {msg.time}
+              </span>
+            )}
+
+            {/* Quick replies for this message step */}
+            {msg.quickReplies && msg.quickReplies.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2.5">
+                {msg.quickReplies.map((qr, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => onQuickReply && onQuickReply(qr)}
+                    className="px-3.5 py-1.5 bg-white border-2 border-teal-700 text-teal-800 hover:bg-teal-700 hover:text-white active:scale-95 rounded-full text-xs font-bold transition-all shadow-sm cursor-pointer"
+                  >
+                    {qr}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         );
       })}
 
-      {/* Typing Loader dots */}
+      {/* Typing Indicator */}
       {loading && (
-        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <div style={{
-              width: '34px',
-              height: '34px',
-              borderRadius: '50%',
-              background: '#12173f',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <FaRobot style={{ color: '#fff', fontSize: '13px' }} />
-            </div>
-            <div style={{
-              padding: '12px 20px',
-              background: '#fff',
-              border: '1px solid var(--line)',
-              borderRadius: '16px',
-              borderBottomLeftRadius: '4px',
-            }}>
-              <div style={{ display: 'flex', gap: '5px', padding: '4px 0' }}>
-                <span style={{ width: '6px', height: '6px', bg: 'var(--gray)', background: 'var(--gray)', borderRadius: '50%', display: 'inline-block', animation: 'chat-dot-bounce 0.8s infinite', animationDelay: '0ms' }} />
-                <span style={{ width: '6px', height: '6px', bg: 'var(--gray)', background: 'var(--gray)', borderRadius: '50%', display: 'inline-block', animation: 'chat-dot-bounce 0.8s infinite', animationDelay: '150ms' }} />
-                <span style={{ width: '6px', height: '6px', bg: 'var(--gray)', background: 'var(--gray)', borderRadius: '50%', display: 'inline-block', animation: 'chat-dot-bounce 0.8s infinite', animationDelay: '300ms' }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Quick replies blocks */}
-      {showQuickReplies && messages.length <= 2 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px', paddingLeft: '46px' }}>
-          {quickReplies.map((qr, i) => (
-            <button
-              key={i}
-              onClick={() => handleQuickReply(qr)}
-              style={{
-                fontSize: '12.5px',
-                padding: '8px 16px',
-                background: '#fff',
-                border: '1px solid var(--line)',
-                color: 'var(--text)',
-                borderRadius: '20px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                outline: 'none',
-                fontWeight: 500,
-                boxShadow: '0 2px 5px rgba(0,0,0,0.02)',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.borderColor = 'var(--indigo)';
-                e.target.style.color = 'var(--indigo)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.borderColor = 'var(--line)';
-                e.target.style.color = 'var(--text)';
-              }}
-            >
-              {qr}
-            </button>
-          ))}
+        <div className="self-start bg-white border border-slate-200 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-slate-400 animate-bounce [animation-delay:-0.32s]" />
+          <span className="w-2 h-2 rounded-full bg-slate-400 animate-bounce [animation-delay:-0.16s]" />
+          <span className="w-2 h-2 rounded-full bg-slate-400 animate-bounce" />
         </div>
       )}
     </div>

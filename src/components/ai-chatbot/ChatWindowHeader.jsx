@@ -1,26 +1,17 @@
 import React from 'react';
-import { FaRobot } from 'react-icons/fa';
 
 export default function ChatWindowHeader() {
   return (
-    <div style={{ padding: '16px 24px', borderBottom: '1px solid var(--line)', background: '#fff', display: 'flex', alignItems: 'center', gap: '12px' }}>
-      <div style={{
-        width: '40px',
-        height: '40px',
-        borderRadius: '50%',
-        background: '#f0effc',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        <FaRobot style={{ color: 'var(--indigo)', fontSize: '20px' }} />
+    <div className="px-5 py-4 border-b border-[#e2e8f0] bg-white flex items-center gap-3">
+      <div className="w-11 h-11 rounded-full bg-teal-50 border border-teal-200 flex items-center justify-center text-xl shadow-sm">
+        🏠
       </div>
       <div>
-        <h3 style={{ fontSize: '15px', fontWeight: 800, color: 'var(--text)', margin: 0 }}>JSM Support Bot</h3>
-        <span style={{ fontSize: '11px', color: '#2ecc71', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#2ecc71' }} />
-          Online • Active Multilingual Support
-        </span>
+        <h3 className="text-base font-bold text-slate-800 leading-snug">AI Assistant</h3>
+        <div className="text-xs text-emerald-600 font-semibold flex items-center gap-1.5 mt-0.5">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          Online • Premium Odisha Projects
+        </div>
       </div>
     </div>
   );

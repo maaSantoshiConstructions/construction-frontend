@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
   LuBot,
+  LuMessageSquare,
   LuTrendingUp,
   LuMap,
   LuEye,
@@ -23,7 +24,7 @@ const features = [
   { ic: LuMap, title: 'Live Plot Map', desc: 'View plot availability, dimensions, and reservations live in real-time.', path: '/plot-map' },
   { ic: LuEye, title: 'Virtual Site Visit', desc: 'Tour developments from home with immersive 3D walkthroughs.', path: '/virtual-tour' },
   { ic: LuHardHat, title: 'Construction Tracker', desc: 'Get live progress updates, photos, and engineering updates directly on your dashboard.', path: '/construction-tracker' },
-  // { ic: LuMessageSquare, title: 'AI Sales Assistant', desc: 'Instant 24/7 answers to your pricing, zoning, and project questions.', path: '/ai-chatbot' },
+  { ic: LuMessageSquare, title: 'AI Sales Assistant', desc: 'Instant 24/7 answers to your pricing, zoning, and project questions.', path: '/ai-chatbot' },
   { ic: LuCalendarCheck, title: 'Smart Booking', desc: 'Reserve plots instantly with a secure online token payment gateway.', path: '/book-visit' },
   { ic: LuGift, title: 'Referral Program', desc: 'Invite friends to invest and earn attractive cash rewards on successful referrals.', path: '/referral-program' },
   // { ic: LuCompass, title: 'Channel Partner Portal', desc: 'Specialized portal for registered brokers to track clients and payouts.', path: '/partner/dashboard' },

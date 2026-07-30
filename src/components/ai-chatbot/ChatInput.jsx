@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaPaperPlane } from 'react-icons/fa';
+import React, { useRef, useEffect } from 'react';
+import { LuSend } from 'react-icons/lu';
 
 export default function ChatInput({
   input = '',
@@ -7,51 +7,49 @@ export default function ChatInput({
   handleSend,
   loading = false
 }) {
+  const textareaRef = useRef(null);
+
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!loading && input.trim()) {
+        handleSend();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 100)}px`;
+    }
+  }, [input]);
+
   return (
-    <div style={{ padding: '20px 24px', borderTop: '1px solid var(--line)', background: '#fff' }}>
-      <div style={{ display: 'flex', gap: '12px' }}>
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          placeholder="Ask about project prices, RERA approval, amenities..."
-          style={{
-            flex: 1,
-            padding: '12px 20px',
-            border: '1px solid var(--line)',
-            borderRadius: '30px',
-            fontSize: '14px',
-            outline: 'none',
-            background: '#fff',
-            fontFamily: 'Inter, sans-serif',
-            boxSizing: 'border-box',
-          }}
-        />
+    <div className="p-3.5 md:p-4 border-t border-slate-200 bg-white flex flex-col gap-2">
+      <div className="flex items-end gap-2.5">
+        <div className="flex-1 bg-slate-100 rounded-2xl px-4 py-2.5 flex items-center border border-transparent focus-within:border-teal-500 focus-within:bg-white transition-all">
+          <textarea
+            ref={textareaRef}
+            rows={1}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="Type your message..."
+            className="w-full bg-transparent border-none outline-none text-slate-800 text-sm placeholder-slate-400 resize-none max-h-24 leading-snug font-sans"
+          />
+        </div>
         <button
           type="button"
           onClick={() => handleSend()}
           disabled={loading || !input.trim()}
-          style={{
-            width: '44px',
-            height: '44px',
-            background: 'var(--indigo)',
-            color: '#fff',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: 'none',
-            cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',
-            opacity: loading || !input.trim() ? 0.6 : 1,
-            transition: 'background 0.2s',
-            outline: 'none',
-          }}
+          className="w-11 h-11 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white rounded-full flex items-center justify-center border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transition-all shadow-md flex-shrink-0"
         >
-          <FaPaperPlane style={{ fontSize: '14px' }} />
+          <LuSend size={18} className="translate-x-[1px]" />
         </button>
       </div>
-      <p style={{ fontSize: '10.5px', textAlign: 'center', color: 'var(--gray)', marginTop: '10px', margin: '10px 0 0' }}>
-        Multilingual Assistant • English, Hindi (हिंदी) &amp; Odia (ଓଡ଼ିଆ) Supported
+      <p className="text-[11px] text-center text-slate-400 font-medium">
+        Type <strong className="text-slate-600">"restart"</strong> anytime to start fresh • Odisha Property Matcher
       </p>
     </div>
   );

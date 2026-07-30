@@ -243,14 +243,15 @@ export default function ManageReferrals() {
             <button className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Assign Executive">
               <LuUserCheck size={16} />
             </button>
-            <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-xl shadow-xl border py-1 z-50 hidden group-hover:block">
+            <div className="absolute right-0 bottom-full mb-1 w-52 bg-white rounded-xl shadow-2xl border border-slate-200 py-1.5 z-50 hidden group-hover:block">
+              <div className="px-3 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 mb-1">Assign Executive</div>
               {users.map((u) => (
                 <button
                   key={u._id}
                   onClick={() => handleAssign(r._id, u._id)}
-                  className="block w-full text-left px-3 py-2 text-xs hover:bg-slate-50 text-slate-700 font-medium"
+                  className="block w-full text-left px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
                 >
-                  {u.name}
+                  {u.name} <span className="text-[10px] text-slate-400 font-normal">({u.role?.replace(/_/g, ' ')})</span>
                 </button>
               ))}
             </div>

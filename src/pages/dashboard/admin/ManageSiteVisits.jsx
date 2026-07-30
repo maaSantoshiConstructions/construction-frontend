@@ -98,9 +98,10 @@ export default function ManageSiteVisits() {
         )}
         <div className="relative group">
           <button className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg" title="Assign"><FaUserCheck /></button>
-          <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-xl shadow-xl border py-1 z-50 hidden group-hover:block">
+          <div className="absolute right-0 bottom-full mb-1 w-52 bg-white rounded-xl shadow-2xl border border-slate-200 py-1.5 z-50 hidden group-hover:block">
+            <div className="px-3 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 mb-1">Assign Executive</div>
             {users.map(u => (
-              <button key={u._id} onClick={() => handleAssign(r._id, u._id)} className="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50">{u.name}</button>
+              <button key={u._id} onClick={() => handleAssign(r._id, u._id)} className="block w-full text-left px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors">{u.name} <span className="text-[10px] text-slate-400 font-normal">({u.role?.replace(/_/g, ' ')})</span></button>
             ))}
           </div>
         </div>

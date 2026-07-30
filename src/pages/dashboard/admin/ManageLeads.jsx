@@ -111,48 +111,13 @@ export default function ManageLeads() {
   };
 
   const columns = [
-    { key: 'name', label: 'Name', render: r => <span className="font-medium text-slate-800">{r.name}</span> },
-    { key: 'phone', label: 'Phone', render: r => r.phone || '-' },
-    { key: 'source', label: 'Source', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${sourceColors[r.source] || 'bg-slate-100 text-slate-600'}`}>{r.source?.replace(/_/g, ' ') || '-'}</span> },
-    { key: 'referredBy', label: 'Referred By', render: r => {
-      if (r.referredBy) {
-        return (
-          <div className="text-xs">
-            <span className="font-semibold text-emerald-700 block">{r.referredBy.name}</span>
-            <span className="text-slate-500">{r.referredBy.phone || r.referralCode || '-'}</span>
-          </div>
-        );
-      }
-      if (r.referrerInfo?.name) {
-        return (
-          <div className="text-xs">
-            <span className="font-semibold text-amber-700 block">{r.referrerInfo.name}</span>
-            <span className="text-slate-500">{r.referrerInfo.phone || '-'}</span>
-          </div>
-        );
-      }
-      return <span className="text-slate-400 text-xs">-</span>;
-    }},
-    { key: 'project', label: 'Project', render: r => r.project?.name || r.projectName || '-' },
-    { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status?.replace(/_/g, ' ')}</span> },
-    { key: 'score', label: 'Score', render: r => r.score ? <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${scoreColors[r.score] || 'bg-slate-100 text-slate-600'}`}>{r.score}</span> : '-' },
-    { key: 'assignedTo', label: 'Assigned To', render: r => {
-      if (!r.assignedTo) return <span className="text-slate-400 text-xs">Unassigned</span>;
-      return <span>{r.assignedTo.name || r.assignedTo}</span>;
-    }},
-    { key: 'followUp', label: 'Follow-up', render: r => r.nextFollowUp ? new Date(r.nextFollowUp).toLocaleDateString() : '-' },
-    { key: 'actions', label: 'Actions', render: r => (
-      <div className="flex items-center gap-1">
-        <button onClick={() => { setStatusLead(r); setNewStatus(r.status || ''); setShowStatusModal(true); }} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg" title="Update Status"><FaEdit /></button>
-        <div className="relative group">
-          <button className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg" title="Assign"><FaUserCheck /></button>
-          <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-xl shadow-xl border py-1 z-50 hidden group-hover:block">
-            {users.map(u => (
-              <button key={u._id} onClick={() => handleAssign(r._id, u._id)} className="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50">{u.name}</button>
-            ))}
-          </div>
-        </div>
-        <button onClick={() => { setNoteLead(r); setNoteText(''); setShowNoteModal(true); }} className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg" title="Add Note"><FaStickyNote /></button>
+    { key: 'name', label: 'Name', render: r => <span className="font-semibold text-slate-800">{r.name}</span> },
+    { key: 'phone', label: 'Phone', render: r => <span className="font-mono text-slate-700">{r.phone || '-'}</span> },
+    { key: 'source', label: 'Source', render: r => <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${sourceColors[r.source] || 'bg-slate-100 text-slate-600'}`}>{r.source?.replace(/_/g, ' ') || '-'}</span> },
+    { key: 'status', label: 'Status', render: r => <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status?.replace(/_/g, ' ')}</span> },
+    { key: 'actions', label: 'Actions', render: (r) => (
+      <div className="flex items-center gap-1.5">
+        <button onClick={() => { setStatusLead(r); setNewStatus(r.status || ''); setShowStatusModal(true); }} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Update Status"><FaEdit size={16} /></button>
       </div>
     )},
   ];

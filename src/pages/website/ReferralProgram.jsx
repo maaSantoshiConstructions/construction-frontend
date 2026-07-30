@@ -398,12 +398,14 @@ export default function ReferralProgram() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/login?redirect=/referral-program"
+                style={{ color: '#0b0f2e' }}
                 className="w-full sm:w-auto px-8 py-3.5 bg-[#e8b355] hover:bg-[#d8a345] text-[#0b0f2e] text-sm font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm"
               >
                 <LuUserCheck size={18} /> Log In to Refer →
               </Link>
               <Link
                 to="/register?redirect=/referral-program"
+                style={{ color: '#ffffff' }}
                 className="w-full sm:w-auto px-8 py-3.5 bg-[#0b0f2e] hover:bg-[#161b45] text-white text-sm font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 <LuUserPlus size={18} /> Create Account

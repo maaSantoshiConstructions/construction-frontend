@@ -17,12 +17,12 @@ function SkeletonRow({ cols }) {
 export default function DataTable({ columns = [], data = [], loading = false }) {
   if (loading) {
     return (
-      <div style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 6px rgba(0,0,0,0.06)' }}>
+      <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }} className="min-h-[280px]">
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
               {columns.map(col => (
-                <th key={col.key} style={{ padding: '14px 20px', textAlign: 'left', fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                <th key={col.key} style={{ padding: '14px 20px', textAlign: 'left', fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
                   {col.label}
                 </th>
               ))}
@@ -40,9 +40,9 @@ export default function DataTable({ columns = [], data = [], loading = false }) 
 
   if (!data || data.length === 0) {
     return (
-      <div style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)' }}>
+      <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
         <div style={{ padding: '14px 20px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
-          <div style={{ display: 'flex', gap: '12px', fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+          <div style={{ display: 'flex', gap: '12px', fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
             {columns.map(col => (
               <span key={col.key} style={{ flex: 1 }}>{col.label}</span>
             ))}
@@ -54,13 +54,13 @@ export default function DataTable({ columns = [], data = [], loading = false }) 
   }
 
   return (
-    <div style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 6px rgba(0,0,0,0.06)' }}>
-      <div style={{ overflowX: 'auto' }}>
+    <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }} className="min-h-[300px] pb-16">
+      <div style={{ overflowX: 'auto', minHeight: '260px' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
               {columns.map(col => (
-                <th key={col.key} style={{ padding: '14px 20px', textAlign: 'left', fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.07em', whiteSpace: 'nowrap' }}>
+                <th key={col.key} style={{ padding: '14px 20px', textAlign: 'left', fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.07em', whiteSpace: 'nowrap' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     {col.label}
                     <FaSort style={{ color: '#cbd5e1', fontSize: '10px', flexShrink: 0 }} />
@@ -82,7 +82,7 @@ export default function DataTable({ columns = [], data = [], loading = false }) 
               >
                 {columns.map(col => (
                   <td key={col.key} style={{ padding: '16px 20px', fontSize: '14px', color: '#334155', verticalAlign: 'middle' }}>
-                    {col.render ? col.render(row) : row[col.key]}
+                    {col.render ? col.render(row, i) : row[col.key]}
                   </td>
                 ))}
               </motion.tr>
