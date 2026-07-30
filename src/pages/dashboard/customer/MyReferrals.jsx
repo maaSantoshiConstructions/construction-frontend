@@ -7,8 +7,14 @@ import ErrorMessage from '../../../components/common/ErrorMessage';
 import { useAuth } from '../../../context/AuthContext';
 
 const referralStatusColors = {
-  new: 'bg-orange-100 text-orange-700', contacted: 'bg-amber-100 text-amber-700',
-  interested: 'bg-amber-100 text-amber-700', converted: 'bg-green-100 text-green-700',
+  new: 'bg-orange-100 text-orange-700',
+  contacted: 'bg-amber-100 text-amber-700',
+  interested: 'bg-amber-100 text-amber-700',
+  site_visit_done: 'bg-indigo-100 text-indigo-700',
+  negotiation: 'bg-purple-100 text-purple-700',
+  booking_done: 'bg-emerald-100 text-emerald-700 font-semibold',
+  commission_paid: 'bg-green-100 text-green-800 font-bold',
+  converted: 'bg-green-100 text-green-700',
   lost: 'bg-red-100 text-red-700',
 };
 
@@ -21,14 +27,14 @@ export default function MyReferrals() {
   const [copied, setCopied] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
 
-  const referralCode = user?.referralCode || user?._id?.slice(-8).toUpperCase() || 'REF123';
+  const referralCode = user?.referralCode || (user?._id ? `REF-${user._id.slice(-6).toUpperCase()}` : 'REF123');
 
   const fetchReferrals = async () => {
     setLoading(true);
     setError(null);
     try {
       const { default: leadsApi } = await import('../../../api/leads');
-      const { data: res } = await leadsApi.getLeads({ source: 'customer_referral', limit: 100 });
+      const { data: res } = await leadsApi.getLeads({ limit: 100 });
       const items = res?.data || res || [];
       setReferrals(Array.isArray(items) ? items : []);
     } catch (err) {
@@ -55,7 +61,18 @@ export default function MyReferrals() {
     }
     try {
       const { createLead } = await import('../../../api/leads');
-      await createLead({ name: form.name, phone: form.phone, email: form.email, source: 'customer_referral' });
+      await createLead({
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim() || undefined,
+        source: 'customer_referral',
+        referredBy: user?._id,
+        referralCode,
+        referrerInfo: {
+          name: user?.name || 'Customer',
+          phone: user?.phone || '',
+        },
+      });
       toast.success('Referral submitted!');
       setShowForm(false);
       setForm({ name: '', phone: '', email: '' });
@@ -66,15 +83,52 @@ export default function MyReferrals() {
   };
 
   const commissionEarned = referrals
-    .filter(r => r.status === 'converted')
+    .filter(r => r.status === 'booking_done' || r.status === 'commission_paid' || r.status === 'converted')
     .reduce((sum, r) => sum + (r.commissionAmount || 0), 0);
 
   const columns = [
-    { key: 'name', label: 'Name', render: r => <span className="font-medium text-slate-800">{r.name || '-'}</span> },
-    { key: 'phone', label: 'Phone', render: r => r.phone || '-' },
-    { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${referralStatusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status?.replace(/_/g, ' ')}</span> },
-    { key: 'commission', label: 'Commission', render: r => r.commissionAmount ? '₹' + r.commissionAmount.toLocaleString() : '-' },
-    { key: 'date', label: 'Date', render: r => new Date(r.createdAt || r.date).toLocaleDateString() },
+    {
+      key: 'name',
+      label: 'Referred Friend',
+      render: (r) => (
+        <div>
+          <span className="font-semibold text-slate-800 block">{r.name || '-'}</span>
+          {r.email && <span className="text-xs text-slate-400 block">{r.email}</span>}
+        </div>
+      ),
+    },
+    {
+      key: 'phone',
+      label: 'Phone Number',
+      render: (r) => <span className="font-mono text-slate-700 text-xs">{r.phone || '-'}</span>,
+    },
+    {
+      key: 'status',
+      label: 'Referral Status',
+      render: (r) => (
+        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${referralStatusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>
+          {r.status?.replace(/_/g, ' ')}
+        </span>
+      ),
+    },
+    {
+      key: 'commission',
+      label: 'Cash Reward',
+      render: (r) => (
+        <span className="text-xs">
+          {r.commissionAmount ? (
+            <strong className="text-emerald-700 font-bold">₹{r.commissionAmount.toLocaleString()}</strong>
+          ) : (
+            <span className="text-slate-400">1% (Pending)</span>
+          )}
+        </span>
+      ),
+    },
+    {
+      key: 'date',
+      label: 'Referred On',
+      render: (r) => <span className="text-xs text-slate-500">{new Date(r.createdAt || r.date).toLocaleDateString()}</span>,
+    },
   ];
 
   return (

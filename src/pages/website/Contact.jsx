@@ -49,7 +49,7 @@ export default function Contact() {
       {/* ===== CONTENT WRAPPER ===== */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 pt-10 md:pt-14 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* ===== FORM CARD ===== */}
           <div className="lg:col-span-7 xl:col-span-8 bg-white rounded-3xl border border-slate-200/80 shadow-xl p-6 sm:p-8 md:p-10">
             <span className="text-xs font-bold text-amber-600 uppercase tracking-widest font-poppins">
@@ -70,9 +70,8 @@ export default function Contact() {
                     type="text"
                     {...register('name', { required: 'Name is required' })}
                     placeholder="Your name"
-                    className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${
-                      errors.name ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
-                    }`}
+                    className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${errors.name ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                      }`}
                   />
                   {errors.name && <p className="text-red-500 text-xs mt-1 font-medium">{errors.name.message}</p>}
                 </div>
@@ -88,9 +87,8 @@ export default function Contact() {
                       pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' },
                     })}
                     placeholder="you@example.com"
-                    className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${
-                      errors.email ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
-                    }`}
+                    className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${errors.email ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                      }`}
                   />
                   {errors.email && <p className="text-red-500 text-xs mt-1 font-medium">{errors.email.message}</p>}
                 </div>
@@ -105,9 +103,8 @@ export default function Contact() {
                   type="tel"
                   {...register('phone', { required: 'Phone is required', minLength: { value: 10, message: 'Min 10 digits' } })}
                   placeholder="9876543210"
-                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${
-                    errors.phone ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
-                  }`}
+                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition bg-white ${errors.phone ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                    }`}
                 />
                 {errors.phone && <p className="text-red-500 text-xs mt-1 font-medium">{errors.phone.message}</p>}
               </div>
@@ -121,9 +118,8 @@ export default function Contact() {
                   rows={5}
                   {...register('message', { required: 'Message is required' })}
                   placeholder="Tell us about your requirements..."
-                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition resize-none bg-white ${
-                    errors.message ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
-                  }`}
+                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition resize-none bg-white ${errors.message ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                    }`}
                 />
                 {errors.message && <p className="text-red-500 text-xs mt-1 font-medium">{errors.message.message}</p>}
               </div>
@@ -142,7 +138,7 @@ export default function Contact() {
 
           {/* ===== RIGHT SIDEBAR ===== */}
           <div className="lg:col-span-5 xl:col-span-4 space-y-4">
-            
+
             {/* Contact info cards */}
             {[
               { icon: <FaMapMarkerAlt />, label: 'Address', value: 'Bhubaneswar, Odisha, India 751029' },

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { FaEye, FaEdit, FaTimes, FaUserCheck, FaStickyNote } from 'react-icons/fa';
+import { FaEdit, FaTimes, FaUserCheck, FaStickyNote } from 'react-icons/fa';
 import { getLeads, updateLead, assignLead, addNote } from '../../../api/leads';
 import { getUsers } from '../../../api/users';
 import DataTable from '../../../components/common/DataTable';
@@ -20,9 +20,15 @@ const scoreColors = {
 };
 
 const sourceColors = {
-  website: 'bg-orange-100 text-orange-700', website_contact: 'bg-orange-100 text-orange-700', referral: 'bg-green-100 text-green-700',
-  walk_in: 'bg-amber-100 text-amber-700', call: 'bg-orange-100 text-orange-700',
-  social_media: 'bg-pink-100 text-pink-700', partner: 'bg-amber-100 text-amber-700',
+  website: 'bg-orange-100 text-orange-700',
+  website_contact: 'bg-orange-100 text-orange-700',
+  website_register: 'bg-indigo-100 text-indigo-700 font-semibold',
+  referral: 'bg-green-100 text-green-700',
+  customer_referral: 'bg-emerald-100 text-emerald-700 font-semibold',
+  walk_in: 'bg-amber-100 text-amber-700',
+  call: 'bg-orange-100 text-orange-700',
+  social_media: 'bg-pink-100 text-pink-700',
+  partner: 'bg-amber-100 text-amber-700',
 };
 
 export default function ManageLeads() {
@@ -44,7 +50,12 @@ export default function ManageLeads() {
     setError(null);
     try {
       const { data: res } = await getLeads({ page: p, limit: 10 });
-      setLeads(res?.data || []);
+      const rawLeads = res?.data || [];
+      // Filter out referral leads (managed exclusively under /admin/referrals)
+      const generalLeads = rawLeads.filter(
+        (l) => l.source !== 'customer_referral' && l.source !== 'referral' && !l.referredBy
+      );
+      setLeads(generalLeads);
       setTotalPages(res?.totalPages || 1);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to load leads');
@@ -103,6 +114,25 @@ export default function ManageLeads() {
     { key: 'name', label: 'Name', render: r => <span className="font-medium text-slate-800">{r.name}</span> },
     { key: 'phone', label: 'Phone', render: r => r.phone || '-' },
     { key: 'source', label: 'Source', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${sourceColors[r.source] || 'bg-slate-100 text-slate-600'}`}>{r.source?.replace(/_/g, ' ') || '-'}</span> },
+    { key: 'referredBy', label: 'Referred By', render: r => {
+      if (r.referredBy) {
+        return (
+          <div className="text-xs">
+            <span className="font-semibold text-emerald-700 block">{r.referredBy.name}</span>
+            <span className="text-slate-500">{r.referredBy.phone || r.referralCode || '-'}</span>
+          </div>
+        );
+      }
+      if (r.referrerInfo?.name) {
+        return (
+          <div className="text-xs">
+            <span className="font-semibold text-amber-700 block">{r.referrerInfo.name}</span>
+            <span className="text-slate-500">{r.referrerInfo.phone || '-'}</span>
+          </div>
+        );
+      }
+      return <span className="text-slate-400 text-xs">-</span>;
+    }},
     { key: 'project', label: 'Project', render: r => r.project?.name || r.projectName || '-' },
     { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status?.replace(/_/g, ' ')}</span> },
     { key: 'score', label: 'Score', render: r => r.score ? <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${scoreColors[r.score] || 'bg-slate-100 text-slate-600'}`}>{r.score}</span> : '-' },

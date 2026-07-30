@@ -38,6 +38,7 @@ import AIFollowupAutomation from './pages/features/AIFollowupAutomation';
 import InvestmentHeatmap from './pages/features/InvestmentHeatmap';
 import CustomerReviews from './pages/features/CustomerReviews';
 import ConstructionTracker from './pages/website/ConstructionTracker';
+import ReferralProgram from './pages/website/ReferralProgram';
 import NotFound from './pages/website/NotFound';
 
 // Admin Dashboard
@@ -47,6 +48,7 @@ import ManagePlots from './pages/dashboard/admin/ManagePlots';
 import ManageBookings from './pages/dashboard/admin/ManageBookings';
 import ManageCustomers from './pages/dashboard/admin/ManageCustomers';
 import ManageLeads from './pages/dashboard/admin/ManageLeads';
+import ManageReferrals from './pages/dashboard/admin/ManageReferrals';
 import ManagePayments from './pages/dashboard/admin/ManagePayments';
 import ManageDocuments from './pages/dashboard/admin/ManageDocuments';
 import ManageSiteVisits from './pages/dashboard/admin/ManageSiteVisits';
@@ -74,7 +76,6 @@ import MyPayments from './pages/dashboard/customer/MyPayments';
 import MyDocuments from './pages/dashboard/customer/MyDocuments';
 import ConstructionUpdates from './pages/dashboard/customer/ConstructionUpdates';
 import MyReferrals from './pages/dashboard/customer/MyReferrals';
-import SupportTickets from './pages/dashboard/customer/SupportTickets';
 import Profile from './pages/dashboard/customer/Profile';
 import Wishlist from './pages/dashboard/customer/Wishlist';
 import MySiteVisits from './pages/dashboard/customer/MySiteVisits';
@@ -121,6 +122,7 @@ export default function App() {
       <Route path="/ai-followup" element={<PublicLayout><AIFollowupAutomation /></PublicLayout>} />
       <Route path="/investment-heatmap" element={<PublicLayout><InvestmentHeatmap /></PublicLayout>} />
       <Route path="/reviews" element={<PublicLayout><CustomerReviews /></PublicLayout>} />
+      <Route path="/referral-program" element={<PublicLayout><ReferralProgram /></PublicLayout>} />
 
       {/* Auth Routes */}
       <Route path="/login" element={<Login />} />
@@ -142,6 +144,7 @@ export default function App() {
         <Route path="bookings" element={<ManageBookings />} />
         <Route path="customers" element={<ManageCustomers />} />
         <Route path="leads" element={<ManageLeads />} />
+        <Route path="referrals" element={<ManageReferrals />} />
         <Route path="payments" element={<ManagePayments />} />
         <Route path="documents" element={<ManageDocuments />} />
         <Route path="site-visits" element={<ManageSiteVisits />} />
@@ -191,7 +194,6 @@ export default function App() {
         <Route path="documents" element={<MyDocuments />} />
         <Route path="construction-updates" element={<ConstructionUpdates />} />
         <Route path="referrals" element={<MyReferrals />} />
-        <Route path="support-tickets" element={<SupportTickets />} />
         <Route path="profile" element={<Profile />} />
         <Route path="wishlist" element={<Wishlist />} />
       </Route>

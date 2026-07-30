@@ -131,8 +131,7 @@ export default function BookingFormModal({
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Booking Status</label>
                 <select
                   {...register('status')}
-                  disabled={!editing}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-medium outline-none focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-medium outline-none focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all cursor-pointer"
                 >
                   <option value="token">Token Paid</option>
                   <option value="partial">Partial Payments</option>

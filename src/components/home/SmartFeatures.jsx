@@ -35,7 +35,7 @@ export default function SmartFeatures() {
     { to: '/construction-tracker', icon: LuHardHat, label: 'Construction Tracker' },
     // { to: '/ai-chatbot', icon: LuMessageSquare, label: 'AI Sales Assistant' },
     { to: '/book-visit', icon: LuCalendar, label: 'Smart Booking' },
-    { to: '/customer/referrals', icon: LuGift, label: 'Referral Program' },
+    { to: '/referral-program', icon: LuGift, label: 'Referral Program' },
     // { to: '/partner/dashboard', icon: LuCompass, label: 'Channel Partner Portal' },
     { to: '/admin/documents', icon: LuLaptop, label: 'Online Document Upload' },
     { to: '/book-visit', icon: LuLaptop, label: 'Online Booking' },
