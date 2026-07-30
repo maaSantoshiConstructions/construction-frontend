@@ -51,7 +51,7 @@ export default function CalculatorsSection() {
           <div className="cta-stats">
             <div><div className="num">500+</div><div className="lbl">Happy Customers</div></div>
             <div><div className="num">100+</div><div className="lbl">Acres Delivered</div></div>
-            <div><div className="num">20+</div><div className="lbl">Smart Features</div></div>
+            <div><div className="num">10+</div><div className="lbl">Smart Features</div></div>
           </div>
           <Link to="/book-visit" className="btn-gold">Enquire Now →</Link>
         </div>

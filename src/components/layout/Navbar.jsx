@@ -38,7 +38,7 @@ export default function Navbar() {
           <nav className="links">
             <Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link>
             <Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link>
-            <Link to="/smart-features" className={isActive('/smart-features') ? 'active' : ''}>20 Smart Features</Link>
+            <Link to="/smart-features" className={isActive('/smart-features') ? 'active' : ''}>Smart Features</Link>
             <Link to="/calculators" className={isActive('/calculators') ? 'active' : ''}>Calculators</Link>
             <Link to={dashboardPath}>Owner Portal</Link>
             <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>

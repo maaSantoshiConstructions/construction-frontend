@@ -23,7 +23,7 @@ export default function HeroSection() {
             <span className="accent">Invest with Confidence.</span>
           </h1>
           <p className="lead">
-            AI-powered real estate platform with 20 intelligent features, smart calculators &amp; real-time insights.
+            AI-powered real estate platform with intelligent features, smart calculators &amp; real-time insights.
           </p>
           <div className="hero-stats">
             <div className="hstat">
@@ -31,7 +31,7 @@ export default function HeroSection() {
                 <LuLayoutGrid size={22} className="text-amber-500" />
               </div>
               <div>
-                <div className="num">20+</div>
+                <div className="num">10+</div>
                 <div className="lbl">Smart Features</div>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function HeroSection() {
           </div>
           <div className="hero-actions">
             <Link to="/projects" className="btn-gold">Explore Projects →</Link>
-            <Link to="/smart-features" className="btn-outline">See 20 Features ▦</Link>
+            <Link to="/smart-features" className="btn-outline">See smart Features</Link>
           </div>
         </div>
 

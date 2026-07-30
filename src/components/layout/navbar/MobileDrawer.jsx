@@ -116,7 +116,7 @@ export default function MobileDrawer({
                   transition: 'all 0.2s',
                 }}
               >
-                20 Smart Features
+                Smart Features
               </Link>
               <Link
                 to="/calculators"

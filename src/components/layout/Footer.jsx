@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getProjects } from '../../api/projects';
+import { LuPhone, LuMail, LuMapPin, LuFacebook, LuInstagram, LuYoutube } from 'react-icons/lu';
 
 export default function Footer() {
   const { user, getRedirectPath } = useAuth();
@@ -36,10 +37,10 @@ export default function Footer() {
             </div>
             <p>Building dreams, creating value, and delivering excellence in real estate with innovation and trust.</p>
             <div className="socials">
-              <a href="#" aria-label="Facebook">f</a>
-              <a href="#" aria-label="Instagram">◎</a>
-              <a href="tel:+919142328629" aria-label="Phone">☎</a>
-              <a href="#" aria-label="YouTube">▶</a>
+              <a href="#" aria-label="Facebook"><LuFacebook size={15} /></a>
+              <a href="#" aria-label="Instagram"><LuInstagram size={15} /></a>
+              <a href="tel:+919142328629" aria-label="Phone"><LuPhone size={15} /></a>
+              <a href="#" aria-label="YouTube"><LuYoutube size={15} /></a>
             </div>
           </div>
 
@@ -49,7 +50,7 @@ export default function Footer() {
             <ul>
               <li><Link to="/">Home</Link></li>
               <li><Link to="/projects">Projects</Link></li>
-              <li><Link to="/#features">20 Smart Features</Link></li>
+              <li><Link to="/#features">Smart Features</Link></li>
               <li><Link to="/calculators">Calculators</Link></li>
               <li><Link to={dashboardPath}>Owner Portal</Link></li>
               <li><Link to="/about">About Us</Link></li>
@@ -75,7 +76,7 @@ export default function Footer() {
                 </>
               )}
               <li>
-                <Link to="/projects" style={{ color: '#e8b355', fontWeight: 600 }}>All Projects →</Link>
+                <Link to="/projects" className="text-[#e8b355] font-semibold">All Projects →</Link>
               </li>
             </ul>
           </div>
@@ -93,21 +94,30 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="foot-contact-box bg-white/[0.04] sm:bg-transparent p-4 sm:p-0 rounded-xl border border-white/10 sm:border-0">
             <h5>Contact Us</h5>
-            <div className="contact-line">📞 +91 91423 28629</div>
-            <div className="contact-line">✉ support@maasantoshiconstructions.com</div>
-            <div className="contact-line">📍 Bhubaneswar, Odisha, India</div>
+            <div className="contact-line">
+              <LuPhone size={16} className="text-[#e8b355] shrink-0 mt-0.5" />
+              <span>+91 91423 28629</span>
+            </div>
+            <div className="contact-line">
+              <LuMail size={16} className="text-[#e8b355] shrink-0 mt-0.5" />
+              <span className="break-all sm:break-normal">support@maasantoshiconstructions.com</span>
+            </div>
+            <div className="contact-line">
+              <LuMapPin size={16} className="text-[#e8b355] shrink-0 mt-0.5" />
+              <span>Bhubaneswar, Odisha, India</span>
+            </div>
           </div>
         </div>
 
         <div className="foot-bottom">
           <span>© {new Date().getFullYear()} Jai Santoshi Maa Infrastructure Pvt. Ltd. All Rights Reserved.</span>
-          <span>
+          <div>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms &amp; Conditions</a>
             <a href="#">Disclaimer</a>
-          </span>
+          </div>
         </div>
       </div>
     </footer>
