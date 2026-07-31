@@ -48,6 +48,7 @@ import ManagePlots from './pages/dashboard/admin/ManagePlots';
 import ManageBookings from './pages/dashboard/admin/ManageBookings';
 import BookingDetails from './pages/dashboard/admin/BookingDetails';
 import ManageCustomers from './pages/dashboard/admin/ManageCustomers';
+import AdminCustomerDetails from './pages/dashboard/admin/AdminCustomerDetails';
 import ManageLeads from './pages/dashboard/admin/ManageLeads';
 import ManageReferrals from './pages/dashboard/admin/ManageReferrals';
 import ManagePayments from './pages/dashboard/admin/ManagePayments';
@@ -73,6 +74,7 @@ import MarketingMaterials from './pages/dashboard/partner/MarketingMaterials';
 // Customer Dashboard
 import CustomerDashboard from './pages/dashboard/customer/CustomerDashboard';
 import MyBookings from './pages/dashboard/customer/MyBookings';
+import CustomerBookingDetails from './pages/dashboard/customer/CustomerBookingDetails';
 import MyPayments from './pages/dashboard/customer/MyPayments';
 import MyDocuments from './pages/dashboard/customer/MyDocuments';
 import ConstructionUpdates from './pages/dashboard/customer/ConstructionUpdates';
@@ -145,6 +147,7 @@ export default function App() {
         <Route path="bookings" element={<ManageBookings />} />
         <Route path="bookings/:id" element={<BookingDetails />} />
         <Route path="customers" element={<ManageCustomers />} />
+        <Route path="customers/:id" element={<AdminCustomerDetails />} />
         <Route path="leads" element={<ManageLeads />} />
         <Route path="referrals" element={<ManageReferrals />} />
         <Route path="payments" element={<ManagePayments />} />
@@ -191,6 +194,7 @@ export default function App() {
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<CustomerDashboard />} />
         <Route path="bookings" element={<MyBookings />} />
+        <Route path="bookings/:id" element={<CustomerBookingDetails />} />
         <Route path="site-visits" element={<MySiteVisits />} />
         <Route path="payments" element={<MyPayments />} />
         <Route path="documents" element={<MyDocuments />} />

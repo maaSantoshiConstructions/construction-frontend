@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { FaEye, FaTimes } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { FaEye } from 'react-icons/fa';
 import { getCustomers } from '../../../api/customers';
 import DataTable from '../../../components/common/DataTable';
 import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
+const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-IN') : '0');
+
 export default function ManageCustomers() {
+  const navigate = useNavigate();
+
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [viewCustomer, setViewCustomer] = useState(null);
 
   const fetchCustomers = async (p = page) => {
     setLoading(true);
@@ -31,19 +34,49 @@ export default function ManageCustomers() {
   useEffect(() => { fetchCustomers(); }, [page]);
 
   const columns = [
-    { key: 'name', label: 'Name', render: r => (
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-700 text-sm font-bold">{r.user?.name?.charAt(0) || '?'}</div>
-        <span className="font-medium text-slate-800">{r.user?.name || '-'}</span>
-      </div>
-    )},
-    { key: 'email', label: 'Email', render: r => r.user?.email || '-' },
-    { key: 'phone', label: 'Phone', render: r => r.user?.phone || '-' },
-    { key: 'properties', label: 'Properties', render: r => (r.booking ? 1 : 0) },
-    { key: 'totalPaid', label: 'Total Paid', render: r => `₹${(r.totalPaid || 0).toLocaleString('en-IN')}` },
-    { key: 'actions', label: 'Actions', render: r => (
-      <button onClick={() => setViewCustomer(r)} className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg"><FaEye /></button>
-    )},
+    {
+      key: 'name', label: 'Name',
+      render: (r) => (
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 bg-amber-100 border border-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold text-sm shrink-0">
+            {r.user?.name?.charAt(0)?.toUpperCase() || '?'}
+          </div>
+          <div>
+            <span className="font-bold text-slate-800 text-sm block">{r.user?.name || '—'}</span>
+            <span className="text-xs font-mono text-amber-700">CUST-{r._id?.slice(-6).toUpperCase()}</span>
+          </div>
+        </div>
+      ),
+    },
+    { key: 'email', label: 'Email', render: (r) => <span className="text-slate-600 text-sm">{r.user?.email || '—'}</span> },
+    { key: 'phone', label: 'Phone', render: (r) => <span className="text-slate-600 text-sm font-medium">{r.user?.phone || '—'}</span> },
+    {
+      key: 'properties', label: 'Properties',
+      render: (r) => {
+        const count = r.propertiesCount ?? (r.booking ? 1 : 0);
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">
+            {count} {count === 1 ? 'Property' : 'Properties'}
+          </span>
+        );
+      },
+    },
+    {
+      key: 'totalPaid', label: 'Total Paid',
+      render: (r) => <span className="font-bold text-emerald-600 text-sm">₹{fmt(r.totalPaid || 0)}</span>,
+    },
+    {
+      key: 'actions', label: 'Actions',
+      render: (r) => (
+        <button
+          onClick={() => navigate(`/admin/customers/${r._id}`)}
+          title="View Customer Profile"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-xl text-xs font-bold transition-all"
+        >
+          <FaEye /> View Profile
+        </button>
+      ),
+    },
   ];
 
   return (
@@ -51,65 +84,16 @@ export default function ManageCustomers() {
       {/* Title */}
       <div>
         <h1 className="text-2xl font-bold text-slate-800">Manage Customers</h1>
-        <p className="text-slate-500 text-sm">View customer information and purchase history</p>
+        <p className="text-slate-500 text-sm mt-0.5">View customer profiles, financial summaries, and property portfolios</p>
       </div>
 
-      {error ? <ErrorMessage message={error} onRetry={() => fetchCustomers()} /> : (
+      {error ? (
+        <ErrorMessage message={error} onRetry={() => fetchCustomers()} />
+      ) : (
         <>
           <DataTable columns={columns} data={customers} loading={loading} />
           <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </>
-      )}
-
-      {/* Customer Details Modal */}
-      {viewCustomer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-5 border-b border-slate-200">
-              <h2 className="text-lg font-semibold text-slate-800">Customer Details</h2>
-              <button onClick={() => setViewCustomer(null)} className="p-1 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-slate-700"><FaTimes /></button>
-            </div>
-            <div className="p-5 space-y-4">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center text-orange-700 text-xl font-bold">{viewCustomer.user?.name?.charAt(0) || '?'}</div>
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-800">{viewCustomer.user?.name || '-'}</h3>
-                  <p className="text-sm text-slate-500">{viewCustomer.user?.email || '-'}</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div><span className="text-slate-500">Phone:</span><p className="font-medium text-slate-800">{viewCustomer.user?.phone || '-'}</p></div>
-                <div><span className="text-slate-500">Total Paid:</span><p className="font-medium text-green-600">₹{(viewCustomer.totalPaid || 0).toLocaleString('en-IN')}</p></div>
-                <div><span className="text-slate-500">Properties:</span><p className="font-medium text-slate-800">{viewCustomer.booking ? 1 : 0}</p></div>
-                <div><span className="text-slate-500">Joined:</span><p className="text-slate-850">{viewCustomer.createdAt ? new Date(viewCustomer.createdAt).toLocaleDateString() : '-'}</p></div>
-              </div>
-
-              {viewCustomer.booking && (
-                <div className="border-t border-slate-100 pt-4">
-                  <h3 className="font-bold text-slate-800 text-sm mb-3">Active Purchased Property</h3>
-                  <div className="border border-slate-150 rounded-xl p-4 bg-slate-50 text-sm grid grid-cols-2 gap-4">
-                    <div>
-                      <span className="text-slate-500 block text-xs">Booking ID:</span>
-                      <span className="font-semibold text-slate-800">#{viewCustomer.booking.bookingId || viewCustomer.booking._id?.slice(-6)}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block text-xs">Booking Status:</span>
-                      <span className="capitalize font-semibold text-indigo-700">{viewCustomer.booking.status}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block text-xs">Assigned Project:</span>
-                      <span className="font-medium text-slate-800">{viewCustomer.project?.name || '-'}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block text-xs">Assigned Plot:</span>
-                      <span className="font-semibold text-slate-800">Plot #{viewCustomer.plot?.plotNumber || '-'}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        </div>
       )}
     </div>
   );

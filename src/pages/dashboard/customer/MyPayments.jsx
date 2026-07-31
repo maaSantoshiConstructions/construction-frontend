@@ -1,106 +1,243 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { FaDownload, FaFileInvoice } from 'react-icons/fa';
-import { getMyPayments, downloadInvoice } from '../../../api/payments';
+import { FaDownload, FaCheckCircle, FaExclamationCircle, FaFilter } from 'react-icons/fa';
+import { getMyPayments, downloadReceipt } from '../../../api/payments';
+import { getMyBookings } from '../../../api/bookings';
 import DataTable from '../../../components/common/DataTable';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
-const paymentStatusColors = {
-  pending: 'bg-amber-100 text-amber-700',
-  partial: 'bg-orange-100 text-orange-700',
-  completed: 'bg-green-100 text-green-700',
-  paid: 'bg-green-100 text-green-700',
-  failed: 'bg-red-100 text-red-700',
-  refunded: 'bg-amber-100 text-amber-700',
+const TXSTATUS_COLORS = {
+  success:   'bg-emerald-100 text-emerald-700 border border-emerald-200',
+  cancelled: 'bg-slate-100 text-slate-500 border border-slate-200',
+  refunded:  'bg-violet-100 text-violet-700 border border-violet-200',
 };
+
+const TYPE_LABELS = {
+  token:             'Token',
+  installment:       'Installment',
+  final_payment:     'Final Payment',
+  loan_disbursement: 'Loan Disbursement',
+  refund:            'Refund',
+};
+
+const TYPE_COLORS = {
+  token:             'bg-indigo-100 text-indigo-700',
+  installment:       'bg-sky-100 text-sky-700',
+  final_payment:     'bg-emerald-100 text-emerald-700',
+  loan_disbursement: 'bg-teal-100 text-teal-700',
+  refund:            'bg-violet-100 text-violet-700',
+};
+
+const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-IN') : '—');
+const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—');
 
 export default function MyPayments() {
   const [payments, setPayments] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('all');
 
-  const fetchPayments = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const { data: res } = await getMyPayments();
-      setPayments(res?.data || res || []);
+      const [{ data: pRes }, { data: bRes }] = await Promise.all([
+        getMyPayments(),
+        getMyBookings(),
+      ]);
+
+      const rawPayments = pRes?.data || pRes || [];
+      // Default Sort: Newest Payment First
+      const sortedPayments = [...rawPayments].sort((a, b) =>
+        new Date(b.paidAt || b.createdAt) - new Date(a.paidAt || a.createdAt)
+      );
+
+      setPayments(sortedPayments);
+      setBookings(bRes?.data || bRes || []);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load payments');
+      setError(err?.response?.data?.message || 'Failed to load payment history');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  useEffect(() => { fetchPayments(); }, []);
+  useEffect(() => { fetchData(); }, [fetchData]);
 
-  const handleDownloadInvoice = async (paymentId) => {
+  const handleDownloadReceipt = async (paymentId, paymentIdStr) => {
     try {
-      const { data } = await downloadInvoice(paymentId);
-      const url = window.URL.createObjectURL(new Blob([data]));
+      const res = await downloadReceipt(paymentId);
+      const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
-      a.download = `invoice-${paymentId.slice(-6)}.pdf`;
+      a.download = `receipt-${paymentIdStr || paymentId.slice(-6)}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
-      toast.success('Invoice downloaded');
+      toast.success('Receipt downloaded');
     } catch {
-      toast.error('Failed to download invoice');
+      toast.error('Failed to download receipt');
     }
   };
 
-  const totalPaid = payments.filter(p => p.status === 'paid' || p.status === 'completed').reduce((sum, p) => sum + (p.amount || 0), 0);
-  const totalPending = payments.filter(p => p.status === 'pending').reduce((sum, p) => sum + (p.amount || 0), 0);
+  // Calculations
+  const totalPaid = payments
+    .filter((p) => (p.transactionStatus === 'success' || p.status === 'completed' || p.status === 'paid'))
+    .reduce((sum, p) => sum + (p.amount || 0), 0);
+
+  const totalRemaining = bookings.reduce((sum, b) => {
+    const tot = b.totalAmount || b.amount || 0;
+    const paid = b.paidAmount || 0;
+    const rem = b.remainingAmount ?? Math.max(0, tot - paid);
+    return sum + rem;
+  }, 0);
+
+  // Filtered Payments
+  const filteredPayments = payments.filter((p) => {
+    if (statusFilter === 'all') return true;
+    const st = p.transactionStatus || p.status || 'success';
+    return st === statusFilter;
+  });
 
   const columns = [
-    { key: 'date', label: 'Date', render: r => new Date(r.createdAt || r.date || r.paymentDate).toLocaleDateString() },
-    { key: 'description', label: 'Description', render: r => r.description || r.purpose || `Payment #${r._id?.slice(-6) || ''}` },
-    { key: 'amount', label: 'Amount', render: r => <span className="font-medium">₹{(r.amount || 0).toLocaleString()}</span> },
-    { key: 'status', label: 'Status', render: r => <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${paymentStatusColors[r.status] || 'bg-slate-100 text-slate-600'}`}>{r.status?.replace(/_/g, ' ')}</span> },
-    { key: 'receipt', label: 'Receipt', render: r => (
-      <button onClick={() => handleDownloadInvoice(r._id)} className="flex items-center gap-1.5 text-orange-600 hover:text-orange-700 text-xs font-medium">
-        <FaDownload /> Invoice
-      </button>
-    )},
+    {
+      key: 'paymentId', label: 'Payment ID',
+      render: (r) => (
+        <span className="font-mono text-xs font-bold text-amber-700">
+          {r.paymentId || `#${r._id?.slice(-6)}`}
+        </span>
+      ),
+    },
+    {
+      key: 'date', label: 'Date',
+      render: (r) => <span className="text-slate-600 text-xs font-medium whitespace-nowrap">{fmtDate(r.paidAt || r.createdAt)}</span>,
+    },
+    {
+      key: 'paymentType', label: 'Payment Type',
+      render: (r) => (
+        <span className={`px-2.5 py-0.5 rounded-md text-xs font-bold ${TYPE_COLORS[r.paymentType] || 'bg-slate-100 text-slate-700'}`}>
+          {TYPE_LABELS[r.paymentType] || r.paymentType?.replace(/_/g, ' ') || 'Payment'}
+        </span>
+      ),
+    },
+    {
+      key: 'amount', label: 'Amount',
+      render: (r) => {
+        const isCancelled = r.transactionStatus === 'cancelled' || r.transactionStatus === 'refunded';
+        return (
+          <span className={`font-bold ${isCancelled ? 'line-through text-slate-400' : 'text-slate-800'}`}>
+            ₹{fmt(r.amount)}
+          </span>
+        );
+      },
+    },
+    {
+      key: 'paymentMethod', label: 'Payment Mode',
+      render: (r) => <span className="capitalize text-slate-700 text-xs font-medium">{r.paymentMethod?.replace(/_/g, ' ') || '—'}</span>,
+    },
+    {
+      key: 'status', label: 'Status',
+      render: (r) => {
+        const st = r.transactionStatus || (r.status === 'completed' || r.status === 'paid' ? 'success' : r.status) || 'success';
+        return (
+          <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold capitalize ${TXSTATUS_COLORS[st] || 'bg-slate-100 text-slate-600'}`}>
+            {st}
+          </span>
+        );
+      },
+    },
+    {
+      key: 'receipt', label: 'Receipt',
+      render: (r) => (
+        <button
+          onClick={() => handleDownloadReceipt(r._id, r.paymentId)}
+          className="flex items-center gap-1.5 px-3 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs font-bold transition-all"
+        >
+          <FaDownload className="text-xs" /> Download Receipt
+        </button>
+      ),
+    },
   ];
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-800">My Payments</h1>
-        <p className="text-slate-500 text-sm">View your payment history and download invoices</p>
+
+      {/* Header */}
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800">My Payments</h1>
+          <p className="text-slate-500 text-sm mt-0.5">Complete history of all your plot payment receipts</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* Summary Cards: Total Paid & Remaining Amount (Pending Payments Removed) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Card 1: Total Paid */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl border border-slate-200 p-5"
+          className="bg-white rounded-2xl border border-emerald-200 bg-emerald-50/40 p-5 flex items-center gap-4 shadow-sm"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center"><FaFileInvoice className="text-emerald-600" /></div>
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+            <FaCheckCircle />
           </div>
-          <p className="text-2xl font-bold text-slate-900">₹{totalPaid.toLocaleString()}</p>
-          <p className="text-sm text-slate-500 mt-0.5">Total Paid</p>
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">Total Paid</span>
+            <p className="text-2xl font-extrabold text-emerald-700 mt-0.5">₹{fmt(totalPaid)}</p>
+          </div>
         </motion.div>
+
+        {/* Card 2: Remaining Amount */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl border border-slate-200 p-5"
+          transition={{ delay: 0.05 }}
+          className="bg-white rounded-2xl border border-orange-200 bg-orange-50/40 p-5 flex items-center gap-4 shadow-sm"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center"><FaFileInvoice className="text-amber-600" /></div>
+          <div className="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl shrink-0">
+            <FaExclamationCircle />
           </div>
-          <p className="text-2xl font-bold text-slate-900">₹{totalPending.toLocaleString()}</p>
-          <p className="text-sm text-slate-500 mt-0.5">Pending Payments</p>
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-orange-800">Remaining Amount</span>
+            <p className="text-2xl font-extrabold text-orange-600 mt-0.5">₹{fmt(totalRemaining)}</p>
+          </div>
         </motion.div>
       </div>
 
-      {error ? <ErrorMessage message={error} onRetry={fetchPayments} /> : (
-        <DataTable columns={columns} data={payments} loading={loading} />
+      {/* Status Filter */}
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-2">
+          <FaFilter className="text-slate-400 text-xs" />
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Filter Status:</span>
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+            {['all', 'success', 'cancelled', 'refunded'].map((st) => (
+              <button
+                key={st}
+                onClick={() => setStatusFilter(st)}
+                className={`px-3 py-1 text-xs font-bold rounded-lg capitalize transition-all ${
+                  statusFilter === st
+                    ? 'bg-white text-slate-800 shadow-xs'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                {st}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <span className="text-xs font-semibold text-slate-400">
+          Showing {filteredPayments.length} of {payments.length} payments
+        </span>
+      </div>
+
+      {/* Payment Table */}
+      {error ? (
+        <ErrorMessage message={error} onRetry={fetchData} />
+      ) : (
+        <DataTable columns={columns} data={filteredPayments} loading={loading} />
       )}
+
     </div>
   );
 }
