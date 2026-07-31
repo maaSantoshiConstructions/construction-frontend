@@ -113,7 +113,6 @@ export default function AddPaymentDialog({ booking, onClose, onSuccess }) {
                     <option value="installment">Installment</option>
                     <option value="final_payment">Final Payment</option>
                     <option value="loan_disbursement">Loan Disbursement</option>
-                    <option value="refund">Refund</option>
                   </select>
                 </div>
                 <div>

@@ -63,7 +63,7 @@ export default function ManageBookings() {
   const [customers, setCustomers] = useState([]);
   const [salesExecutives, setSalesExecutives] = useState([]);
 
-  const { register, handleSubmit, reset, watch, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, watch, setValue, control, formState: { errors } } = useForm();
 
   const fetchBookings = useCallback(async (p = page) => {
     setLoading(true);
@@ -153,12 +153,19 @@ export default function ManageBookings() {
         customer: '', plot: '', paymentPlan: 'full_payment',
         totalAmount: '', tokenAmount: '', bookingStatus: 'active',
         salesExecutive: '', remarks: '',
+        paymentMethod: 'cash',
+        referenceNumber: '',
+        paymentDate: new Date().toISOString().split('T')[0],
       });
     }
   }, [showFormModal, editing]);
 
-  // Auto-fill totalAmount from plot price when creating
+  // Watch form fields for reactive UI updates
   const selectedPlotId = watch('plot');
+  const tokenAmountWatched = watch('tokenAmount');
+  const paymentMethodWatched = watch('paymentMethod');
+  const totalAmountWatched = watch('totalAmount');
+
   useEffect(() => {
     if (selectedPlotId && !editing) {
       const plot = availablePlots.find((p) => p._id === selectedPlotId);
@@ -166,18 +173,39 @@ export default function ManageBookings() {
     }
   }, [selectedPlotId, availablePlots, editing]);
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (formData, receiptFile) => {
     setSubmitting(true);
     try {
-      const payload = {
-        ...formData,
-        totalAmount: Number(formData.totalAmount),
-        tokenAmount: formData.tokenAmount ? Number(formData.tokenAmount) : 0,
-      };
       if (editing) {
+        const payload = {
+          ...formData,
+          totalAmount: Number(formData.totalAmount),
+          tokenAmount: formData.tokenAmount ? Number(formData.tokenAmount) : 0,
+        };
         await updateBooking(editing._id, payload);
         toast.success('Booking updated');
       } else {
+        const tokenAmt = formData.tokenAmount ? Number(formData.tokenAmount) : 0;
+        let payload;
+        if (tokenAmt > 0 && receiptFile) {
+          payload = new FormData();
+          Object.keys(formData).forEach((key) => {
+            if (formData[key] !== undefined && formData[key] !== null) {
+              if (key === 'referenceNumber' && formData.paymentMethod === 'cash') return;
+              payload.append(key, formData[key]);
+            }
+          });
+          payload.append('receipt', receiptFile);
+        } else {
+          payload = {
+            ...formData,
+            totalAmount: Number(formData.totalAmount),
+            tokenAmount: tokenAmt,
+            paymentMethod: formData.paymentMethod || 'cash',
+            referenceNumber: formData.paymentMethod === 'cash' ? undefined : formData.referenceNumber,
+            paymentDate: formData.paymentDate || new Date().toISOString().split('T')[0],
+          };
+        }
         await createBooking(payload);
         toast.success('Booking created — Plot reserved');
       }
@@ -399,6 +427,10 @@ export default function ManageBookings() {
         handleSubmitForm={handleSubmit}
         errors={errors}
         userRole={user?.role}
+        setValue={setValue}
+        tokenAmountWatched={tokenAmountWatched}
+        paymentMethodWatched={paymentMethodWatched}
+        totalAmountWatched={totalAmountWatched}
         onPaymentPlanChanged={() => { fetchBookings(); setShowFormModal(false); }}
       />
     </div>

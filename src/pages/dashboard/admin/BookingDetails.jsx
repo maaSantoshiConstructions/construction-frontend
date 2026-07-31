@@ -32,8 +32,6 @@ const PAYMENT_STATUS_COLORS = {
 
 const TXSTATUS_COLORS = {
   success:   'bg-emerald-100 text-emerald-700',
-  pending:   'bg-amber-100 text-amber-700',
-  failed:    'bg-red-100 text-red-700',
   cancelled: 'bg-slate-100 text-slate-500',
   refunded:  'bg-violet-100 text-violet-700',
 };

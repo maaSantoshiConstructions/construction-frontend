@@ -13,8 +13,6 @@ const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { day: '2-di
 
 const TXSTATUS_COLORS = {
   success:   'bg-emerald-100 text-emerald-700 border border-emerald-200',
-  pending:   'bg-amber-100 text-amber-700 border border-amber-200',
-  failed:    'bg-red-100 text-red-700 border border-red-200',
   cancelled: 'bg-slate-100 text-slate-500 border border-slate-200',
   refunded:  'bg-violet-100 text-violet-700 border border-violet-200',
 };
@@ -84,20 +82,17 @@ export default function ManagePayments() {
   // Summary cards
   const totalRevenue = stats?.byStatus?.find((s) => s.transactionStatus === 'success')?.total || 0;
   const totalRefunded = stats?.byStatus?.find((s) => s.transactionStatus === 'refunded')?.total || 0;
-  const totalPending = stats?.byStatus?.find((s) => s.transactionStatus === 'pending')?.total || 0;
   const totalCancelled = stats?.byStatus?.find((s) => s.transactionStatus === 'cancelled')?.total || 0;
 
   const summaryCards = [
     { label: 'Total Revenue', value: `₹${fmt(totalRevenue)}`, color: 'emerald' },
     { label: 'Refunded',      value: `₹${fmt(totalRefunded)}`, color: 'violet' },
-    { label: 'Pending',       value: `₹${fmt(totalPending)}`,  color: 'amber' },
     { label: 'Cancelled',     value: `₹${fmt(totalCancelled)}`, color: 'slate' },
   ];
 
   const colorMap = {
     emerald: 'bg-emerald-50 border-emerald-200 text-emerald-700',
     violet:  'bg-violet-50 border-violet-200 text-violet-700',
-    amber:   'bg-amber-50 border-amber-200 text-amber-700',
     slate:   'bg-slate-50 border-slate-200 text-slate-600',
   };
 
@@ -196,7 +191,7 @@ export default function ManagePayments() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {summaryCards.map((c) => (
           <div key={c.label} className={`border rounded-2xl p-4 ${colorMap[c.color]}`}>
             <p className="text-xs font-bold uppercase tracking-wider mb-1 opacity-70">{c.label}</p>
@@ -246,8 +241,6 @@ export default function ManagePayments() {
             >
               <option value="">All Statuses</option>
               <option value="success">Success</option>
-              <option value="pending">Pending</option>
-              <option value="failed">Failed</option>
               <option value="cancelled">Cancelled</option>
               <option value="refunded">Refunded</option>
             </select>

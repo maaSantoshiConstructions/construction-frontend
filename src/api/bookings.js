@@ -4,7 +4,12 @@ export const getBookings = (params) => API.get('/bookings', { params });
 export const getBooking = (id) => API.get(`/bookings/${id}`);
 export const getBookingDetails = (id) => API.get(`/bookings/${id}/details`);
 export const getBookingPaymentSummary = (id) => API.get(`/bookings/${id}/payment-summary`);
-export const createBooking = (data) => API.post('/bookings', data);
+export const createBooking = (data) => {
+  const isFormData = data instanceof FormData;
+  return API.post('/bookings', data, {
+    headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {},
+  });
+};
 export const updateBooking = (id, data) => API.put(`/bookings/${id}`, data);
 export const cancelBooking = (id) => API.put(`/bookings/${id}/cancel`);
 export const getMyBookings = () => API.get('/bookings/my-bookings');
