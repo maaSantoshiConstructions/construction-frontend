@@ -46,6 +46,7 @@ import AdminDashboard from './pages/dashboard/admin/AdminDashboard';
 import ManageProjects from './pages/dashboard/admin/ManageProjects';
 import ManagePlots from './pages/dashboard/admin/ManagePlots';
 import ManageBookings from './pages/dashboard/admin/ManageBookings';
+import BookingDetails from './pages/dashboard/admin/BookingDetails';
 import ManageCustomers from './pages/dashboard/admin/ManageCustomers';
 import ManageLeads from './pages/dashboard/admin/ManageLeads';
 import ManageReferrals from './pages/dashboard/admin/ManageReferrals';
@@ -142,6 +143,7 @@ export default function App() {
         <Route path="projects" element={<ManageProjects />} />
         <Route path="plots" element={<ManagePlots />} />
         <Route path="bookings" element={<ManageBookings />} />
+        <Route path="bookings/:id" element={<BookingDetails />} />
         <Route path="customers" element={<ManageCustomers />} />
         <Route path="leads" element={<ManageLeads />} />
         <Route path="referrals" element={<ManageReferrals />} />
