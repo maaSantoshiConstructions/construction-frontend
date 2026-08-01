@@ -1,37 +1,15 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 import { getCustomers } from '../../../api/customers';
 import DataTable from '../../../components/common/DataTable';
 import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
-
+import useFetchData from '../../../hooks/useFetchData';
 import { fmt } from '../../../utils/formatters';
 
 export default function ManageCustomers() {
   const navigate = useNavigate();
-
-  const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  const fetchCustomers = async (p = page) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data: res } = await getCustomers({ page: p, limit: 10 });
-      setCustomers(res?.data || []);
-      setTotalPages(res?.totalPages || 1);
-    } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load customers');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { fetchCustomers(); }, [page]);
+  const { data: customers, loading, error, page, setPage, totalPages } = useFetchData(getCustomers);
 
   const columns = [
     {
