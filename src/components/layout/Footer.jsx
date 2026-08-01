@@ -28,13 +28,13 @@ export default function Footer() {
         <div className="foot-grid">
           {/* About */}
           <div className="foot-about">
-            <div className="brand">
-              <div className="brand-icon">JS</div>
-              <div className="brand-text">
-                <div className="l1">JAI SANTOSHI MAA</div>
-                <div className="l2">INFRASTRUCTURE PVT. LTD.</div>
-              </div>
-            </div>
+            <Link to="/" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: '12px' }}>
+              <img
+                src="/construction logo.png"
+                alt="JSMIL – Jai Santoshi Maa Infrastructure"
+                style={{ height: '80px', width: 'auto', objectFit: 'contain' }}
+              />
+            </Link>
             <p>Building dreams, creating value, and delivering excellence in real estate with innovation and trust.</p>
             <div className="socials">
               <a href="#" aria-label="Facebook"><LuFacebook size={15} /></a>

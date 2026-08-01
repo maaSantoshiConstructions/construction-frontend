@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
+import { LuEye, LuEyeOff } from 'react-icons/lu';
 
 export default function Register() {
   const { register: registerUser, getRedirectPath } = useAuth();
@@ -57,15 +58,11 @@ export default function Register() {
         <div style={{ position: 'absolute', bottom: '-60px', right: '-60px', width: '260px', height: '260px', borderRadius: '50%', background: 'rgba(232,179,85,.1)' }} />
 
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '380px' }}>
-          <div style={{
-            width: '60px', height: '60px', borderRadius: '14px',
-            background: 'linear-gradient(135deg,#e8b355,#d99f36)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: 'Poppins,sans-serif', fontWeight: 800, color: '#0b0f2e', fontSize: '22px',
-            margin: '0 auto 24px',
-          }}>JS</div>
-          <div style={{ color: '#e8b355', fontFamily: 'Poppins,sans-serif', fontWeight: 700, fontSize: '13px', letterSpacing: '.3px', marginBottom: '4px' }}>JAI SANTOSHI MAA</div>
-          <div style={{ color: '#c7cae0', fontSize: '10px', letterSpacing: '1.5px', marginBottom: '28px' }}>INFRASTRUCTURE PVT. LTD.</div>
+          <img
+            src="/construction logo.png"
+            alt="JSMIL"
+            style={{ height: '130px', width: 'auto', objectFit: 'contain', margin: '0 auto 20px', display: 'block' }}
+          />
           <h1 style={{ color: '#fff', fontFamily: 'Poppins,sans-serif', fontWeight: 800, fontSize: '28px', lineHeight: 1.2, marginBottom: '16px' }}>
             Build Your Future.<br />Invest with Confidence.
           </h1>
@@ -73,7 +70,7 @@ export default function Register() {
             Join our AI-powered platform for real-time plot tracking, seamless booking, and transparent project updates.
           </p>
           <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', marginTop: '40px' }}>
-            {[['25+','Smart Features'], ['500+','Happy Customers'], ['100+','Acres Delivered']].map(([n,l]) => (
+            {[['10+','Smart Features'], ['500+','Happy Customers'], ['100+','Acres Delivered']].map(([n,l]) => (
               <div key={l} style={{ textAlign: 'center' }}>
                 <div style={{ color: '#e8b355', fontFamily: 'Poppins,sans-serif', fontWeight: 800, fontSize: '20px' }}>{n}</div>
                 <div style={{ color: '#9ea1c4', fontSize: '11px', marginTop: '2px' }}>{l}</div>
@@ -94,17 +91,12 @@ export default function Register() {
       }}>
         <div style={{ width: '100%', maxWidth: '440px' }}>
           {/* Logo for mobile */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '36px', justifyContent: 'center' }}>
-            <div style={{
-              width: '38px', height: '38px', borderRadius: '8px',
-              background: 'linear-gradient(135deg,#e8b355,#d99f36)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 800, color: '#0b0f2e', fontSize: '16px', fontFamily: 'Poppins,sans-serif',
-            }}>JS</div>
-            <div>
-              <div style={{ color: '#0b0f2e', fontFamily: 'Poppins,sans-serif', fontWeight: 700, fontSize: '14px', letterSpacing: '.3px' }}>JAI SANTOSHI MAA</div>
-              <div style={{ color: '#6b6f8a', fontSize: '9px', letterSpacing: '1.5px' }}>INFRASTRUCTURE PVT. LTD.</div>
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
+            <img
+              src="/construction logo.png"
+              alt="JSMIL"
+              style={{ height: '80px', width: 'auto', objectFit: 'contain' }}
+            />
           </div>
 
           <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e6e6f0', boxShadow: '0 15px 40px rgba(20,20,60,.09)', padding: '36px' }}>
@@ -165,7 +157,7 @@ export default function Register() {
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
                     style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#6b6f8a', fontSize: '14px' }}>
-                    {showPassword ? '🙈' : '👁'}
+                    {showPassword ? <LuEyeOff size={16} /> : <LuEye size={16} />}
                   </button>
                 </div>
                 {errors.password && <p style={err}>{errors.password.message}</p>}
@@ -185,7 +177,7 @@ export default function Register() {
                   />
                   <button type="button" onClick={() => setShowConfirm(!showConfirm)}
                     style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#6b6f8a', fontSize: '14px' }}>
-                    {showConfirm ? '🙈' : '👁'}
+                    {showConfirm ? <LuEyeOff size={16} /> : <LuEye size={16} />}
                   </button>
                 </div>
                 {errors.confirmPassword && <p style={err}>{errors.confirmPassword.message}</p>}

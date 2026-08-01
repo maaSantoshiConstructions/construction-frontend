@@ -118,13 +118,13 @@ export default function DashboardLayout() {
         flexShrink: 0,
       }} className="sidebar-el">
         {/* Logo */}
-        <div style={{ padding: '18px 20px 16px', borderBottom: '1px solid rgba(255,255,255,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'linear-gradient(135deg,#e8b355,#d99f36)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Poppins,sans-serif', fontWeight: 800, color: '#0b0f2e', fontSize: '14px' }}>JS</div>
-            <div>
-              <div style={{ color: '#e8b355', fontFamily: 'Poppins,sans-serif', fontWeight: 700, fontSize: '12px', letterSpacing: '.3px' }}>JAI SANTOSHI MAA</div>
-              <div style={{ color: '#c7cae0', fontSize: '8.5px', letterSpacing: '1.5px' }}>INFRASTRUCTURE</div>
-            </div>
+        <div style={{ padding: '14px 20px 12px', borderBottom: '1px solid rgba(255,255,255,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <img
+              src="/construction logo.png"
+              alt="JSMIL"
+              style={{ height: '52px', width: 'auto', objectFit: 'contain', filter: 'brightness(1.05)' }}
+            />
           </Link>
           <button onClick={() => setSidebarOpen(false)} className="sidebar-close-btn"
             style={{ background: 'none', border: 'none', color: '#9ea1c4', cursor: 'pointer', fontSize: '16px', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 export default function NavbarLogo({ onClick }) {
   return (
-    <Link to="/" className="brand" onClick={onClick}>
-      <div className="brand-icon">JS</div>
-      <div className="brand-text">
-        <div className="l1">JAI SANTOSHI MAA</div>
-        <div className="l2">INFRASTRUCTURE PVT. LTD.</div>
-      </div>
+    <Link to="/" className="brand" onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: '0px', textDecoration: 'none' }}>
+      <img
+        src="/construction logo.png"
+        alt="JSMIL – Jai Santoshi Maa Infrastructure"
+        style={{ height: '52px', width: 'auto', objectFit: 'contain' }}
+      />
     </Link>
   );
 }

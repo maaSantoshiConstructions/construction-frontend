@@ -68,6 +68,15 @@ export default function MobileDrawer({
               <FaTimes />
             </button>
 
+            {/* Logo at top of drawer */}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+              <img
+                src="/construction logo.png"
+                alt="JSMIL"
+                style={{ height: '90px', width: 'auto', objectFit: 'contain' }}
+              />
+            </div>
+
             {/* Navigation Links inside Drawer */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
               <Link
