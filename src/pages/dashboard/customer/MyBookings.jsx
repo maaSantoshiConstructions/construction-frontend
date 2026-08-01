@@ -8,19 +8,8 @@ import { getMyBookings } from '../../../api/bookings';
 import Loader from '../../../components/common/Loader';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 import { getAssetUrl } from '../../../config';
-
-const BOOKING_STATUS_COLORS = {
-  active:    'bg-sky-100 text-sky-700 border border-sky-200',
-  completed: 'bg-emerald-100 text-emerald-700 border border-emerald-200',
-  cancelled: 'bg-red-100 text-red-700 border border-red-200',
-};
-
-const PAYMENT_STATUS_COLORS = {
-  token_paid:     'bg-amber-100 text-amber-700 border border-amber-200',
-  partially_paid: 'bg-orange-100 text-orange-700 border border-orange-200',
-  fully_paid:     'bg-emerald-100 text-emerald-700 border border-emerald-200',
-  refunded:       'bg-violet-100 text-violet-700 border border-violet-200',
-};
+import { BOOKING_STATUS_COLORS, PAYMENT_STATUS_COLORS } from '../../../constants/statusStyles';
+import { fmt, fmtDate } from '../../../utils/formatters';
 
 const PAYMENT_STATUS_LABELS = {
   token_paid:     'Token Paid',
@@ -28,9 +17,6 @@ const PAYMENT_STATUS_LABELS = {
   fully_paid:     'Fully Paid',
   refunded:       'Refunded',
 };
-
-const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-IN') : '—');
-const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—');
 
 const getLocationString = (loc) => {
   if (!loc) return '—';

@@ -3,18 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaLock, FaPaperclip, FaMoneyBillWave } from 'react-icons/fa';
 import ChangePaymentPlanDialog from './ChangePaymentPlanDialog';
 
-const PLAN_LABELS = {
-  full_payment: 'Full Payment',
-  installment: 'Installment Plan',
-  loan: 'Bank Loan',
-};
-
-const PAYMENT_STATUS_COLORS = {
-  token_paid:     'bg-amber-100 text-amber-700',
-  partially_paid: 'bg-orange-100 text-orange-700',
-  fully_paid:     'bg-emerald-100 text-emerald-700',
-  refunded:       'bg-violet-100 text-violet-700',
-};
+import { PLAN_LABELS, PAYMENT_STATUS_COLORS } from '../../constants/statusStyles';
 
 export default function BookingFormModal({
   showFormModal,

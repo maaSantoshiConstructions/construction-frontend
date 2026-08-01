@@ -4,7 +4,7 @@ import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { cancelPayment, refundPayment } from '../../api/payments';
 
-const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-IN') : '—');
+import { fmt } from '../../utils/formatters';
 
 export default function CancelPaymentDialog({ payment, onClose, onSuccess, userRole }) {
   const [reason, setReason] = useState('');

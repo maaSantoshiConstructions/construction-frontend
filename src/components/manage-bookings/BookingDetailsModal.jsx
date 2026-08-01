@@ -3,18 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaTimes, FaExternalLinkAlt } from 'react-icons/fa';
 
-const BOOKING_STATUS_COLORS = {
-  active:    'bg-sky-100 text-sky-700',
-  completed: 'bg-emerald-100 text-emerald-700',
-  cancelled: 'bg-red-100 text-red-700',
-};
-
-const PAYMENT_STATUS_COLORS = {
-  token_paid:     'bg-amber-100 text-amber-700',
-  partially_paid: 'bg-orange-100 text-orange-700',
-  fully_paid:     'bg-emerald-100 text-emerald-700',
-  refunded:       'bg-violet-100 text-violet-700',
-};
+import { BOOKING_STATUS_COLORS, PAYMENT_STATUS_COLORS } from '../../constants/statusStyles';
 
 export default function BookingDetailsModal({ viewBooking, setViewBooking }) {
   const navigate = useNavigate();

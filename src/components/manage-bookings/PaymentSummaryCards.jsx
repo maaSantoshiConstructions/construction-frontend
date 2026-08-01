@@ -3,11 +3,7 @@ import {
   FaRupeeSign, FaCheckCircle, FaExclamationCircle, FaChartLine, FaCalendarAlt,
 } from 'react-icons/fa';
 
-const fmt = (n) =>
-  typeof n === 'number' ? n.toLocaleString('en-IN') : '—';
-
-const fmtDate = (d) =>
-  d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+import { fmt, fmtDate } from '../../utils/formatters';
 
 const PAYMENT_STATUS_LABEL = {
   token_paid:     { label: 'Token Paid',     color: '#f59e0b' },

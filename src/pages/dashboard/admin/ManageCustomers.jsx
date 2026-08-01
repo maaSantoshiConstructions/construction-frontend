@@ -6,7 +6,7 @@ import DataTable from '../../../components/common/DataTable';
 import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
-const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-IN') : '0');
+import { fmt } from '../../../utils/formatters';
 
 export default function ManageCustomers() {
   const navigate = useNavigate();

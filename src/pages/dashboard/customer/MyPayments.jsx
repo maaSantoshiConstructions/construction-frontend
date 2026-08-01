@@ -7,30 +7,9 @@ import { getMyBookings } from '../../../api/bookings';
 import DataTable from '../../../components/common/DataTable';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
-const TXSTATUS_COLORS = {
-  success:   'bg-emerald-100 text-emerald-700 border border-emerald-200',
-  cancelled: 'bg-slate-100 text-slate-500 border border-slate-200',
-  refunded:  'bg-violet-100 text-violet-700 border border-violet-200',
-};
-
-const TYPE_LABELS = {
-  token:             'Token',
-  installment:       'Installment',
-  final_payment:     'Final Payment',
-  loan_disbursement: 'Loan Disbursement',
-  refund:            'Refund',
-};
-
-const TYPE_COLORS = {
-  token:             'bg-indigo-100 text-indigo-700',
-  installment:       'bg-sky-100 text-sky-700',
-  final_payment:     'bg-emerald-100 text-emerald-700',
-  loan_disbursement: 'bg-teal-100 text-teal-700',
-  refund:            'bg-violet-100 text-violet-700',
-};
-
-const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-IN') : '—');
-const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—');
+import { TXSTATUS_COLORS, TYPE_LABELS, TYPE_COLORS } from '../../../constants/statusStyles';
+import { fmt, fmtDate } from '../../../utils/formatters';
+import { downloadBlobFile } from '../../../utils/download';
 
 export default function MyPayments() {
   const [payments, setPayments] = useState([]);
@@ -68,12 +47,7 @@ export default function MyPayments() {
   const handleDownloadReceipt = async (paymentId, paymentIdStr) => {
     try {
       const res = await downloadReceipt(paymentId);
-      const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `receipt-${paymentIdStr || paymentId.slice(-6)}.pdf`;
-      a.click();
-      window.URL.revokeObjectURL(url);
+      downloadBlobFile(res.data, `receipt-${paymentIdStr || paymentId.slice(-6)}.pdf`, 'application/pdf');
       toast.success('Receipt downloaded');
     } catch {
       toast.error('Failed to download receipt');

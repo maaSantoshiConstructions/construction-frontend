@@ -17,34 +17,11 @@ import { getUsers } from '../../../api/users';
 import { updateBooking } from '../../../api/bookings';
 import { useForm } from 'react-hook-form';
 
-const BOOKING_STATUS_COLORS = {
-  active:    'bg-sky-100 text-sky-700',
-  completed: 'bg-emerald-100 text-emerald-700',
-  cancelled: 'bg-red-100 text-red-700',
-};
+import { BOOKING_STATUS_COLORS, PAYMENT_STATUS_COLORS, TXSTATUS_COLORS, PLAN_LABELS } from '../../../constants/statusStyles';
+import { fmt, fmtDate, formatDateTime } from '../../../utils/formatters';
+import { downloadBlobFile } from '../../../utils/download';
 
-const PAYMENT_STATUS_COLORS = {
-  token_paid:     'bg-amber-100 text-amber-700',
-  partially_paid: 'bg-orange-100 text-orange-700',
-  fully_paid:     'bg-emerald-100 text-emerald-700',
-  refunded:       'bg-violet-100 text-violet-700',
-};
-
-const TXSTATUS_COLORS = {
-  success:   'bg-emerald-100 text-emerald-700',
-  cancelled: 'bg-slate-100 text-slate-500',
-  refunded:  'bg-violet-100 text-violet-700',
-};
-
-const PLAN_LABELS = {
-  full_payment: 'Full Payment',
-  installment:  'Installment',
-  loan:         'Bank Loan',
-};
-
-const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-IN') : '—');
-const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—');
-const fmtDateTime = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
+const fmtDateTime = formatDateTime;
 
 export default function BookingDetails() {
   const { id } = useParams();
