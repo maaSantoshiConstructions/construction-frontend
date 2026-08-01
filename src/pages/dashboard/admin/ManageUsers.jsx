@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
@@ -7,6 +6,8 @@ import { getUsers, createUser, updateUser } from '../../../api/users';
 import DataTable from '../../../components/common/DataTable';
 import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import useFetchData from '../../../hooks/useFetchData';
+import useModalState from '../../../hooks/useModalState';
 
 const roleColors = {
   super_admin: 'bg-red-100 text-red-700',
@@ -17,35 +18,14 @@ const roleColors = {
 };
 
 export default function ManageUsers() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [showModal, setShowModal] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const { data: users, loading, error, page, setPage, totalPages, refetch: fetchUsers } = useFetchData(getUsers);
+  const { isOpen: showModal, setIsOpen: setShowModal, submitting, setSubmitting, openModal, closeModal } = useModalState();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-  const fetchUsers = async (p = page) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data: res } = await getUsers({ page: p, limit: 10 });
-      setUsers(res?.data || []);
-      setTotalPages(res?.totalPages || 1);
-    } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load users');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { fetchUsers(); }, [page]);
-
   const openCreate = () => {
     reset({ name: '', email: '', password: '', role: 'sales_executive' });
-    setShowModal(true);
+    openModal();
   };
 
   const onSubmit = async (formData) => {
@@ -53,7 +33,7 @@ export default function ManageUsers() {
     try {
       await createUser(formData);
       toast.success('User created');
-      setShowModal(false);
+      closeModal();
       fetchUsers();
     } catch (err) {
       toast.error(err?.response?.data?.message || 'Create failed');
