@@ -163,7 +163,7 @@ export default function ManageBookings() {
     }
   }, [selectedPlotId, availablePlots, editing, setValue]);
 
-  const onSubmit = async (formData, receiptFile) => {
+  const onSubmit = async (formData) => {
     setSubmitting(true);
     try {
       if (editing) {
@@ -176,26 +176,14 @@ export default function ManageBookings() {
         toast.success('Booking updated');
       } else {
         const tokenAmt = formData.tokenAmount ? Number(formData.tokenAmount) : 0;
-        let payload;
-        if (tokenAmt > 0 && receiptFile) {
-          payload = new FormData();
-          Object.keys(formData).forEach((key) => {
-            if (formData[key] !== undefined && formData[key] !== null) {
-              if (key === 'referenceNumber' && formData.paymentMethod === 'cash') return;
-              payload.append(key, formData[key]);
-            }
-          });
-          payload.append('receipt', receiptFile);
-        } else {
-          payload = {
-            ...formData,
-            totalAmount: Number(formData.totalAmount),
-            tokenAmount: tokenAmt,
-            paymentMethod: formData.paymentMethod || 'cash',
-            referenceNumber: formData.paymentMethod === 'cash' ? undefined : formData.referenceNumber,
-            paymentDate: formData.paymentDate || new Date().toISOString().split('T')[0],
-          };
-        }
+        const payload = {
+          ...formData,
+          totalAmount: Number(formData.totalAmount),
+          tokenAmount: tokenAmt,
+          paymentMethod: formData.paymentMethod || 'cash',
+          referenceNumber: formData.paymentMethod === 'cash' ? undefined : formData.referenceNumber,
+          paymentDate: formData.paymentDate || new Date().toISOString().split('T')[0],
+        };
         await createBooking(payload);
         toast.success('Booking created — Plot reserved');
       }

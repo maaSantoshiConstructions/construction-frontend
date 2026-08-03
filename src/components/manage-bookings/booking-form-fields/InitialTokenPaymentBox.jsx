@@ -1,4 +1,4 @@
-import { FaMoneyBillWave, FaPaperclip } from 'react-icons/fa';
+import { FaMoneyBillWave } from 'react-icons/fa';
 
 export default function InitialTokenPaymentBox({
   tokenAmountNum,
@@ -6,9 +6,6 @@ export default function InitialTokenPaymentBox({
   errors = {},
   paymentMethodVal,
   todayStr,
-  fileRef,
-  receiptFile,
-  setReceiptFile,
   isTokenPaymentVisible,
 }) {
   return (
@@ -99,53 +96,25 @@ export default function InitialTokenPaymentBox({
         )}
       </div>
 
-      {/* Payment Date + Upload Receipt */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
-            Payment Date <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="date"
-            max={todayStr}
-            {...register('paymentDate', {
-              required: isTokenPaymentVisible ? 'Payment Date is required' : false,
-              max: { value: todayStr, message: 'Future dates are not allowed' },
-            })}
-            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm text-slate-800 font-medium outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-100 transition-all shadow-xs"
-          />
-          {errors.paymentDate && (
-            <p className="text-red-500 text-xs mt-1.5">{errors.paymentDate.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
-            Upload Receipt
-          </label>
-          <div
-            onClick={() => fileRef.current?.click()}
-            className="flex items-center gap-2 px-3 py-3 bg-white border border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-amber-400 hover:bg-amber-50/50 transition-all shadow-xs"
-          >
-            <FaPaperclip className="text-slate-400 shrink-0 text-xs" />
-            <span className="text-xs text-slate-500 truncate">
-              {receiptFile ? receiptFile.name : 'Attach receipt (PDF/Image)'}
-            </span>
-          </div>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*,.pdf"
-            className="hidden"
-            onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
-          />
-          {receiptFile && (
-            <p className="text-xs text-emerald-600 mt-1 font-medium truncate">
-              ✓ {receiptFile.name}
-            </p>
-          )}
-        </div>
+      {/* Payment Date */}
+      <div>
+        <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+          Payment Date <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="date"
+          max={todayStr}
+          {...register('paymentDate', {
+            required: isTokenPaymentVisible ? 'Payment Date is required' : false,
+            max: { value: todayStr, message: 'Future dates are not allowed' },
+          })}
+          className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm text-slate-800 font-medium outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-100 transition-all shadow-xs"
+        />
+        {errors.paymentDate && (
+          <p className="text-red-500 text-xs mt-1.5">{errors.paymentDate.message}</p>
+        )}
       </div>
     </div>
   );
 }
+

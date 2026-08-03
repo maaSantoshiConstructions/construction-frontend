@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ChangePaymentPlanDialog from './ChangePaymentPlanDialog';
 
@@ -31,8 +31,6 @@ export default function BookingFormModal({
   onPaymentPlanChanged,
 }) {
   const [showPlanDialog, setShowPlanDialog] = useState(false);
-  const [receiptFile, setReceiptFile] = useState(null);
-  const fileRef = useRef(null);
 
   const isEdit = Boolean(editing);
   const isSuperAdmin = userRole === 'super_admin';
@@ -50,7 +48,6 @@ export default function BookingFormModal({
       setValue('paymentMethod', 'cash');
       setValue('referenceNumber', '');
       setValue('paymentDate', todayStr);
-      setReceiptFile(null);
     }
   }, [tokenAmountNum, isEdit, setValue, todayStr]);
 
@@ -73,7 +70,7 @@ export default function BookingFormModal({
           onClick={(e) => e.stopPropagation()}
         >
           <form
-            onSubmit={handleSubmitForm((data) => onSubmit(data, receiptFile))}
+            onSubmit={handleSubmitForm((data) => onSubmit(data))}
             className="flex flex-col max-h-[90vh] overflow-hidden"
           >
             <BookingFormHeader isEdit={isEdit} onClose={() => setShowFormModal(false)} />
@@ -168,9 +165,6 @@ export default function BookingFormModal({
                   errors={errors}
                   paymentMethodVal={paymentMethodVal}
                   todayStr={todayStr}
-                  fileRef={fileRef}
-                  receiptFile={receiptFile}
-                  setReceiptFile={setReceiptFile}
                   isTokenPaymentVisible={isTokenPaymentVisible}
                 />
               )}

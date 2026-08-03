@@ -3,8 +3,9 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { getProjects, createProject, updateProject, deleteProject, uploadProjectImages } from '../../../api/projects';
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import { validateImageFiles } from '../../../utils/fileValidation';
 
-// Import refactored subcomponents
+// Import subcomponents
 import ProjectsHeader from '../../../components/manage-projects/ProjectsHeader';
 import ProjectFormModal from '../../../components/manage-projects/ProjectFormModal';
 
@@ -20,25 +21,34 @@ export default function ManageProjects() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [submittingPhase, setSubmittingPhase] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [imageValidationError, setImageValidationError] = useState('');
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   const fetchProjects = async (p = page) => {
-    setLoading(true); setError(null);
+    setLoading(true);
+    setError(null);
     try {
       const { data: res } = await getProjects({ page: p, limit: 10 });
       setProjects(res?.data || []);
       setTotalPages(res?.totalPages || 1);
-    } catch (err) { setError(err?.response?.data?.message || 'Failed to load projects'); }
-    finally { setLoading(false); }
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Failed to load projects');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  useEffect(() => { fetchProjects(); }, [page]);
+  useEffect(() => {
+    fetchProjects();
+  }, [page]);
 
   const openCreate = () => {
     setEditing(null);
     setSelectedFiles([]);
+    setImageValidationError('');
     reset({
       name: '',
       type: 'plotted_development',
@@ -63,19 +73,25 @@ export default function ManageProjects() {
   const openEdit = (project) => {
     setEditing(project);
     setSelectedFiles([]);
+    setImageValidationError('');
     reset({
       ...project,
-      location: typeof project.location === 'object' && project.location !== null
-        ? (project.location.address || '')
-        : (typeof project.location === 'string' ? project.location : ''),
-      city: typeof project.location === 'object' && project.location !== null
-        ? (project.location.city || '')
-        : (project.city || ''),
-      state: typeof project.location === 'object' && project.location !== null
-        ? (project.location.state || '')
-        : (project.state || ''),
-      amenities: Array.isArray(project.amenities) ? project.amenities.join(', ') : (project.amenities || ''),
-      highlights: Array.isArray(project.highlights) ? project.highlights.join(', ') : (project.highlights || ''),
+      location:
+        typeof project.location === 'object' && project.location !== null
+          ? project.location.address || ''
+          : typeof project.location === 'string'
+          ? project.location
+          : '',
+      city:
+        typeof project.location === 'object' && project.location !== null
+          ? project.location.city || ''
+          : project.city || '',
+      state:
+        typeof project.location === 'object' && project.location !== null
+          ? project.location.state || ''
+          : project.state || '',
+      amenities: Array.isArray(project.amenities) ? project.amenities.join(', ') : project.amenities || '',
+      highlights: Array.isArray(project.highlights) ? project.highlights.join(', ') : project.highlights || '',
       possessionDate: project.possessionDate ? new Date(project.possessionDate).toISOString().split('T')[0] : '',
       layoutImage: project.layoutImage || '',
       featured: !!project.featured,
@@ -84,15 +100,37 @@ export default function ManageProjects() {
   };
 
   const onSubmit = async (formData) => {
+    // 1. Double click / concurrent submission guard
+    if (submitting) return;
+
+    // 2. Client-side file validation BEFORE any API calls
+    if (selectedFiles.length > 0) {
+      const fileCheck = validateImageFiles(selectedFiles);
+      if (!fileCheck.valid) {
+        setImageValidationError(fileCheck.error);
+        toast.error(fileCheck.error);
+        return; // Abort submission completely
+      }
+    }
+
+    setImageValidationError('');
     setSubmitting(true);
+    setSubmittingPhase(editing ? 'Updating Project...' : 'Creating Project...');
+
+    const toastId = toast.loading(editing ? 'Updating project...' : 'Creating project...');
+
+    let savedProject = null;
+
     try {
       const payload = {
         name: formData.name,
-        slug: formData.slug || formData.name
-          .toLowerCase()
-          .trim()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)+/g, ''),
+        slug:
+          formData.slug ||
+          formData.name
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)+/g, ''),
         type: formData.type,
         status: formData.status,
         description: formData.description,
@@ -106,42 +144,71 @@ export default function ManageProjects() {
         totalPlots: formData.totalPlots ? Number(formData.totalPlots) : undefined,
         totalArea: formData.totalArea ? Number(formData.totalArea) : undefined,
         possessionDate: formData.possessionDate || undefined,
-        reraNumber: formData.reraNumber || '',
+        reraNumber: formData.reraNumber ? formData.reraNumber.trim() : '',
         layoutImage: formData.layoutImage || '',
-        amenities: formData.amenities ? formData.amenities.split(',').map(a => a.trim()) : [],
-        highlights: formData.highlights ? formData.highlights.split(',').map(h => h.trim()) : [],
+        amenities: formData.amenities ? formData.amenities.split(',').map((a) => a.trim()) : [],
+        highlights: formData.highlights ? formData.highlights.split(',').map((h) => h.trim()) : [],
         featured: !!formData.featured,
       };
-      let savedProject;
-      if (editing) { 
+
+      if (editing) {
         const { data: res } = await updateProject(editing._id, payload);
         savedProject = res?.data;
-        toast.success('Project updated');
-      }
-      else { 
+      } else {
         const { data: res } = await createProject(payload);
         savedProject = res?.data;
-        toast.success('Project created');
       }
 
+      // 3. Upload images if selected
       if (selectedFiles.length > 0 && savedProject?._id) {
+        setSubmittingPhase('Uploading Images...');
+        toast.loading('Uploading project images...', { id: toastId });
+
         const uploadData = new FormData();
         selectedFiles.forEach((file) => {
           uploadData.append('images', file);
         });
-        await uploadProjectImages(savedProject._id, uploadData);
-        toast.success('Images uploaded successfully');
+
+        try {
+          await uploadProjectImages(savedProject._id, uploadData);
+        } catch (uploadErr) {
+          // ATOMIC ROLLBACK: If new project creation succeeded but image upload failed, cleanup database record
+          if (!editing && savedProject._id) {
+            try {
+              await deleteProject(savedProject._id);
+            } catch {}
+          }
+          const uploadMsg = uploadErr?.response?.data?.message || 'Image upload failed. Project creation rolled back.';
+          toast.error(uploadMsg, { id: toastId });
+          setSubmitting(false);
+          setSubmittingPhase('');
+          return; // Keep modal open with form data preserved
+        }
       }
 
-      setShowModal(false); fetchProjects();
-    } catch (err) { toast.error(err?.response?.data?.message || 'Operation failed'); }
-    finally { setSubmitting(false); }
+      // 4. Final atomic success feedback
+      toast.success(editing ? 'Project updated successfully' : 'Project created successfully', { id: toastId });
+      setShowModal(false);
+      setSelectedFiles([]);
+      fetchProjects();
+    } catch (err) {
+      const errMsg = err?.response?.data?.message || 'Operation failed. Please check form inputs.';
+      toast.error(errMsg, { id: toastId });
+    } finally {
+      setSubmitting(false);
+      setSubmittingPhase('');
+    }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this project?')) return;
-    try { await deleteProject(id); toast.success('Deleted'); fetchProjects(); }
-    catch (err) { toast.error(err?.response?.data?.message || 'Delete failed'); }
+    try {
+      await deleteProject(id);
+      toast.success('Project deleted');
+      fetchProjects();
+    } catch (err) {
+      toast.error(err?.response?.data?.message || 'Delete failed');
+    }
   };
 
   return (
@@ -149,7 +216,9 @@ export default function ManageProjects() {
       {/* Header */}
       <ProjectsHeader openCreate={openCreate} />
 
-      {error ? <ErrorMessage message={error} onRetry={() => fetchProjects()} /> : (
+      {error ? (
+        <ErrorMessage message={error} onRetry={() => fetchProjects()} />
+      ) : (
         <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', boxShadow: '0 2px 10px rgba(20,20,60,.05)', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           {loading ? (
             <div style={{ padding: '40px', textAlign: 'center', color: '#9ea1c4' }}>Loading projects...</div>
@@ -157,29 +226,56 @@ export default function ManageProjects() {
             <div style={{ padding: '60px', textAlign: 'center' }}>
               <div style={{ fontSize: '40px', marginBottom: '12px' }}>🏗</div>
               <p style={{ color: '#6b6f8a', fontSize: '14px', marginBottom: '16px' }}>No projects yet. Add your first project.</p>
-              <button onClick={openCreate} className="btn-gold" style={{ fontSize: '13px', padding: '10px 20px', border: 'none' }}>+ Add Project</button>
+              <button onClick={openCreate} className="btn-gold" style={{ fontSize: '13px', padding: '10px 20px', border: 'none' }}>
+                + Add Project
+              </button>
             </div>
           ) : (
             <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: '#f7f7fb', borderBottom: '1px solid #e6e6f0' }}>
-                  {['#','Name','Type','Location','Plots','Status','Featured','Actions'].map(h => (
-                    <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '11.5px', fontWeight: 700, color: '#6b6f8a', letterSpacing: '.5px', textTransform: 'uppercase' }}>{h}</th>
+                  {['#', 'Name', 'Type', 'Location', 'Plots', 'Status', 'Featured', 'Actions'].map((h) => (
+                    <th
+                      key={h}
+                      style={{ padding: '12px 16px', textAlign: 'left', fontSize: '11.5px', fontWeight: 700, color: '#6b6f8a', letterSpacing: '.5px', textTransform: 'uppercase' }}
+                    >
+                      {h}
+                    </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {projects.map((r, i) => (
-                  <tr key={r._id} style={{ borderBottom: '1px solid #f0f0f6', transition: '.15s' }}
-                    onMouseEnter={e => e.currentTarget.style.background = '#f7f7fb'}
-                    onMouseLeave={e => e.currentTarget.style.background = ''}>
+                  <tr
+                    key={r._id}
+                    style={{ borderBottom: '1px solid #f0f0f6', transition: '.15s' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = '#f7f7fb')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = '')}
+                  >
                     <td style={td}>{(page - 1) * 10 + i + 1}</td>
-                    <td style={td}><span style={{ fontWeight: 600, color: '#171a35', fontSize: '13.5px' }}>{r.name}</span></td>
-                    <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px', textTransform: 'capitalize' }}>{r.type?.replace(/_/g,' ')}</span></td>
-                    <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.location?.city || r.location?.address || '-'}</span></td>
-                    <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.totalPlots || r.plots?.length || 0}</span></td>
                     <td style={td}>
-                      <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', background: (statusColor[r.status] || '#3a2fb8') + '18', color: statusColor[r.status] || '#3a2fb8' }}>
+                      <span style={{ fontWeight: 600, color: '#171a35', fontSize: '13.5px' }}>{r.name}</span>
+                    </td>
+                    <td style={td}>
+                      <span style={{ color: '#6b6f8a', fontSize: '13px', textTransform: 'capitalize' }}>{r.type?.replace(/_/g, ' ')}</span>
+                    </td>
+                    <td style={td}>
+                      <span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.location?.city || r.location?.address || '-'}</span>
+                    </td>
+                    <td style={td}>
+                      <span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.totalPlots || r.plots?.length || 0}</span>
+                    </td>
+                    <td style={td}>
+                      <span
+                        style={{
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          padding: '3px 10px',
+                          borderRadius: '12px',
+                          background: (statusColor[r.status] || '#3a2fb8') + '18',
+                          color: statusColor[r.status] || '#3a2fb8',
+                        }}
+                      >
                         {r.status}
                       </span>
                     </td>
@@ -195,19 +291,23 @@ export default function ManageProjects() {
                           }
                         }}
                         style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: r.featured ? '#f39c12' : '#ccc', outline: 'none' }}
-                        title={r.featured ? "Remove from featured" : "Mark as featured"}
+                        title={r.featured ? 'Remove from featured' : 'Mark as featured'}
                       >
                         {r.featured ? '★' : '☆'}
                       </button>
                     </td>
                     <td style={td}>
                       <div style={{ display: 'flex', gap: '6px' }}>
-                        <button onClick={() => openEdit(r)}
-                          style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #e6e6f0', background: '#fff', color: '#3a2fb8', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+                        <button
+                          onClick={() => openEdit(r)}
+                          style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #e6e6f0', background: '#fff', color: '#3a2fb8', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
+                        >
                           Edit
                         </button>
-                        <button onClick={() => handleDelete(r._id)}
-                          style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #fde8e8', background: '#fff8f8', color: '#c0392b', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+                        <button
+                          onClick={() => handleDelete(r._id)}
+                          style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #fde8e8', background: '#fff8f8', color: '#c0392b', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
+                        >
                           Delete
                         </button>
                       </div>
@@ -221,9 +321,23 @@ export default function ManageProjects() {
           {/* Pagination */}
           {totalPages > 1 && (
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', padding: '16px' }}>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-                <button key={p} onClick={() => setPage(p)}
-                  style={{ width: '34px', height: '34px', borderRadius: '8px', border: '1px solid', borderColor: p === page ? '#3a2fb8' : '#e6e6f0', background: p === page ? '#3a2fb8' : '#fff', color: p === page ? '#fff' : '#6b6f8a', fontWeight: p === page ? 700 : 400, fontSize: '13px', cursor: 'pointer' }}>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  style={{
+                    width: '34px',
+                    height: '34px',
+                    borderRadius: '8px',
+                    border: '1px solid',
+                    borderColor: p === page ? '#3a2fb8' : '#e6e6f0',
+                    background: p === page ? '#3a2fb8' : '#fff',
+                    color: p === page ? '#fff' : '#6b6f8a',
+                    fontWeight: p === page ? 700 : 400,
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                  }}
+                >
                   {p}
                 </button>
               ))}
@@ -232,18 +346,21 @@ export default function ManageProjects() {
         </div>
       )}
 
-      {/* ===== MODAL ===== */}
+      {/* Modal */}
       <ProjectFormModal
         showModal={showModal}
         setShowModal={setShowModal}
         editing={editing}
         submitting={submitting}
+        submittingPhase={submittingPhase}
         onSubmit={onSubmit}
         register={register}
         handleSubmitForm={handleSubmit}
         errors={errors}
         selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
+        imageValidationError={imageValidationError}
+        setImageValidationError={setImageValidationError}
         updateProject={updateProject}
         fetchProjects={fetchProjects}
         setEditing={setEditing}
