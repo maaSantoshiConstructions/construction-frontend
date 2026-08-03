@@ -1,21 +1,18 @@
-import React from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 export default function BookingsHeader({ openFormModal }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between flex-wrap gap-3">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Manage Bookings</h1>
-        <p className="text-slate-500 text-sm">View, create, and manage customer plot bookings</p>
+        <h1 className="text-2xl font-bold text-slate-800">Booking Management</h1>
+        <p className="text-slate-500 text-sm mt-0.5">Manage all plot bookings and payment progress</p>
       </div>
       <button
         onClick={() => openFormModal()}
-        style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 22px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff', fontSize: '14px', fontWeight: 700, borderRadius: '12px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 15px rgba(245,158,11,0.3)', transition: 'all 0.2s ease', fontFamily: 'inherit' }}
-        onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(245,158,11,0.4)'; }}
-        onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(245,158,11,0.3)'; }}
+        className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-sm font-bold rounded-xl shadow-md shadow-amber-500/20 hover:-translate-y-0.5 active:scale-95 transition-all"
       >
-        <FaPlus style={{ fontSize: '11px' }} />
-        Add Booking
+        <FaPlus />
+        New Booking
       </button>
     </div>
   );

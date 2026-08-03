@@ -2,20 +2,21 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import {
-  FaEye, FaBan, FaEdit, FaPlus, FaFilter, FaSearch,
-  FaBuilding, FaCheckCircle, FaRupeeSign, FaExclamationCircle,
-} from 'react-icons/fa';
+import { FaEye, FaBan, FaEdit } from 'react-icons/fa';
 import { getBookings, createBooking, updateBooking, cancelBooking, getBookingStats } from '../../../api/bookings';
 import { getPlots } from '../../../api/plots';
 import { getUsers } from '../../../api/users';
 import { useAuth } from '../../../context/AuthContext';
+
 import DataTable from '../../../components/common/DataTable';
 import Pagination from '../../../components/common/Pagination';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 import PaymentProgressBar from '../../../components/manage-bookings/PaymentProgressBar';
 import BookingDetailsModal from '../../../components/manage-bookings/BookingDetailsModal';
 import BookingFormModal from '../../../components/manage-bookings/BookingFormModal';
+import BookingsHeader from '../../../components/manage-bookings/BookingsHeader';
+import BookingsStatCards from '../../../components/manage-bookings/BookingsStatCards';
+import BookingsFilterBar from '../../../components/manage-bookings/BookingsFilterBar';
 
 import { BOOKING_STATUS_COLORS, PAYMENT_STATUS_COLORS, PLAN_LABELS } from '../../../constants/statusStyles';
 import { fmt, fmtDate } from '../../../utils/formatters';
@@ -44,7 +45,7 @@ export default function ManageBookings() {
   const [customers, setCustomers] = useState([]);
   const [salesExecutives, setSalesExecutives] = useState([]);
 
-  const { register, handleSubmit, reset, watch, setValue, control, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, watch, setValue, formState: { errors } } = useForm();
 
   const fetchBookings = useCallback(async (p = page) => {
     setLoading(true);
@@ -71,7 +72,10 @@ export default function ManageBookings() {
     } catch {}
   }, []);
 
-  useEffect(() => { fetchBookings(); fetchStats(); }, [page, filters]);
+  useEffect(() => {
+    fetchBookings();
+    fetchStats();
+  }, [fetchBookings, fetchStats]);
 
   const handleCancel = async (id) => {
     if (!window.confirm('Cancel this booking? The plot will be released back to Available.')) return;
@@ -131,15 +135,20 @@ export default function ManageBookings() {
       });
     } else {
       reset({
-        customer: '', plot: '', paymentPlan: 'full_payment',
-        totalAmount: '', tokenAmount: '', bookingStatus: 'active',
-        salesExecutive: '', remarks: '',
+        customer: '',
+        plot: '',
+        paymentPlan: 'full_payment',
+        totalAmount: '',
+        tokenAmount: '',
+        bookingStatus: 'active',
+        salesExecutive: '',
+        remarks: '',
         paymentMethod: 'cash',
         referenceNumber: '',
         paymentDate: new Date().toISOString().split('T')[0],
       });
     }
-  }, [showFormModal, editing]);
+  }, [showFormModal, editing, reset]);
 
   // Watch form fields for reactive UI updates
   const selectedPlotId = watch('plot');
@@ -152,7 +161,7 @@ export default function ManageBookings() {
       const plot = availablePlots.find((p) => p._id === selectedPlotId);
       if (plot?.price) setValue('totalAmount', plot.price);
     }
-  }, [selectedPlotId, availablePlots, editing]);
+  }, [selectedPlotId, availablePlots, editing, setValue]);
 
   const onSubmit = async (formData, receiptFile) => {
     setSubmitting(true);
@@ -200,29 +209,10 @@ export default function ManageBookings() {
     }
   };
 
-  // Summary stat cards
-  const totalBookings = stats?.totalBookings || 0;
-  const totalCollected = stats?.totalCollected || 0;
-  const totalOutstanding = stats?.totalOutstanding || 0;
-  const activeCount = stats?.byBookingStatus?.find((s) => s.bookingStatus === 'active')?.count || 0;
-
-  const summaryCards = [
-    { icon: <FaBuilding />, label: 'Total Bookings', value: totalBookings, color: 'indigo' },
-    { icon: <FaCheckCircle />, label: 'Active', value: activeCount, color: 'sky' },
-    { icon: <FaRupeeSign />, label: 'Revenue Collected', value: `₹${fmt(totalCollected)}`, color: 'emerald' },
-    { icon: <FaExclamationCircle />, label: 'Outstanding', value: `₹${fmt(totalOutstanding)}`, color: 'orange' },
-  ];
-
-  const colorMap = {
-    indigo: { bg: 'bg-indigo-50', icon: 'bg-indigo-100 text-indigo-600', border: 'border-indigo-200' },
-    sky:    { bg: 'bg-sky-50',    icon: 'bg-sky-100 text-sky-600',       border: 'border-sky-200' },
-    emerald:{ bg: 'bg-emerald-50',icon: 'bg-emerald-100 text-emerald-600',border: 'border-emerald-200' },
-    orange: { bg: 'bg-orange-50', icon: 'bg-orange-100 text-orange-600', border: 'border-orange-200' },
-  };
-
   const columns = [
     {
-      key: 'bookingId', label: 'Booking ID',
+      key: 'bookingId',
+      label: 'Booking ID',
       render: (r) => (
         <span
           className="font-mono text-sm font-semibold text-amber-700 cursor-pointer hover:underline"
@@ -234,16 +224,18 @@ export default function ManageBookings() {
     },
     { key: 'customer', label: 'Customer', render: (r) => <span className="font-medium text-slate-800">{r.customer?.name || '—'}</span> },
     { key: 'project', label: 'Project', render: (r) => r.project?.name || '—' },
-    { key: 'plot', label: 'Plot #', render: (r) => r.plot?.plotNumber ? `#${r.plot.plotNumber}` : '—' },
+    { key: 'plot', label: 'Plot #', render: (r) => (r.plot?.plotNumber ? `#${r.plot.plotNumber}` : '—') },
     {
-      key: 'paymentPlan', label: 'Plan',
+      key: 'paymentPlan',
+      label: 'Plan',
       render: (r) => <span className="text-xs font-semibold text-slate-600">{PLAN_LABELS[r.paymentPlan] || r.paymentPlan}</span>,
     },
     { key: 'totalAmount', label: 'Total', render: (r) => <span className="font-semibold text-slate-800">₹{fmt(r.totalAmount)}</span> },
-    { key: 'paidAmount',  label: 'Paid',  render: (r) => <span className="font-semibold text-emerald-700">₹{fmt(r.paidAmount)}</span> },
+    { key: 'paidAmount', label: 'Paid', render: (r) => <span className="font-semibold text-emerald-700">₹{fmt(r.paidAmount)}</span> },
     { key: 'remainingAmount', label: 'Remaining', render: (r) => <span className="font-semibold text-orange-600">₹{fmt(r.remainingAmount)}</span> },
     {
-      key: 'paymentStatus', label: 'Payment Status',
+      key: 'paymentStatus',
+      label: 'Payment Status',
       render: (r) => (
         <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${PAYMENT_STATUS_COLORS[r.paymentStatus] || 'bg-slate-100 text-slate-600'}`}>
           {r.paymentStatus?.replace(/_/g, ' ') || '—'}
@@ -251,7 +243,8 @@ export default function ManageBookings() {
       ),
     },
     {
-      key: 'bookingStatus', label: 'Status',
+      key: 'bookingStatus',
+      label: 'Status',
       render: (r) => (
         <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${BOOKING_STATUS_COLORS[r.bookingStatus] || 'bg-slate-100 text-slate-600'}`}>
           {r.bookingStatus || '—'}
@@ -259,11 +252,13 @@ export default function ManageBookings() {
       ),
     },
     {
-      key: 'lastPaymentDate', label: 'Last Payment',
+      key: 'lastPaymentDate',
+      label: 'Last Payment',
       render: (r) => <span className="text-slate-500 text-xs">{fmtDate(r.lastPaymentDate)}</span>,
     },
     {
-      key: 'progress', label: 'Progress',
+      key: 'progress',
+      label: 'Progress',
       render: (r) => (
         <div className="w-24">
           <PaymentProgressBar paidAmount={r.paidAmount || 0} totalAmount={r.totalAmount || 0} />
@@ -271,7 +266,8 @@ export default function ManageBookings() {
       ),
     },
     {
-      key: 'actions', label: 'Actions',
+      key: 'actions',
+      label: 'Actions',
       render: (r) => (
         <div className="flex items-center gap-1.5">
           <button
@@ -304,87 +300,18 @@ export default function ManageBookings() {
 
   return (
     <div className="space-y-6">
+      <BookingsHeader openFormModal={openFormModal} />
 
-      {/* Page Header */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">Booking Management</h1>
-          <p className="text-slate-500 text-sm mt-0.5">Manage all plot bookings and payment progress</p>
-        </div>
-        <button
-          onClick={() => openFormModal()}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-sm font-bold rounded-xl shadow-md shadow-amber-500/20 hover:-translate-y-0.5 active:scale-95 transition-all"
-        >
-          <FaPlus />
-          New Booking
-        </button>
-      </div>
+      <BookingsStatCards stats={stats} />
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {summaryCards.map((card) => {
-          const c = colorMap[card.color];
-          return (
-            <div key={card.label} className={`${c.bg} border ${c.border} rounded-2xl p-3 sm:p-4 flex items-start gap-3 min-w-0`}>
-              <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center ${c.icon} shrink-0 text-sm`}>
-                {card.icon}
-              </div>
-              <div className="min-w-0">
-                <p className="text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wide leading-tight">{card.label}</p>
-                <p className="text-sm sm:text-lg font-bold text-slate-800 break-words leading-snug mt-0.5">{card.value}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <BookingsFilterBar
+        filters={filters}
+        setFilters={setFilters}
+        showFilters={showFilters}
+        setShowFilters={setShowFilters}
+        setPage={setPage}
+      />
 
-      {/* Filter bar */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl border transition-all ${showFilters ? 'bg-amber-50 border-amber-300 text-amber-700' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'}`}
-          >
-            <FaFilter className="text-xs" /> Filters
-          </button>
-          {/* Clear button inline on desktop, shown alongside filters */}
-          {showFilters && (filters.bookingStatus || filters.paymentStatus) && (
-            <button
-              onClick={() => { setFilters({ bookingStatus: '', paymentStatus: '', search: '' }); setPage(1); }}
-              className="px-3 py-2 text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-xl hover:bg-red-100 transition-colors"
-            >
-              Clear
-            </button>
-          )}
-        </div>
-        {showFilters && (
-          <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-            <select
-              value={filters.bookingStatus}
-              onChange={(e) => { setFilters((f) => ({ ...f, bookingStatus: e.target.value })); setPage(1); }}
-              className="w-full sm:w-auto px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl outline-none focus:border-amber-400 cursor-pointer"
-            >
-              <option value="">All Statuses</option>
-              <option value="active">Active</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-            <select
-              value={filters.paymentStatus}
-              onChange={(e) => { setFilters((f) => ({ ...f, paymentStatus: e.target.value })); setPage(1); }}
-              className="w-full sm:w-auto px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl outline-none focus:border-amber-400 cursor-pointer"
-            >
-              <option value="">All Payment Status</option>
-              <option value="token_paid">Token Paid</option>
-              <option value="partially_paid">Partially Paid</option>
-              <option value="fully_paid">Fully Paid</option>
-              <option value="refunded">Refunded</option>
-            </select>
-          </div>
-        )}
-      </div>
-
-      {/* Table */}
       {error ? (
         <ErrorMessage message={error} onRetry={() => fetchBookings()} />
       ) : (
@@ -394,10 +321,8 @@ export default function ManageBookings() {
         </>
       )}
 
-      {/* Quick View Modal */}
       <BookingDetailsModal viewBooking={viewBooking} setViewBooking={setViewBooking} />
 
-      {/* Create / Edit Modal */}
       <BookingFormModal
         showFormModal={showFormModal}
         setShowFormModal={setShowFormModal}
@@ -415,7 +340,10 @@ export default function ManageBookings() {
         tokenAmountWatched={tokenAmountWatched}
         paymentMethodWatched={paymentMethodWatched}
         totalAmountWatched={totalAmountWatched}
-        onPaymentPlanChanged={() => { fetchBookings(); setShowFormModal(false); }}
+        onPaymentPlanChanged={() => {
+          fetchBookings();
+          setShowFormModal(false);
+        }}
       />
     </div>
   );

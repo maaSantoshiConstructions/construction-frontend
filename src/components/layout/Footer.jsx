@@ -98,7 +98,7 @@ export default function Footer() {
             <h5>Contact Us</h5>
             <div className="contact-line">
               <LuPhone size={16} className="text-[#e8b355] shrink-0 mt-0.5" />
-              <span>+91 91423 28629</span>
+              <span>+91 8798675654</span>
             </div>
             <div className="contact-line">
               <LuMail size={16} className="text-[#e8b355] shrink-0 mt-0.5" />
