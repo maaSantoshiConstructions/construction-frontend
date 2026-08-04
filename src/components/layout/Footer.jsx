@@ -85,9 +85,10 @@ export default function Footer() {
           <div>
             <h5>Tools</h5>
             <ul>
-              <li><Link to="/calculators">Investment Calculator</Link></li>
-              <li><Link to="/calculators">Loan Eligibility</Link></li>
-              <li><Link to="/calculators">Construction Calculator</Link></li>
+              <li><Link to="/calculators?tab=investment">Investment Calculator</Link></li>
+              <li><Link to="/calculators?tab=loan-eligibility">Loan Eligibility</Link></li>
+              <li><Link to="/calculators?tab=emi">Home Loan EMI</Link></li>
+              <li><Link to="/calculators?tab=construction">Construction Calculator</Link></li>
               <li><Link to="/property-comparison">Property Comparison</Link></li>
               <li><Link to="/plot-map">Live Plot Map</Link></li>
             </ul>

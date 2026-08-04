@@ -1,22 +1,40 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { LuTrendingUp, LuBadgePercent, LuChartPie, LuCalculator } from 'react-icons/lu';
 
 // Import modular subcomponents
 import InvestmentCalculator from '../../components/calculators/InvestmentCalculator';
 import LoanCalculator from '../../components/calculators/LoanCalculator';
+import EMICalculator from '../../components/calculators/EMICalculator';
 import ConstructionCalculator from '../../components/calculators/ConstructionCalculator';
 
 const tabs = [
-  { id: 'investment', label: 'Investment Return', ic: '📊' },
-  { id: 'loan', label: 'Loan Eligibility', ic: '🏦' },
-  { id: 'construction', label: 'Construction Cost', ic: '🏗' },
+  { id: 'investment', label: 'Investment Return', Icon: LuTrendingUp },
+  { id: 'loan-eligibility', label: 'Loan Eligibility', Icon: LuBadgePercent },
+  { id: 'emi', label: 'Home Loan EMI', Icon: LuChartPie },
+  { id: 'construction', label: 'Construction Cost', Icon: LuCalculator },
 ];
 
+const validTabIds = ['investment', 'loan-eligibility', 'loan', 'emi', 'construction'];
+
 export default function Calculators() {
-  const [activeTab, setActiveTab] = useState('investment');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const rawTabParam = searchParams.get('tab');
+
+  // Normalize active tab (default to 'investment', support 'loan' alias for 'loan-eligibility')
+  let activeTab = 'investment';
+  if (rawTabParam && validTabIds.includes(rawTabParam)) {
+    activeTab = rawTabParam === 'loan' ? 'loan-eligibility' : rawTabParam;
+  }
+
+  const handleTabChange = (tabId) => {
+    setSearchParams({ tab: tabId });
+  };
 
   const tabsContent = {
     investment: <InvestmentCalculator />,
+    'loan-eligibility': <LoanCalculator />,
     loan: <LoanCalculator />,
+    emi: <EMICalculator />,
     construction: <ConstructionCalculator />,
   };
 
@@ -56,37 +74,42 @@ export default function Calculators() {
           marginBottom: '32px',
           overflowX: 'auto',
         }}>
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              style={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '12px 24px',
-                borderRadius: '12px',
-                fontSize: '14px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-                transition: '.2s',
-                whiteSpace: 'nowrap',
-                background: activeTab === tab.id ? 'var(--indigo)' : 'transparent',
-                color: activeTab === tab.id ? '#fff' : 'var(--gray)',
-                border: 'none',
-              }}
-            >
-              <span>{tab.ic}</span> {tab.label}
-            </button>
-          ))}
+          {tabs.map((tab) => {
+            const TabIcon = tab.Icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTabChange(tab.id)}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  padding: '12px 24px',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  transition: '.2s',
+                  whiteSpace: 'nowrap',
+                  background: isActive ? 'var(--indigo)' : 'transparent',
+                  color: isActive ? '#fff' : 'var(--gray)',
+                  border: 'none',
+                }}
+              >
+                <TabIcon size={18} style={{ color: isActive ? '#fff' : 'var(--indigo)' }} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* ===== ACTIVE CALCULATOR CONTENT ===== */}
         <div style={{ transition: 'all .3s' }}>
-          {tabsContent[activeTab]}
+          {tabsContent[activeTab] || tabsContent['investment']}
         </div>
       </div>
     </div>

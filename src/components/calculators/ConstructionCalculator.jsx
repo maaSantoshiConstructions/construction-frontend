@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LuCalculator } from 'react-icons/lu';
 
 const labelRow = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' };
 const labelStyle = { fontSize: '13px', fontWeight: 600, color: 'var(--text)' };
@@ -42,8 +43,8 @@ export default function ConstructionCalculator() {
       background: '#fff', borderRadius: '16px', border: '1px solid var(--line)',
       boxShadow: '0 10px 30px rgba(20,20,60,.04)', padding: '36px',
     }}>
-      <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px' }}>
-        🏗 Built Construction Estimator
+      <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <LuCalculator size={22} className="text-indigo-600" /> Built Construction Estimator
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
 
