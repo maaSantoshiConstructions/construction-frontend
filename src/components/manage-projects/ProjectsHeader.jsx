@@ -2,12 +2,19 @@ import React from 'react';
 
 export default function ProjectsHeader({ openCreate }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
       <div>
-        <h1 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '22px', fontWeight: 800, color: '#171a35', marginBottom: '4px' }}>Manage Projects</h1>
-        <p style={{ color: '#6b6f8a', fontSize: '13.5px' }}>Create and manage real estate projects</p>
+        <h1 className="font-['Poppins',sans-serif] text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">
+          Manage Projects
+        </h1>
+        <p className="text-slate-500 text-xs sm:text-sm font-medium">
+          Create and manage real estate projects
+        </p>
       </div>
-      <button onClick={openCreate} className="btn-gold" style={{ fontSize: '13px', padding: '10px 20px', border: 'none' }}>
+      <button
+        onClick={openCreate}
+        className="cta-btn text-xs font-bold px-5 py-2.5 rounded-xl border-0 cursor-pointer shadow-md transition-all shrink-0"
+      >
         + Add Project
       </button>
     </div>

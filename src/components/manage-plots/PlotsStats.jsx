@@ -1,89 +1,85 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaRulerCombined, FaCheckCircle, FaLock, FaCheckDouble, FaTimes } from 'react-icons/fa';
+import { LuRuler, LuCircleCheck, LuLock, LuCheckCheck, LuBan } from 'react-icons/lu';
 
 export default function PlotsStats({ stats }) {
+  const cards = [
+    {
+      label: 'Total Plots',
+      val: stats?.total || 0,
+      border: 'bg-slate-400',
+      iconBg: 'bg-slate-50 border-slate-200 text-slate-500',
+      textCol: 'text-slate-800',
+      icon: LuRuler,
+      delay: 0,
+    },
+    {
+      label: 'Available',
+      val: stats?.available || 0,
+      border: 'bg-emerald-500',
+      iconBg: 'bg-emerald-50 border-emerald-200 text-emerald-600',
+      textCol: 'text-emerald-600',
+      icon: LuCircleCheck,
+      delay: 0.05,
+    },
+    {
+      label: 'Reserved',
+      val: stats?.reserved || 0,
+      border: 'bg-amber-500',
+      iconBg: 'bg-amber-50 border-amber-200 text-amber-600',
+      textCol: 'text-amber-600',
+      icon: LuLock,
+      delay: 0.1,
+    },
+    {
+      label: 'Sold',
+      val: stats?.sold || 0,
+      border: 'bg-rose-500',
+      iconBg: 'bg-rose-50 border-rose-200 text-rose-600',
+      textCol: 'text-rose-600',
+      icon: LuCheckCheck,
+      delay: 0.15,
+    },
+    {
+      label: 'Blocked',
+      val: stats?.blocked || 0,
+      border: 'bg-slate-500',
+      iconBg: 'bg-slate-100 border-slate-200 text-slate-600',
+      textCol: 'text-slate-700',
+      icon: LuBan,
+      delay: 0.2,
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-      {/* Total */}
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-        style={{ background: '#fff', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', minHeight: '72px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
-        onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
-        onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
-      >
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#94a3b8', borderRadius: '12px 0 0 12px' }} />
-        <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', flexShrink: 0 }}>
-          <FaRulerCombined style={{ fontSize: '13px' }} />
-        </div>
-        <div>
-          <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Total Plots</p>
-          <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#1e293b', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.total}</h3>
-        </div>
-      </motion.div>
-
-      {/* Available */}
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-        style={{ background: '#fff', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', minHeight: '72px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
-        onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
-        onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
-      >
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#10b981', borderRadius: '12px 0 0 12px' }} />
-        <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#ecfdf5', border: '1px solid #d1fae5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669', flexShrink: 0 }}>
-          <FaCheckCircle style={{ fontSize: '13px' }} />
-        </div>
-        <div>
-          <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Available</p>
-          <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#059669', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.available}</h3>
-        </div>
-      </motion.div>
-
-      {/* Reserved */}
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        style={{ background: '#fff', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', minHeight: '72px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
-        onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
-        onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
-      >
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#f59e0b', borderRadius: '12px 0 0 12px' }} />
-        <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#fffbeb', border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', flexShrink: 0 }}>
-          <FaLock style={{ fontSize: '13px' }} />
-        </div>
-        <div>
-          <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Reserved</p>
-          <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#d97706', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.reserved}</h3>
-        </div>
-      </motion.div>
-
-      {/* Sold */}
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-        style={{ background: '#fff', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', minHeight: '72px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
-        onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
-        onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
-      >
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#f43f5e', borderRadius: '12px 0 0 12px' }} />
-        <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#fff1f2', border: '1px solid #fecdd3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#e11d48', flexShrink: 0 }}>
-          <FaCheckDouble style={{ fontSize: '13px' }} />
-        </div>
-        <div>
-          <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Sold</p>
-          <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#e11d48', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.sold}</h3>
-        </div>
-      </motion.div>
-
-      {/* Blocked */}
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-        style={{ background: '#fff', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', minHeight: '72px', position: 'relative', overflow: 'hidden', transition: 'box-shadow 0.2s' }}
-        onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
-        onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.06)'}
-      >
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#64748b', borderRadius: '12px 0 0 12px' }} />
-        <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', flexShrink: 0 }}>
-          <FaTimes style={{ fontSize: '13px' }} />
-        </div>
-        <div>
-          <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Blocked</p>
-          <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#475569', lineHeight: 1.1, margin: '2px 0 0 0' }}>{stats.blocked}</h3>
-        </div>
-      </motion.div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+      {cards.map((c, idx) => {
+        const IconComponent = c.icon;
+        return (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: c.delay }}
+            className="bg-white rounded-2xl border border-slate-200 shadow-xs flex items-center gap-3 p-4 min-h-[72px] relative overflow-hidden hover:shadow-md transition-all"
+          >
+            <div className={`absolute top-0 left-0 w-1 h-full rounded-l-2xl ${c.border}`} />
+            <div
+              className={`w-10 h-10 rounded-xl border flex items-center justify-center text-sm shrink-0 ${c.iconBg}`}
+            >
+              <IconComponent />
+            </div>
+            <div>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                {c.label}
+              </p>
+              <h3 className={`text-xl sm:text-2xl font-extrabold leading-tight ${c.textCol}`}>
+                {c.val}
+              </h3>
+            </div>
+          </motion.div>
+        );
+      })}
     </div>
   );
 }

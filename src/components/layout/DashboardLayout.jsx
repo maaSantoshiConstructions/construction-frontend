@@ -1,82 +1,81 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { 
-  LuLayoutDashboard, 
-  LuBuilding, 
-  LuMap, 
-  LuCalendar, 
-  LuUsers, 
-  LuTrendingUp, 
-  LuBot, 
-  LuCreditCard, 
-  LuFileText, 
-  LuMapPin, 
-  LuHardHat, 
-  LuGift, 
-  LuMegaphone, 
-  LuHeart, 
-  LuLogOut, 
-  LuUser, 
-  LuMenu, 
-  LuArrowLeft, 
-  LuChevronDown, 
-  LuX 
+import {
+  LuLayoutDashboard,
+  LuBuilding,
+  LuMap,
+  LuCalendar,
+  LuUsers,
+  LuTrendingUp,
+  LuBot,
+  LuCreditCard,
+  LuFileText,
+  LuMapPin,
+  LuHardHat,
+  LuGift,
+  LuMegaphone,
+  LuLogOut,
+  LuUser,
+  LuMenu,
+  LuArrowLeft,
+  LuChevronDown,
+  LuX,
 } from 'react-icons/lu';
 
 const roleSidebarLinks = {
   super_admin: [
-    { label: 'Dashboard',            path: '/admin/dashboard',             ic: LuLayoutDashboard },
-    { label: 'Projects',             path: '/admin/projects',              ic: LuBuilding },
-    { label: 'Plots',                path: '/admin/plots',                 ic: LuMap },
-    { label: 'Bookings',             path: '/admin/bookings',              ic: LuCalendar },
-    { label: 'Customers',            path: '/admin/customers',             ic: LuUsers },
-    { label: 'Leads',                path: '/admin/leads',                 ic: LuTrendingUp },
-    { label: 'Referrals',            path: '/admin/referrals',             ic: LuGift },
+    { label: 'Dashboard', path: '/admin/dashboard', ic: LuLayoutDashboard },
+    { label: 'Projects', path: '/admin/projects', ic: LuBuilding },
+    { label: 'Plots', path: '/admin/plots', ic: LuMap },
+    { label: 'Bookings', path: '/admin/bookings', ic: LuCalendar },
+    { label: 'Customers', path: '/admin/customers', ic: LuUsers },
+    { label: 'Leads', path: '/admin/leads', ic: LuTrendingUp },
+    { label: 'Referrals', path: '/admin/referrals', ic: LuGift },
     // { label: 'AI Follow-up',         path: '/ai-followup',                ic: LuBot },
-    { label: 'Payments',             path: '/admin/payments',              ic: LuCreditCard },
-    { label: 'Documents',            path: '/admin/documents',             ic: LuFileText },
-    { label: 'Site Visits',          path: '/admin/site-visits',           ic: LuMapPin },
-    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: LuHardHat },
-    { label: 'Users',                path: '/admin/users',                 ic: LuUsers },
+    { label: 'Payments', path: '/admin/payments', ic: LuCreditCard },
+    { label: 'Documents', path: '/admin/documents', ic: LuFileText },
+    { label: 'Site Visits', path: '/admin/site-visits', ic: LuMapPin },
+    { label: 'Construction Updates', path: '/admin/construction-updates', ic: LuHardHat },
+    { label: 'Users', path: '/admin/users', ic: LuUsers },
   ],
   company_admin: [
-    { label: 'Dashboard',            path: '/admin/dashboard',             ic: LuLayoutDashboard },
-    { label: 'Projects',             path: '/admin/projects',              ic: LuBuilding },
-    { label: 'Plots',                path: '/admin/plots',                 ic: LuMap },
-    { label: 'Bookings',             path: '/admin/bookings',              ic: LuCalendar },
-    { label: 'Customers',            path: '/admin/customers',             ic: LuUsers },
-    { label: 'Leads',                path: '/admin/leads',                 ic: LuTrendingUp },
-    { label: 'Referrals',            path: '/admin/referrals',             ic: LuGift },
+    { label: 'Dashboard', path: '/admin/dashboard', ic: LuLayoutDashboard },
+    { label: 'Projects', path: '/admin/projects', ic: LuBuilding },
+    { label: 'Plots', path: '/admin/plots', ic: LuMap },
+    { label: 'Bookings', path: '/admin/bookings', ic: LuCalendar },
+    { label: 'Customers', path: '/admin/customers', ic: LuUsers },
+    { label: 'Leads', path: '/admin/leads', ic: LuTrendingUp },
+    { label: 'Referrals', path: '/admin/referrals', ic: LuGift },
     // { label: 'AI Follow-up',         path: '/ai-followup',                ic: LuBot },
-    { label: 'Payments',             path: '/admin/payments',              ic: LuCreditCard },
-    { label: 'Documents',            path: '/admin/documents',             ic: LuFileText },
-    { label: 'Site Visits',          path: '/admin/site-visits',           ic: LuMapPin },
-    { label: 'Construction Updates', path: '/admin/construction-updates',  ic: LuHardHat },
+    { label: 'Payments', path: '/admin/payments', ic: LuCreditCard },
+    { label: 'Documents', path: '/admin/documents', ic: LuFileText },
+    { label: 'Site Visits', path: '/admin/site-visits', ic: LuMapPin },
+    { label: 'Construction Updates', path: '/admin/construction-updates', ic: LuHardHat },
   ],
   sales_executive: [
-    { label: 'Dashboard',   path: '/sales/dashboard',    ic: LuLayoutDashboard },
-    { label: 'My Leads',    path: '/sales/leads',        ic: LuTrendingUp },
+    { label: 'Dashboard', path: '/sales/dashboard', ic: LuLayoutDashboard },
+    { label: 'My Leads', path: '/sales/leads', ic: LuTrendingUp },
     // { label: 'AI Follow-up',path: '/ai-followup',        ic: LuBot },
-    { label: 'Site Visits', path: '/sales/site-visits',  ic: LuMapPin },
-    { label: 'Customers',   path: '/sales/customers',    ic: LuUsers },
+    { label: 'Site Visits', path: '/sales/site-visits', ic: LuMapPin },
+    { label: 'Customers', path: '/sales/customers', ic: LuUsers },
   ],
   channel_partner: [
-    { label: 'Dashboard',            path: '/partner/dashboard',    ic: LuLayoutDashboard },
-    { label: 'AI Follow-up',         path: '/ai-followup',          ic: LuBot },
-    { label: 'My Commissions',       path: '/partner/commissions',  ic: LuCreditCard },
-    { label: 'My Referrals',         path: '/partner/referrals',    ic: LuGift },
-    { label: 'Marketing Materials',  path: '/partner/materials',    ic: LuMegaphone },
+    { label: 'Dashboard', path: '/partner/dashboard', ic: LuLayoutDashboard },
+    { label: 'AI Follow-up', path: '/ai-followup', ic: LuBot },
+    { label: 'My Commissions', path: '/partner/commissions', ic: LuCreditCard },
+    { label: 'My Referrals', path: '/partner/referrals', ic: LuGift },
+    { label: 'Marketing Materials', path: '/partner/materials', ic: LuMegaphone },
   ],
   customer: [
-    { label: 'Dashboard',            path: '/customer/dashboard',              ic: LuLayoutDashboard },
-    { label: 'My Bookings',          path: '/customer/bookings',               ic: LuCalendar },
-    { label: 'My Site Visits',       path: '/customer/site-visits',            ic: LuMapPin },
-    { label: 'My Payments',          path: '/customer/payments',               ic: LuCreditCard },
+    { label: 'Dashboard', path: '/customer/dashboard', ic: LuLayoutDashboard },
+    { label: 'My Bookings', path: '/customer/bookings', ic: LuCalendar },
+    { label: 'My Site Visits', path: '/customer/site-visits', ic: LuMapPin },
+    { label: 'My Payments', path: '/customer/payments', ic: LuCreditCard },
     // { label: 'My Documents',         path: '/customer/documents',              ic: LuFileText },
-    { label: 'Construction Updates', path: '/customer/construction-updates',   ic: LuHardHat },
+    { label: 'Construction Updates', path: '/customer/construction-updates', ic: LuHardHat },
     // { label: 'My Referrals',         path: '/customer/referrals',              ic: LuGift },
-    { label: 'Profile',              path: '/customer/profile',                ic: LuUser },
+    { label: 'Profile', path: '/customer/profile', ic: LuUser },
     // { label: 'Wishlist',             path: '/customer/wishlist',               ic: LuHeart },
   ],
 };
@@ -95,126 +94,143 @@ export default function DashboardLayout() {
     return location.pathname.startsWith(path);
   };
 
-  const handleLogout = () => { logout(); navigate('/login'); };
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
-    <div style={{ height: '100vh', overflow: 'hidden', background: '#f7f7fb', display: 'flex' }}>
-
+    <div className="h-screen overflow-hidden bg-[#f7f7fb] flex">
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 40, background: 'rgba(0,0,0,.45)' }}
-          onClick={() => setSidebarOpen(false)} />
+        <div
+          className="fixed inset-0 !z-[1200] bg-slate-950/50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
       )}
 
       {/* ===== SIDEBAR ===== */}
-      <aside style={{
-        position: 'fixed', top: 0, left: 0, zIndex: 50,
-        height: '100%', width: '240px',
-        background: 'var(--navy)',
-        transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-        transition: 'transform .3s ease',
-        display: 'flex', flexDirection: 'column',
-        borderRight: '1px solid rgba(255,255,255,.06)',
-        flexShrink: 0,
-      }} className="sidebar-el">
+      <aside
+        className={`fixed top-0 left-0 !z-[1210] h-full w-60 bg-[#0b0f2e] border-r border-white/10 flex flex-col shrink-0 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-100'
+        }`}
+      >
         {/* Logo */}
-        <div style={{ padding: '14px 20px 12px', borderBottom: '1px solid rgba(255,255,255,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <div className="p-4 sm:px-5 border-b border-white/10 flex items-center justify-between">
+          <Link to="/" className="flex items-center no-underline">
             <img
               src="/construction logo.png"
               alt="JSMIL"
-              style={{ height: '52px', width: 'auto', objectFit: 'contain', filter: 'brightness(1.05)' }}
+              className="h-12 w-auto object-contain brightness-105"
             />
           </Link>
-          <button onClick={() => setSidebarOpen(false)} className="sidebar-close-btn"
-            style={{ background: 'none', border: 'none', color: '#9ea1c4', cursor: 'pointer', fontSize: '16px', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <LuX style={{ fontSize: '18px' }} />
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden bg-transparent border-0 text-slate-400 hover:text-white cursor-pointer p-1 flex items-center justify-center"
+          >
+            <LuX className="text-lg" />
           </button>
         </div>
 
         {/* Nav links */}
-        <nav style={{ flex: 1, overflowY: 'auto', padding: '12px 10px' }}>
-          {links.map(link => {
+        <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+          {links.map((link) => {
             const IconComponent = link.ic;
+            const active = isActive(link.path);
             return (
-              <Link key={link.path} to={link.path} onClick={() => setSidebarOpen(false)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '9px 12px', borderRadius: '10px', marginBottom: '2px',
-                  fontSize: '13px', fontWeight: isActive(link.path) ? 600 : 400,
-                  background: isActive(link.path) ? 'rgba(91,79,224,.35)' : 'transparent',
-                  color: isActive(link.path) ? '#fff' : '#b7bade',
-                  transition: '.15s',
-                  textDecoration: 'none',
-                  borderLeft: isActive(link.path) ? '3px solid #e8b355' : '3px solid transparent',
-                }}>
-                {IconComponent && <IconComponent style={{ fontSize: '16px', flexShrink: 0 }} />}
-                <span>{link.label}</span>
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setSidebarOpen(false)}
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all no-underline border-l-4 !text-white ${
+                  active
+                    ? '!bg-indigo-600/50 border-amber-400 font-bold shadow-xs'
+                    : 'bg-transparent hover:!bg-white/10 border-transparent'
+                }`}
+              >
+                {IconComponent && <IconComponent className="text-base shrink-0 !text-white" />}
+                <span className="!text-white">{link.label}</span>
               </Link>
             );
           })}
         </nav>
 
         {/* Logout at bottom */}
-        <div style={{ padding: '12px 10px', borderTop: '1px solid rgba(255,255,255,.06)' }}>
-          <button onClick={handleLogout}
-            style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '9px 12px', borderRadius: '10px', background: 'none', border: 'none', cursor: 'pointer', color: '#9ea1c4', fontSize: '13px', fontFamily: 'Inter,sans-serif', transition: '.15s' }}>
-            <LuLogOut style={{ fontSize: '16px', flexShrink: 0 }} /> <span>Logout</span>
+        <div className="p-3 border-t border-white/10">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="flex items-center gap-2.5 w-full px-3 py-2.5 rounded-xl bg-transparent hover:!bg-white/10 border-0 cursor-pointer !text-white text-xs sm:text-sm font-semibold transition-colors"
+          >
+            <LuLogOut className="text-base shrink-0 !text-white" />
+            <span className="!text-white">Logout</span>
           </button>
         </div>
       </aside>
 
       {/* ===== MAIN CONTENT ===== */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%', overflow: 'hidden' }} className="main-content-el">
-
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Top header */}
-        <header className="dashboard-top-header" style={{
-          height: '60px', background: '#fff',
-          borderBottom: '1px solid #e6e6f0',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 24px', position: 'sticky', top: 0, zIndex: 30,
-          boxShadow: '0 2px 10px rgba(20,20,60,.05)',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <button onClick={() => setSidebarOpen(true)}
-              className="menu-toggle-btn"
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#6b6f8a', display: 'flex', alignItems: 'center' }}>
-              <LuMenu style={{ fontSize: '20px' }} />
+        <header className="h-15 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30 shadow-xs">
+          <div className="flex items-center gap-3.5">
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden bg-transparent border-0 cursor-pointer !text-slate-600 hover:!text-slate-900 p-1 flex items-center"
+            >
+              <LuMenu className="text-xl" />
             </button>
-            <Link to="/" style={{ fontSize: '13px', color: '#6b6f8a', display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontWeight: 500 }}>
-              <LuArrowLeft style={{ fontSize: '15px' }} /> Back to Site
+            <Link
+              to="/"
+              className="text-xs sm:text-sm !text-slate-600 hover:!text-slate-900 flex items-center gap-1.5 no-underline font-semibold"
+            >
+              <LuArrowLeft className="text-base" /> Back to Site
             </Link>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div className="flex items-center gap-3.5">
             {/* User menu */}
-            <div style={{ position: 'relative' }}>
-              <button onClick={() => setUserMenuOpen(!userMenuOpen)}
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}>
-                <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg,#3a2fb8,#5b4fe0)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '14px', fontFamily: 'Poppins,sans-serif' }}>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-2 bg-transparent border-0 cursor-pointer p-1"
+              >
+                <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xs font-['Poppins',sans-serif]">
                   {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                 </div>
-                <div style={{ textAlign: 'left', display: 'none' }} className="user-name-el">
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: '#171a35', lineHeight: 1.2 }}>{user?.name || 'User'}</div>
-                  <div style={{ fontSize: '10px', color: '#6b6f8a', textTransform: 'capitalize' }}>{user?.role?.replace(/_/g,' ') || ''}</div>
+                <div className="hidden lg:block text-left">
+                  <div className="text-xs font-bold !text-slate-900 leading-tight">
+                    {user?.name || 'User'}
+                  </div>
+                  <div className="text-[10px] !text-slate-500 capitalize font-medium">
+                    {user?.role?.replace(/_/g, ' ') || ''}
+                  </div>
                 </div>
-                <LuChevronDown style={{ color: '#6b6f8a', fontSize: '14px' }} />
+                <LuChevronDown className="!text-slate-500 text-xs" />
               </button>
 
               {userMenuOpen && (
-                <div style={{ position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: '200px', background: '#fff', borderRadius: '12px', border: '1px solid #e6e6f0', boxShadow: '0 15px 40px rgba(20,20,60,.12)', zIndex: 50, overflow: 'hidden' }}>
-                  <div style={{ padding: '14px 16px', borderBottom: '1px solid #e6e6f0' }}>
-                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#171a35' }}>{user?.name}</div>
-                    <div style={{ fontSize: '11px', color: '#6b6f8a' }}>{user?.email}</div>
+                <div className="absolute right-0 top-[calc(100%+8px)] w-52 bg-white rounded-2xl border border-slate-200 shadow-2xl z-50 overflow-hidden">
+                  <div className="p-3.5 border-b border-slate-100">
+                    <div className="text-xs font-bold text-slate-900">{user?.name}</div>
+                    <div className="text-[11px] text-slate-400 truncate">{user?.email}</div>
                   </div>
-                  <Link to="/customer/profile" onClick={() => setUserMenuOpen(false)}
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 16px', fontSize: '13px', color: '#171a35', textDecoration: 'none', transition: '.15s' }}>
-                    <LuUser style={{ fontSize: '16px', color: '#6b6f8a' }} />
+                  <Link
+                    to="/customer/profile"
+                    onClick={() => setUserMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 no-underline transition-colors"
+                  >
+                    <LuUser className="text-base text-slate-400" />
                     <span>Profile</span>
                   </Link>
-                  <button onClick={handleLogout}
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '11px 16px', fontSize: '13px', color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Inter,sans-serif', textAlign: 'left', transition: '.15s' }}>
-                    <LuLogOut style={{ fontSize: '16px', color: '#dc2626' }} />
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex items-center gap-2.5 w-full px-4 py-2.5 text-xs text-rose-600 hover:bg-rose-50 bg-transparent border-0 cursor-pointer text-left transition-colors font-medium"
+                  >
+                    <LuLogOut className="text-base text-rose-600" />
                     <span>Logout</span>
                   </button>
                 </div>
@@ -224,19 +240,10 @@ export default function DashboardLayout() {
         </header>
 
         {/* Page content */}
-        <main className="dashboard-main-content">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#f7f7fb]">
           <Outlet />
         </main>
       </div>
-
-      <style>{`
-        @media(min-width:1024px){
-          .sidebar-el { transform: translateX(0) !important; position: static !important; }
-          .sidebar-close-btn { display: none !important; }
-          .user-name-el { display: block !important; }
-          .menu-toggle-btn { display: none !important; }
-        }
-      `}</style>
     </div>
   );
 }

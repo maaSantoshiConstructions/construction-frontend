@@ -1,16 +1,26 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { getProjects, createProject, updateProject, deleteProject, uploadProjectImages } from '../../../api/projects';
+import {
+  getProjects,
+  createProject,
+  updateProject,
+  deleteProject,
+  uploadProjectImages,
+} from '../../../api/projects';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 import { validateImageFiles } from '../../../utils/fileValidation';
+import { LuPlus, LuStar, LuBuilding2 } from 'react-icons/lu';
 
 // Import subcomponents
 import ProjectsHeader from '../../../components/manage-projects/ProjectsHeader';
 import ProjectFormModal from '../../../components/manage-projects/ProjectFormModal';
 
-const statusColor = { upcoming: '#d99f36', ongoing: '#5b4fe0', completed: '#2f9e5c' };
-const td = { padding: '13px 16px', fontSize: '13px', verticalAlign: 'middle' };
+const statusStyle = {
+  upcoming: 'bg-amber-50 text-amber-700 border-amber-200',
+  ongoing: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  completed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+};
 
 export default function ManageProjects() {
   const [projects, setProjects] = useState([]);
@@ -25,7 +35,12 @@ export default function ManageProjects() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [imageValidationError, setImageValidationError] = useState('');
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const fetchProjects = async (p = page) => {
     setLoading(true);
@@ -90,9 +105,15 @@ export default function ManageProjects() {
         typeof project.location === 'object' && project.location !== null
           ? project.location.state || ''
           : project.state || '',
-      amenities: Array.isArray(project.amenities) ? project.amenities.join(', ') : project.amenities || '',
-      highlights: Array.isArray(project.highlights) ? project.highlights.join(', ') : project.highlights || '',
-      possessionDate: project.possessionDate ? new Date(project.possessionDate).toISOString().split('T')[0] : '',
+      amenities: Array.isArray(project.amenities)
+        ? project.amenities.join(', ')
+        : project.amenities || '',
+      highlights: Array.isArray(project.highlights)
+        ? project.highlights.join(', ')
+        : project.highlights || '',
+      possessionDate: project.possessionDate
+        ? new Date(project.possessionDate).toISOString().split('T')[0]
+        : '',
       layoutImage: project.layoutImage || '',
       featured: !!project.featured,
     });
@@ -100,16 +121,14 @@ export default function ManageProjects() {
   };
 
   const onSubmit = async (formData) => {
-    // 1. Double click / concurrent submission guard
     if (submitting) return;
 
-    // 2. Client-side file validation BEFORE any API calls
     if (selectedFiles.length > 0) {
       const fileCheck = validateImageFiles(selectedFiles);
       if (!fileCheck.valid) {
         setImageValidationError(fileCheck.error);
         toast.error(fileCheck.error);
-        return; // Abort submission completely
+        return;
       }
     }
 
@@ -118,7 +137,6 @@ export default function ManageProjects() {
     setSubmittingPhase(editing ? 'Updating Project...' : 'Creating Project...');
 
     const toastId = toast.loading(editing ? 'Updating project...' : 'Creating project...');
-
     let savedProject = null;
 
     try {
@@ -135,7 +153,9 @@ export default function ManageProjects() {
         status: formData.status,
         description: formData.description,
         location: {
-          ...(typeof editing?.location === 'object' && editing.location !== null ? editing.location : {}),
+          ...(typeof editing?.location === 'object' && editing.location !== null
+            ? editing.location
+            : {}),
           address: formData.location || '',
           city: formData.city || '',
           state: formData.state || '',
@@ -159,7 +179,6 @@ export default function ManageProjects() {
         savedProject = res?.data;
       }
 
-      // 3. Upload images if selected
       if (selectedFiles.length > 0 && savedProject?._id) {
         setSubmittingPhase('Uploading Images...');
         toast.loading('Uploading project images...', { id: toastId });
@@ -172,22 +191,24 @@ export default function ManageProjects() {
         try {
           await uploadProjectImages(savedProject._id, uploadData);
         } catch (uploadErr) {
-          // ATOMIC ROLLBACK: If new project creation succeeded but image upload failed, cleanup database record
           if (!editing && savedProject._id) {
             try {
               await deleteProject(savedProject._id);
             } catch {}
           }
-          const uploadMsg = uploadErr?.response?.data?.message || 'Image upload failed. Project creation rolled back.';
+          const uploadMsg =
+            uploadErr?.response?.data?.message ||
+            'Image upload failed. Project creation rolled back.';
           toast.error(uploadMsg, { id: toastId });
           setSubmitting(false);
           setSubmittingPhase('');
-          return; // Keep modal open with form data preserved
+          return;
         }
       }
 
-      // 4. Final atomic success feedback
-      toast.success(editing ? 'Project updated successfully' : 'Project created successfully', { id: toastId });
+      toast.success(editing ? 'Project updated successfully' : 'Project created successfully', {
+        id: toastId,
+      });
       setShowModal(false);
       setSelectedFiles([]);
       fetchProjects();
@@ -219,124 +240,133 @@ export default function ManageProjects() {
       {error ? (
         <ErrorMessage message={error} onRetry={() => fetchProjects()} />
       ) : (
-        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', boxShadow: '0 2px 10px rgba(20,20,60,.05)', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-x-auto">
           {loading ? (
-            <div style={{ padding: '40px', textAlign: 'center', color: '#9ea1c4' }}>Loading projects...</div>
+            <div className="p-10 text-center text-slate-400 text-xs sm:text-sm font-medium">
+              Loading projects...
+            </div>
           ) : projects.length === 0 ? (
-            <div style={{ padding: '60px', textAlign: 'center' }}>
-              <div style={{ fontSize: '40px', marginBottom: '12px' }}>🏗</div>
-              <p style={{ color: '#6b6f8a', fontSize: '14px', marginBottom: '16px' }}>No projects yet. Add your first project.</p>
-              <button onClick={openCreate} className="btn-gold" style={{ fontSize: '13px', padding: '10px 20px', border: 'none' }}>
-                + Add Project
+            <div className="p-12 text-center">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mx-auto mb-3">
+                <LuBuilding2 />
+              </div>
+              <p className="text-slate-500 text-xs sm:text-sm mb-4">
+                No projects yet. Add your first project.
+              </p>
+              <button
+                type="button"
+                onClick={openCreate}
+                className="cta-btn inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold rounded-xl border-0 shadow-md no-underline cursor-pointer"
+              >
+                <LuPlus className="text-sm" /> Add Project
               </button>
             </div>
           ) : (
-            <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse' }}>
+            <table className="w-full min-w-[680px] border-collapse text-left">
               <thead>
-                <tr style={{ background: '#f7f7fb', borderBottom: '1px solid #e6e6f0' }}>
-                  {['#', 'Name', 'Type', 'Location', 'Plots', 'Status', 'Featured', 'Actions'].map((h) => (
-                    <th
-                      key={h}
-                      style={{ padding: '12px 16px', textAlign: 'left', fontSize: '11.5px', fontWeight: 700, color: '#6b6f8a', letterSpacing: '.5px', textTransform: 'uppercase' }}
-                    >
-                      {h}
-                    </th>
-                  ))}
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  {['#', 'Name', 'Type', 'Location', 'Plots', 'Status', 'Featured', 'Actions'].map(
+                    (h) => (
+                      <th
+                        key={h}
+                        className="px-4 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider"
+                      >
+                        {h}
+                      </th>
+                    )
+                  )}
                 </tr>
               </thead>
-              <tbody>
-                {projects.map((r, i) => (
-                  <tr
-                    key={r._id}
-                    style={{ borderBottom: '1px solid #f0f0f6', transition: '.15s' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = '#f7f7fb')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = '')}
-                  >
-                    <td style={td}>{(page - 1) * 10 + i + 1}</td>
-                    <td style={td}>
-                      <span style={{ fontWeight: 600, color: '#171a35', fontSize: '13.5px' }}>{r.name}</span>
-                    </td>
-                    <td style={td}>
-                      <span style={{ color: '#6b6f8a', fontSize: '13px', textTransform: 'capitalize' }}>{r.type?.replace(/_/g, ' ')}</span>
-                    </td>
-                    <td style={td}>
-                      <span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.location?.city || r.location?.address || '-'}</span>
-                    </td>
-                    <td style={td}>
-                      <span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.totalPlots || r.plots?.length || 0}</span>
-                    </td>
-                    <td style={td}>
-                      <span
-                        style={{
-                          fontSize: '11px',
-                          fontWeight: 700,
-                          padding: '3px 10px',
-                          borderRadius: '12px',
-                          background: (statusColor[r.status] || '#3a2fb8') + '18',
-                          color: statusColor[r.status] || '#3a2fb8',
-                        }}
-                      >
-                        {r.status}
-                      </span>
-                    </td>
-                    <td style={td}>
-                      <button
-                        onClick={async () => {
-                          try {
-                            await updateProject(r._id, { featured: !r.featured });
-                            toast.success(r.featured ? 'Removed from featured' : 'Marked as featured');
-                            fetchProjects();
-                          } catch (err) {
-                            toast.error('Failed to update featured status');
-                          }
-                        }}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: r.featured ? '#f39c12' : '#ccc', outline: 'none' }}
-                        title={r.featured ? 'Remove from featured' : 'Mark as featured'}
-                      >
-                        {r.featured ? '★' : '☆'}
-                      </button>
-                    </td>
-                    <td style={td}>
-                      <div style={{ display: 'flex', gap: '6px' }}>
-                        <button
-                          onClick={() => openEdit(r)}
-                          style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #e6e6f0', background: '#fff', color: '#3a2fb8', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
+              <tbody className="divide-y divide-slate-100">
+                {projects.map((r, i) => {
+                  const badgeStyle =
+                    statusStyle[r.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                  return (
+                    <tr key={r._id} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="px-4 py-3.5 text-xs font-bold text-slate-500 align-middle">
+                        {(page - 1) * 10 + i + 1}
+                      </td>
+                      <td className="px-4 py-3.5 text-xs font-bold text-slate-900 align-middle">
+                        {r.name}
+                      </td>
+                      <td className="px-4 py-3.5 text-xs text-slate-500 font-medium capitalize align-middle">
+                        {r.type?.replace(/_/g, ' ')}
+                      </td>
+                      <td className="px-4 py-3.5 text-xs text-slate-500 font-medium align-middle">
+                        {r.location?.city || r.location?.address || '-'}
+                      </td>
+                      <td className="px-4 py-3.5 text-xs font-bold text-slate-800 align-middle">
+                        {r.totalPlots || r.plots?.length || 0}
+                      </td>
+                      <td className="px-4 py-3.5 align-middle">
+                        <span
+                          className={`text-[10px] font-bold px-2.5 py-1 rounded-md border capitalize ${badgeStyle}`}
                         >
-                          Edit
-                        </button>
+                          {r.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5 align-middle">
                         <button
-                          onClick={() => handleDelete(r._id)}
-                          style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #fde8e8', background: '#fff8f8', color: '#c0392b', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
+                          type="button"
+                          onClick={async () => {
+                            try {
+                              await updateProject(r._id, { featured: !r.featured });
+                              toast.success(
+                                r.featured ? 'Removed from featured' : 'Marked as featured'
+                              );
+                              fetchProjects();
+                            } catch (err) {
+                              toast.error('Failed to update featured status');
+                            }
+                          }}
+                          className={`bg-transparent border-0 cursor-pointer text-lg outline-none p-1 transition-colors ${
+                            r.featured
+                              ? 'text-amber-500'
+                              : 'text-slate-300 hover:text-amber-400'
+                          }`}
+                          title={r.featured ? 'Remove from featured' : 'Mark as featured'}
                         >
-                          Delete
+                          ★
                         </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="px-4 py-3.5 align-middle">
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() => openEdit(r)}
+                            className="px-3 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 text-indigo-700 text-xs font-bold transition-colors cursor-pointer"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(r._id)}
+                            className="px-3 py-1.5 rounded-lg border border-rose-200 bg-rose-50/50 hover:bg-rose-50 text-rose-700 text-xs font-bold transition-colors cursor-pointer"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', padding: '16px' }}>
+            <div className="flex justify-center gap-2 p-4 border-t border-slate-100">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                 <button
                   key={p}
+                  type="button"
                   onClick={() => setPage(p)}
-                  style={{
-                    width: '34px',
-                    height: '34px',
-                    borderRadius: '8px',
-                    border: '1px solid',
-                    borderColor: p === page ? '#3a2fb8' : '#e6e6f0',
-                    background: p === page ? '#3a2fb8' : '#fff',
-                    color: p === page ? '#fff' : '#6b6f8a',
-                    fontWeight: p === page ? 700 : 400,
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                  }}
+                  className={`w-8 h-8 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                    p === page
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                  }`}
                 >
                   {p}
                 </button>

@@ -1,14 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTimes } from 'react-icons/fa';
+import { LuX } from 'react-icons/lu';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function MobileDrawer({
   mobileOpen = false,
   setMobileOpen,
   isActive,
-  dashboardPath
+  dashboardPath,
 }) {
+  const navLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/projects', label: 'Projects' },
+    { path: '/smart-features', label: 'Smart Features' },
+    { path: '/calculators', label: 'Calculators' },
+    { path: dashboardPath, label: 'Owner Portal' },
+    { path: '/about', label: 'About Us' },
+    { path: '/contact', label: 'Contact' },
+  ];
+
   return (
     <AnimatePresence>
       {mobileOpen && (
@@ -16,16 +26,10 @@ export default function MobileDrawer({
           {/* Dark Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMobileOpen(false)}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: '#090c24',
-              zIndex: 1000,
-              backdropFilter: 'blur(4px)',
-            }}
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-xs z-[2000]"
           />
 
           {/* Slide-out Menu Panel */}
@@ -34,180 +38,55 @@ export default function MobileDrawer({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', ease: 'easeOut', duration: 0.3 }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              width: '280px',
-              background: '#0b0f2e',
-              borderLeft: '1px solid rgba(255,255,255,0.06)',
-              zIndex: 1005,
-              boxShadow: '-10px 0 30px rgba(0,0,0,0.3)',
-              padding: '80px 24px 32px',
-              display: 'flex',
-              flexDirection: 'column',
-              boxSizing: 'border-box',
-            }}
+            className="fixed top-0 right-0 bottom-0 w-[280px] bg-[#0b0f2e] border-l border-white/10 z-[2005] shadow-2xl p-6 pt-20 flex flex-col box-border"
           >
             {/* Close Button Inside Drawer */}
             <button
               onClick={() => setMobileOpen(false)}
-              style={{
-                position: 'absolute',
-                top: '20px',
-                right: '24px',
-                background: 'none',
-                border: 'none',
-                color: '#fff',
-                fontSize: '20px',
-                cursor: 'pointer',
-                outline: 'none',
-              }}
+              className="absolute top-5 right-6 bg-transparent border-0 text-white text-2xl cursor-pointer outline-none hover:text-amber-400 transition-colors"
+              aria-label="Close Navigation Drawer"
             >
-              <FaTimes />
+              <LuX />
             </button>
 
             {/* Logo at top of drawer */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+            <div className="flex justify-center mb-6">
               <img
                 src="/construction logo.png"
-                alt="JSMIL"
-                style={{ height: '90px', width: 'auto', objectFit: 'contain' }}
+                alt="JSMIL Logo"
+                className="h-[90px] w-auto object-contain"
               />
             </div>
 
             {/* Navigation Links inside Drawer */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
-              <Link
-                to="/"
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  color: isActive('/') ? '#fff' : '#d7d9ec',
-                  background: isActive('/') ? 'var(--indigo-light)' : 'transparent',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                Home
-              </Link>
-              <Link
-                to="/projects"
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  color: isActive('/projects') ? '#fff' : '#d7d9ec',
-                  background: isActive('/projects') ? 'var(--indigo-light)' : 'transparent',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                Projects
-              </Link>
-              <Link
-                to="/smart-features"
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  color: isActive('/smart-features') ? '#fff' : '#d7d9ec',
-                  background: isActive('/smart-features') ? 'var(--indigo-light)' : 'transparent',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                Smart Features
-              </Link>
-              <Link
-                to="/calculators"
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  color: isActive('/calculators') ? '#fff' : '#d7d9ec',
-                  background: isActive('/calculators') ? 'var(--indigo-light)' : 'transparent',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                Calculators
-              </Link>
-              <Link
-                to={dashboardPath}
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  color: isActive(dashboardPath) ? '#fff' : '#d7d9ec',
-                  background: isActive(dashboardPath) ? 'var(--indigo-light)' : 'transparent',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                Owner Portal
-              </Link>
-              <Link
-                to="/about"
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  color: isActive('/about') ? '#fff' : '#d7d9ec',
-                  background: isActive('/about') ? 'var(--indigo-light)' : 'transparent',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                About Us
-              </Link>
-              <Link
-                to="/contact"
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  color: isActive('/contact') ? '#fff' : '#d7d9ec',
-                  background: isActive('/contact') ? 'var(--indigo-light)' : 'transparent',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'all 0.2s',
-                }}
-              >
-                Contact
-              </Link>
+            <div className="flex flex-col gap-2 flex-1">
+              {navLinks.map((link) => {
+                const active = isActive(link.path);
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setMobileOpen(false)}
+                    style={{ color: '#ffffff' }}
+                    className={`px-4 py-3 rounded-xl text-[15px] font-bold transition-all no-underline !text-white flex items-center justify-between ${
+                      active
+                        ? 'bg-indigo-600 !text-white shadow-md shadow-indigo-600/30'
+                        : 'hover:bg-white/10 hover:!text-amber-300'
+                    }`}
+                  >
+                    <span className="!text-white" style={{ color: '#ffffff' }}>
+                      {link.label}
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
 
             {/* CTA at Bottom of Drawer */}
             <Link
               to="/book-visit"
               onClick={() => setMobileOpen(false)}
-              className="cta-btn"
-              style={{
-                textAlign: 'center',
-                display: 'block',
-                padding: '14px',
-                borderRadius: '30px',
-                fontWeight: 700,
-                fontSize: '14px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-              }}
+              className="text-center block py-3.5 px-6 rounded-full font-bold text-xs uppercase tracking-wider bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 transition-all shadow-md no-underline border-0 mt-4"
             >
               Enquire Now →
             </Link>

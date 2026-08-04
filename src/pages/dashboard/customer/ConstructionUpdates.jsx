@@ -1,11 +1,27 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaHardHat, FaImage, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { LuHardHat, LuImage, LuChevronDown, LuChevronUp } from 'react-icons/lu';
 import { getMyPlotUpdates } from '../../../api/constructionUpdates';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 import { getAssetUrl } from '../../../config';
 
-const stageColor = { planning: '#3a2fb8', foundation: '#d99f36', structure: '#5b4fe0', roofing: '#7a3fd6', finishing: '#2f9e5c', completed: '#2f9e5c' };
+const stageBadgeStyle = {
+  planning: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  foundation: 'bg-amber-50 text-amber-700 border-amber-200',
+  structure: 'bg-purple-50 text-purple-700 border-purple-200',
+  roofing: 'bg-pink-50 text-pink-700 border-pink-200',
+  finishing: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  completed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+};
+
+const stageDotStyle = {
+  planning: 'bg-indigo-600',
+  foundation: 'bg-amber-500',
+  structure: 'bg-purple-600',
+  roofing: 'bg-pink-600',
+  finishing: 'bg-emerald-600',
+  completed: 'bg-emerald-600',
+};
 
 export default function ConstructionUpdates() {
   const [updates, setUpdates] = useState([]);
@@ -27,7 +43,9 @@ export default function ConstructionUpdates() {
     }
   };
 
-  useEffect(() => { fetchUpdates(); }, []);
+  useEffect(() => {
+    fetchUpdates();
+  }, []);
 
   const groupedByProject = updates.reduce((acc, u) => {
     const key = u.project?.name || u.projectName || 'General';
@@ -56,13 +74,21 @@ export default function ConstructionUpdates() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Construction Updates</h1>
-          <p className="text-slate-500 text-sm">Track the progress of your property construction</p>
+          <h1 className="font-['Poppins',sans-serif] text-2xl font-bold text-slate-900">
+            Construction Updates
+          </h1>
+          <p className="text-slate-500 text-xs sm:text-sm">
+            Track the progress of your property construction
+          </p>
         </div>
-        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
-          <FaHardHat className="text-slate-300 text-4xl mx-auto mb-3" />
-          <p className="text-slate-500 font-medium">No updates yet</p>
-          <p className="text-slate-400 text-sm mt-1">Updates will appear here once construction begins</p>
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs">
+          <div className="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-3xl mx-auto mb-3">
+            <LuHardHat />
+          </div>
+          <p className="text-slate-700 font-bold text-sm">No updates yet</p>
+          <p className="text-slate-400 text-xs mt-1">
+            Updates will appear here once construction begins
+          </p>
         </div>
       </div>
     );
@@ -71,32 +97,47 @@ export default function ConstructionUpdates() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Construction Updates</h1>
-        <p className="text-slate-500 text-sm">Track the progress of your property construction</p>
+        <h1 className="font-['Poppins',sans-serif] text-2xl font-bold text-slate-900">
+          Construction Updates
+        </h1>
+        <p className="text-slate-500 text-xs sm:text-sm">
+          Track the progress of your property construction
+        </p>
       </div>
 
       {Object.entries(groupedByProject).map(([projectName, projectUpdates]) => {
-        const avgProgress = projectUpdates.length > 0
-          ? Math.round(projectUpdates.reduce((sum, u) => sum + (u.progressPercent || 0), 0) / projectUpdates.length)
-          : 0;
+        const avgProgress =
+          projectUpdates.length > 0
+            ? Math.round(
+                projectUpdates.reduce((sum, u) => sum + (u.progressPercent || 0), 0) /
+                  projectUpdates.length
+              )
+            : 0;
 
         return (
-          <div key={projectName} className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div key={projectName} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-slate-800">{projectName}</h2>
-              <span className="text-sm text-slate-500">{avgProgress}% Complete</span>
+              <h2 className="font-['Poppins',sans-serif] text-base sm:text-lg font-bold text-slate-900">
+                {projectName}
+              </h2>
+              <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100">
+                {avgProgress}% Complete
+              </span>
             </div>
 
-            <div className="w-full bg-slate-100 rounded-full h-2.5 mb-6">
+            <div className="w-full bg-slate-100 rounded-full h-2.5 mb-6 overflow-hidden">
               <div
-                className="bg-orange-600 h-2.5 rounded-full transition-all duration-500"
-                style={{ width: avgProgress + '%' }}
+                className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
+                style={{ width: `${avgProgress}%` }}
               />
             </div>
 
             <div className="relative">
               {projectUpdates.map((u, i) => {
-                const stageColorVal = stageColor[u.stage] || '#3a2fb8';
+                const bStyle =
+                  stageBadgeStyle[u.stage] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                const dStyle = stageDotStyle[u.stage] || 'bg-indigo-600';
+
                 return (
                   <motion.div
                     key={u._id || i}
@@ -106,63 +147,77 @@ export default function ConstructionUpdates() {
                     className="relative pl-8 pb-6 last:pb-0"
                   >
                     <div
-                      className="absolute left-0 top-1 w-3 h-3 rounded-full border-2 border-white shadow"
-                      style={{ background: stageColorVal }}
+                      className={`absolute left-0 top-1 w-3.5 h-3.5 rounded-full border-2 border-white shadow-xs ${dStyle}`}
                     />
                     {i < projectUpdates.length - 1 && (
-                      <div className="absolute left-[5px] top-4 bottom-0 w-0.5 bg-slate-200" />
+                      <div className="absolute left-[6px] top-4 bottom-0 w-0.5 bg-slate-200" />
                     )}
 
                     <div
-                      className="bg-slate-50 rounded-xl p-4 cursor-pointer hover:bg-slate-100 transition-colors"
+                      className="bg-slate-50 rounded-xl p-4 cursor-pointer hover:bg-slate-100/80 transition-colors border border-slate-200/60"
                       onClick={() => setExpanded(expanded === u._id ? null : u._id)}
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-semibold text-slate-800">{u.title || 'Progress Update'}</p>
-                          <div className="flex items-center gap-2 mt-1">
+                          <p className="text-xs sm:text-sm font-bold text-slate-900">
+                            {u.title || 'Progress Update'}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1 flex-wrap">
                             {u.stage && (
                               <span
-                                className="text-xs font-bold px-2 py-0.5 rounded-full"
-                                style={{ background: stageColorVal + '20', color: stageColorVal }}
+                                className={`text-[10px] font-bold px-2 py-0.5 rounded-md border capitalize ${bStyle}`}
                               >
-                                {u.stage.charAt(0).toUpperCase() + u.stage.slice(1)}
+                                {u.stage}
                               </span>
                             )}
-                            <span className="text-xs text-slate-400">{u.progressPercent || 0}%</span>
-                            <span className="text-xs text-slate-400">{new Date(u.createdAt || u.date).toLocaleDateString()}</span>
+                            <span className="text-[11px] font-semibold text-slate-500">
+                              {u.progressPercent || 0}%
+                            </span>
+                            <span className="text-[11px] text-slate-400">
+                              {new Date(u.createdAt || u.date).toLocaleDateString()}
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
                           {u.images?.length > 0 && (
-                            <div className="flex items-center gap-1 text-xs text-slate-400">
-                              <FaImage /> {u.images.length}
+                            <div className="flex items-center gap-1 text-xs text-slate-500 font-semibold bg-white px-2 py-1 rounded-md border border-slate-200">
+                              <LuImage className="text-xs" /> {u.images.length}
                             </div>
                           )}
-                          {expanded === u._id ? <FaChevronUp className="text-slate-400" /> : <FaChevronDown className="text-slate-400" />}
+                          {expanded === u._id ? (
+                            <LuChevronUp className="text-slate-400 text-base" />
+                          ) : (
+                            <LuChevronDown className="text-slate-400 text-base" />
+                          )}
                         </div>
                       </div>
 
                       {u.description && (
-                        <p className="text-sm text-slate-600 mt-2">{u.description}</p>
+                        <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                          {u.description}
+                        </p>
                       )}
 
                       {expanded === u._id && (
-                        <div className="mt-3">
+                        <div className="mt-3 pt-3 border-t border-slate-200/80">
                           {u.engineerReport && (
-                            <div className="mb-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                              <p className="text-xs font-bold text-blue-700 mb-1">Engineer Report</p>
-                              <p className="text-sm text-blue-600">{u.engineerReport}</p>
+                            <div className="mb-3 p-3 bg-blue-50/80 rounded-xl border border-blue-100">
+                              <p className="text-xs font-bold text-blue-800 mb-1">
+                                Engineer Report
+                              </p>
+                              <p className="text-xs text-blue-700 leading-relaxed">
+                                {u.engineerReport}
+                              </p>
                             </div>
                           )}
                           {u.images?.length > 0 && (
-                            <div className="grid grid-cols-3 gap-2">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                               {u.images.map((img, j) => (
                                 <img
                                   key={j}
                                   src={getAssetUrl(img)}
                                   alt={`Update ${i + 1} - ${j + 1}`}
-                                  className="w-full h-24 object-cover rounded-lg"
+                                  className="w-full h-24 object-cover rounded-xl border border-slate-200 bg-slate-100"
                                 />
                               ))}
                             </div>

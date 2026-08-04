@@ -26,8 +26,11 @@ export default function ReferralProgram() {
   const [friendEmail, setFriendEmail] = useState('');
   const [notes, setNotes] = useState('');
 
-  const userReferralCode = user?.referralCode || (user?._id ? `REF-${user._id.slice(-6).toUpperCase()}` : '');
-  const referralLink = userReferralCode ? `${window.location.origin}/referral-program?ref=${userReferralCode}` : '';
+  const userReferralCode =
+    user?.referralCode || (user?._id ? `REF-${user._id.slice(-6).toUpperCase()}` : '');
+  const referralLink = userReferralCode
+    ? `${window.location.origin}/referral-program?ref=${userReferralCode}`
+    : '';
 
   const activeFriendName = friendName.trim() || submittedFriend?.name || '';
   const activeFriendPhone = friendPhone.trim() || submittedFriend?.phone || '';
@@ -35,7 +38,9 @@ export default function ReferralProgram() {
   const handleCopy = (text) => {
     if (!text) return;
     if (!activeFriendName || !activeFriendPhone) {
-      toast.error("Please fill in your friend's details (Name & Phone) first before copying your referral link.");
+      toast.error(
+        "Please fill in your friend's details (Name & Phone) first before copying your referral link."
+      );
       return;
     }
     navigator.clipboard.writeText(text);
@@ -47,7 +52,9 @@ export default function ReferralProgram() {
   const handleWhatsAppShare = () => {
     if (!referralLink) return;
     if (!activeFriendName || !activeFriendPhone) {
-      toast.error("Please fill in your friend's details (Name & Phone) first before sharing via WhatsApp.");
+      toast.error(
+        "Please fill in your friend's details (Name & Phone) first before sharing via WhatsApp."
+      );
       return;
     }
     const message = encodeURIComponent(
@@ -87,7 +94,9 @@ export default function ReferralProgram() {
       });
 
       setSubmittedFriend({ name: currentFriendName, phone: currentFriendPhone });
-      toast.success(`Referral submitted for ${currentFriendName}! You can now copy or share your link.`);
+      toast.success(
+        `Referral submitted for ${currentFriendName}! You can now copy or share your link.`
+      );
       setFriendName('');
       setFriendPhone('');
       setFriendEmail('');
@@ -119,11 +128,11 @@ export default function ReferralProgram() {
   ];
 
   return (
-    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+    <div className="bg-[#f7f7fb] min-h-screen pb-24">
       {/* HEADER BANNER COMPONENT */}
       <ReferralHeader />
 
-      <div className="wrap max-w-6xl mx-auto px-4" style={{ marginTop: '48px' }}>
+      <div className="wrap max-w-6xl mx-auto px-4 mt-12">
         {/* 3-STEP PROCESS COMPONENT */}
         <ReferralSteps />
 

@@ -2,17 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  FaStar, FaMapMarkerAlt, FaRulerCombined, FaCompass,
-  FaRoad, FaStarHalfAlt, FaCheckCircle, FaArrowRight,
-  FaPhone, FaRedo,
-} from 'react-icons/fa';
+  LuStar, LuMapPin, LuRuler, LuCompass, LuSparkles,
+  LuMap, LuCheck, LuArrowRight, LuPhone, LuRotateCcw,
+  LuSearch, LuHouse, LuBuilding, LuBuilding2, LuLandmark, LuCrown
+} from 'react-icons/lu';
 
 const budgetRanges = [
-  { label: 'Under ₹10 Lakhs', value: '0-1000000', icon: '🏠', desc: 'Affordable plots to get started' },
-  { label: '₹10 – ₹25 Lakhs', value: '1000000-2500000', icon: '🏡', desc: 'Value residential plots' },
-  { label: '₹25 – ₹40 Lakhs', value: '2500000-4000000', icon: '🏘️', desc: 'Mid-range premium options' },
-  { label: '₹40 – ₹60 Lakhs', value: '4000000-6000000', icon: '🏢', desc: 'Premium investment plots' },
-  { label: 'Above ₹60 Lakhs', value: '6000000+', icon: '🏰', desc: 'Luxury & investment-grade land' },
+  { label: 'Under ₹10 Lakhs', value: '0-1000000', icon: LuHouse, desc: 'Affordable plots to get started' },
+  { label: '₹10 – ₹25 Lakhs', value: '1000000-2500000', icon: LuBuilding, desc: 'Value residential plots' },
+  { label: '₹25 – ₹40 Lakhs', value: '2500000-4000000', icon: LuBuilding2, desc: 'Mid-range premium options' },
+  { label: '₹40 – ₹60 Lakhs', value: '4000000-6000000', icon: LuLandmark, desc: 'Premium investment plots' },
+  { label: 'Above ₹60 Lakhs', value: '6000000+', icon: LuCrown, desc: 'Luxury & investment-grade land' },
 ];
 
 const PROJECT_IMAGES = [
@@ -30,21 +30,32 @@ const formatCurrency = (val) => {
 };
 
 const ScoreRing = ({ score }) => {
-  const r = 26;
+  const r = 24;
   const circ = 2 * Math.PI * r;
   const offset = circ - (score / 100) * circ;
   const color = score >= 75 ? '#2ecc71' : score >= 50 ? '#f39c12' : '#e74c3c';
   return (
-    <div className="score-ring-wrap">
-      <svg width="64" height="64" style={{ transform: 'rotate(-90deg)' }}>
-        <circle cx="32" cy="32" r={r} fill="none" stroke="#e6e6f0" strokeWidth="5" />
-        <circle cx="32" cy="32" r={r} fill="none" stroke={color} strokeWidth="5"
-          strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
-          style={{ transition: 'stroke-dashoffset 1s ease' }} />
+    <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0">
+      <svg className="w-14 h-14 sm:w-16 sm:h-16 -rotate-90">
+        <circle cx="32" cy="32" r={r} fill="none" stroke="#e6e6f0" strokeWidth="4.5" />
+        <circle
+          cx="32"
+          cy="32"
+          r={r}
+          fill="none"
+          stroke={color}
+          strokeWidth="4.5"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          className="transition-all duration-1000 ease-out"
+        />
       </svg>
-      <div className="score-ring-inner">
-        <span className="score-ring-num" style={{ color }}>{score}</span>
-        <span className="score-ring-lbl">% MATCH</span>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-sm sm:text-base font-extrabold leading-none" style={{ color }}>
+          {score}
+        </span>
+        <span className="text-[8px] text-slate-500 font-semibold mt-0.5">% MATCH</span>
       </div>
     </div>
   );
@@ -58,14 +69,18 @@ export default function RecommendationResults({
   const plots = results?.recommendedPlots || [];
 
   return (
-    <div className="ai-page">
+    <div className="bg-[#f7f7fb] min-h-screen pb-[90px]">
       {/* Header */}
-      <div className="ai-header">
-        <div className="ai-header-orb" />
-        <div className="wrap" style={{ textAlign: 'center' }}>
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>AI POWERED ANALYSIS</span>
-          <h1 className="ai-header-title">Your Matched Properties</h1>
-          <p className="ai-header-desc">
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-center py-16 px-4 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-white/10 text-amber-400 border border-white/10">
+            AI POWERED ANALYSIS
+          </span>
+          <h1 className="font-['Poppins',sans-serif] text-3xl sm:text-4xl font-extrabold text-white my-3">
+            Your Matched Properties
+          </h1>
+          <p className="text-slate-300 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
             {plots.length > 0
               ? `Found ${results?.totalResults || plots.length} plots — showing top ${plots.length} matches ranked by compatibility.`
               : 'No plots matched your exact criteria. Try adjusting your preferences.'}
@@ -73,81 +88,126 @@ export default function RecommendationResults({
         </div>
       </div>
 
-      <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10 }}>
-        <div className="ai-results-container">
+      <div className="max-w-4xl mx-auto px-4 -mt-7 relative z-10">
+        <div>
           {/* Preference pills */}
-          <div className="ai-prefs-bar">
-            <span className="ai-prefs-label">Your Preferences:</span>
-            <span className="ai-pill">{budgetRanges.find((b) => b.value === formData.budget)?.label || formData.budget}</span>
-            <span className="ai-pill">{formData.location}</span>
-            <span className="ai-pill">{formData.propertyType}</span>
-            <span className="ai-pill">{formData.purpose}</span>
+          <div className="bg-white rounded-xl border border-slate-200 p-3.5 sm:p-5 mb-6 flex flex-wrap gap-2.5 items-center shadow-xs">
+            <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Your Preferences:</span>
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">
+              {budgetRanges.find((b) => b.value === formData.budget)?.label || formData.budget}
+            </span>
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">{formData.location}</span>
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">{formData.propertyType}</span>
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">{formData.purpose}</span>
           </div>
 
           {plots.length === 0 ? (
-            <div className="ai-empty-card">
-              <div className="ai-empty-icon">🔍</div>
-              <h3 className="ai-empty-title">No Matching Plots Found</h3>
-              <p className="ai-empty-desc">We couldn't find plots matching your exact preferences. Try adjusting your budget range or exploring a different location.</p>
-              <button onClick={resetWizard} className="ai-retry-btn"><FaRedo /> Adjust Preferences</button>
+            <div className="bg-white rounded-2xl border border-slate-200 p-10 sm:p-16 text-center shadow-xs">
+              <LuSearch size={48} className="text-indigo-500 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-slate-800 mb-2">No Matching Plots Found</h3>
+              <p className="text-sm text-slate-500 max-w-md mx-auto mb-6 leading-relaxed">
+                We couldn't find plots matching your exact preferences. Try adjusting your budget range or exploring a different location.
+              </p>
+              <button
+                onClick={resetWizard}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-bold text-sm px-6 py-3 rounded-xl transition-all cursor-pointer"
+              >
+                <LuRotateCcw size={16} /> Adjust Preferences
+              </button>
             </div>
           ) : (
-            <div className="ai-results-list">
+            <div className="flex flex-col gap-4">
               {plots.map((rec, i) => {
                 const plot = rec.plot || {};
                 const project = rec.project || plot.project || {};
                 const image = project.images?.[0] || PROJECT_IMAGES[i % PROJECT_IMAGES.length];
                 return (
-                  <motion.div key={rec.plot?._id || i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
-                    className="ai-result-card">
-                    {i === 0 && <div className="ai-top-badge"><FaStar /> TOP MATCH</div>}
-                    <div className="ai-result-img-wrap">
-                      <img src={image} alt={plot.plotNumber || 'Plot'} className="ai-result-img" />
-                      <div className="ai-result-plot-tag">Plot {plot.plotNumber || 'N/A'}</div>
+                  <motion.div
+                    key={rec.plot?._id || i}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                    className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all overflow-hidden flex flex-col md:flex-row relative group"
+                  >
+                    {i === 0 && (
+                      <div className="absolute top-3.5 left-3.5 z-10 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-full flex items-center gap-1 shadow-xs">
+                        <LuStar className="fill-current" size={12} /> TOP MATCH
+                      </div>
+                    )}
+                    <div className="w-full md:w-56 h-48 md:h-auto relative overflow-hidden shrink-0">
+                      <img src={image} alt={plot.plotNumber || 'Plot'} className="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-300" />
+                      <div className="absolute bottom-2.5 left-2.5 bg-slate-950/80 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg">
+                        Plot {plot.plotNumber || 'N/A'}
+                      </div>
                     </div>
-                    <div className="ai-result-body">
-                      <div className="ai-result-head">
-                        <div className="ai-result-head-text">
-                          <h3 className="ai-result-name">{project.name || 'Recommended Plot'}</h3>
-                          <p className="ai-result-loc">
-                            <FaMapMarkerAlt />
+                    <div className="flex-1 p-4.5 sm:p-6 flex flex-col min-w-0">
+                      <div className="flex flex-row justify-between items-start gap-3.5 mb-1">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base sm:text-lg font-extrabold text-slate-900 m-0 truncate">
+                            {project.name || 'Recommended Plot'}
+                          </h3>
+                          <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
+                            <LuMapPin size={13} className="text-indigo-600 shrink-0" />
                             {project.location?.city || ''}{project.location?.state ? `, ${project.location.state}` : ''}
                           </p>
                         </div>
                         <ScoreRing score={rec.score} />
                       </div>
 
-                      <div className="ai-result-meta">
-                        <span className="ai-meta-badge"><FaRulerCombined /> {plot.size ? `${plot.size} sq.ft` : '—'}</span>
-                        {plot.facing && <span className="ai-meta-badge"><FaCompass /> {plot.facing}</span>}
-                        {plot.corner && <span className="ai-meta-badge ai-meta-green"><FaStarHalfAlt /> Corner</span>}
-                        {plot.roadWidth && <span className="ai-meta-badge"><FaRoad /> {plot.roadWidth}ft road</span>}
+                      <div className="flex flex-wrap gap-2 my-2.5">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 border border-slate-200">
+                          <LuRuler size={13} /> {plot.size ? `${plot.size} sq.ft` : '—'}
+                        </span>
+                        {plot.facing && (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 border border-slate-200">
+                            <LuCompass size={13} /> {plot.facing}
+                          </span>
+                        )}
+                        {plot.corner && (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <LuSparkles size={13} /> Corner
+                          </span>
+                        )}
+                        {plot.roadWidth && (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 border border-slate-200">
+                            <LuMap size={13} /> {plot.roadWidth}ft road
+                          </span>
+                        )}
                       </div>
 
                       {rec.matchReasons?.length > 0 && (
-                        <div className="ai-reasons">
+                        <div className="mb-3">
                           {rec.matchReasons.slice(0, 3).map((reason, ri) => (
-                            <div key={ri} className="ai-reason"><FaCheckCircle className="ai-reason-icon" />{reason}</div>
+                            <div key={ri} className="flex items-center gap-1.5 text-xs text-slate-600 mb-1">
+                              <LuCheck size={13} className="text-emerald-500 shrink-0 font-bold" />
+                              {reason}
+                            </div>
                           ))}
                         </div>
                       )}
 
                       {rec.scoreBreakdown?.length > 0 && (
-                        <div className="ai-breakdown">
+                        <div className="flex flex-wrap gap-1.5 mb-3.5">
                           {rec.scoreBreakdown.slice(0, 4).map((item, bi) => (
-                            <span key={bi} className="ai-breakdown-tag">{item.label} +{item.points}</span>
+                            <span key={bi} className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">
+                              {item.label} +{item.points}
+                            </span>
                           ))}
                         </div>
                       )}
 
-                      <div className="ai-result-foot">
-                        <div className="ai-result-price-col">
-                          <span className="ai-result-price">{formatCurrency(plot.price)}</span>
-                          {plot.pricePerSqft && <span className="ai-result-psf">@ ₹{plot.pricePerSqft.toLocaleString('en-IN')}/sq.ft</span>}
+                      <div className="mt-auto pt-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div className="flex gap-2 items-baseline">
+                          <span className="font-extrabold text-amber-700 text-lg">{formatCurrency(plot.price)}</span>
+                          {plot.pricePerSqft && <span className="text-[11.5px] text-slate-500">@ ₹{plot.pricePerSqft.toLocaleString('en-IN')}/sq.ft</span>}
                         </div>
-                        <div className="ai-result-actions">
-                          <Link to="/book-visit" className="btn-gold ai-visit-btn">Schedule Visit <FaArrowRight /></Link>
-                          <a href="tel:+917000012345" className="ai-call-btn"><FaPhone /> Call</a>
+                        <div className="flex gap-2 w-full sm:w-auto">
+                          <Link to="/book-visit" className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-bold text-xs px-4.5 py-2.5 rounded-lg no-underline transition-all shadow-xs">
+                            Schedule Visit <LuArrowRight size={14} />
+                          </Link>
+                          <a href="tel:+917000012345" className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs transition-all no-underline">
+                            <LuPhone size={14} /> Call
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -157,150 +217,13 @@ export default function RecommendationResults({
             </div>
           )}
 
-          <div className="ai-reset-row">
-            <button onClick={resetWizard} className="ai-reset-link"><FaRedo /> Start New Search</button>
+          <div className="text-center mt-9">
+            <button onClick={resetWizard} className="bg-transparent border-0 text-indigo-600 hover:bg-indigo-50 font-semibold text-sm cursor-pointer inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg transition-colors">
+              <LuRotateCcw size={16} /> Start New Search
+            </button>
           </div>
         </div>
       </div>
-
-      <style>{resultStyles}</style>
     </div>
   );
 }
-
-const resultStyles = `
-  /* --- Results Container --- */
-  .ai-results-container { max-width: 860px; margin: 0 auto; }
-
-  /* --- Preference Bar --- */
-  .ai-prefs-bar {
-    background: #fff; border-radius: 14px; border: 1px solid var(--line);
-    padding: 14px 20px; margin-bottom: 24px;
-    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-    box-shadow: 0 2px 10px rgba(20,20,60,.04);
-  }
-  .ai-prefs-label { color: #6b6f8a; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
-  .ai-pill { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px; background: #efeafe; color: var(--indigo); }
-
-  /* --- Results List --- */
-  .ai-results-list { display: flex; flex-direction: column; gap: 16px; }
-
-  /* --- Result Card --- */
-  .ai-result-card {
-    background: #fff; border-radius: 16px; border: 1px solid var(--line);
-    box-shadow: 0 4px 20px rgba(20,20,60,.05); overflow: hidden;
-    display: flex; flex-direction: row; position: relative; transition: box-shadow .25s, transform .25s;
-  }
-  .ai-result-card:hover { box-shadow: 0 12px 36px rgba(20,20,60,.1); transform: translateY(-3px); }
-  .ai-top-badge {
-    position: absolute; top: 14px; left: 14px; z-index: 2;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: var(--navy); font-size: 10px; font-weight: 700;
-    padding: 5px 12px; border-radius: 12px;
-    display: flex; align-items: center; gap: 4px;
-  }
-
-  /* --- Result Image --- */
-  .ai-result-img-wrap { width: 220px; min-height: 200px; position: relative; overflow: hidden; flex-shrink: 0; }
-  .ai-result-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
-  .ai-result-card:hover .ai-result-img { transform: scale(1.04); }
-  .ai-result-plot-tag {
-    position: absolute; bottom: 10px; left: 10px;
-    background: rgba(15,18,48,.85); backdrop-filter: blur(6px);
-    color: #fff; font-size: 11px; font-weight: 600;
-    padding: 5px 10px; border-radius: 8px;
-  }
-
-  /* --- Result Body --- */
-  .ai-result-body { flex: 1; padding: 22px 26px; display: flex; flex-direction: column; min-width: 0; }
-  .ai-result-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 4px; }
-  .ai-result-head-text { flex: 1; min-width: 0; }
-  .ai-result-name { font-size: 18px; font-weight: 800; color: var(--text); margin: 0 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ai-result-loc { font-size: 12.5px; color: #6b6f8a; display: flex; align-items: center; gap: 5px; margin: 0; }
-
-  /* --- Score Ring --- */
-  .score-ring-wrap { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
-  .score-ring-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .score-ring-num { font-size: 16px; font-weight: 800; line-height: 1; }
-  .score-ring-lbl { font-size: 8px; color: #6b6f8a; font-weight: 600; }
-
-  /* --- Meta Badges --- */
-  .ai-result-meta { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 12px; }
-  .ai-meta-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 11px; font-weight: 600; padding: 4px 10px;
-    border-radius: 8px; background: #f7f7fb; color: #6b6f8a; border: 1px solid #e6e6f0;
-  }
-  .ai-meta-green { background: #e6f7ed; color: #27ae60; border-color: #c3ecd4; }
-
-  /* --- Reasons --- */
-  .ai-reasons { margin-bottom: 12px; }
-  .ai-reason { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6b6f8a; margin-bottom: 4px; }
-  .ai-reason-icon { color: #2ecc71; font-size: 10px; flex-shrink: 0; }
-
-  /* --- Score Breakdown --- */
-  .ai-breakdown { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-  .ai-breakdown-tag {
-    font-size: 10px; font-weight: 600; padding: 3px 8px;
-    border-radius: 6px; background: #f7f7fb; color: #6b6f8a; border: 1px solid #e6e6f0;
-  }
-
-  /* --- Result Footer --- */
-  .ai-result-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 14px; border-top: 1px solid #f0f0f6; }
-  .ai-result-price-col { display: flex; gap: 12px; align-items: baseline; }
-  .ai-result-price { font-weight: 800; color: var(--gold-dark); font-size: 18px; }
-  .ai-result-psf { font-size: 11.5px; color: #6b6f8a; }
-  .ai-result-actions { display: flex; gap: 8px; }
-  .ai-visit-btn { text-decoration: none; font-size: 12.5px; padding: 9px 18px; border: none; border-radius: 8px; }
-  .ai-call-btn {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 9px 16px; border-radius: 8px; border: 1px solid var(--line);
-    background: #fff; color: var(--text); font-size: 12.5px;
-    font-weight: 600; cursor: pointer; text-decoration: none; transition: all .2s;
-  }
-  .ai-call-btn:hover { border-color: #c5c3ea; background: #f7f7fb; }
-
-  /* --- Empty State --- */
-  .ai-empty-card {
-    background: #fff; border-radius: 16px; border: 1px solid var(--line);
-    padding: 60px 32px; text-align: center;
-    box-shadow: 0 4px 20px rgba(20,20,60,.05);
-  }
-  .ai-empty-icon { font-size: 48px; margin-bottom: 16px; }
-  .ai-empty-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-  .ai-empty-desc { font-size: 14px; color: #6b6f8a; max-width: 400px; margin: 0 auto 24px; line-height: 1.6; }
-  .ai-retry-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: var(--navy); padding: 12px 24px; border-radius: 10px;
-    font-size: 14px; font-weight: 700; border: none; cursor: pointer;
-  }
-
-  /* --- Reset Row --- */
-  .ai-reset-row { text-align: center; margin-top: 36px; }
-  .ai-reset-link {
-    background: none; border: none; color: var(--indigo);
-    font-size: 14px; font-weight: 600; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 20px; border-radius: 8px; transition: background .2s;
-  }
-  .ai-reset-link:hover { background: #f1eefe; }
-
-  /* --- Responsive --- */
-  @media (max-width: 768px) {
-    .ai-result-card { flex-direction: column; }
-    .ai-result-img-wrap { width: 100%; min-height: 180px; max-height: 200px; }
-    .ai-result-body { padding: 18px 18px; }
-    .ai-result-name { font-size: 16px; white-space: normal; }
-    .ai-result-head { flex-direction: column-reverse; gap: 10px; }
-    .score-ring-wrap { width: 56px; height: 56px; }
-    .score-ring-num { font-size: 14px; }
-    .ai-result-foot { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .ai-result-actions { width: 100%; }
-    .ai-visit-btn { flex: 1; justify-content: center; }
-    .ai-call-btn { flex: 1; justify-content: center; }
-    .ai-top-badge { top: 10px; left: 10px; }
-    .ai-prefs-bar { padding: 12px 16px; }
-    .ai-empty-card { padding: 40px 20px; }
-  }
-`;

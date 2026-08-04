@@ -1,38 +1,6 @@
 import React, { useState } from 'react';
 import { LuTrendingUp } from 'react-icons/lu';
 
-const labelRow = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' };
-const labelStyle = { fontSize: '13px', fontWeight: 600, color: 'var(--text)' };
-const valStyle = { fontSize: '14.5px', fontWeight: 700, color: 'var(--indigo)' };
-const rangeLimits = { display: 'flex', justifyContent: 'space-between', fontSize: '10.5px', color: '#9ea1c4', marginTop: '4px' };
-
-const sliderStyle = {
-  width: '100%',
-  height: '5px',
-  borderRadius: '3px',
-  background: '#e6e6f0',
-  outline: 'none',
-  accentColor: 'var(--indigo)',
-  cursor: 'pointer',
-};
-
-const resCard = {
-  background: '#f7f7fb',
-  border: '1px solid var(--line)',
-  borderRadius: '10px',
-  padding: '14px 16px',
-  display: 'flex',
-  flexDirection: 'column',
-};
-const resCardLbl = { fontSize: '11px', color: 'var(--gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.3px' };
-const resCardVal = { fontSize: '16px', fontWeight: 800, marginTop: '2px' };
-
-const calcMedia = `
-  @media(max-width: 991px) {
-    .calc-grid-el { grid-template-columns: 1fr !important; gap: 32px !important; }
-  }
-`;
-
 export default function InvestmentCalculator() {
   const [amount, setAmount] = useState(5000000);
   const [rate, setRate] = useState(12);
@@ -45,67 +13,87 @@ export default function InvestmentCalculator() {
   const formatCurrency = (val) => '₹ ' + Math.round(val).toLocaleString('en-IN');
 
   return (
-    <div style={{
-      background: '#fff', borderRadius: '16px', border: '1px solid var(--line)',
-      boxShadow: '0 10px 30px rgba(20,20,60,.04)', padding: '36px',
-    }}>
-      <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <LuTrendingUp size={22} className="text-indigo-600" /> Real Estate Appreciation &amp; Investment returns
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 sm:p-9 transition-all">
+      <h2 className="font-['Poppins',sans-serif] text-xl font-extrabold text-slate-900 mb-7 flex items-center gap-2">
+        <LuTrendingUp size={22} className="text-indigo-600 shrink-0" /> Real Estate Appreciation &amp; Investment returns
       </h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-9">
 
         {/* Sliders */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="flex flex-col gap-6">
           <div>
-            <div style={labelRow}>
-              <span style={labelStyle}>Investment Amount</span>
-              <span style={valStyle}>{formatCurrency(amount)}</span>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-800">Investment Amount</span>
+              <span className="text-xs sm:text-sm font-bold text-indigo-700">{formatCurrency(amount)}</span>
             </div>
-            <input type="range" min={100000} max={50000000} step={100000} value={amount} onChange={(e) => setAmount(Number(e.target.value))} style={sliderStyle} />
-            <div style={rangeLimits}><span>₹1 Lakh</span><span>₹5 Crore</span></div>
+            <input
+              type="range"
+              min={100000}
+              max={50000000}
+              step={100000}
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+            />
+            <div className="flex justify-between text-[10.5px] text-slate-400 mt-1"><span>₹1 Lakh</span><span>₹5 Crore</span></div>
           </div>
           <div>
-            <div style={labelRow}>
-              <span style={labelStyle}>Expected Appreciation (p.a.)</span>
-              <span style={valStyle}>{rate}%</span>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-800">Expected Appreciation (p.a.)</span>
+              <span className="text-xs sm:text-sm font-bold text-indigo-700">{rate}%</span>
             </div>
-            <input type="range" min={1} max={30} step={0.5} value={rate} onChange={(e) => setRate(Number(e.target.value))} style={sliderStyle} />
-            <div style={rangeLimits}><span>1%</span><span>30%</span></div>
+            <input
+              type="range"
+              min={1}
+              max={30}
+              step={0.5}
+              value={rate}
+              onChange={(e) => setRate(Number(e.target.value))}
+              className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+            />
+            <div className="flex justify-between text-[10.5px] text-slate-400 mt-1"><span>1%</span><span>30%</span></div>
           </div>
           <div>
-            <div style={labelRow}>
-              <span style={labelStyle}>Holding Tenure</span>
-              <span style={valStyle}>{years} Years</span>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-800">Holding Tenure</span>
+              <span className="text-xs sm:text-sm font-bold text-indigo-700">{years} Years</span>
             </div>
-            <input type="range" min={1} max={25} step={1} value={years} onChange={(e) => setYears(Number(e.target.value))} style={sliderStyle} />
-            <div style={rangeLimits}><span>1 Year</span><span>25 Years</span></div>
+            <input
+              type="range"
+              min={1}
+              max={25}
+              step={1}
+              value={years}
+              onChange={(e) => setYears(Number(e.target.value))}
+              className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+            />
+            <div className="flex justify-between text-[10.5px] text-slate-400 mt-1"><span>1 Year</span><span>25 Years</span></div>
           </div>
         </div>
 
         {/* Results */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)', borderRadius: '12px', padding: '22px', color: '#fff' }}>
-            <p style={{ fontSize: '12.5px', color: '#d8d4ff', textTransform: 'uppercase', fontWeight: 600 }}>Estimated Future Value</p>
-            <p style={{ fontSize: '30px', fontWeight: 800, marginTop: '4px' }}>{formatCurrency(futureValue)}</p>
+        <div className="flex flex-col gap-4">
+          <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-purple-600 rounded-xl p-5.5 text-white shadow-lg shadow-indigo-900/10">
+            <p className="text-xs text-indigo-200 uppercase font-bold tracking-wider">Estimated Future Value</p>
+            <p className="text-3xl font-extrabold mt-1">{formatCurrency(futureValue)}</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div style={resCard}>
-              <span style={resCardLbl}>Wealth Gain</span>
-              <span style={{ ...resCardVal, color: '#2f9e5c' }}>{formatCurrency(futureValue - amount)}</span>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-[#f7f7fb] border border-slate-200 rounded-xl p-3.5 flex flex-col">
+              <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Wealth Gain</span>
+              <span className="text-base font-extrabold text-emerald-600 mt-0.5">{formatCurrency(futureValue - amount)}</span>
             </div>
-            <div style={resCard}>
-              <span style={resCardLbl}>ROI (Percentage)</span>
-              <span style={{ ...resCardVal, color: 'var(--indigo)' }}>{roi.toFixed(1)}%</span>
+            <div className="bg-[#f7f7fb] border border-slate-200 rounded-xl p-3.5 flex flex-col">
+              <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">ROI (Percentage)</span>
+              <span className="text-base font-extrabold text-indigo-700 mt-0.5">{roi.toFixed(1)}%</span>
             </div>
           </div>
-          <div style={resCard}>
-            <span style={resCardLbl}>Estimated Rental Yield</span>
-            <span style={{ ...resCardVal, color: 'var(--indigo)' }}>{rentalYield}% p.a.</span>
+          <div className="bg-[#f7f7fb] border border-slate-200 rounded-xl p-3.5 flex flex-col">
+            <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Estimated Rental Yield</span>
+            <span className="text-base font-extrabold text-indigo-700 mt-0.5">{rentalYield}% p.a.</span>
           </div>
         </div>
 
       </div>
-      <style>{calcMedia}</style>
     </div>
   );
 }

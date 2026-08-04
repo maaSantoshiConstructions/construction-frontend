@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { LuMenu, LuX } from 'react-icons/lu';
 
 import NavbarLogo from './navbar/NavbarLogo';
 import MobileDrawer from './navbar/MobileDrawer';
@@ -17,58 +17,53 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Self-contained responsive overrides */}
-      <style>{`
-        @media (max-width: 1100px) {
-          .hamburger-btn {
-            display: flex !important;
-          }
-          .cta-btn-desktop {
-            display: none !important;
-          }
-        }
-      `}</style>
-
-      <header>
-        <div className="nav" style={{ position: 'relative', zIndex: 1015 }}>
+      <header className="bg-[#0b0f2e] sticky top-0 z-[1100] border-b border-white/10">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between relative z-[1015]">
           {/* Brand */}
           <NavbarLogo onClick={() => setMobileOpen(false)} />
 
           {/* Desktop Nav */}
-          <nav className="links">
-            <Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link>
-            <Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link>
-            <Link to="/smart-features" className={isActive('/smart-features') ? 'active' : ''}>Smart Features</Link>
-            <Link to="/calculators" className={isActive('/calculators') ? 'active' : ''}>Calculators</Link>
-            <Link to={dashboardPath}>Owner Portal</Link>
-            <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>
-            <Link to="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link>
+          <nav className="hidden min-[1101px]:flex items-center gap-1">
+            {[
+              { path: '/', label: 'Home' },
+              { path: '/projects', label: 'Projects' },
+              { path: '/smart-features', label: 'Smart Features' },
+              { path: '/calculators', label: 'Calculators' },
+              { path: dashboardPath, label: 'Owner Portal' },
+              { path: '/about', label: 'About Us' },
+              { path: '/contact', label: 'Contact' },
+            ].map((item) => {
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all no-underline !text-white ${
+                    active
+                      ? '!bg-indigo-600/80 font-bold shadow-xs'
+                      : 'hover:!bg-white/15'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Action Row */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div className="flex items-center gap-3">
             {/* Desktop CTA */}
-            <Link to="/book-visit" className="cta-btn cta-btn-desktop">Enquire Now →</Link>
+            <Link to="/book-visit" className="cta-btn !hidden min-[1101px]:!flex items-center gap-2">
+              Enquire Now →
+            </Link>
 
             {/* Hamburger for Mobile */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="hamburger-btn"
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#fff',
-                fontSize: '22px',
-                cursor: 'pointer',
-                display: 'none',
-                outline: 'none',
-                padding: '6px',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 1020,
-              }}
+              className="min-[1101px]:hidden bg-transparent border-0 text-white text-2xl cursor-pointer outline-none p-1.5 flex items-center justify-center relative z-[1020]"
+              aria-label="Toggle Mobile Navigation Menu"
             >
-              {mobileOpen ? <FaTimes /> : <FaBars />}
+              {mobileOpen ? <LuX /> : <LuMenu />}
             </button>
           </div>
         </div>

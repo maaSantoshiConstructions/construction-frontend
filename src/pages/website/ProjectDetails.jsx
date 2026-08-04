@@ -44,9 +44,10 @@ export default function ProjectDetails() {
   if (error) return <ErrorMessage message={error} onRetry={fetchProject} />;
   if (!project) return <ErrorMessage message="Project not found" />;
 
-  const images = project.images?.length > 0 
-    ? project.images.map(img => getAssetUrl(img)) 
-    : [config.fallbackImageUrl];
+  const images =
+    project.images?.length > 0
+      ? project.images.map((img) => getAssetUrl(img))
+      : [config.fallbackImageUrl];
   const rera = project.reraNumber || 'Applied / Pending';
 
   // Format price
@@ -55,23 +56,35 @@ export default function ProjectDetails() {
     : 'Contact for Price';
 
   // Location string helper
-  const locationStr = typeof project.location === 'object'
-    ? `${project.location.address || ''}, ${project.location.city || ''}, ${project.location.state || ''}`.replace(/(^,\s*)|(,\s*$)/g, '')
-    : project.location || 'Bhubaneswar, Odisha';
+  const locationStr =
+    typeof project.location === 'object'
+      ? `${project.location.address || ''}, ${project.location.city || ''}, ${
+          project.location.state || ''
+        }`.replace(/(^,\s*)|(,\s*$)/g, '')
+      : project.location || 'Bhubaneswar, Odisha';
 
-  const finalAmenities = project.amenities?.length > 0
-    ? project.amenities
-    : ['Landscaped Gardens', '24/7 Security', 'Electricity Connection', 'Water Supply', 'Concrete Roads', 'Street Lights'];
+  const finalAmenities =
+    project.amenities?.length > 0
+      ? project.amenities
+      : [
+          'Landscaped Gardens',
+          '24/7 Security',
+          'Electricity Connection',
+          'Water Supply',
+          'Concrete Roads',
+          'Street Lights',
+        ];
 
-  const finalHighlights = project.highlights?.length > 0
-    ? project.highlights
-    : [
-        'Direct access to National Highway',
-        '15 minutes from nearest Railway Station',
-        'Close proximity to top schools & engineering colleges',
-        '5 km from upcoming IT parks & shopping centers',
-        'Quiet residential area with high growth prospects',
-      ];
+  const finalHighlights =
+    project.highlights?.length > 0
+      ? project.highlights
+      : [
+          'Direct access to National Highway',
+          '15 minutes from nearest Railway Station',
+          'Close proximity to top schools & engineering colleges',
+          '5 km from upcoming IT parks & shopping centers',
+          'Quiet residential area with high growth prospects',
+        ];
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -79,8 +92,7 @@ export default function ProjectDetails() {
   };
 
   return (
-    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
-      
+    <div className="bg-[#f7f7fb] min-h-screen pb-24">
       {/* ===== BREADCRUMB ===== */}
       <ProjectBreadcrumb projectName={project.name} />
 
@@ -104,12 +116,6 @@ export default function ProjectDetails() {
         finalHighlights={finalHighlights}
         getImageUrl={getAssetUrl}
       />
-
-      <style>{`
-        @media(max-width:991px){
-          .project-detail-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-        }
-      `}</style>
     </div>
   );
 }

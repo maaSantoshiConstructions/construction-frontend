@@ -39,68 +39,41 @@ export default function Calculators() {
   };
 
   return (
-    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
-
+    <div className="bg-[#f7f7fb] min-h-screen pb-24">
       {/* ===== HEADER ===== */}
-      <div style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
-        padding: '64px 0 60px',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
-        <div className="wrap">
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>FINANCIAL TOOLS</span>
-          <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '42px', fontWeight: 800, color: '#fff', margin: '12px 0 14px' }}>
+      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0b0f2e] via-[#161b45] to-[#1c1450]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+        <div className="wrap max-w-4xl mx-auto">
+          <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold tracking-wider uppercase mb-3">
+            FINANCIAL TOOLS
+          </span>
+          <h1 className="font-['Poppins',sans-serif] text-3xl sm:text-4xl md:text-5xl font-extrabold text-white my-3">
             Smart Calculators
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '520px', margin: '0 auto', lineHeight: 1.6 }}>
+          <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-md mx-auto leading-relaxed">
             Estimate land values, calculate your compound appreciation rates, construction budgets, and loan eligibilities instantly.
           </p>
         </div>
       </div>
 
       {/* ===== TABS NAV ===== */}
-      <div className="wrap" style={{ position: 'relative', zIndex: 10, marginTop: '-28px' }}>
-        <div style={{
-          background: '#fff',
-          borderRadius: '16px',
-          border: '1px solid var(--line)',
-          boxShadow: '0 15px 40px rgba(20,20,60,.1)',
-          padding: '6px',
-          display: 'flex',
-          gap: '4px',
-          marginBottom: '32px',
-          overflowX: 'auto',
-        }}>
+      <div className="wrap max-w-5xl mx-auto px-4 sm:px-6 -mt-7 relative z-10">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-1.5 flex gap-1 mb-8 overflow-x-auto">
           {tabs.map((tab) => {
             const TabIcon = tab.Icon;
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
+                type="button"
                 onClick={() => handleTabChange(tab.id)}
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '12px 24px',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  fontFamily: 'inherit',
-                  transition: '.2s',
-                  whiteSpace: 'nowrap',
-                  background: isActive ? 'var(--indigo)' : 'transparent',
-                  color: isActive ? '#fff' : 'var(--gray)',
-                  border: 'none',
-                }}
+                className={`flex-1 flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-xl text-xs sm:text-sm font-bold cursor-pointer transition-all whitespace-nowrap border-0 ${
+                  isActive
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                    : 'bg-transparent text-slate-600 hover:bg-slate-50'
+                }`}
               >
-                <TabIcon size={18} style={{ color: isActive ? '#fff' : 'var(--indigo)' }} />
+                <TabIcon className={`text-base shrink-0 ${isActive ? 'text-white' : 'text-indigo-600'}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -108,7 +81,7 @@ export default function Calculators() {
         </div>
 
         {/* ===== ACTIVE CALCULATOR CONTENT ===== */}
-        <div style={{ transition: 'all .3s' }}>
+        <div className="transition-all duration-300">
           {tabsContent[activeTab] || tabsContent['investment']}
         </div>
       </div>

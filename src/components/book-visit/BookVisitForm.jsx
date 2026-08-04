@@ -1,35 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from 'react-icons/fa';
-
-/* ===== Style helpers ===== */
-const labelStyle = {
-  display: 'block',
-  fontSize: '13px',
-  fontWeight: 600,
-  color: 'var(--text)',
-  marginBottom: '6px',
-};
-
-const inputStyle = (hasError) => ({
-  width: '100%',
-  padding: '11px 14px',
-  border: `1px solid ${hasError ? '#e55' : 'var(--line)'}`,
-  borderRadius: '8px',
-  fontSize: '14px',
-  color: 'var(--text)',
-  outline: 'none',
-  transition: 'border-color .2s',
-  background: '#fff',
-  fontFamily: 'Inter, sans-serif',
-  boxSizing: 'border-box',
-});
-
-const errStyle = {
-  color: '#c0392b',
-  fontSize: '11.5px',
-  marginTop: '4px',
-};
+import { LuCalendar, LuClock, LuMapPin } from 'react-icons/lu';
 
 export default function BookVisitForm({
   projects,
@@ -45,117 +16,119 @@ export default function BookVisitForm({
   const visitType = watch ? watch('visitType', 'physical') : 'physical';
 
   return (
-    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
+    <div className="bg-[#f7f7fb] min-h-screen pb-[90px]">
       {/* ===== PAGE HEADER ===== */}
-      <div style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
-        padding: '64px 0 60px',
-        position: 'relative',
-        overflow: 'hidden',
-        textAlign: 'center',
-      }}>
-        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
-        <div className="wrap">
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>SECURE YOUR PLOT</span>
-          <h1 style={{ fontFamily: 'Poppins, Inter, sans-serif', fontSize: '40px', fontWeight: 800, color: '#fff', marginTop: '8px', marginBottom: '14px' }}>
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-center py-16 px-4 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-white/10 text-amber-400 border border-white/10">
+            SECURE YOUR PLOT
+          </span>
+          <h1 className="font-['Poppins',sans-serif] text-3xl sm:text-4xl font-extrabold text-white mt-2 mb-3.5">
             Book a Site Visit
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '480px', margin: '0 auto', lineHeight: 1.6 }}>
+          <p className="text-slate-300 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
             Schedule a free site visit with our experts to explore your dream plot in person.
           </p>
         </div>
       </div>
 
       {/* ===== CONTENT ===== */}
-      <div className="wrap" style={{ marginTop: '-28px', position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+      <div className="max-w-xl mx-auto px-4 -mt-7 relative z-10">
+        <div>
           {/* ===== FORM CARD ===== */}
-          <div style={{
-            background: '#fff',
-            borderRadius: '16px',
-            border: '1px solid var(--line)',
-            boxShadow: '0 15px 40px rgba(20,20,60,.1)',
-            padding: '36px',
-          }}>
-            <span className="eyebrow">SCHEDULE YOUR VISIT</span>
-            <h2 style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px' }}>
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 sm:p-9">
+            <span className="inline-block px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider rounded-md bg-indigo-50 text-indigo-700 mb-2">
+              SCHEDULE YOUR VISIT
+            </span>
+            <h2 className="text-xl font-extrabold text-slate-900 mb-7">
               Select Date &amp; Time
             </h2>
 
-            <form onSubmit={handleSubmitForm(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <form onSubmit={handleSubmitForm(onSubmit)} className="flex flex-col gap-5">
               <div>
-                <label style={labelStyle}>Select Project</label>
+                <label className="block text-xs font-semibold text-slate-800 mb-1.5">Select Project</label>
                 <select
                   {...register('project', { required: 'Please select a project' })}
-                  style={inputStyle(!!errors.project)}
+                  className={`w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
+                    errors.project ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                  }`}
                 >
                   <option value="">Choose a project</option>
                   {projects.map((p) => <option key={p._id} value={p._id}>{p.name}</option>)}
                 </select>
-                {errors.project && <p style={errStyle}>{errors.project.message}</p>}
+                {errors.project && <p className="text-red-600 text-xs mt-1">{errors.project.message}</p>}
               </div>
 
               <div>
-                <label style={labelStyle}>Visit Type</label>
+                <label className="block text-xs font-semibold text-slate-800 mb-1.5">Visit Type</label>
                 <select
                   {...register('visitType', { required: 'Please select a visit type' })}
-                  style={inputStyle(!!errors.visitType)}
+                  className={`w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
+                    errors.visitType ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                  }`}
                 >
                   <option value="physical">Physical Visit (on-site with executive)</option>
                   <option value="vr">VR Visit (online virtual reality tour)</option>
                 </select>
-                {errors.visitType && <p style={errStyle}>{errors.visitType.message}</p>}
+                {errors.visitType && <p className="text-red-600 text-xs mt-1">{errors.visitType.message}</p>}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label style={labelStyle}>Preferred Date</label>
-                  <div style={{ position: 'relative' }}>
-                    <FaCalendarAlt style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--gray)', fontSize: '14px' }} />
+                  <label className="block text-xs font-semibold text-slate-800 mb-1.5">Preferred Date</label>
+                  <div className="relative">
+                    <LuCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none" />
                     <input
                       type="date"
                       min={getMinDate()}
                       {...register('date', { required: 'Please select a date' })}
-                      style={{ ...inputStyle(!!errors.date), paddingLeft: '38px' }}
+                      className={`w-full pl-9.5 pr-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
+                        errors.date ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                      }`}
                     />
                   </div>
-                  {errors.date && <p style={errStyle}>{errors.date.message}</p>}
+                  {errors.date && <p className="text-red-600 text-xs mt-1">{errors.date.message}</p>}
                 </div>
 
                 <div>
-                  <label style={labelStyle}>Time Slot</label>
-                  <div style={{ position: 'relative' }}>
-                    <FaClock style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--gray)', fontSize: '14px', pointerEvents: 'none', zIndex: 1 }} />
+                  <label className="block text-xs font-semibold text-slate-800 mb-1.5">Time Slot</label>
+                  <div className="relative">
+                    <LuClock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none z-10" />
                     <select
                       {...register('timeSlot', { required: 'Please select a time' })}
-                      style={{ ...inputStyle(!!errors.timeSlot), paddingLeft: '38px' }}
+                      className={`w-full pl-9.5 pr-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
+                        errors.timeSlot ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                      }`}
                     >
                       <option value="">Select time</option>
                       {timeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
                     </select>
                   </div>
-                  {errors.timeSlot && <p style={errStyle}>{errors.timeSlot.message}</p>}
+                  {errors.timeSlot && <p className="text-red-600 text-xs mt-1">{errors.timeSlot.message}</p>}
                 </div>
               </div>
 
               {visitType === 'physical' && (
                 <div>
-                  <label style={labelStyle}>Pickup Location</label>
-                  <div style={{ position: 'relative' }}>
-                    <FaMapMarkerAlt style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--gray)', fontSize: '14px' }} />
+                  <label className="block text-xs font-semibold text-slate-800 mb-1.5">Pickup Location</label>
+                  <div className="relative">
+                    <LuMapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none" />
                     <input
                       type="text"
                       {...register('pickupLocation', { required: visitType === 'physical' ? 'Pickup location is required' : false })}
-                      style={{ ...inputStyle(!!errors.pickupLocation), paddingLeft: '38px' }}
+                      className={`w-full pl-9.5 pr-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
+                        errors.pickupLocation ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                      }`}
                       placeholder="Enter your pickup address"
                     />
                   </div>
-                  {errors.pickupLocation && <p style={errStyle}>{errors.pickupLocation.message}</p>}
+                  {errors.pickupLocation && <p className="text-red-600 text-xs mt-1">{errors.pickupLocation.message}</p>}
                 </div>
               )}
 
               {visitType === 'vr' && (
-                <div style={{ padding: '14px', borderRadius: '8px', border: '1px solid #d5d1fb', background: '#f0effd', fontSize: '13px', color: '#3a2fb8', lineHeight: 1.5 }}>
+                <div className="p-3.5 rounded-lg border border-indigo-200 bg-indigo-50/70 text-xs font-medium text-indigo-900 leading-relaxed">
                   <strong>Virtual Reality Tour:</strong> You will join an online meeting. We will provide a 3D VR walkthrough of the project and plots. No pickup or physical travel is required!
                 </div>
               )}
@@ -163,30 +136,11 @@ export default function BookVisitForm({
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-gold"
-                style={{
-                  width: '100%',
-                  justifyContent: 'center',
-                  padding: '14px',
-                  fontSize: '15px',
-                  fontWeight: 700,
-                  opacity: loading ? 0.7 : 1,
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  border: 'none',
-                  marginTop: '10px',
-                }}
+                className="w-full justify-center py-3.5 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 transition-all cursor-pointer shadow-xs disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2 border-0"
               >
                 {loading && (
                   <motion.div
-                    style={{
-                      width: '16px',
-                      height: '16px',
-                      border: '2px solid var(--navy)',
-                      borderTopColor: 'transparent',
-                      borderRadius: '50%',
-                      marginRight: '8px',
-                      display: 'inline-block',
-                    }}
+                    className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full"
                     animate={{ rotate: 360 }}
                     transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
                   />

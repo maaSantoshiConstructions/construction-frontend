@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { LuSearch } from 'react-icons/lu';
 
 export default function PlotsFilters({
   searchTerm,
@@ -11,34 +11,47 @@ export default function PlotsFilters({
   setPage,
 }) {
   return (
-    <div style={{ background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 6px rgba(0,0,0,0.06)', padding: '14px 18px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-      <div style={{ position: 'relative', flex: 1, minWidth: '220px', maxWidth: '380px' }}>
-        <FaSearch style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', fontSize: '13px', pointerEvents: 'none' }} />
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-3 mb-6">
+      {/* Search Bar */}
+      <div className="relative flex-1 min-w-[220px] max-w-sm">
+        <LuSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none" />
         <input
           type="text"
           placeholder="Search by Plot Number (e.g. 104)..."
           value={searchTerm}
-          onChange={e => { setSearchTerm(e.target.value); setPage(1); }}
-          style={{ width: '100%', height: '44px', paddingLeft: '40px', paddingRight: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', color: '#334155', outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box', transition: 'border-color 0.2s, box-shadow 0.2s' }}
-          onFocus={e => { e.target.style.borderColor = '#f59e0b'; e.target.style.boxShadow = '0 0 0 3px rgba(245,158,11,0.15)'; e.target.style.background = '#fff'; }}
-          onBlur={e => { e.target.style.borderColor = '#e2e8f0'; e.target.style.boxShadow = 'none'; e.target.style.background = '#f8fafc'; }}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setPage(1);
+          }}
+          className="w-full h-11 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 outline-none transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white"
         />
       </div>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
+      {/* Filter Selects */}
+      <div className="flex flex-wrap items-center gap-2.5">
         <select
           value={filters.project}
-          onChange={e => { setFilters(f => ({ ...f, project: e.target.value })); setPage(1); }}
-          style={{ height: '44px', padding: '0 14px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', fontWeight: 600, color: '#334155', outline: 'none', cursor: 'pointer', minWidth: '148px', fontFamily: 'inherit' }}
+          onChange={(e) => {
+            setFilters((f) => ({ ...f, project: e.target.value }));
+            setPage(1);
+          }}
+          className="h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 outline-none cursor-pointer min-w-[140px] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white transition-all"
         >
           <option value="">All Projects</option>
-          {projects.map(p => <option key={p._id} value={p._id}>{p.name}</option>)}
+          {projects.map((p) => (
+            <option key={p._id} value={p._id}>
+              {p.name}
+            </option>
+          ))}
         </select>
 
         <select
           value={filters.status}
-          onChange={e => { setFilters(f => ({ ...f, status: e.target.value })); setPage(1); }}
-          style={{ height: '44px', padding: '0 14px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', fontWeight: 600, color: '#334155', outline: 'none', cursor: 'pointer', minWidth: '140px', fontFamily: 'inherit' }}
+          onChange={(e) => {
+            setFilters((f) => ({ ...f, status: e.target.value }));
+            setPage(1);
+          }}
+          className="h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 outline-none cursor-pointer min-w-[130px] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white transition-all"
         >
           <option value="">All Statuses</option>
           <option value="available">Available</option>
@@ -49,11 +62,18 @@ export default function PlotsFilters({
 
         <select
           value={filters.facing}
-          onChange={e => { setFilters(f => ({ ...f, facing: e.target.value })); setPage(1); }}
-          style={{ height: '44px', padding: '0 14px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', fontWeight: 600, color: '#334155', outline: 'none', cursor: 'pointer', minWidth: '140px', fontFamily: 'inherit' }}
+          onChange={(e) => {
+            setFilters((f) => ({ ...f, facing: e.target.value }));
+            setPage(1);
+          }}
+          className="h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 outline-none cursor-pointer min-w-[130px] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15 focus:bg-white transition-all"
         >
           <option value="">All Facings</option>
-          {facings.map(f => <option key={f} value={f}>{f}</option>)}
+          {facings.map((f) => (
+            <option key={f} value={f}>
+              {f}
+            </option>
+          ))}
         </select>
       </div>
     </div>

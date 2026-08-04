@@ -11,75 +11,44 @@ export default function RecommendationLoading({ analyzingStep }) {
   ];
 
   return (
-    <div className="ai-page">
-      <div className="ai-loading-card">
+    <div className="bg-[#f7f7fb] min-h-screen pb-[90px]">
+      <div className="bg-white rounded-2xl p-9 sm:p-12 shadow-[0_20px_60px_rgba(20,20,60,0.1)] text-center max-w-[440px] w-[90%] my-20 sm:my-30 mx-auto">
         <motion.div
-          className="ai-loading-spinner"
+          className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-slate-200 border-t-indigo-600"
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
         />
-        <h3 className="ai-loading-title">Finding Your Perfect Plot</h3>
-        <p className="ai-loading-sub">
+        <h3 className="text-xl font-bold text-slate-800 mb-2">Finding Your Perfect Plot</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-7 leading-relaxed">
           Our intelligent engine is analyzing hundreds of plots to match your preferences.
         </p>
-        <div className="ai-loading-steps">
+        <div className="flex flex-col gap-2.5 text-left">
           {steps.map((msg, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: analyzingStep >= i ? 1 : 0.35, x: 0 }}
               transition={{ delay: i * 0.15 }}
-              className={`ai-loading-step ${analyzingStep >= i ? 'active' : ''}`}
+              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                analyzingStep >= i ? 'bg-indigo-50 text-indigo-700 font-bold' : 'bg-[#f7f7fb] text-slate-400'
+              }`}
             >
               {analyzingStep > i ? (
-                <FaCheckCircle className="ai-loading-step-icon done" />
+                <FaCheckCircle className="text-emerald-500 text-sm shrink-0" />
               ) : analyzingStep === i ? (
                 <motion.div
-                  className="ai-loading-step-spinner"
+                  className="w-3.5 h-3.5 rounded-full border-2 border-indigo-600 border-t-transparent shrink-0"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                 />
               ) : (
-                <div className="ai-loading-step-dot" />
+                <div className="w-3.5 h-3.5 rounded-full border-2 border-slate-200 shrink-0" />
               )}
               {msg}
             </motion.div>
           ))}
         </div>
       </div>
-      <style>{loadingStyles}</style>
     </div>
   );
 }
-
-const loadingStyles = `
-  .ai-page { background: #f7f7fb; min-height: 100vh; padding-bottom: 90px; }
-  .ai-loading-card {
-    background: #fff; border-radius: 20px; padding: 48px 40px;
-    box-shadow: 0 20px 60px rgba(20,20,60,.1); text-align: center;
-    max-width: 440px; width: 90%; margin: 120px auto;
-  }
-  .ai-loading-spinner {
-    width: 64px; height: 64px; margin: 0 auto 24px;
-    border-radius: 50%; border: 4px solid #e6e6f0; border-top-color: var(--indigo);
-  }
-  .ai-loading-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-  .ai-loading-sub { font-size: 13.5px; color: #6b6f8a; margin-bottom: 28px; line-height: 1.6; }
-  .ai-loading-steps { display: flex; flex-direction: column; gap: 10px; text-align: left; }
-  .ai-loading-step {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
-    background: #f7f7fb; color: #b7bade; transition: all .3s;
-  }
-  .ai-loading-step.active { background: #f1eefe; color: var(--indigo); }
-  .ai-loading-step-icon.done { color: #2ecc71; font-size: 14px; }
-  .ai-loading-step-spinner {
-    width: 14px; height: 14px; border-radius: 50%;
-    border: 2px solid var(--indigo); border-top-color: transparent;
-  }
-  .ai-loading-step-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #e6e6f0; }
-
-  @media (max-width: 768px) {
-    .ai-loading-card { margin: 80px auto; padding: 36px 24px; }
-  }
-`;

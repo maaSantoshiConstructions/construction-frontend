@@ -1,8 +1,14 @@
 import React from 'react';
 import ErrorMessage from '../common/ErrorMessage';
 
-const stageColor = { planning: '#3a2fb8', foundation: '#d99f36', structure: '#5b4fe0', roofing: '#7a3fd6', finishing: '#2f9e5c', completed: '#2f9e5c' };
-const td = { padding: '13px 16px', fontSize: '13px', verticalAlign: 'middle' };
+const stageColorMap = {
+  planning: 'bg-indigo-50 text-indigo-700 border-indigo-100',
+  foundation: 'bg-amber-50 text-amber-700 border-amber-100',
+  structure: 'bg-indigo-50 text-indigo-700 border-indigo-100',
+  roofing: 'bg-purple-50 text-purple-700 border-purple-100',
+  finishing: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+  completed: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+};
 
 export default function UpdatesTable({
   updates = [],
@@ -14,61 +20,104 @@ export default function UpdatesTable({
   openEdit,
   handleDelete,
   openCreate,
-  fetchUpdates
+  fetchUpdates,
 }) {
   return (
     <>
-      {error ? <ErrorMessage message={error} onRetry={fetchUpdates} /> : (
-        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', boxShadow: '0 2px 10px rgba(20,20,60,.05)', overflow: 'hidden' }}>
+      {error ? (
+        <ErrorMessage message={error} onRetry={fetchUpdates} />
+      ) : (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
           {loading ? (
-            <div style={{ padding: '40px', textAlign: 'center', color: '#9ea1c4' }}>Loading updates...</div>
+            <div className="p-10 text-center text-slate-400 text-xs font-semibold">
+              Loading updates...
+            </div>
           ) : updates.length === 0 ? (
-            <div style={{ padding: '60px', textAlign: 'center' }}>
-              <div style={{ fontSize: '40px', marginBottom: '12px' }}>&#x1F477;</div>
-              <p style={{ color: '#6b6f8a', fontSize: '14px', marginBottom: '16px' }}>No construction updates yet.</p>
-              <button onClick={openCreate} className="btn-gold" style={{ fontSize: '13px', padding: '10px 20px', border: 'none' }}>+ Add First Update</button>
+            <div className="p-16 text-center">
+              <div className="text-4xl mb-3">👷</div>
+              <p className="text-slate-500 text-sm mb-4 font-medium">
+                No construction updates yet.
+              </p>
+              <button
+                onClick={openCreate}
+                className="cta-btn text-xs font-bold px-5 py-2.5 rounded-xl border-0 cursor-pointer shadow-md transition-all inline-block"
+              >
+                + Add First Update
+              </button>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left">
                 <thead>
-                  <tr style={{ background: '#f7f7fb', borderBottom: '1px solid #e6e6f0' }}>
-                    {['Title','Project','Stage','Progress','Date','Actions'].map(h => (
-                      <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '11.5px', fontWeight: 700, color: '#6b6f8a', letterSpacing: '.5px', textTransform: 'uppercase' }}>{h}</th>
+                  <tr className="bg-slate-50 border-b border-slate-200">
+                    {['Title', 'Project', 'Stage', 'Progress', 'Date', 'Actions'].map((h) => (
+                      <th
+                        key={h}
+                        className="px-4 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider"
+                      >
+                        {h}
+                      </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-slate-100">
                   {updates.map((r) => (
-                    <tr key={r._id} style={{ borderBottom: '1px solid #f0f0f6', transition: '.15s' }}
-                      onMouseEnter={e => e.currentTarget.style.background = '#f7f7fb'}
-                      onMouseLeave={e => e.currentTarget.style.background = ''}>
-                      <td style={td}><span style={{ fontWeight: 600, color: '#171a35', fontSize: '13.5px' }}>{r.title}</span></td>
-                      <td style={td}><span style={{ color: '#6b6f8a', fontSize: '13px' }}>{r.project?.name || '-'}</span></td>
-                      <td style={td}>
+                    <tr
+                      key={r._id}
+                      className="hover:bg-slate-50/80 transition-colors"
+                    >
+                      <td className="px-4 py-3.5 text-xs font-bold text-slate-900">
+                        {r.title}
+                      </td>
+                      <td className="px-4 py-3.5 text-xs text-slate-500 font-medium">
+                        {r.project?.name || '-'}
+                      </td>
+                      <td className="px-4 py-3.5 text-xs">
                         {r.stage ? (
-                          <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', background: (stageColor[r.stage?.toLowerCase()] || '#3a2fb8') + '18', color: stageColor[r.stage?.toLowerCase()] || '#3a2fb8' }}>
+                          <span
+                            className={`inline-block text-[11px] font-bold px-2.5 py-1 rounded-full border ${
+                              stageColorMap[r.stage?.toLowerCase()] ||
+                              'bg-indigo-50 text-indigo-700 border-indigo-100'
+                            }`}
+                          >
                             {r.stage.charAt(0).toUpperCase() + r.stage.slice(1)}
                           </span>
-                        ) : '-'}
+                        ) : (
+                          '-'
+                        )}
                       </td>
-                      <td style={td}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ width: '80px', height: '6px', background: '#e6e6f0', borderRadius: '3px', overflow: 'hidden' }}>
-                            <div style={{ height: '100%', width: `${r.progressPercent || 0}%`, background: (r.progressPercent || 0) >= 80 ? '#2f9e5c' : '#3a2fb8', borderRadius: '3px', transition: 'width .4s' }} />
+                      <td className="px-4 py-3.5 text-xs">
+                        <div className="flex items-center gap-2">
+                          <div className="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all duration-300 ${
+                                (r.progressPercent || 0) >= 80 ? 'bg-emerald-600' : 'bg-indigo-600'
+                              }`}
+                              style={{ width: `${r.progressPercent || 0}%` }}
+                            />
                           </div>
-                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#171a35' }}>{r.progressPercent || 0}%</span>
+                          <span className="text-xs font-bold text-slate-900">
+                            {r.progressPercent || 0}%
+                          </span>
                         </div>
                       </td>
-                      <td style={td}><span style={{ color: '#6b6f8a', fontSize: '12.5px' }}>{r.createdAt ? new Date(r.createdAt).toLocaleDateString('en-IN') : '-'}</span></td>
-                      <td style={td}>
-                        <div style={{ display: 'flex', gap: '6px' }}>
-                          <button onClick={() => openEdit(r)}
-                            style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #e6e6f0', background: '#fff', color: '#3a2fb8', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+                      <td className="px-4 py-3.5 text-xs text-slate-500 font-medium">
+                        {r.createdAt
+                          ? new Date(r.createdAt).toLocaleDateString('en-IN')
+                          : '-'}
+                      </td>
+                      <td className="px-4 py-3.5 text-xs">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => openEdit(r)}
+                            className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-indigo-600 text-xs font-semibold hover:bg-indigo-50 transition-colors cursor-pointer"
+                          >
                             Edit
                           </button>
-                          <button onClick={() => handleDelete(r._id)}
-                            style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #fde8e8', background: '#fff8f8', color: '#c0392b', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+                          <button
+                            onClick={() => handleDelete(r._id)}
+                            className="px-3 py-1.5 rounded-lg border border-red-100 bg-red-50/50 text-red-600 text-xs font-semibold hover:bg-red-100 transition-colors cursor-pointer"
+                          >
                             Delete
                           </button>
                         </div>
@@ -81,10 +130,17 @@ export default function UpdatesTable({
           )}
 
           {totalPages > 1 && (
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', padding: '16px' }}>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-                <button key={p} onClick={() => setPage(p)}
-                  style={{ width: '34px', height: '34px', borderRadius: '8px', border: '1px solid', borderColor: p === page ? '#3a2fb8' : '#e6e6f0', background: p === page ? '#3a2fb8' : '#fff', color: p === page ? '#fff' : '#6b6f8a', fontWeight: p === page ? 700 : 400, fontSize: '13px', cursor: 'pointer' }}>
+            <div className="flex justify-center gap-2 p-4 border-t border-slate-100">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`w-8.5 h-8.5 rounded-lg border text-xs font-bold cursor-pointer transition-all ${
+                    p === page
+                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  }`}
+                >
                   {p}
                 </button>
               ))}

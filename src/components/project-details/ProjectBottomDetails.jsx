@@ -1,43 +1,46 @@
 import React from 'react';
+import { LuPhone, LuCheck, LuSparkles } from 'react-icons/lu';
 
 export default function ProjectBottomDetails({
   project,
-  finalAmenities,
-  finalHighlights,
+  finalAmenities = [],
+  finalHighlights = [],
   getImageUrl,
 }) {
   return (
     <div className="wrap">
-      <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '32px' }} className="project-detail-grid">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Amenities */}
-        <div className="project-section-card" style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '32px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
-          <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '20px' }}>
+        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
+          <h2 className="font-['Poppins',sans-serif] text-xl font-extrabold text-slate-900 mb-5">
             Project Amenities
           </h2>
-          <div className="amenities-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {finalAmenities.map((amenity, i) => (
-              <div key={i} className="trust-item" style={{ padding: '14px 18px', borderRadius: '10px', border: '1px solid var(--line)', background: '#fff', gap: '12px' }}>
-                <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#efeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--indigo)', fontSize: '16px', flexShrink: 0 }}>
-                  ✦
+              <div
+                key={i}
+                className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 bg-white"
+              >
+                <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 text-sm shrink-0">
+                  <LuSparkles />
                 </div>
-                <span style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--text)' }}>{amenity}</span>
+                <span className="text-xs sm:text-sm font-semibold text-slate-800">{amenity}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Location Highlights & Contact */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          
+        <div className="lg:col-span-5 flex flex-col gap-5">
           {/* Highlights */}
-          <div className="project-section-card" style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: '16px', padding: '28px', boxShadow: '0 10px 30px rgba(20,20,60,.03)' }}>
-            <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '18px', fontWeight: 800, color: 'var(--text)', marginBottom: '16px' }}>
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-xs">
+            <h2 className="font-['Poppins',sans-serif] text-lg font-extrabold text-slate-900 mb-4">
               Location Highlights
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className="flex flex-col gap-2.5">
               {finalHighlights.map((item, i) => (
-                <div key={i} style={{ fontSize: '13px', color: 'var(--gray)', display: 'flex', gap: '8px', alignItems: 'start' }}>
-                  <span style={{ color: '#2f9e5c', fontWeight: 'bold' }}>✓</span>
+                <div key={i} className="text-xs sm:text-sm text-slate-600 flex items-start gap-2.5">
+                  <LuCheck className="text-emerald-600 text-base font-bold shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </div>
               ))}
@@ -45,54 +48,39 @@ export default function ProjectBottomDetails({
           </div>
 
           {/* Premium CTA box */}
-          <div style={{
-            background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)',
-            borderRadius: '16px',
-            padding: '28px',
-            color: '#fff',
-          }}>
-            <h3 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '18px', fontWeight: 800, marginBottom: '8px' }}>
+          <div className="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 rounded-2xl p-6 sm:p-7 text-white shadow-lg">
+            <h3 className="font-['Poppins',sans-serif] text-lg font-extrabold mb-2">
               Interested in this project?
             </h3>
-            <p style={{ fontSize: '13px', color: '#d8d4ff', marginBottom: '20px', lineHeight: 1.6 }}>
+            <p className="text-xs sm:text-sm text-indigo-100 mb-5 leading-relaxed font-normal">
               Our dedicated relationship managers will guide you through site visits, layout maps, and plot bookings.
             </p>
-            <a href="tel:+917000012345" className="btn-gold" style={{ border: 'none', width: '100%', justifyContent: 'center', padding: '12px', textDecoration: 'none' }}>
-              📞 Call +91 70000 12345
+            <a
+              href="tel:+917000012345"
+              className="cta-btn flex items-center justify-center gap-2 w-full py-3.5 text-xs font-bold rounded-xl no-underline border-0 shadow-md"
+            >
+              <LuPhone className="text-sm shrink-0" />
+              <span>Call +91 70000 12345</span>
             </a>
           </div>
-
         </div>
       </div>
 
       {/* Layout Plan Map Section */}
-      {project.layoutImage && (
-        <div className="project-section-card" style={{
-          background: '#fff',
-          border: '1px solid var(--line)',
-          borderRadius: '16px',
-          padding: '32px',
-          boxShadow: '0 10px 30px rgba(20,20,60,.03)',
-          marginTop: '32px',
-        }}>
-          <h2 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '12px' }}>
+      {project?.layoutImage && (
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs mt-8">
+          <h2 className="font-['Poppins',sans-serif] text-xl font-extrabold text-slate-900 mb-2">
             Master Layout Plan
           </h2>
-          <p style={{ fontSize: '14px', color: 'var(--gray)', marginBottom: '20px' }}>
+          <p className="text-xs sm:text-sm text-slate-500 mb-5">
             Official layout map configuration and boundary divisions for {project.name}.
           </p>
-          <div style={{
-            borderRadius: '12px',
-            overflow: 'hidden',
-            border: '1px solid var(--line)',
-            background: '#f7f7fb',
-            maxHeight: '500px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '16px',
-          }}>
-            <img src={getImageUrl(project.layoutImage)} alt="Master Layout Plan" style={{ maxWidth: '100%', maxHeight: '468px', objectFit: 'contain' }} />
+          <div className="rounded-xl overflow-hidden border border-slate-200 bg-slate-50 max-h-[500px] flex items-center justify-center p-4">
+            <img
+              src={getImageUrl(project.layoutImage)}
+              alt="Master Layout Plan"
+              className="max-w-full max-h-[468px] object-contain"
+            />
           </div>
         </div>
       )}

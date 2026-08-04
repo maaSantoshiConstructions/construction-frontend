@@ -51,71 +51,46 @@ export default function SmartFeatures() {
   });
 
   return (
-    <div style={{ background: '#f7f7fb', minHeight: '100vh', paddingBottom: '90px' }}>
-
+    <div className="bg-[#f7f7fb] min-h-screen pb-24">
       {/* ===== HEADER ===== */}
-      <div style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
-        padding: '64px 0 60px',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.1)' }} />
-        <div className="wrap">
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>POWERED BY INNOVATION</span>
-          <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '42px', fontWeight: 800, color: '#fff', margin: '12px 0 14px' }}>
-             Smart Features
+      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0b0f2e] via-[#161b45] to-[#1c1450]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+        <div className="wrap max-w-4xl mx-auto">
+          <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold tracking-wider uppercase mb-3">
+            POWERED BY INNOVATION
+          </span>
+          <h1 className="font-['Poppins',sans-serif] text-3xl sm:text-4xl md:text-5xl font-extrabold text-white my-3">
+            Smart Features
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '540px', margin: '0 auto', lineHeight: 1.6 }}>
+          <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-md mx-auto leading-relaxed">
             Experience the future of real estate investing. Explore our intelligent, AI-powered toolkit designed to make plot buying seamless.
           </p>
         </div>
       </div>
 
       {/* ===== FEATURES GRID ===== */}
-      <div className="wrap" style={{ marginTop: '48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '22px' }}>
+      <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {visibleFeatures.map((f, i) => {
             const Icon = f.ic;
             return (
               <Link
                 key={i}
                 to={f.title === 'Owner Dashboard' ? dashboardPath : f.path}
-
-                className="ccard"
-                style={{
-                  flexDirection: 'column',
-                  gap: '0',
-                  background: '#fff',
-                  border: '1px solid var(--line)',
-                  borderRadius: '14px',
-                  padding: '24px',
-                  transition: '.25s',
-                  textDecoration: 'none',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(20,20,60,.08)';
-                  e.currentTarget.style.borderColor = 'var(--indigo)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '';
-                  e.currentTarget.style.borderColor = 'var(--line)';
-                }}
+                className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-indigo-600 transition-all duration-200 no-underline group"
               >
-                <div className="w-[44px] h-[44px] rounded-xl bg-[#efeafe] text-[var(--indigo)] flex items-center justify-center mb-4">
-                  <Icon size={22} />
+                <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 text-xl shrink-0">
+                  <Icon />
                 </div>
-                <h3 style={{ fontSize: '15.5px', fontWeight: 700, color: 'var(--text)', marginBottom: '8px' }}>
+                <h3 className="font-['Poppins',sans-serif] text-base font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
                   {f.title}
                 </h3>
-                <p style={{ fontSize: '12.5px', color: 'var(--gray)', lineHeight: 1.6, flexGrow: 1 }}>
+                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed flex-grow">
                   {f.desc}
                 </p>
-                <div className="mt-4 text-[12.5px] font-bold text-[var(--indigo)] flex items-center gap-1">
-                  Try Feature <LuArrowRight size={14} />
+                <div className="mt-4 text-xs font-bold text-indigo-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+                  <span>Try Feature</span>
+                  <LuArrowRight className="text-sm" />
                 </div>
               </Link>
             );
@@ -125,4 +100,3 @@ export default function SmartFeatures() {
     </div>
   );
 }
-

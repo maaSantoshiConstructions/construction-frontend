@@ -1,27 +1,6 @@
 import React, { useState } from 'react';
 import { LuCalculator } from 'react-icons/lu';
 
-const labelRow = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' };
-const labelStyle = { fontSize: '13px', fontWeight: 600, color: 'var(--text)' };
-const valStyle = { fontSize: '14.5px', fontWeight: 700, color: 'var(--indigo)' };
-const rangeLimits = { display: 'flex', justifyContent: 'space-between', fontSize: '10.5px', color: '#9ea1c4', marginTop: '4px' };
-
-const sliderStyle = {
-  width: '100%',
-  height: '5px',
-  borderRadius: '3px',
-  background: '#e6e6f0',
-  outline: 'none',
-  accentColor: 'var(--indigo)',
-  cursor: 'pointer',
-};
-
-const calcMedia = `
-  @media(max-width: 991px) {
-    .calc-grid-el { grid-template-columns: 1fr !important; gap: 32px !important; }
-  }
-`;
-
 export default function ConstructionCalculator() {
   const [plotSize, setPlotSize] = useState(1200);
   const [floors, setFloors] = useState(2);
@@ -39,85 +18,113 @@ export default function ConstructionCalculator() {
   const formatCurrency = (val) => '₹ ' + Math.round(val).toLocaleString('en-IN');
 
   return (
-    <div style={{
-      background: '#fff', borderRadius: '16px', border: '1px solid var(--line)',
-      boxShadow: '0 10px 30px rgba(20,20,60,.04)', padding: '36px',
-    }}>
-      <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', fontWeight: 800, color: 'var(--text)', marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <LuCalculator size={22} className="text-indigo-600" /> Built Construction Estimator
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 sm:p-9 transition-all">
+      <h2 className="font-['Poppins',sans-serif] text-xl font-extrabold text-slate-900 mb-7 flex items-center gap-2">
+        <LuCalculator size={22} className="text-indigo-600 shrink-0" /> Built Construction Estimator
       </h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px' }} className="calc-grid-el">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-9">
 
-        {/* Sliders */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* Sliders & Quality Selection */}
+        <div className="flex flex-col gap-5">
           <div>
-            <div style={labelRow}>
-              <span style={labelStyle}>Plot Area Size</span>
-              <span style={valStyle}>{plotSize} Sq.ft</span>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-800">Plot Area Size</span>
+              <span className="text-xs sm:text-sm font-bold text-indigo-700">{plotSize} Sq.ft</span>
             </div>
-            <input type="range" min={500} max={5000} step={50} value={plotSize} onChange={(e) => setPlotSize(Number(e.target.value))} style={sliderStyle} />
-            <div style={rangeLimits}><span>500 Sq.ft</span><span>5000 Sq.ft</span></div>
-          </div>
-          <div>
-            <div style={labelRow}>
-              <span style={labelStyle}>Total Floors</span>
-              <span style={valStyle}>{floors} Floors</span>
+            <input
+              type="range"
+              min={500}
+              max={5000}
+              step={50}
+              value={plotSize}
+              onChange={(e) => setPlotSize(Number(e.target.value))}
+              className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+            />
+            <div className="flex justify-between text-[10.5px] text-slate-400 mt-1">
+              <span>500 Sq.ft</span>
+              <span>5000 Sq.ft</span>
             </div>
-            <input type="range" min={1} max={5} step={1} value={floors} onChange={(e) => setFloors(Number(e.target.value))} style={sliderStyle} />
-            <div style={rangeLimits}><span>1 Floor</span><span>5 Floors</span></div>
           </div>
+
           <div>
-            <span style={{ ...labelStyle, display: 'block', marginBottom: '8px' }}>Material Quality Selection</span>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              {Object.entries(qualityRates).map(([key, val]) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setQuality(key)}
-                  style={{
-                    flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid',
-                    cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center', transition: '.2s',
-                    borderColor: quality === key ? 'var(--indigo)' : 'var(--line)',
-                    background: quality === key ? 'var(--indigo)' : '#fff',
-                    color: quality === key ? '#fff' : 'var(--text)',
-                  }}
-                >
-                  <div style={{ fontSize: '13px', fontWeight: 700, textTransform: 'capitalize' }}>{key}</div>
-                  <div style={{ fontSize: '10.5px', marginTop: '2px', opacity: 0.85 }}>₹{val}/Sq.ft</div>
-                </button>
-              ))}
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-800">Total Floors</span>
+              <span className="text-xs sm:text-sm font-bold text-indigo-700">{floors} Floors</span>
+            </div>
+            <input
+              type="range"
+              min={1}
+              max={5}
+              step={1}
+              value={floors}
+              onChange={(e) => setFloors(Number(e.target.value))}
+              className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+            />
+            <div className="flex justify-between text-[10.5px] text-slate-400 mt-1">
+              <span>1 Floor</span>
+              <span>5 Floors</span>
+            </div>
+          </div>
+
+          <div>
+            <span className="block text-xs font-semibold text-slate-800 mb-2">Material Quality Selection</span>
+            <div className="flex gap-2.5">
+              {Object.entries(qualityRates).map(([key, val]) => {
+                const isSelected = quality === key;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setQuality(key)}
+                    className={`flex-1 p-3 rounded-xl border text-center cursor-pointer transition-all outline-none ${
+                      isSelected
+                        ? 'border-indigo-600 bg-indigo-600 text-white shadow-xs'
+                        : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="text-xs font-bold capitalize">{key}</div>
+                    <div className={`text-[10.5px] mt-0.5 ${isSelected ? 'text-indigo-100' : 'text-slate-500'}`}>
+                      ₹{val}/Sq.ft
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
 
         {/* Results */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ background: 'linear-gradient(120deg,#3a2fb8,#5b4fe0 60%,#7a3fd6)', borderRadius: '12px', padding: '22px', color: '#fff' }}>
-            <p style={{ fontSize: '12.5px', color: '#d8d4ff', textTransform: 'uppercase', fontWeight: 600 }}>Total Construction Cost</p>
-            <p style={{ fontSize: '30px', fontWeight: 800, marginTop: '4px' }}>{formatCurrency(constructionCost)}</p>
-            <p style={{ fontSize: '11px', color: '#b7bade', marginTop: '6px' }}>Estimated Built-up area: {builtUpArea.toFixed(0)} Sq.ft (at 60% coverage)</p>
+        <div className="flex flex-col gap-4">
+          <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-purple-600 rounded-xl p-5.5 text-white shadow-lg shadow-indigo-900/10">
+            <p className="text-xs text-indigo-200 uppercase font-bold tracking-wider">Total Construction Cost</p>
+            <p className="text-3xl font-extrabold mt-1">{formatCurrency(constructionCost)}</p>
+            <p className="text-[11px] text-indigo-200 mt-1.5">
+              Estimated Built-up area: {builtUpArea.toFixed(0)} Sq.ft (at 60% coverage)
+            </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div className="flex flex-col gap-2">
             {[
               { label: 'Material Cost (55%)', value: materialCost, col: '#3a2fb8' },
               { label: 'Labor Cost (25%)', value: laborCost, col: '#2f9e5c' },
               { label: 'Overheads (10%)', value: overheadCost, col: '#d99f36' },
               { label: 'Contingency (10%)', value: contingencyCost, col: '#7d7aa3' },
             ].map((item, idx) => (
-              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderRadius: '8px', background: '#f7f7fb', fontSize: '13px' }}>
-                <span style={{ color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: item.col }} />
+              <div
+                key={idx}
+                className="flex items-center justify-between p-2.5 px-3.5 rounded-lg bg-[#f7f7fb] border border-slate-100 text-xs sm:text-sm"
+              >
+                <span className="text-slate-500 flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: item.col }} />
                   {item.label}
                 </span>
-                <span style={{ fontWeight: 700, color: 'var(--text)' }}>{formatCurrency(item.value)}</span>
+                <span className="font-extrabold text-slate-800">{formatCurrency(item.value)}</span>
               </div>
             ))}
           </div>
         </div>
 
       </div>
-      <style>{calcMedia}</style>
     </div>
   );
 }

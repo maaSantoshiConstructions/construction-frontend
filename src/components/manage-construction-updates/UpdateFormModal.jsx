@@ -1,17 +1,12 @@
 import React from 'react';
+import { LuX } from 'react-icons/lu';
 
-const fi = (hasErr) => ({
-  width: '100%', padding: '10px 14px', border: `1px solid ${hasErr ? '#c0392b' : '#e6e6f0'}`,
-  borderRadius: '8px', fontSize: '13.5px', color: '#171a35', outline: 'none', fontFamily: 'Inter,sans-serif',
-  boxSizing: 'border-box', transition: 'border-color .2s', background: '#fff',
-});
-
-function FF({ label, error, children }) {
+function FormField({ label, error, children }) {
   return (
-    <div>
-      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#171a35', marginBottom: '6px' }}>{label}</label>
+    <div className="flex flex-col gap-1.5">
+      <label className="block text-xs font-semibold text-slate-800">{label}</label>
       {children}
-      {error && <p style={{ color: '#c0392b', fontSize: '11.5px', marginTop: '4px' }}>{error}</p>}
+      {error && <p className="text-xs text-red-500 mt-0.5">{error}</p>}
     </div>
   );
 }
@@ -29,98 +24,176 @@ export default function UpdateFormModal({
   setFiles,
   register,
   handleSubmitForm,
-  errors
+  errors,
 }) {
   if (!showModal) return null;
 
-  return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', background: 'rgba(11,15,46,.5)' }}>
-      <div style={{ background: '#fff', borderRadius: '16px', width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 30px 70px rgba(0,0,0,.3)' }}
-        onClick={e => e.stopPropagation()}>
+  const inputClass = (hasErr) =>
+    `w-full px-3.5 py-2.5 border rounded-xl text-xs font-medium text-slate-900 outline-none bg-white transition-colors focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 ${
+      hasErr ? 'border-red-500' : 'border-slate-200 hover:border-slate-300'
+    }`;
 
-        <div style={{ padding: '20px 24px', borderBottom: '1px solid #e6e6f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#fff', zIndex: 2 }}>
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+      <div
+        className="bg-white rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal Header */}
+        <div className="px-6 py-5 border-b border-slate-200 flex items-center justify-between sticky top-0 bg-white z-10">
           <div>
-            <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '18px', fontWeight: 800, color: '#171a35' }}>{editing ? 'Edit Update' : '+ Add Construction Update'}</h2>
-            <p style={{ fontSize: '12.5px', color: '#6b6f8a' }}>Track progress for a project</p>
+            <h2 className="font-['Poppins',sans-serif] text-lg font-bold text-slate-900">
+              {editing ? 'Edit Construction Update' : '+ Add Construction Update'}
+            </h2>
+            <p className="text-xs text-slate-500">Track progress for a project</p>
           </div>
-          <button onClick={() => setShowModal(false)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: '#6b6f8a', lineHeight: 1 }}>&#x2715;</button>
+          <button
+            type="button"
+            onClick={() => setShowModal(false)}
+            className="bg-transparent border-0 cursor-pointer text-slate-400 hover:text-slate-700 text-xl p-1 flex items-center justify-center transition-colors"
+            aria-label="Close Modal"
+          >
+            <LuX />
+          </button>
         </div>
 
-        <form onSubmit={handleSubmitForm(onSubmit)} style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          <FF label="Title *" error={errors.title?.message}>
-            <input {...register('title', { required: 'Title is required' })} placeholder="e.g. Foundation Work Completed" style={fi(!!errors.title)} />
-          </FF>
+        {/* Modal Form */}
+        <form onSubmit={handleSubmitForm(onSubmit)} className="p-6 flex flex-col gap-4.5">
+          <FormField label="Title *" error={errors.title?.message}>
+            <input
+              {...register('title', { required: 'Title is required' })}
+              placeholder="e.g. Foundation Work Completed"
+              className={inputClass(!!errors.title)}
+            />
+          </FormField>
 
-          <FF label="Description">
-            <textarea {...register('description')} rows={3} placeholder="Describe what was done..." style={{ ...fi(), resize: 'none' }} />
-          </FF>
+          <FormField label="Description">
+            <textarea
+              {...register('description')}
+              rows={3}
+              placeholder="Describe what was done..."
+              className={`${inputClass(false)} resize-none`}
+            />
+          </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <FF label="Project">
-              <select {...register('project')} style={fi()}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <FormField label="Project">
+              <select {...register('project')} className={inputClass(false)}>
                 <option value="">Select Project</option>
-                {projects.map(p => <option key={p._id} value={p._id}>{p.name}</option>)}
-              </select>
-            </FF>
-            <FF label="Plot (optional)">
-              <select {...register('plot')} style={fi()}>
-                <option value="">All Plots</option>
-                {plots.map(p => <option key={p._id} value={p._id}>Plot {p.plotNumber}</option>)}
-              </select>
-            </FF>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <FF label="Stage">
-              <select {...register('stage', { required: 'Stage is required' })} style={fi(!!errors.stage)}>
-                <option value="">Select Stage</option>
-                {['planning', 'foundation', 'structure', 'roofing', 'finishing', 'completed'].map(s => (
-                  <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                {projects.map((p) => (
+                  <option key={p._id} value={p._id}>
+                    {p.name}
+                  </option>
                 ))}
               </select>
-            </FF>
-            <FF label={`Progress: ${progressValue || 0}%`}>
-              <input type="range" min="0" max="100" {...register('progressPercent')}
-                style={{ width: '100%', accentColor: '#3a2fb8', cursor: 'pointer' }} />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#9ea1c4', marginTop: '4px' }}>
-                <span>0%</span><span>50%</span><span>100%</span>
-              </div>
-              <div style={{ height: '8px', background: '#e6e6f0', borderRadius: '4px', marginTop: '8px', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${progressValue || 0}%`, background: (progressValue || 0) >= 80 ? '#2f9e5c' : '#3a2fb8', borderRadius: '4px', transition: 'width .2s' }} />
-              </div>
-            </FF>
+            </FormField>
+            <FormField label="Plot (optional)">
+              <select {...register('plot')} className={inputClass(false)}>
+                <option value="">All Plots</option>
+                {plots.map((p) => (
+                  <option key={p._id} value={p._id}>
+                    Plot {p.plotNumber}
+                  </option>
+                ))}
+              </select>
+            </FormField>
           </div>
 
-          <FF label="Images (max 5)">
-            <input type="file" accept="image/*" multiple
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <FormField label="Stage">
+              <select
+                {...register('stage', { required: 'Stage is required' })}
+                className={inputClass(!!errors.stage)}
+              >
+                <option value="">Select Stage</option>
+                {['planning', 'foundation', 'structure', 'roofing', 'finishing', 'completed'].map(
+                  (s) => (
+                    <option key={s} value={s}>
+                      {s.charAt(0).toUpperCase() + s.slice(1)}
+                    </option>
+                  )
+                )}
+              </select>
+            </FormField>
+
+            <FormField label={`Progress: ${progressValue || 0}%`}>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                {...register('progressPercent')}
+                className="w-full accent-indigo-600 cursor-pointer"
+              />
+              <div className="flex justify-between text-[11px] text-slate-400 mt-1">
+                <span>0%</span>
+                <span>50%</span>
+                <span>100%</span>
+              </div>
+              <div className="h-2 bg-slate-200 rounded-full mt-2 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-200 ${
+                    (progressValue || 0) >= 80 ? 'bg-emerald-600' : 'bg-indigo-600'
+                  }`}
+                  style={{ width: `${progressValue || 0}%` }}
+                />
+              </div>
+            </FormField>
+          </div>
+
+          <FormField label="Images (max 5)">
+            <input
+              type="file"
+              accept="image/*"
+              multiple
               onChange={(e) => setFiles(Array.from(e.target.files).slice(0, 5))}
-              style={{ fontSize: '13px', color: '#171a35' }} />
+              className="text-xs text-slate-700 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"
+            />
             {files.length > 0 && (
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '8px' }}>
+              <div className="flex gap-2 flex-wrap mt-2">
                 {files.map((f, i) => (
-                  <span key={i} style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', background: '#f0f0ff', color: '#3a2fb8', fontWeight: 600 }}>{f.name}</span>
+                  <span
+                    key={i}
+                    className="text-[11px] px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100"
+                  >
+                    {f.name}
+                  </span>
                 ))}
               </div>
             )}
             {editing?.images?.length > 0 && (
-              <div style={{ marginTop: '8px' }}>
-                <span style={{ fontSize: '11px', color: '#9ea1c4' }}>{editing.images.length} existing image(s)</span>
+              <div className="mt-1.5">
+                <span className="text-[11px] text-slate-400">
+                  {editing.images.length} existing image(s)
+                </span>
               </div>
             )}
-          </FF>
+          </FormField>
 
-          <FF label="Engineer Report">
-            <textarea {...register('engineerReport')} rows={2} placeholder="Optional engineer notes or report..." style={{ ...fi(), resize: 'none' }} />
-          </FF>
+          <FormField label="Engineer Report">
+            <textarea
+              {...register('engineerReport')}
+              rows={2}
+              placeholder="Optional engineer notes or report..."
+              className={`${inputClass(false)} resize-none`}
+            />
+          </FormField>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '4px' }}>
-            <button type="button" onClick={() => setShowModal(false)}
-              style={{ padding: '10px 20px', borderRadius: '8px', border: '1px solid #e6e6f0', background: '#fff', color: '#6b6f8a', fontSize: '13.5px', fontWeight: 600, cursor: 'pointer' }}>
+          {/* Buttons */}
+          <div className="flex items-center justify-end gap-3 pt-2 border-t border-slate-100 mt-2">
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              className="px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 text-xs font-semibold hover:bg-slate-50 transition-colors cursor-pointer"
+            >
               Cancel
             </button>
-            <button type="submit" disabled={submitting} className="btn-gold"
-              style={{ fontSize: '13.5px', opacity: submitting ? .7 : 1, cursor: submitting ? 'not-allowed' : 'pointer', border: 'none' }}>
+            <button
+              type="submit"
+              disabled={submitting}
+              className={`cta-btn px-5 py-2.5 text-xs font-bold rounded-xl transition-all border-0 ${
+                submitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
+              }`}
+            >
               {submitting ? 'Saving...' : editing ? 'Save Update' : 'Create Update'}
             </button>
           </div>

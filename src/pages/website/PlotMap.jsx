@@ -1,10 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  FaMapMarkerAlt, FaFilter, FaTh, FaMap, FaListAlt,
-  FaCalendarAlt, FaBuilding,
-} from 'react-icons/fa';
+import { LuMapPin, LuFilter, LuLayoutGrid, LuMap, LuListFilter } from 'react-icons/lu';
 import Loader from '../../components/common/Loader';
 
 // Import refactored modular components
@@ -19,10 +16,10 @@ import { getPlotMapData } from '../../api/plots';
 import { getProjects } from '../../api/projects';
 
 const statusConfig = {
-  available: { color: '#22c55e', bg: '#f0fdf4', text: '#15803d', border: '#86efac', label: 'Available' },
-  reserved: { color: '#f59e0b', bg: '#fffbeb', text: '#b45309', border: '#fcd34d', label: 'Reserved' },
-  sold: { color: '#ef4444', bg: '#fef2f2', text: '#b91c1c', border: '#fca5a5', label: 'Sold' },
-  blocked: { color: '#94a3b8', bg: '#f8fafc', text: '#475569', border: '#cbd5e1', label: 'Blocked' },
+  available: { colorClass: 'bg-emerald-500', label: 'Available' },
+  reserved: { colorClass: 'bg-amber-500', label: 'Reserved' },
+  sold: { colorClass: 'bg-rose-500', label: 'Sold' },
+  blocked: { colorClass: 'bg-slate-400', label: 'Blocked' },
 };
 
 const formatCurrency = (val) => '₹' + (val || 0).toLocaleString('en-IN');
@@ -65,33 +62,44 @@ export default function PlotMap() {
     fetchData();
   }, [projectFilter]);
 
-  const getProjectName = useCallback((plot) => {
-    if (plot.project?.name) return plot.project.name;
-    if (typeof plot.project === 'string') {
-      const found = projects.find((p) => p._id === plot.project);
-      return found?.name || 'Unknown Project';
-    }
-    return 'Unknown Project';
-  }, [projects]);
+  const getProjectName = useCallback(
+    (plot) => {
+      if (plot.project?.name) return plot.project.name;
+      if (typeof plot.project === 'string') {
+        const found = projects.find((p) => p._id === plot.project);
+        return found?.name || 'Unknown Project';
+      }
+      return 'Unknown Project';
+    },
+    [projects]
+  );
 
-  const getProjectCity = useCallback((plot) => {
-    if (plot.project?.location?.city) return plot.project.location.city;
-    if (typeof plot.project === 'string') {
-      const found = projects.find((p) => p._id === plot.project);
-      return found?.location?.city || '';
-    }
-    return '';
-  }, [projects]);
+  const getProjectCity = useCallback(
+    (plot) => {
+      if (plot.project?.location?.city) return plot.project.location.city;
+      if (typeof plot.project === 'string') {
+        const found = projects.find((p) => p._id === plot.project);
+        return found?.location?.city || '';
+      }
+      return '';
+    },
+    [projects]
+  );
 
-  const getProjectObj = useCallback((plot) => {
-    if (plot.project && typeof plot.project === 'object') return plot.project;
-    if (typeof plot.project === 'string') return projects.find((p) => p._id === plot.project) || null;
-    return null;
-  }, [projects]);
+  const getProjectObj = useCallback(
+    (plot) => {
+      if (plot.project && typeof plot.project === 'object') return plot.project;
+      if (typeof plot.project === 'string')
+        return projects.find((p) => p._id === plot.project) || null;
+      return null;
+    },
+    [projects]
+  );
 
   const filteredPlots = useMemo(() => {
     return plots.filter((plot) => {
-      if (searchQuery && !plot.plotNumber?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+      if (searchQuery && !plot.plotNumber?.toLowerCase().includes(searchQuery.toLowerCase()))
+        return false;
       const pName = getProjectName(plot);
       if (filters.project && pName !== filters.project) return false;
       if (filters.facing && plot.facing !== filters.facing) return false;
@@ -117,7 +125,9 @@ export default function PlotMap() {
 
   const stats = useMemo(() => {
     const s = { total: filteredPlots.length, available: 0, sold: 0, reserved: 0, blocked: 0 };
-    filteredPlots.forEach((p) => { if (s[p.status] !== undefined) s[p.status]++; });
+    filteredPlots.forEach((p) => {
+      if (s[p.status] !== undefined) s[p.status]++;
+    });
     return s;
   }, [filteredPlots]);
 
@@ -131,21 +141,26 @@ export default function PlotMap() {
     const pName = getProjectName(selectedPlot);
     const projPlots = plots.filter((p) => getProjectName(p) === pName);
     const s = { total: projPlots.length, available: 0, sold: 0, reserved: 0, blocked: 0 };
-    projPlots.forEach((p) => { if (s[p.status] !== undefined) s[p.status]++; });
+    projPlots.forEach((p) => {
+      if (s[p.status] !== undefined) s[p.status]++;
+    });
     return s;
   }, [selectedPlot, plots, getProjectName]);
 
   const mapCenter = useMemo(() => {
     if (!selectedPlot && filteredPlots.length === 0) return [20.2961, 85.8245];
     if (selectedPlot) {
-      if (selectedPlot.coordinates?.lat) return [selectedPlot.coordinates.lat, selectedPlot.coordinates.lng];
+      if (selectedPlot.coordinates?.lat)
+        return [selectedPlot.coordinates.lat, selectedPlot.coordinates.lng];
       const proj = getProjectObj(selectedPlot);
-      if (proj?.location?.coordinates?.lat) return [proj.location.coordinates.lat, proj.location.coordinates.lng];
+      if (proj?.location?.coordinates?.lat)
+        return [proj.location.coordinates.lat, proj.location.coordinates.lng];
     }
     for (const p of filteredPlots) {
       if (p.coordinates?.lat) return [p.coordinates.lat, p.coordinates.lng];
       const proj = getProjectObj(p);
-      if (proj?.location?.coordinates?.lat) return [proj.location.coordinates.lat, proj.location.coordinates.lng];
+      if (proj?.location?.coordinates?.lat)
+        return [proj.location.coordinates.lat, proj.location.coordinates.lng];
     }
     return [20.2961, 85.8245];
   }, [selectedPlot, filteredPlots, getProjectObj]);
@@ -153,42 +168,45 @@ export default function PlotMap() {
   if (loading) return <Loader />;
 
   const viewBtns = [
-    { key: 'layout', icon: <FaTh />, label: 'Layout' },
-    { key: 'map', icon: <FaMap />, label: 'Map' },
-    { key: 'table', icon: <FaListAlt />, label: 'Table' },
+    { key: 'layout', icon: <LuLayoutGrid />, label: 'Layout' },
+    { key: 'map', icon: <LuMap />, label: 'Map' },
+    { key: 'table', icon: <LuListFilter />, label: 'Table' },
   ];
 
   return (
-    <div style={{ background: '#f0f2f5', minHeight: '100vh' }}>
-
+    <div className="bg-[#f0f2f5] min-h-screen">
       {/* HEADER */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '16px' : '20px 32px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'linear-gradient(135deg, #1e3a5f, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(37,99,235,0.3)' }}>
-                <FaMapMarkerAlt style={{ color: '#fff', fontSize: '18px' }} />
+      <div className="bg-white border-b border-slate-200">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-8 py-4 sm:py-5">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 flex items-center justify-center text-white text-lg shadow-md shadow-indigo-600/20 shrink-0">
+                <LuMapPin />
               </div>
               <div>
-                <h1 style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'Poppins, sans-serif', lineHeight: 1.2 }}>
+                <h1 className="font-['Poppins',sans-serif] text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">
                   Plot Map
                 </h1>
-                <p style={{ fontSize: '13px', color: '#64748b', margin: '2px 0 0', fontWeight: 500 }}>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
                   JSM Infrastructure — Site Layout
                 </p>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+
+            <div className="flex items-center gap-2 flex-wrap">
               {[
-                { key: 'total', label: 'Total', count: stats.total, color: '#1e293b', bg: '#f1f5f9' },
-                { key: 'available', label: 'Available', count: stats.available, color: '#15803d', bg: '#f0fdf4' },
-                { key: 'sold', label: 'Sold', count: stats.sold, color: '#b91c1c', bg: '#fef2f2' },
-                { key: 'reserved', label: 'Reserved', count: stats.reserved, color: '#b45309', bg: '#fffbeb' },
+                { key: 'total', label: 'Total', count: stats.total, color: 'text-slate-800', bg: 'bg-slate-100', dot: 'bg-slate-800' },
+                { key: 'available', label: 'Available', count: stats.available, color: 'text-emerald-700', bg: 'bg-emerald-50', dot: 'bg-emerald-500' },
+                { key: 'sold', label: 'Sold', count: stats.sold, color: 'text-rose-700', bg: 'bg-rose-50', dot: 'bg-rose-500' },
+                { key: 'reserved', label: 'Reserved', count: stats.reserved, color: 'text-amber-700', bg: 'bg-amber-50', dot: 'bg-amber-500' },
               ].map((s) => (
-                <div key={s.key} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 14px', borderRadius: '10px', background: s.bg, border: '1px solid #e5e7eb' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: s.color }} />
-                  <span style={{ fontSize: '13px', fontWeight: 700, color: s.color }}>{s.count}</span>
-                  <span style={{ fontSize: '12px', color: '#64748b', fontWeight: 500 }}>{s.label}</span>
+                <div
+                  key={s.key}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 ${s.bg}`}
+                >
+                  <span className={`w-2 h-2 rounded-full ${s.dot}`} />
+                  <span className={`text-xs font-extrabold ${s.color}`}>{s.count}</span>
+                  <span className="text-xs text-slate-500 font-medium">{s.label}</span>
                 </div>
               ))}
             </div>
@@ -197,8 +215,7 @@ export default function PlotMap() {
       </div>
 
       {/* MAIN */}
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '16px' : '24px 32px', display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
-
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 py-4 sm:py-6 flex gap-6 items-start">
         {/* LEFT SIDEBAR */}
         <FilterSidebar
           isMobile={isMobile}
@@ -216,12 +233,14 @@ export default function PlotMap() {
         />
 
         {/* RIGHT CONTENT */}
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
-
+        <div className="flex-1 min-w-0 flex flex-col gap-5">
           {isMobile && !showFilters && (
-            <button type="button" onClick={() => setShowFilters(true)}
-              style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 150, padding: '14px 20px', background: '#2563eb', border: 'none', borderRadius: '14px', boxShadow: '0 4px 16px rgba(37,99,235,0.4)', fontSize: '14px', fontWeight: 700, color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <FaFilter /> Filters ({filteredPlots.length})
+            <button
+              type="button"
+              onClick={() => setShowFilters(true)}
+              className="fixed bottom-6 right-6 z-[150] px-5 py-3.5 bg-indigo-600 border-0 rounded-2xl shadow-lg shadow-indigo-600/30 text-xs font-bold text-white cursor-pointer flex items-center gap-2"
+            >
+              <LuFilter className="text-sm" /> Filters ({filteredPlots.length})
             </button>
           )}
 
@@ -234,35 +253,38 @@ export default function PlotMap() {
           />
 
           {/* VIEW SWITCHER */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', background: '#fff', borderRadius: '12px', border: '1px solid #e5e7eb', overflow: 'hidden', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>
+          <div className="flex items-center gap-2 flex-wrap justify-between">
+            <div className="flex bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs p-1 gap-1">
               {viewBtns.map((v) => (
-                <button key={v.key} type="button" onClick={() => setActiveView(v.key)}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 16px',
-                    border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: 600,
-                    background: activeView === v.key ? '#2563eb' : 'transparent',
-                    color: activeView === v.key ? '#fff' : '#64748b',
-                    transition: 'all 0.15s', fontFamily: 'Inter, sans-serif',
-                  }}>
-                  {v.icon} {v.label}
+                <button
+                  key={v.key}
+                  type="button"
+                  onClick={() => setActiveView(v.key)}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-lg border-0 cursor-pointer text-xs font-bold transition-all ${
+                    activeView === v.key
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'bg-transparent text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  <span className="text-sm">{v.icon}</span>
+                  <span>{v.label}</span>
                 </button>
               ))}
             </div>
-            <div style={{ marginLeft: 'auto', display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+
+            <div className="flex items-center gap-4 flex-wrap">
               {Object.entries(statusConfig).map(([key, cfg]) => (
-                <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: cfg.color }} />
-                  <span style={{ fontSize: '11px', fontWeight: 600, color: '#475569' }}>{cfg.label}</span>
+                <div key={key} className="flex items-center gap-1.5">
+                  <span className={`w-3 h-3 rounded ${cfg.colorClass}`} />
+                  <span className="text-xs font-semibold text-slate-600">{cfg.label}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* MAIN CONTENT AREA */}
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-
+          <div className="flex gap-5 items-start">
+            <div className="flex-1 min-w-0">
               {/* LAYOUT VIEW */}
               {activeView === 'layout' && (
                 <LayoutView
@@ -300,8 +322,12 @@ export default function PlotMap() {
 
             {/* STICKY PLOT DETAILS (Desktop) */}
             {!isMobile && selectedPlot && (
-              <div style={{ width: '380px', flexShrink: 0, position: 'sticky', top: '24px' }}>
-                <PlotDetailsContent plot={selectedPlot} onClose={() => setSelectedPlot(null)} getProjectName={getProjectName} />
+              <div className="w-[380px] shrink-0 sticky top-6 z-20">
+                <PlotDetailsContent
+                  plot={selectedPlot}
+                  onClose={() => setSelectedPlot(null)}
+                  getProjectName={getProjectName}
+                />
               </div>
             )}
           </div>
@@ -313,31 +339,33 @@ export default function PlotMap() {
         {selectedPlot && isMobile && (
           <>
             <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setSelectedPlot(null)}
-              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 300 }}
+              className="fixed inset-0 bg-slate-950/40 z-[300]"
             />
             <motion.div
-              initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              style={{ position: 'fixed', bottom: 0, left: 0, right: 0, maxHeight: '75vh', background: '#fff', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', zIndex: 310, display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 -4px 24px rgba(0,0,0,0.12)' }}
+              className="fixed bottom-0 left-0 right-0 maxHeight-[75vh] bg-white rounded-t-3xl z-[310] flex flex-col overflow-hidden shadow-2xl"
             >
-              <div style={{ padding: '12px 24px', display: 'flex', justifyContent: 'center' }}>
-                <div style={{ width: '40px', height: '4px', borderRadius: '2px', background: '#d1d5db' }} />
+              <div className="py-3 px-6 flex justify-center">
+                <div className="w-10 h-1 rounded-full bg-slate-300" />
               </div>
-              <div style={{ flex: 1, overflowY: 'auto' }}>
-                <PlotDetailsContent plot={selectedPlot} onClose={() => setSelectedPlot(null)} getProjectName={getProjectName} />
+              <div className="flex-1 overflow-y-auto">
+                <PlotDetailsContent
+                  plot={selectedPlot}
+                  onClose={() => setSelectedPlot(null)}
+                  getProjectName={getProjectName}
+                />
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .plot-map-layout { flex-direction: column; }
-        }
-      `}</style>
     </div>
   );
 }

@@ -28,11 +28,11 @@ export default function Footer() {
         <div className="foot-grid">
           {/* About */}
           <div className="foot-about">
-            <Link to="/" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: '12px' }}>
+            <Link to="/" className="inline-block no-underline mb-3">
               <img
                 src="/construction logo.png"
                 alt="JSMIL – Jai Santoshi Maa Infrastructure"
-                style={{ height: '80px', width: 'auto', objectFit: 'contain' }}
+                className="h-20 w-auto object-contain"
               />
             </Link>
             <p>Building dreams, creating value, and delivering excellence in real estate with innovation and trust.</p>

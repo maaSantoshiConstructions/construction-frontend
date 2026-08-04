@@ -1,32 +1,31 @@
 import React from 'react';
-import { FaHardHat } from 'react-icons/fa';
+import { LuHardHat } from 'react-icons/lu';
 
 export default function TrackerHeader({
   selectedProject,
   setSelectedProject,
   projects,
   setSearchParams,
-  isMobile,
 }) {
   return (
-    <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px' : '24px 32px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'linear-gradient(135deg, #d99f36, #b8860b)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 10px rgba(217,159,54,0.3)' }}>
-              <FaHardHat style={{ color: '#fff', fontSize: '22px' }} />
+    <div className="bg-white border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-6">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center shadow-md shadow-amber-500/20 shrink-0">
+              <LuHardHat className="text-white text-2xl" />
             </div>
             <div>
-              <h1 style={{ fontSize: isMobile ? '22px' : '26px', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'Poppins, sans-serif' }}>
+              <h1 className="font-['Poppins',sans-serif] text-xl sm:text-2xl font-extrabold text-slate-900 m-0">
                 Construction Tracker
               </h1>
-              <p style={{ fontSize: '13px', color: '#64748b', margin: '2px 0 0', fontWeight: 500 }}>
+              <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
                 Real-time progress across all projects
               </p>
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <label style={{ fontSize: '12px', fontWeight: 600, color: '#64748b' }}>Filter:</label>
+          <div className="flex items-center gap-2.5">
+            <label className="text-xs font-semibold text-slate-500">Filter:</label>
             <select
               value={selectedProject}
               onChange={(e) => {
@@ -34,7 +33,7 @@ export default function TrackerHeader({
                 if (e.target.value) setSearchParams({ project: e.target.value });
                 else setSearchParams({});
               }}
-              style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #e5e7eb', fontSize: '13px', fontWeight: 500, color: '#1e293b', background: '#fff', cursor: 'pointer', outline: 'none', fontFamily: 'Inter, sans-serif', minWidth: '180px' }}
+              className="px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold text-slate-800 bg-white cursor-pointer outline-none focus:border-indigo-600 min-w-[180px] shadow-xs"
             >
               <option value="">All Projects</option>
               {projects.map((p) => <option key={p._id} value={p._id}>{p.name}</option>)}

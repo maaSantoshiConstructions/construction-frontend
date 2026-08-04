@@ -4,42 +4,79 @@ export default function TrackerStats({
   projectStats,
   currentProjectObj,
   stages,
-  isMobile,
 }) {
   if (!projectStats) return null;
 
   return (
-    <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e5e7eb', padding: isMobile ? '20px' : '24px 28px', marginBottom: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 mb-6 shadow-xs">
+      <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#0f172a', margin: 0, fontFamily: 'Poppins, sans-serif' }}>
+          <h3 className="text-base sm:text-lg font-bold text-slate-900 m-0 font-['Poppins',sans-serif]">
             {currentProjectObj?.name || 'Overall Progress'}
           </h3>
           {currentProjectObj?.location?.city && (
-            <p style={{ fontSize: '12px', color: '#64748b', margin: '3px 0 0' }}>{currentProjectObj.location.city}, {currentProjectObj.location.state}</p>
+            <p className="text-xs text-slate-500 mt-0.5">
+              {currentProjectObj.location.city}, {currentProjectObj.location.state}
+            </p>
           )}
         </div>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '28px', fontWeight: 800, color: '#d99f36', fontFamily: 'Poppins, sans-serif' }}>{projectStats.avgProgress}%</div>
-          <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 600 }}>{projectStats.total} Updates</div>
+        <div className="text-right">
+          <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 font-['Poppins',sans-serif]">
+            {projectStats.avgProgress}%
+          </div>
+          <div className="text-[11px] text-slate-400 font-semibold">
+            {projectStats.total} Updates
+          </div>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div style={{ height: '10px', background: '#f1f5f9', borderRadius: '5px', overflow: 'hidden', marginBottom: '16px' }}>
-        <div style={{ height: '100%', width: `${projectStats.avgProgress}%`, background: 'linear-gradient(90deg, #3a2fb8, #5b4fe0)', borderRadius: '5px', transition: 'width 0.6s ease' }} />
+      <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden mb-4">
+        <div
+          className="h-full bg-gradient-to-r from-indigo-700 to-indigo-500 rounded-full transition-all duration-500 ease-out"
+          style={{ width: `${projectStats.avgProgress}%` }}
+        />
       </div>
 
       {/* Stage Indicators */}
-      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)', gap: '8px' }}>
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
         {stages.map((s) => {
           const count = projectStats.stageCounts[s.key] || 0;
           const active = count > 0;
           return (
-            <div key={s.key} style={{ padding: '10px 8px', borderRadius: '10px', background: active ? s.color + '10' : '#f8fafc', border: `1.5px solid ${active ? s.color + '30' : '#e5e7eb'}`, textAlign: 'center', transition: 'all 0.2s' }}>
-              <div style={{ color: active ? s.color : '#94a3b8', fontSize: '16px', marginBottom: '4px', display: 'flex', justifyContent: 'center' }}>{s.icon}</div>
-              <div style={{ fontSize: '11px', fontWeight: 700, color: active ? s.color : '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.3px' }}>{s.label}</div>
-              <div style={{ fontSize: '13px', fontWeight: 800, color: active ? '#0f172a' : '#cbd5e1', marginTop: '2px' }}>{count}</div>
+            <div
+              key={s.key}
+              className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center ${
+                active ? '' : 'bg-slate-50 border-slate-200'
+              }`}
+              style={
+                active
+                  ? {
+                      backgroundColor: `${s.color}12`,
+                      borderColor: `${s.color}35`,
+                    }
+                  : undefined
+              }
+            >
+              <div
+                className="text-base mb-1 flex justify-center"
+                style={{ color: active ? s.color : '#94a3b8' }}
+              >
+                {s.icon}
+              </div>
+              <div
+                className="text-[10.5px] font-bold uppercase tracking-wider"
+                style={{ color: active ? s.color : '#94a3b8' }}
+              >
+                {s.label}
+              </div>
+              <div
+                className={`text-xs sm:text-sm font-extrabold mt-0.5 ${
+                  active ? 'text-slate-900' : 'text-slate-300'
+                }`}
+              >
+                {count}
+              </div>
             </div>
           );
         })}

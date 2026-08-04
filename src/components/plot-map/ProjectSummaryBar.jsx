@@ -1,11 +1,15 @@
 import React from 'react';
-import { FaBuilding, FaCalendarAlt } from 'react-icons/fa';
+import { LuBuilding, LuCalendar } from 'react-icons/lu';
 
-function SummaryItem({ label, value, color }) {
+function SummaryItem({ label, value, colorClass }) {
   return (
     <div>
-      <div style={{ fontSize: '10px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>{label}</div>
-      <div style={{ fontSize: '18px', fontWeight: 800, color, fontFamily: 'Poppins, sans-serif' }}>{value}</div>
+      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+        {label}
+      </div>
+      <div className={`text-lg font-extrabold font-['Poppins',sans-serif] ${colorClass}`}>
+        {value}
+      </div>
     </div>
   );
 }
@@ -14,38 +18,56 @@ export default function ProjectSummaryBar({
   currentProject,
   projectStats,
   isMobile,
-  formatCurrency
+  formatCurrency,
 }) {
   if (!currentProject) return null;
 
   return (
-    <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e5e7eb', padding: isMobile ? '16px' : '18px 24px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #2563eb, #1d4ed8)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          <FaBuilding style={{ color: '#fff', fontSize: '14px' }} />
+    <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs mb-4">
+      <div className="flex items-center gap-3 mb-3.5">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 flex items-center justify-center text-white text-sm shrink-0">
+          <LuBuilding />
         </div>
-        <div style={{ minWidth: 0 }}>
-          <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#0f172a', margin: 0, fontFamily: 'Poppins, sans-serif', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <div className="min-w-0">
+          <h3 className="text-sm sm:text-base font-bold text-slate-900 truncate font-['Poppins',sans-serif]">
             {currentProject.name}
           </h3>
-          <p style={{ fontSize: '12px', color: '#64748b', margin: '2px 0 0' }}>
-            {currentProject.location?.city}{currentProject.location?.state ? `, ${currentProject.location.state}` : ''}
-            {currentProject.status && <span style={{ marginLeft: '8px', padding: '2px 8px', borderRadius: '6px', background: '#f0fdf4', color: '#15803d', fontWeight: 600, fontSize: '11px', textTransform: 'capitalize' }}>{currentProject.status}</span>}
+          <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-2 flex-wrap">
+            <span>
+              {currentProject.location?.city}
+              {currentProject.location?.state ? `, ${currentProject.location.state}` : ''}
+            </span>
+            {currentProject.status && (
+              <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-semibold text-[11px] capitalize border border-emerald-100">
+                {currentProject.status}
+              </span>
+            )}
           </p>
         </div>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)', gap: '10px' }}>
-        <SummaryItem label="Total" value={projectStats?.total || 0} color="#1e293b" />
-        <SummaryItem label="Available" value={projectStats?.available || 0} color="#15803d" />
-        <SummaryItem label="Reserved" value={projectStats?.reserved || 0} color="#b45309" />
-        <SummaryItem label="Sold" value={projectStats?.sold || 0} color="#b91c1c" />
-        {!isMobile && <SummaryItem label="Price/Sqft" value={currentProject.pricePerSqft ? formatCurrency(currentProject.pricePerSqft) : 'N/A'} color="#2563eb" />}
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+        <SummaryItem label="Total" value={projectStats?.total || 0} colorClass="text-slate-900" />
+        <SummaryItem label="Available" value={projectStats?.available || 0} colorClass="text-emerald-700" />
+        <SummaryItem label="Reserved" value={projectStats?.reserved || 0} colorClass="text-amber-700" />
+        <SummaryItem label="Sold" value={projectStats?.sold || 0} colorClass="text-rose-700" />
+        {!isMobile && (
+          <SummaryItem
+            label="Price/Sqft"
+            value={currentProject.pricePerSqft ? formatCurrency(currentProject.pricePerSqft) : 'N/A'}
+            colorClass="text-indigo-600"
+          />
+        )}
         {currentProject.possessionDate && !isMobile && (
           <div>
-            <div style={{ fontSize: '10px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Possession</div>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: '#1e293b' }}>
-              <FaCalendarAlt style={{ fontSize: '11px', marginRight: '4px', color: '#94a3b8' }} />
-              {new Date(currentProject.possessionDate).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+              Possession
+            </div>
+            <div className="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1">
+              <LuCalendar className="text-xs text-slate-400" />
+              {new Date(currentProject.possessionDate).toLocaleDateString('en-IN', {
+                month: 'short',
+                year: 'numeric',
+              })}
             </div>
           </div>
         )}

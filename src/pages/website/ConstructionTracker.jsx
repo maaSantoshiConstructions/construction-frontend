@@ -1,8 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
-  FaHardHat, FaCheckCircle, FaClipboardList, FaTools, FaBuilding, FaHome,
-} from 'react-icons/fa';
+  LuHardHat,
+  LuCircleCheck,
+  LuClipboardList,
+  LuWrench,
+  LuBuilding2,
+  LuHouse,
+} from 'react-icons/lu';
 import { getUpdates } from '../../api/constructionUpdates';
 import { getProjects } from '../../api/projects';
 import Loader from '../../components/common/Loader';
@@ -13,16 +18,18 @@ import TrackerStats from '../../components/construction-tracker/TrackerStats';
 import TrackerTimeline from '../../components/construction-tracker/TrackerTimeline';
 
 const stages = [
-  { key: 'planning', label: 'Planning', icon: <FaClipboardList />, color: '#3a2fb8' },
-  { key: 'foundation', label: 'Foundation', icon: <FaTools />, color: '#d99f36' },
-  { key: 'structure', label: 'Structure', icon: <FaBuilding />, color: '#5b4fe0' },
-  { key: 'roofing', label: 'Roofing', icon: <FaHome />, color: '#7a3fd6' },
-  { key: 'finishing', label: 'Finishing', icon: <FaHardHat />, color: '#2f9e5c' },
-  { key: 'completed', label: 'Completed', icon: <FaCheckCircle />, color: '#2f9e5c' },
+  { key: 'planning', label: 'Planning', icon: <LuClipboardList />, color: '#3a2fb8' },
+  { key: 'foundation', label: 'Foundation', icon: <LuWrench />, color: '#d99f36' },
+  { key: 'structure', label: 'Structure', icon: <LuBuilding2 />, color: '#5b4fe0' },
+  { key: 'roofing', label: 'Roofing', icon: <LuHouse />, color: '#7a3fd6' },
+  { key: 'finishing', label: 'Finishing', icon: <LuHardHat />, color: '#2f9e5c' },
+  { key: 'completed', label: 'Completed', icon: <LuCircleCheck />, color: '#2f9e5c' },
 ];
 
 const stageMap = {};
-stages.forEach((s, i) => { stageMap[s.key] = { ...s, order: i }; });
+stages.forEach((s, i) => {
+  stageMap[s.key] = { ...s, order: i };
+});
 
 export default function ConstructionTracker() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,7 +74,9 @@ export default function ConstructionTracker() {
 
   const filteredUpdates = useMemo(() => {
     if (!selectedProject) return updates;
-    return updates.filter((u) => u.project?._id === selectedProject || u.project?.slug === selectedProject);
+    return updates.filter(
+      (u) => u.project?._id === selectedProject || u.project?.slug === selectedProject
+    );
   }, [updates, selectedProject]);
 
   const groupedByProject = useMemo(() => {
@@ -83,9 +92,16 @@ export default function ConstructionTracker() {
   const projectStats = useMemo(() => {
     if (filteredUpdates.length === 0) return null;
     const stageCounts = {};
-    stages.forEach((s) => { stageCounts[s.key] = 0; });
-    filteredUpdates.forEach((u) => { if (stageCounts[u.stage] !== undefined) stageCounts[u.stage]++; });
-    const avgProgress = Math.round(filteredUpdates.reduce((sum, u) => sum + (u.progressPercent || 0), 0) / filteredUpdates.length);
+    stages.forEach((s) => {
+      stageCounts[s.key] = 0;
+    });
+    filteredUpdates.forEach((u) => {
+      if (stageCounts[u.stage] !== undefined) stageCounts[u.stage]++;
+    });
+    const avgProgress = Math.round(
+      filteredUpdates.reduce((sum, u) => sum + (u.progressPercent || 0), 0) /
+        filteredUpdates.length
+    );
     return { stageCounts, avgProgress, total: filteredUpdates.length };
   }, [filteredUpdates]);
 
@@ -97,8 +113,7 @@ export default function ConstructionTracker() {
   if (loading) return <Loader />;
 
   return (
-    <div style={{ background: '#f0f2f5', minHeight: '100vh' }}>
-
+    <div className="bg-[#f0f2f5] min-h-screen pb-16">
       {/* HEADER */}
       <TrackerHeader
         selectedProject={selectedProject}
@@ -108,8 +123,7 @@ export default function ConstructionTracker() {
         isMobile={isMobile}
       />
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px' : '24px 32px' }}>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-6">
         {/* OVERALL PROGRESS BAR */}
         <TrackerStats
           projectStats={projectStats}

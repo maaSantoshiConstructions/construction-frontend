@@ -1,33 +1,55 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { getAdminDashboard } from '../../../api/dashboard';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import ErrorMessage from '../../../components/common/ErrorMessage';
-import { 
-  LuBuilding2, 
-  LuMap, 
-  LuCircleCheck, 
-  LuCircleX, 
-  LuLock, 
-  LuIndianRupee, 
-  LuTrendingUp, 
-  LuMapPin 
+import {
+  LuBuilding2,
+  LuMap,
+  LuCircleCheck,
+  LuCircleX,
+  LuLock,
+  LuIndianRupee,
+  LuTrendingUp,
+  LuMapPin,
 } from 'react-icons/lu';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const statCards = [
-  { key: 'totalProjects',      label: 'Projects',        ic: LuBuilding2, color: '#3a2fb8' },
-  { key: 'totalPlots',         label: 'Total Plots',     ic: LuMap,  color: '#5b4fe0' },
-  { key: 'availablePlots',     label: 'Available',       ic: LuCircleCheck, color: '#2f9e5c' },
-  { key: 'soldPlots',          label: 'Sold',            ic: LuCircleX, color: '#c0392b' },
-  { key: 'reservedPlots',      label: 'Reserved',        ic: LuLock, color: '#d99f36' },
-  { key: 'revenue',            label: 'Revenue',         ic: LuIndianRupee, color: '#2f9e5c', money: true },
-  { key: 'totalLeads',         label: 'Leads',           ic: LuTrendingUp, color: '#7a3fd6' },
-  { key: 'siteVisitsThisMonth',label: 'Site Visits',     ic: LuMapPin, color: '#3a2fb8' },
+  { key: 'totalProjects', label: 'Projects', ic: LuBuilding2, iconBg: 'bg-indigo-50 text-indigo-700', textClass: 'text-indigo-700' },
+  { key: 'totalPlots', label: 'Total Plots', ic: LuMap, iconBg: 'bg-purple-50 text-purple-700', textClass: 'text-purple-700' },
+  { key: 'availablePlots', label: 'Available', ic: LuCircleCheck, iconBg: 'bg-emerald-50 text-emerald-700', textClass: 'text-emerald-700' },
+  { key: 'soldPlots', label: 'Sold', ic: LuCircleX, iconBg: 'bg-rose-50 text-rose-700', textClass: 'text-rose-700' },
+  { key: 'reservedPlots', label: 'Reserved', ic: LuLock, iconBg: 'bg-amber-50 text-amber-700', textClass: 'text-amber-700' },
+  { key: 'revenue', label: 'Revenue', ic: LuIndianRupee, iconBg: 'bg-emerald-50 text-emerald-700', textClass: 'text-emerald-700', money: true },
+  { key: 'totalLeads', label: 'Leads', ic: LuTrendingUp, iconBg: 'bg-indigo-50 text-indigo-700', textClass: 'text-indigo-700' },
+  { key: 'siteVisitsThisMonth', label: 'Site Visits', ic: LuMapPin, iconBg: 'bg-sky-50 text-sky-700', textClass: 'text-sky-700' },
 ];
+
+const leadStatusStyle = {
+  new: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  contacted: 'bg-amber-50 text-amber-700 border-amber-200',
+  interested: 'bg-purple-50 text-purple-700 border-purple-200',
+  booking_done: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  lost: 'bg-rose-50 text-rose-700 border-rose-200',
+};
+
+const bookingStatusStyle = {
+  token: 'bg-amber-50 text-amber-700 border-amber-200',
+  partial: 'bg-purple-50 text-purple-700 border-purple-200',
+  completed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  cancelled: 'bg-rose-50 text-rose-700 border-rose-200',
+};
 
 export default function AdminDashboard() {
   const [data, setData] = useState(null);
@@ -35,35 +57,40 @@ export default function AdminDashboard() {
   const [error, setError] = useState(null);
 
   const fetchDashboard = async () => {
-    setLoading(true); setError(null);
+    setLoading(true);
+    setError(null);
     try {
       const { data: res } = await getAdminDashboard();
       setData(res?.data || res);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to load dashboard');
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  useEffect(() => { fetchDashboard(); }, []);
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
 
-  if (loading) return (
-    <div>
-      <div style={{ marginBottom: '28px' }}>
-        <div style={{ height: '28px', width: '200px', background: '#e6e6f0', borderRadius: '6px', marginBottom: '8px' }} className="pulse-skeleton" />
-        <div style={{ height: '16px', width: '280px', background: '#f0f0f6', borderRadius: '6px' }} className="pulse-skeleton" />
+  if (loading)
+    return (
+      <div className="space-y-6">
+        <div>
+          <div className="h-7 w-48 bg-slate-200 rounded-md mb-2 animate-pulse" />
+          <div className="h-4 w-64 bg-slate-100 rounded-md animate-pulse" />
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <div className="w-10 h-10 bg-slate-100 rounded-xl mb-3 animate-pulse" />
+              <div className="h-6 w-16 bg-slate-200 rounded mb-1.5 animate-pulse" />
+              <div className="h-3.5 w-20 bg-slate-100 rounded animate-pulse" />
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="admin-stat-grid">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '20px' }}>
-            <div style={{ width: '40px', height: '40px', background: '#f0f0f6', borderRadius: '10px', marginBottom: '12px' }} className="pulse-skeleton" />
-            <div style={{ height: '24px', width: '70px', background: '#e6e6f0', borderRadius: '4px', marginBottom: '6px' }} className="pulse-skeleton" />
-            <div style={{ height: '14px', width: '90px', background: '#f0f0f6', borderRadius: '4px' }} className="pulse-skeleton" />
-          </div>
-        ))}
-      </div>
-      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}.pulse-skeleton{animation:pulse 1.5s ease-in-out infinite}`}</style>
-    </div>
-  );
+    );
 
   if (error) return <ErrorMessage message={error} onRetry={fetchDashboard} />;
 
@@ -73,80 +100,99 @@ export default function AdminDashboard() {
   const recentBookings = data?.recentBookings || [];
 
   const chartData = {
-    labels: monthlySales.map(s => s.month),
-    datasets: [{
-      label: 'Revenue (₹)',
-      data: monthlySales.map(s => s.amount),
-      backgroundColor: 'rgba(58,47,184,.7)',
-      borderColor: '#3a2fb8',
-      borderWidth: 2,
-      borderRadius: 6,
-    }],
+    labels: monthlySales.map((s) => s.month),
+    datasets: [
+      {
+        label: 'Revenue (₹)',
+        data: monthlySales.map((s) => s.amount),
+        backgroundColor: 'rgba(79, 70, 229, 0.8)',
+        borderColor: '#4f46e5',
+        borderWidth: 2,
+        borderRadius: 6,
+      },
+    ],
   };
 
   const chartOptions = {
-    responsive: true, maintainAspectRatio: false,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: { legend: { display: false } },
-    scales: { y: { beginAtZero: true, ticks: { callback: v => '₹' + (v / 1000).toFixed(0) + 'k' } } },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { callback: (v) => '₹' + (v / 1000).toFixed(0) + 'k' },
+      },
+    },
   };
 
-  const leadStatusColor = { new: '#3a2fb8', contacted: '#d99f36', interested: '#5b4fe0', booking_done: '#2f9e5c', lost: '#c0392b' };
-  const bookingStatusColor = { token: '#d99f36', partial: '#5b4fe0', completed: '#2f9e5c', cancelled: '#c0392b' };
-
   return (
-    <div>
+    <div className="space-y-7">
       {/* Header */}
-      <div style={{ marginBottom: '28px' }}>
-        <h1 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '24px', fontWeight: 800, color: '#171a35', marginBottom: '4px' }}>Admin Dashboard</h1>
-        <p style={{ color: '#6b6f8a', fontSize: '14px' }}>Overview of your real estate business</p>
+      <div>
+        <h1 className="font-['Poppins',sans-serif] text-2xl sm:text-2xl font-extrabold text-slate-900 mb-1">
+          Admin Dashboard
+        </h1>
+        <p className="text-slate-500 text-xs sm:text-sm">Overview of your real estate business</p>
       </div>
 
       {/* Stat cards */}
-      <div className="admin-stat-grid">
-        {statCards.map(({ key, label, ic: IconComponent, color, money }) => (
-          <div key={key} style={{
-            background: '#fff', borderRadius: '14px',
-            border: '1px solid #e6e6f0', padding: '20px',
-            boxShadow: '0 2px 10px rgba(20,20,60,.05)',
-            transition: '.2s',
-          }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', marginBottom: '12px', color: color }}>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {statCards.map(({ key, label, ic: IconComponent, iconBg, textClass, money }) => (
+          <div
+            key={key}
+            className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:border-slate-300 transition-all"
+          >
+            <div
+              className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-3 ${iconBg}`}
+            >
               {IconComponent && <IconComponent />}
             </div>
-            <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '22px', fontWeight: 800, color: color, lineHeight: 1 }}>
-              {money ? '₹' + ((stats[key] || 0) / 100000).toFixed(1) + 'L' : (stats[key] || 0)}
+            <div
+              className={`font-['Poppins',sans-serif] text-xl sm:text-2xl font-extrabold leading-none ${textClass}`}
+            >
+              {money ? '₹' + ((stats[key] || 0) / 100000).toFixed(1) + 'L' : stats[key] || 0}
             </div>
-            <div style={{ fontSize: '12px', color: '#6b6f8a', marginTop: '4px' }}>{label}</div>
+            <div className="text-xs font-semibold text-slate-500 mt-1.5">{label}</div>
           </div>
         ))}
       </div>
 
-      {/* Chart + Tables */}
-      <div className="admin-two-col">
+      {/* Chart + Quick Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Bar chart */}
-        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '22px', boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
-          <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: 700, color: '#171a35', marginBottom: '18px' }}>Monthly Revenue</h2>
-          <div style={{ height: '240px' }}>
-            {monthlySales.length > 0
-              ? <Bar data={chartData} options={chartOptions} />
-              : <p style={{ color: '#9ea1c4', fontSize: '14px', paddingTop: '80px', textAlign: 'center' }}>No sales data yet</p>
-            }
+        <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs">
+          <h2 className="font-['Poppins',sans-serif] text-base sm:text-lg font-bold text-slate-900 mb-4">
+            Monthly Revenue
+          </h2>
+          <div className="h-60">
+            {monthlySales.length > 0 ? (
+              <Bar data={chartData} options={chartOptions} />
+            ) : (
+              <p className="text-slate-400 text-xs sm:text-sm pt-20 text-center">
+                No sales data yet
+              </p>
+            )}
           </div>
         </div>
 
         {/* Quick actions */}
-        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '22px', boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
-          <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: 700, color: '#171a35', marginBottom: '16px' }}>Quick Actions</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+          <h2 className="font-['Poppins',sans-serif] text-base sm:text-lg font-bold text-slate-900 mb-4">
+            Quick Actions
+          </h2>
+          <div className="flex flex-col gap-2.5">
             {[
-              { label: '+ Add New Project',          path: '/admin/projects',             color: '#3a2fb8' },
-              { label: '+ Add Construction Update',  path: '/admin/construction-updates', color: '#5b4fe0' },
-              { label: '+ Add Plot',                 path: '/admin/plots',                color: '#2f9e5c' },
-              { label: '+ Record Payment',           path: '/admin/payments',             color: '#d99f36' },
-              { label: '→ View All Leads',           path: '/admin/leads',                color: '#7a3fd6' },
-            ].map(a => (
-              <Link key={a.path} to={a.path}
-                style={{ display: 'flex', alignItems: 'center', padding: '10px 14px', borderRadius: '10px', border: `1px solid ${a.color}30`, background: a.color + '08', color: a.color, fontSize: '13px', fontWeight: 600, textDecoration: 'none', transition: '.15s' }}>
+              { label: '+ Add New Project', path: '/admin/projects' },
+              { label: '+ Add Construction Update', path: '/admin/construction-updates' },
+              { label: '+ Add Plot', path: '/admin/plots' },
+              { label: '+ Record Payment', path: '/admin/payments' },
+              { label: '→ View All Leads', path: '/admin/leads' },
+            ].map((a) => (
+              <Link
+                key={a.path}
+                to={a.path}
+                className="flex items-center px-4 py-3 rounded-xl border border-indigo-100 bg-indigo-50/50 hover:bg-indigo-50 text-indigo-700 text-xs font-bold no-underline transition-colors"
+              >
                 {a.label}
               </Link>
             ))}
@@ -154,50 +200,91 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Recent Leads + Bookings */}
-      <div className="admin-two-col equal">
+      {/* Recent Leads + Recent Bookings */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Leads */}
-        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '22px', boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: 700, color: '#171a35' }}>Recent Leads</h2>
-            <Link to="/admin/leads" style={{ fontSize: '12px', color: '#3a2fb8', fontWeight: 600 }}>View all →</Link>
+        <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="font-['Poppins',sans-serif] text-base sm:text-lg font-bold text-slate-900">
+              Recent Leads
+            </h2>
+            <Link
+              to="/admin/leads"
+              className="text-xs font-bold text-indigo-600 hover:text-indigo-700 no-underline transition-colors"
+            >
+              View all →
+            </Link>
           </div>
-          {recentLeads.length === 0
-            ? <p style={{ color: '#9ea1c4', fontSize: '13px', textAlign: 'center', padding: '20px 0' }}>No leads yet</p>
-            : recentLeads.slice(0, 5).map((lead, i) => (
-              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: i < 4 ? '1px solid #f0f0f6' : 'none' }}>
-                <div>
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: '#171a35' }}>{lead.name || lead.customer?.name || '-'}</div>
-                  <div style={{ fontSize: '11.5px', color: '#6b6f8a' }}>{lead.phone || lead.customer?.phone || '-'}</div>
-                </div>
-                <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', background: (leadStatusColor[lead.status] || '#3a2fb8') + '18', color: leadStatusColor[lead.status] || '#3a2fb8' }}>
-                  {lead.status || '-'}
-                </span>
-              </div>
-            ))
-          }
+          {recentLeads.length === 0 ? (
+            <p className="text-slate-400 text-xs text-center py-6">No leads yet</p>
+          ) : (
+            <div className="divide-y divide-slate-100">
+              {recentLeads.slice(0, 5).map((lead, i) => {
+                const badgeStyle =
+                  leadStatusStyle[lead.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                return (
+                  <div key={i} className="flex justify-between items-center py-3">
+                    <div>
+                      <div className="text-xs font-bold text-slate-900">
+                        {lead.name || lead.customer?.name || '-'}
+                      </div>
+                      <div className="text-[11px] text-slate-500 font-medium mt-0.5">
+                        {lead.phone || lead.customer?.phone || '-'}
+                      </div>
+                    </div>
+                    <span
+                      className={`text-[10px] font-bold px-2.5 py-1 rounded-md border capitalize ${badgeStyle}`}
+                    >
+                      {lead.status?.replace(/_/g, ' ') || '-'}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Recent Bookings */}
-        <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e6e6f0', padding: '22px', boxShadow: '0 2px 10px rgba(20,20,60,.05)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: 700, color: '#171a35' }}>Recent Bookings</h2>
-            <Link to="/admin/bookings" style={{ fontSize: '12px', color: '#3a2fb8', fontWeight: 600 }}>View all →</Link>
+        <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="font-['Poppins',sans-serif] text-base sm:text-lg font-bold text-slate-900">
+              Recent Bookings
+            </h2>
+            <Link
+              to="/admin/bookings"
+              className="text-xs font-bold text-indigo-600 hover:text-indigo-700 no-underline transition-colors"
+            >
+              View all →
+            </Link>
           </div>
-          {recentBookings.length === 0
-            ? <p style={{ color: '#9ea1c4', fontSize: '13px', textAlign: 'center', padding: '20px 0' }}>No bookings yet</p>
-            : recentBookings.slice(0, 5).map((b, i) => (
-              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: i < 4 ? '1px solid #f0f0f6' : 'none' }}>
-                <div>
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: '#171a35' }}>#{b.bookingId || b._id?.slice(-6)}</div>
-                  <div style={{ fontSize: '11.5px', color: '#6b6f8a' }}>{b.customer?.name || b.name || '-'} · ₹{(b.totalAmount || b.amount || b.paidAmount || 0).toLocaleString()}</div>
-                </div>
-                <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', background: (bookingStatusColor[b.status] || '#3a2fb8') + '18', color: bookingStatusColor[b.status] || '#3a2fb8' }}>
-                  {b.status || '-'}
-                </span>
-              </div>
-            ))
-          }
+          {recentBookings.length === 0 ? (
+            <p className="text-slate-400 text-xs text-center py-6">No bookings yet</p>
+          ) : (
+            <div className="divide-y divide-slate-100">
+              {recentBookings.slice(0, 5).map((b, i) => {
+                const badgeStyle =
+                  bookingStatusStyle[b.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                return (
+                  <div key={i} className="flex justify-between items-center py-3">
+                    <div>
+                      <div className="text-xs font-bold text-slate-900">
+                        #{b.bookingId || b._id?.slice(-6)}
+                      </div>
+                      <div className="text-[11px] text-slate-500 font-medium mt-0.5">
+                        {b.customer?.name || b.name || '-'} · ₹
+                        {(b.totalAmount || b.amount || b.paidAmount || 0).toLocaleString()}
+                      </div>
+                    </div>
+                    <span
+                      className={`text-[10px] font-bold px-2.5 py-1 rounded-md border capitalize ${badgeStyle}`}
+                    >
+                      {b.status || '-'}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { LuSearch, LuArrowRight, LuMapPin } from 'react-icons/lu';
 import { getProjects } from '../../api/projects';
 import Loader from '../../components/common/Loader';
 import ErrorMessage from '../../components/common/ErrorMessage';
@@ -8,6 +9,12 @@ import config, { getAssetUrl } from '../../config';
 
 const statusFilters = ['all', 'upcoming', 'ongoing', 'completed'];
 const typeFilters = ['all', 'plotted_development', 'villas', 'apartments'];
+
+const statusStyle = {
+  upcoming: 'bg-amber-50 text-amber-700 border-amber-200',
+  ongoing: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  completed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+};
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -43,78 +50,64 @@ export default function Projects() {
     fetchProjects();
   };
 
-  const statusColors = {
-    upcoming: { bg: '#fff2e6', text: '#d99f36' },
-    ongoing: { bg: '#efeafe', text: '#5b4fe0' },
-    completed: { bg: '#eefcf3', text: '#2f9e5c' },
-  };
-
   return (
-    <div style={{ background: 'var(--white)', minHeight: '100vh' }}>
-
+    <div className="bg-slate-50 min-h-screen pb-24">
       {/* ===== HEADER ===== */}
-      <div style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.35), transparent 55%), linear-gradient(120deg,#0b0f2e 0%,#161b45 55%,#1c1450 100%)',
-        padding: '64px 0 60px',
-        textAlign: 'center',
-      }}>
-        <div className="wrap">
-          <span className="eyebrow" style={{ background: 'rgba(255,255,255,.08)', color: 'var(--gold)' }}>PREMIUM PROPERTIES</span>
-          <h1 style={{ fontFamily: 'Poppins,Inter,sans-serif', fontSize: '42px', fontWeight: 800, color: '#fff', margin: '12px 0 14px' }}>
+      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0b0f2e] via-[#161b45] to-[#1c1450]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+        <div className="wrap max-w-4xl mx-auto">
+          <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold tracking-wider uppercase mb-3">
+            PREMIUM PROPERTIES
+          </span>
+          <h1 className="font-['Poppins',sans-serif] text-3xl sm:text-4xl md:text-5xl font-extrabold text-white my-3">
             Our Projects
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '16px', maxWidth: '520px', margin: '0 auto', lineHeight: 1.6 }}>
+          <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-md mx-auto leading-relaxed">
             Discover premium residential plots, luxury villas, and apartments across prime locations in Odisha.
           </p>
         </div>
       </div>
 
       {/* ===== SEARCH & FILTER BAR ===== */}
-      <div className="wrap" style={{ marginTop: '-36px', paddingBottom: '90px' }}>
-        <div style={{
-          background: '#fff',
-          borderRadius: '16px',
-          border: '1px solid var(--line)',
-          boxShadow: '0 15px 40px rgba(20,20,60,.1)',
-          padding: '24px',
-          marginBottom: '40px',
-        }}>
-          <form onSubmit={handleSearch} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ display: 'flex', gap: '12px' }} className="search-row-el">
-              <div style={{ position: 'relative', flex: 1 }}>
+      <div className="wrap max-w-6xl mx-auto px-4 sm:px-6 -mt-7 relative z-10">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-5 sm:p-7 mb-10">
+          <form onSubmit={handleSearch} className="flex flex-col gap-5">
+            <div className="flex items-center gap-3 flex-col sm:flex-row">
+              <div className="relative flex-1 w-full">
+                <LuSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="🔍 Search projects by name, city, location..."
-                  style={{
-                    width: '100%', padding: '12px 16px', border: '1px solid var(--line)',
-                    borderRadius: '10px', fontSize: '14px', color: 'var(--text)',
-                    outline: 'none', background: '#fff', fontFamily: 'Inter,sans-serif', boxSizing: 'border-box'
-                  }}
+                  placeholder="Search projects by name, city, location..."
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 outline-none bg-white transition-colors focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10"
                 />
               </div>
-              <button type="submit" className="btn-gold" style={{ border: 'none', padding: '12px 28px', fontSize: '14px' }}>
+              <button
+                type="submit"
+                className="cta-btn w-full sm:w-auto px-7 py-3 text-xs font-bold rounded-xl border-0 shadow-md no-underline cursor-pointer"
+              >
                 Search
               </button>
             </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '28px', borderTop: '1px solid var(--line)', paddingTop: '20px' }}>
+            <div className="flex flex-wrap gap-6 pt-4 border-t border-slate-100">
               {/* Status Filter */}
               <div>
-                <span style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--gray)', letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '8px' }}>Project Status</span>
-                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                  Project Status
+                </span>
+                <div className="flex gap-2 flex-wrap">
                   {statusFilters.map((s) => (
                     <button
                       key={s}
                       type="button"
                       onClick={() => setStatusFilter(s)}
-                      style={{
-                        padding: '6px 14px', borderRadius: '20px', border: 'none', fontSize: '12.5px', fontWeight: 600,
-                        cursor: 'pointer', fontFamily: 'inherit', transition: '.15s',
-                        background: statusFilter === s ? 'var(--indigo)' : '#f0f0f6',
-                        color: statusFilter === s ? '#fff' : 'var(--text)',
-                      }}
+                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border-0 cursor-pointer ${
+                        statusFilter === s
+                          ? 'bg-indigo-600 text-white shadow-xs'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
                     >
                       {s === 'all' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1)}
                     </button>
@@ -124,21 +117,24 @@ export default function Projects() {
 
               {/* Type Filter */}
               <div>
-                <span style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: 'var(--gray)', letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '8px' }}>Property Type</span>
-                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                  Property Type
+                </span>
+                <div className="flex gap-2 flex-wrap">
                   {typeFilters.map((t) => (
                     <button
                       key={t}
                       type="button"
                       onClick={() => setTypeFilter(t)}
-                      style={{
-                        padding: '6px 14px', borderRadius: '20px', border: 'none', fontSize: '12.5px', fontWeight: 600,
-                        cursor: 'pointer', fontFamily: 'inherit', transition: '.15s',
-                        background: typeFilter === t ? 'var(--indigo)' : '#f0f0f6',
-                        color: typeFilter === t ? '#fff' : 'var(--text)',
-                      }}
+                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border-0 cursor-pointer ${
+                        typeFilter === t
+                          ? 'bg-indigo-600 text-white shadow-xs'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
                     >
-                      {t === 'all' ? 'All' : t.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+                      {t === 'all'
+                        ? 'All'
+                        : t.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
                     </button>
                   ))}
                 </div>
@@ -155,57 +151,81 @@ export default function Projects() {
         ) : projects.length === 0 ? (
           <EmptyState
             title="No projects found"
-            description={search ? 'Try checking your search query or filters.' : 'We are launching new properties soon.'}
+            description={
+              search
+                ? 'Try checking your search query or filters.'
+                : 'We are launching new properties soon.'
+            }
           />
         ) : (
-          <div className="projects-grid">
-            {projects.map((project) => (
-              <div key={project._id} className="pcard" style={{ background: '#fff' }}>
-                <div className="thumb">
-                  <img
-                    src={getAssetUrl(project.image || (project.images && project.images[0])) || config.fallbackImageUrl}
-                    alt={project.name}
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.parentElement.style.background = 'linear-gradient(135deg,#3a3f6b,#7d7aa3)';
-                      e.target.remove();
-                    }}
-                  />
-                  {project.status && (
-                    <span className="tag" style={{
-                      background: statusColors[project.status]?.bg || '#f0f0f6',
-                      color: statusColors[project.status]?.text || 'var(--text)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '.5px',
-                    }}>
-                      {project.status}
-                    </span>
-                  )}
-                </div>
-                <div className="body">
-                  <h4>{project.name}</h4>
-                  <div className="loc">
-                    {typeof project.location === 'object' && project.location !== null
-                      ? ([project.location.address, project.location.city, project.location.state].filter(Boolean).join(', ') || '-')
-                      : (project.location || '-')}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project) => {
+              const bStyle =
+                statusStyle[project.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+              return (
+                <div
+                  key={project._id}
+                  className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col group"
+                >
+                  <div className="relative aspect-[16/10] bg-slate-100 overflow-hidden">
+                    <img
+                      src={
+                        getAssetUrl(project.image || (project.images && project.images[0])) ||
+                        config.fallbackImageUrl
+                      }
+                      alt={project.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    {project.status && (
+                      <span
+                        className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border shadow-xs ${bStyle}`}
+                      >
+                        {project.status}
+                      </span>
+                    )}
                   </div>
-                  <p style={{ fontSize: '13px', color: 'var(--gray)', minHeight: '38px', lineHeight: 1.5, margin: '8px 0 16px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {project.description || 'Premium real estate development with smart features, green parks, security, and electricity connectivity.'}
-                  </p>
-                  <div className="price-row" style={{ marginTop: '0', paddingTop: '12px', borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <div className="from">Starting From</div>
-                      <div className="price" style={{ fontSize: '18px', fontWeight: 800, color: 'var(--gold-dark)' }}>
-                        {project.pricePerSqft ? `₹${project.pricePerSqft}/Sq.ft` : 'Contact for Price'}
-                      </div>
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-['Poppins',sans-serif] text-base font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                      {project.name}
+                    </h3>
+                    <div className="text-xs text-slate-500 font-medium flex items-center gap-1.5 mt-1">
+                      <LuMapPin className="text-slate-400 text-xs shrink-0" />
+                      <span className="truncate">
+                        {typeof project.location === 'object' && project.location !== null
+                          ? [project.location.address, project.location.city, project.location.state]
+                              .filter(Boolean)
+                              .join(', ') || '-'
+                          : project.location || '-'}
+                      </span>
                     </div>
-                    <RouterLink to={`/projects/${project.slug}`} className="vdbtn" style={{ margin: '0', textDecoration: 'none' }}>
-                      View Project <span className="go">→</span>
-                    </RouterLink>
+                    <p className="text-xs text-slate-500 mt-2.5 mb-4 line-clamp-2 leading-relaxed flex-1">
+                      {project.description ||
+                        'Premium real estate development with smart features, green parks, security, and electricity connectivity.'}
+                    </p>
+                    <div className="pt-3 border-t border-slate-100 flex justify-between items-center mt-auto">
+                      <div>
+                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                          Starting From
+                        </div>
+                        <div className="text-sm sm:text-base font-extrabold text-amber-600 font-['Poppins',sans-serif]">
+                          {project.pricePerSqft
+                            ? `₹${project.pricePerSqft}/Sq.ft`
+                            : 'Contact for Price'}
+                        </div>
+                      </div>
+                      <RouterLink
+                        to={`/projects/${project.slug}`}
+                        className=" cta-btn inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-700 transition-colors no-underline"
+                      >
+                        <span>View Project</span>
+                        <LuArrowRight className="text-xs" />
+                      </RouterLink>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

@@ -1,19 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  FaTimes, FaRulerCombined, FaCompass, FaRoad,
-  FaMapMarkerAlt, FaChartLine, FaStar,
-  FaExternalLinkAlt, FaBookmark,
-} from 'react-icons/fa';
+  LuX,
+  LuRuler,
+  LuCompass,
+  LuMilestone,
+  LuMapPin,
+  LuTrendingUp,
+  LuStar,
+  LuExternalLink,
+  LuBookmark,
+} from 'react-icons/lu';
 
 const statusConfig = {
-  available: { color: '#22c55e', bg: '#f0fdf4', text: '#15803d', border: '#86efac', label: 'Available' },
-  reserved: { color: '#f59e0b', bg: '#fffbeb', text: '#b45309', border: '#fcd34d', label: 'Reserved' },
-  sold: { color: '#ef4444', bg: '#fef2f2', text: '#b91c1c', border: '#fca5a5', label: 'Sold' },
-  blocked: { color: '#94a3b8', bg: '#f8fafc', text: '#475569', border: '#cbd5e1', label: 'Blocked' },
+  available: { badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200', label: 'Available' },
+  reserved: { badgeClass: 'bg-amber-50 text-amber-700 border-amber-200', label: 'Reserved' },
+  sold: { badgeClass: 'bg-rose-50 text-rose-700 border-rose-200', label: 'Sold' },
+  blocked: { badgeClass: 'bg-slate-100 text-slate-600 border-slate-200', label: 'Blocked' },
 };
 
-const formatCurrency = (val) => '\u20B9' + (val || 0).toLocaleString('en-IN');
+const formatCurrency = (val) => '₹' + (val || 0).toLocaleString('en-IN');
 const formatSize = (val) => (val || 0).toLocaleString('en-IN');
 
 function getAIInsights(plot) {
@@ -55,8 +61,8 @@ export default function PlotDetailsContent({ plot, onClose, getProjectName }) {
       <div className="px-6 py-5 bg-gradient-to-br from-slate-50 to-slate-100 border-b border-slate-200 flex justify-between items-start">
         <div>
           <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">{getProjectName(plot)}</span>
-          <h2 className="text-2xl font-bold text-slate-900 mt-1 font-poppins">Plot {plot.plotNumber}</h2>
-          <span className="inline-block mt-2 px-3 py-1 rounded-lg text-xs font-bold border" style={{ background: st.bg, color: st.text, borderColor: st.border }}>
+          <h2 className="text-2xl font-bold text-slate-900 mt-1 font-['Poppins',sans-serif]">Plot {plot.plotNumber}</h2>
+          <span className={`inline-block mt-2 px-3 py-1 rounded-lg text-xs font-bold border ${st.badgeClass}`}>
             {st.label}
           </span>
         </div>
@@ -65,29 +71,29 @@ export default function PlotDetailsContent({ plot, onClose, getProjectName }) {
           onClick={onClose}
           className="bg-white border border-slate-200 text-slate-500 hover:bg-rose-50 hover:text-rose-600 cursor-pointer w-9 h-9 rounded-xl flex items-center justify-center text-sm transition-colors outline-none shrink-0"
         >
-          <FaTimes />
+          <LuX />
         </button>
       </div>
 
       <div className="px-6 py-5 flex flex-col gap-5">
         <div className="grid grid-cols-2 gap-3">
-          <InfoCard icon={<FaRulerCombined />} label="Plot Size" value={`${formatSize(plot.size)} sqft`} />
-          <InfoCard icon={<FaCompass />} label="Facing" value={plot.facing || '—'} />
-          {plot.roadWidth && <InfoCard icon={<FaRoad />} label="Road Width" value={`${plot.roadWidth} ft`} />}
-          {plot.corner && <InfoCard icon={<FaMapMarkerAlt />} label="Type" value="Corner Plot" highlight />}
+          <InfoCard icon={<LuRuler />} label="Plot Size" value={`${formatSize(plot.size)} sqft`} />
+          <InfoCard icon={<LuCompass />} label="Facing" value={plot.facing || '—'} />
+          {plot.roadWidth && <InfoCard icon={<LuMilestone />} label="Road Width" value={`${plot.roadWidth} ft`} />}
+          {plot.corner && <InfoCard icon={<LuMapPin />} label="Type" value="Corner Plot" highlight />}
         </div>
 
         <div className="p-4 bg-gradient-to-br from-amber-50 to-amber-100/50 rounded-xl border border-amber-200">
           <div className="text-[11px] font-bold text-amber-700 uppercase tracking-wider mb-1">Total Price</div>
-          <div className="text-2xl font-extrabold text-amber-800 font-poppins">{formatCurrency(plot.price)}</div>
+          <div className="text-2xl font-extrabold text-amber-800 font-['Poppins',sans-serif]">{formatCurrency(plot.price)}</div>
           {plot.pricePerSqft && <div className="text-xs text-amber-700 mt-0.5 font-medium">@ {formatCurrency(plot.pricePerSqft)}/sqft</div>}
         </div>
 
         {ai && (
           <div className="bg-gradient-to-br from-blue-50 to-blue-100/30 rounded-xl border border-blue-200 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <FaChartLine className="text-blue-600 text-base" />
-              <span className="text-xs font-bold text-blue-800 font-poppins">AI Insights</span>
+              <LuTrendingUp className="text-blue-600 text-base" />
+              <span className="text-xs font-bold text-blue-800 font-['Poppins',sans-serif]">AI Insights</span>
             </div>
             <div className="flex items-center gap-2.5 mb-3">
               <div className="w-11 h-11 rounded-xl bg-white border-2 border-blue-500 flex items-center justify-center shrink-0">
@@ -110,12 +116,12 @@ export default function PlotDetailsContent({ plot, onClose, getProjectName }) {
               <div className="text-[11px] font-bold text-blue-800 mb-1.5">Key Highlights</div>
               {ai.highlights.map((h) => (
                 <div key={h} className="text-xs text-slate-600 py-0.5 flex items-center gap-1.5">
-                  <FaStar className="text-amber-500 text-[10px] shrink-0" /> {h}
+                  <LuStar className="text-amber-500 text-[10px] shrink-0 fill-amber-500" /> {h}
                 </div>
               ))}
             </div>
             <div className="flex items-center gap-1.5 p-2 bg-white rounded-lg border border-blue-200">
-              <FaChartLine className="text-emerald-500 text-xs" />
+              <LuTrendingUp className="text-emerald-500 text-xs" />
               <span className="text-xs text-slate-600">Future Appreciation: </span>
               <span className="text-xs font-bold text-emerald-700">{ai.appreciation}</span>
             </div>
@@ -141,11 +147,11 @@ export default function PlotDetailsContent({ plot, onClose, getProjectName }) {
       <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex flex-col gap-2.5">
         {plot.status === 'available' ? (
           <>
-            <Link to="/book-visit" className="flex items-center justify-center w-full py-3 text-sm font-bold text-white rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 shadow-md shadow-blue-500/20 hover:from-blue-700 hover:to-blue-800 transition-all font-inter">
-              <FaExternalLinkAlt className="text-xs mr-2" /> Book Site Visit
+            <Link to="/book-visit" className="flex items-center justify-center gap-2 w-full py-3 text-sm font-bold text-white rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-md shadow-indigo-500/20 hover:from-indigo-700 hover:to-indigo-800 transition-all font-inter no-underline">
+              <LuExternalLink className="text-xs" /> Book Site Visit
             </Link>
-            <Link to="/contact" className="flex items-center justify-center w-full py-3 text-sm font-bold text-slate-700 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-all font-inter">
-              <FaBookmark className="text-xs mr-2" /> Reserve Plot
+            <Link to="/contact" className="flex items-center justify-center gap-2 w-full py-3 text-sm font-bold text-slate-700 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-all font-inter no-underline">
+              <LuBookmark className="text-xs" /> Reserve Plot
             </Link>
           </>
         ) : (

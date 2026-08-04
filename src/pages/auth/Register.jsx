@@ -39,84 +39,88 @@ export default function Register() {
     }
   };
 
-  return (
-    <div style={{ minHeight: '100vh', display: 'flex' }}>
-      {/* Left panel */}
-      <div style={{
-        display: 'none',
-        width: '50%',
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(91,79,224,.4), transparent 60%), linear-gradient(135deg,#0b0f2e 0%,#161b45 60%,#1c1450 100%)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '48px',
-        position: 'relative',
-        overflow: 'hidden',
-        flexDirection: 'column',
-      }} className="register-left">
-        {/* decorative circles */}
-        <div style={{ position: 'absolute', top: '-80px', left: '-80px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(91,79,224,.15)' }} />
-        <div style={{ position: 'absolute', bottom: '-60px', right: '-60px', width: '260px', height: '260px', borderRadius: '50%', background: 'rgba(232,179,85,.1)' }} />
+  const inputClass = (hasErr) =>
+    `w-full px-3.5 py-2.5 border rounded-xl text-sm font-medium text-slate-900 outline-none bg-white transition-colors focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 ${
+      hasErr ? 'border-red-500' : 'border-slate-200 hover:border-slate-300'
+    }`;
 
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '380px' }}>
+  return (
+    <div className="min-h-screen flex">
+      {/* Left Decorative Panel */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0b0f2e] via-[#161b45] to-[#1c1450] items-center justify-center p-12 relative overflow-hidden flex-col text-center">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/15 pointer-events-none" />
+        <div className="absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-amber-500/10 pointer-events-none" />
+
+        <div className="relative z-10 max-w-sm">
           <img
             src="/construction logo.png"
             alt="JSMIL"
-            style={{ height: '130px', width: 'auto', objectFit: 'contain', margin: '0 auto 20px', display: 'block' }}
+            className="h-32 w-auto object-contain mx-auto mb-5 block"
           />
-          <h1 style={{ color: '#fff', fontFamily: 'Poppins,sans-serif', fontWeight: 800, fontSize: '28px', lineHeight: 1.2, marginBottom: '16px' }}>
-            Build Your Future.<br />Invest with Confidence.
+          <h1 className="text-white font-['Poppins',sans-serif] font-extrabold text-3xl leading-snug mb-4">
+            Build Your Future. <br />
+            Invest with Confidence.
           </h1>
-          <p style={{ color: '#b7bade', fontSize: '14px', lineHeight: 1.7 }}>
+          <p className="text-slate-300 text-sm leading-relaxed mb-8">
             Join our AI-powered platform for real-time plot tracking, seamless booking, and transparent project updates.
           </p>
-          <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', marginTop: '40px' }}>
-            {[['10+','Smart Features'], ['500+','Happy Customers'], ['100+','Acres Delivered']].map(([n,l]) => (
-              <div key={l} style={{ textAlign: 'center' }}>
-                <div style={{ color: '#e8b355', fontFamily: 'Poppins,sans-serif', fontWeight: 800, fontSize: '20px' }}>{n}</div>
-                <div style={{ color: '#9ea1c4', fontSize: '11px', marginTop: '2px' }}>{l}</div>
+          <div className="flex gap-6 justify-center">
+            {[
+              ['10+', 'Smart Features'],
+              ['500+', 'Happy Customers'],
+              ['100+', 'Acres Delivered'],
+            ].map(([n, l]) => (
+              <div key={l} className="text-center">
+                <div className="text-amber-400 font-['Poppins',sans-serif] font-extrabold text-xl">
+                  {n}
+                </div>
+                <div className="text-slate-400 text-xs mt-0.5">{l}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Right panel — form */}
-      <div style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#f7f7fb',
-        padding: '32px 24px',
-      }}>
-        <div style={{ width: '100%', maxWidth: '440px' }}>
+      {/* Right Form Panel */}
+      <div className="flex-1 flex items-center justify-center bg-[#f7f7fb] p-6 sm:p-8">
+        <div className="w-full max-w-md">
           {/* Logo for mobile */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
+          <div className="flex lg:hidden justify-center mb-6">
             <img
               src="/construction logo.png"
               alt="JSMIL"
-              style={{ height: '80px', width: 'auto', objectFit: 'contain' }}
+              className="h-20 w-auto object-contain"
             />
           </div>
 
-          <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e6e6f0', boxShadow: '0 15px 40px rgba(20,20,60,.09)', padding: '36px' }}>
-            <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '24px', fontWeight: 800, color: '#171a35', marginBottom: '6px' }}>Create Account</h2>
-            <p style={{ color: '#6b6f8a', fontSize: '14px', marginBottom: '28px' }}>Fill in your details to get started</p>
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 sm:p-9">
+            <h2 className="font-['Poppins',sans-serif] text-2xl font-extrabold text-slate-900 mb-1">
+              Create Account
+            </h2>
+            <p className="text-slate-500 text-xs sm:text-sm mb-6">
+              Fill in your details to get started
+            </p>
 
-            <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
               <div>
-                <label style={lbl}>Full Name</label>
+                <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   {...register('name', { required: 'Name is required' })}
                   placeholder="John Doe"
-                  style={inp(!!errors.name)}
+                  className={inputClass(!!errors.name)}
                 />
-                {errors.name && <p style={err}>{errors.name.message}</p>}
+                {errors.name && (
+                  <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
+                )}
               </div>
 
               <div>
-                <label style={lbl}>Email Address</label>
+                <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   {...register('email', {
@@ -124,13 +128,17 @@ export default function Register() {
                     pattern: { value: /^\S+@\S+\.\S+$/i, message: 'Invalid email address' },
                   })}
                   placeholder="you@example.com"
-                  style={inp(!!errors.email)}
+                  className={inputClass(!!errors.email)}
                 />
-                {errors.email && <p style={err}>{errors.email.message}</p>}
+                {errors.email && (
+                  <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
+                )}
               </div>
 
               <div>
-                <label style={lbl}>Phone Number</label>
+                <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
                   {...register('phone', {
@@ -138,14 +146,18 @@ export default function Register() {
                     minLength: { value: 10, message: 'Minimum 10 digits' },
                   })}
                   placeholder="9876543210"
-                  style={inp(!!errors.phone)}
+                  className={inputClass(!!errors.phone)}
                 />
-                {errors.phone && <p style={err}>{errors.phone.message}</p>}
+                {errors.phone && (
+                  <p className="text-xs text-red-500 mt-1">{errors.phone.message}</p>
+                )}
               </div>
 
               <div>
-                <label style={lbl}>Password</label>
-                <div style={{ position: 'relative' }}>
+                <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                  Password
+                </label>
+                <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
                     {...register('password', {
@@ -153,19 +165,27 @@ export default function Register() {
                       minLength: { value: 6, message: 'Minimum 6 characters' },
                     })}
                     placeholder="••••••••"
-                    style={{ ...inp(!!errors.password), paddingRight: '40px' }}
+                    className={`${inputClass(!!errors.password)} pr-10`}
                   />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)}
-                    style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#6b6f8a', fontSize: '14px' }}>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-0 cursor-pointer text-slate-400 hover:text-slate-600 p-1 flex items-center justify-center"
+                    aria-label="Toggle password visibility"
+                  >
                     {showPassword ? <LuEyeOff size={16} /> : <LuEye size={16} />}
                   </button>
                 </div>
-                {errors.password && <p style={err}>{errors.password.message}</p>}
+                {errors.password && (
+                  <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>
+                )}
               </div>
 
               <div>
-                <label style={lbl}>Confirm Password</label>
-                <div style={{ position: 'relative' }}>
+                <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                  Confirm Password
+                </label>
+                <div className="relative">
                   <input
                     type={showConfirm ? 'text' : 'password'}
                     {...register('confirmPassword', {
@@ -173,45 +193,54 @@ export default function Register() {
                       validate: (value) => value === watch('password') || 'Passwords do not match',
                     })}
                     placeholder="••••••••"
-                    style={{ ...inp(!!errors.confirmPassword), paddingRight: '40px' }}
+                    className={`${inputClass(!!errors.confirmPassword)} pr-10`}
                   />
-                  <button type="button" onClick={() => setShowConfirm(!showConfirm)}
-                    style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#6b6f8a', fontSize: '14px' }}>
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirm(!showConfirm)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-0 cursor-pointer text-slate-400 hover:text-slate-600 p-1 flex items-center justify-center"
+                    aria-label="Toggle confirm password visibility"
+                  >
                     {showConfirm ? <LuEyeOff size={16} /> : <LuEye size={16} />}
                   </button>
                 </div>
-                {errors.confirmPassword && <p style={err}>{errors.confirmPassword.message}</p>}
+                {errors.confirmPassword && (
+                  <p className="text-xs text-red-500 mt-1">{errors.confirmPassword.message}</p>
+                )}
               </div>
 
-              <button type="submit" disabled={loading} className="btn-gold"
-                style={{ width: '100%', justifyContent: 'center', padding: '13px', fontSize: '15px', opacity: loading ? .7 : 1, cursor: loading ? 'not-allowed' : 'pointer', border: 'none', marginTop: '10px' }}>
+              <button
+                type="submit"
+                disabled={loading}
+                className={`cta-btn w-full justify-center py-3.5 text-xs font-bold rounded-xl border-0 shadow-md no-underline transition-all mt-2 ${
+                  loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
+                }`}
+              >
                 {loading ? 'Creating Account...' : 'Create Account →'}
               </button>
             </form>
 
-            <p style={{ textAlign: 'center', fontSize: '13px', color: '#6b6f8a', marginTop: '20px' }}>
+            <p className="text-center text-xs text-slate-500 mt-6">
               Already have an account?{' '}
-              <Link to="/login" style={{ color: '#3a2fb8', fontWeight: 600 }}>Sign in</Link>
+              <Link
+                to="/login"
+                className="text-indigo-600 hover:text-indigo-700 font-bold no-underline transition-colors"
+              >
+                Sign in
+              </Link>
             </p>
           </div>
 
-          <p style={{ textAlign: 'center', fontSize: '12px', color: '#9ea1c4', marginTop: '20px' }}>
-            <Link to="/" style={{ color: '#9ea1c4' }}>← Back to Website</Link>
+          <p className="text-center text-xs text-slate-400 mt-5">
+            <Link
+              to="/"
+              className="text-slate-400 hover:text-slate-600 no-underline transition-colors font-medium"
+            >
+              ← Back to Website
+            </Link>
           </p>
         </div>
       </div>
-
-      <style>{`
-        @media(min-width:1024px){.register-left{display:flex !important;}}
-      `}</style>
     </div>
   );
 }
-
-const lbl = { display: 'block', fontSize: '13px', fontWeight: 600, color: '#171a35', marginBottom: '6px' };
-const inp = (hasErr) => ({
-  width: '100%', padding: '11px 14px', border: `1px solid ${hasErr ? '#c0392b' : '#e6e6f0'}`,
-  borderRadius: '8px', fontSize: '14px', color: '#171a35', outline: 'none',
-  transition: 'border-color .2s', background: '#fff', fontFamily: 'Inter,sans-serif', boxSizing: 'border-box',
-});
-const err = { color: '#c0392b', fontSize: '11.5px', marginTop: '4px' };
