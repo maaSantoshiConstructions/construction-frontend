@@ -8,12 +8,11 @@ export default function ReferralShareCard({
   userReferralCode = '',
   referralLink = '',
   submittedFriend = null,
-  setSubmittedFriend,
+  referralCreated = false,
   copied = false,
   onCopy,
   onWhatsAppShare,
-  setFriendName,
-  setFriendPhone,
+  onResetForm,
 }) {
   return (
     <div className="lg:col-span-5 space-y-6">
@@ -30,7 +29,7 @@ export default function ReferralShareCard({
           </div>
         </div>
 
-        {submittedFriend && (
+        {submittedFriend && referralCreated ? (
           <div className="mb-4 p-3 bg-emerald-950/70 border border-emerald-500/40 rounded-xl text-xs space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
@@ -46,24 +45,35 @@ export default function ReferralShareCard({
               <button
                 type="button"
                 onClick={() => {
-                  setSubmittedFriend(null);
-                  setFriendName('');
-                  setFriendPhone('');
+                  if (onResetForm) onResetForm();
                   toast.success("Form reset. Enter your next friend's details!");
                 }}
-                className="text-[#e8b355] font-bold hover:underline"
+                className="text-[#e8b355] font-bold hover:underline cursor-pointer"
               >
                 + Refer Another Friend
               </button>
             </div>
           </div>
+        ) : (
+          <div className="mb-4 p-3 bg-white/5 border border-white/10 rounded-xl text-xs text-slate-300 flex items-center gap-2">
+            <span className="text-amber-400 font-bold shrink-0">ℹ️</span>
+            <span>Fill and submit your friend&apos;s details first to enable referral link copying and WhatsApp sharing.</span>
+          </div>
         )}
 
         <div className="bg-white/10 rounded-xl p-3 mb-4 flex items-center justify-between gap-2 border border-white/10">
-          <span className="text-xs font-mono truncate text-amber-200">{referralLink}</span>
+          <span className={`text-xs font-mono truncate ${referralCreated ? 'text-amber-200' : 'text-slate-400 select-none'}`}>
+            {referralCreated ? referralLink : 'Submit referral to reveal link...'}
+          </span>
           <button
+            type="button"
+            disabled={!referralCreated}
             onClick={() => onCopy(referralLink)}
-            className="px-3 py-1.5 bg-[#e8b355] hover:bg-[#d8a345] text-[#0b0f2e] text-xs font-bold rounded-lg transition-colors shrink-0 flex items-center gap-1 cursor-pointer"
+            className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all shrink-0 flex items-center gap-1 ${
+              !referralCreated
+                ? 'bg-slate-600/50 text-slate-400 opacity-50 cursor-not-allowed'
+                : 'bg-[#e8b355] hover:bg-[#d8a345] text-[#0b0f2e] cursor-pointer'
+            }`}
           >
             {copied ? <LuCheck size={14} /> : <LuCopy size={14} />}
             {copied ? 'Copied' : 'Copy'}
@@ -72,8 +82,14 @@ export default function ReferralShareCard({
 
         <div className="flex items-center gap-3 pt-2">
           <button
+            type="button"
+            disabled={!referralCreated}
             onClick={onWhatsAppShare}
-            className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
+            className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
+              !referralCreated
+                ? 'bg-slate-700/50 text-slate-400 opacity-50 cursor-not-allowed'
+                : 'bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer'
+            }`}
           >
             <LuMessageSquare size={16} /> Share on WhatsApp
           </button>

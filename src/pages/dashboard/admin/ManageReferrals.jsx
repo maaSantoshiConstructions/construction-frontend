@@ -153,14 +153,15 @@ export default function ManageReferrals() {
       key: 'referredBy',
       label: 'Referred By (Referrer)',
       render: (r) => {
-        if (r.referredBy) {
+        const ref = r.referredBy;
+        if (ref && typeof ref === 'object' && ref.name) {
           return (
             <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-xs">
               <span className="font-bold text-emerald-800 block flex items-center gap-1">
-                <LuUserCheck size={13} /> {r.referredBy.name}
+                <LuUserCheck size={13} /> {ref.name}
               </span>
-              <span className="text-slate-500 font-mono">
-                {r.referredBy.phone || r.referralCode || r.referredBy.email || '-'}
+              <span className="text-slate-500 font-mono text-[11px] block">
+                {ref.email || ref.phone || (ref.referralCode ? `Code: ${ref.referralCode}` : `ID: ${ref._id?.slice(-6)}`)}
               </span>
             </div>
           );
@@ -168,8 +169,12 @@ export default function ManageReferrals() {
         if (r.referrerInfo?.name) {
           return (
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs">
-              <span className="font-bold text-amber-800 block">{r.referrerInfo.name}</span>
-              <span className="text-slate-500 font-mono">{r.referrerInfo.phone || '-'}</span>
+              <span className="font-bold text-amber-800 block flex items-center gap-1">
+                <LuUserCheck size={13} /> {r.referrerInfo.name}
+              </span>
+              <span className="text-slate-500 font-mono text-[11px] block">
+                {r.referrerInfo.email || r.referrerInfo.phone || '-'}
+              </span>
             </div>
           );
         }

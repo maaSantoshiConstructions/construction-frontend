@@ -19,6 +19,9 @@ export default function ReferralProgram() {
   const [openFaq, setOpenFaq] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
+  // Dedicated submission state: Copy/Share buttons remain disabled until successful API response
+  const [referralCreated, setReferralCreated] = useState(false);
+
   // Form State
   const [submittedFriend, setSubmittedFriend] = useState(null);
   const [friendName, setFriendName] = useState('');
@@ -32,17 +35,35 @@ export default function ReferralProgram() {
     ? `${window.location.origin}/referral-program?ref=${userReferralCode}`
     : '';
 
-  const activeFriendName = friendName.trim() || submittedFriend?.name || '';
-  const activeFriendPhone = friendPhone.trim() || submittedFriend?.phone || '';
+  const handleFriendNameChange = (val) => {
+    if (referralCreated) {
+      setReferralCreated(false);
+    }
+    setFriendName(val);
+  };
+
+  const handleFriendPhoneChange = (val) => {
+    if (referralCreated) {
+      setReferralCreated(false);
+    }
+    setFriendPhone(val);
+  };
+
+  const handleResetForm = () => {
+    setSubmittedFriend(null);
+    setReferralCreated(false);
+    setFriendName('');
+    setFriendPhone('');
+    setFriendEmail('');
+    setNotes('');
+  };
 
   const handleCopy = (text) => {
-    if (!text) return;
-    if (!activeFriendName || !activeFriendPhone) {
-      toast.error(
-        "Please fill in your friend's details (Name & Phone) first before copying your referral link."
-      );
+    if (!referralCreated) {
+      toast.error('Please submit the referral lead first before copying your referral link.');
       return;
     }
+    if (!text) return;
     navigator.clipboard.writeText(text);
     setCopied(true);
     toast.success('Referral link copied to clipboard!');
@@ -50,15 +71,14 @@ export default function ReferralProgram() {
   };
 
   const handleWhatsAppShare = () => {
-    if (!referralLink) return;
-    if (!activeFriendName || !activeFriendPhone) {
-      toast.error(
-        "Please fill in your friend's details (Name & Phone) first before sharing via WhatsApp."
-      );
+    if (!referralCreated) {
+      toast.error('Please submit the referral lead first before sharing on WhatsApp.');
       return;
     }
+    if (!referralLink) return;
+    const friendNameForMsg = submittedFriend?.name || '';
     const message = encodeURIComponent(
-      `Hey ${activeFriendName}! Looking for premium residential & commercial plots at prime growth corridors in Odisha? Check out Maa Santoshi Constructions: ${referralLink} (Use my Referral Code: ${userReferralCode})`
+      `Hey ${friendNameForMsg ? friendNameForMsg : 'there'}! Looking for premium residential & commercial plots at prime growth corridors in Odisha? Check out Maa Santoshi Constructions: ${referralLink} (Use my Referral Code: ${userReferralCode})`
     );
     window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
   };
@@ -94,6 +114,7 @@ export default function ReferralProgram() {
       });
 
       setSubmittedFriend({ name: currentFriendName, phone: currentFriendPhone });
+      setReferralCreated(true);
       toast.success(
         `Referral submitted for ${currentFriendName}! You can now copy or share your link.`
       );
@@ -102,6 +123,7 @@ export default function ReferralProgram() {
       setFriendEmail('');
       setNotes('');
     } catch (err) {
+      setReferralCreated(false);
       toast.error(err?.response?.data?.message || 'Failed to submit referral');
     } finally {
       setSubmitting(false);
@@ -142,9 +164,9 @@ export default function ReferralProgram() {
             <ReferralForm
               user={user}
               friendName={friendName}
-              setFriendName={setFriendName}
+              setFriendName={handleFriendNameChange}
               friendPhone={friendPhone}
-              setFriendPhone={setFriendPhone}
+              setFriendPhone={handleFriendPhoneChange}
               friendEmail={friendEmail}
               setFriendEmail={setFriendEmail}
               notes={notes}
@@ -158,12 +180,11 @@ export default function ReferralProgram() {
               userReferralCode={userReferralCode}
               referralLink={referralLink}
               submittedFriend={submittedFriend}
-              setSubmittedFriend={setSubmittedFriend}
+              referralCreated={referralCreated}
               copied={copied}
               onCopy={handleCopy}
               onWhatsAppShare={handleWhatsAppShare}
-              setFriendName={setFriendName}
-              setFriendPhone={setFriendPhone}
+              onResetForm={handleResetForm}
             />
           </div>
         ) : (
