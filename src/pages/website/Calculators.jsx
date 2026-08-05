@@ -10,7 +10,7 @@ import ConstructionCalculator from '../../components/calculators/ConstructionCal
 const tabs = [
   { id: 'investment', label: 'Investment Return', Icon: LuTrendingUp },
   { id: 'loan-eligibility', label: 'Loan Eligibility', Icon: LuBadgePercent },
-  // { id: 'emi', label: 'Home Loan EMI', Icon: LuChartPie },
+  { id: 'emi', label: 'Home Loan EMI', Icon: LuChartPie },
   { id: 'construction', label: 'Construction Cost', Icon: LuCalculator },
 ];
 

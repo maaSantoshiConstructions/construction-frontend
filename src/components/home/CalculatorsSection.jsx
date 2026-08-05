@@ -32,14 +32,14 @@ export default function CalculatorsSection() {
             </div>
             <div className="icon-box"><LuBadgePercent size={32} className="text-indigo-600" /></div>
           </div>
-          {/* <div className="ccard">
+          <div className="ccard">
             <div>
               <h4>Home Loan EMI Calculator</h4>
               <p>Calculate exact monthly EMI &amp; payment schedule</p>
               <Link to="/calculators?tab=emi" className="go-btn">Calculate EMI</Link>
             </div>
             <div className="icon-box"><LuChartPie size={32} className="text-indigo-600" /></div>
-          </div> */}
+          </div>
           <div className="ccard">
             <div>
               <h4>Construction Cost Calculator</h4>

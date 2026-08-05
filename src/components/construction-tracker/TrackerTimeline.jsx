@@ -2,9 +2,8 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LuHardHat, LuHouse, LuCheck, LuBuilding,
-  LuCalendar, LuImage, LuChevronUp, LuChevronDown
+  LuCalendar, LuChevronUp, LuChevronDown
 } from 'react-icons/lu';
-import { getAssetUrl } from '../../config';
 
 export default function TrackerTimeline({
   filteredUpdates,
@@ -156,11 +155,6 @@ export default function TrackerTimeline({
                                         <LuCalendar size={12} />
                                         {new Date(update.createdAt || update.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                                       </span>
-                                      {update.images?.length > 0 && (
-                                        <span className="text-xs text-slate-400 flex items-center gap-1">
-                                          <LuImage size={12} /> {update.images.length} photo{update.images.length > 1 ? 's' : ''}
-                                        </span>
-                                      )}
                                       {update.engineerReport && (
                                         <span className="text-xs text-indigo-600 font-semibold">Has Report</span>
                                       )}
@@ -185,22 +179,9 @@ export default function TrackerTimeline({
                                         )}
 
                                         {update.engineerReport && (
-                                          <div className="p-3 sm:p-3.5 bg-blue-50/70 rounded-xl border border-blue-200 mb-3">
+                                          <div className="p-3 sm:p-3.5 bg-blue-50/70 rounded-xl border border-blue-200">
                                             <div className="text-[11px] font-bold text-blue-800 uppercase tracking-wider mb-1">Engineer Report</div>
                                             <p className="text-xs sm:text-sm text-blue-950 leading-relaxed m-0">{update.engineerReport}</p>
-                                          </div>
-                                        )}
-
-                                        {update.images?.length > 0 && (
-                                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                            {update.images.map((img, j) => (
-                                              <img
-                                                key={j}
-                                                src={getAssetUrl(img)}
-                                                alt={`Update ${j + 1}`}
-                                                className="w-full h-28 object-cover rounded-lg border border-slate-200"
-                                              />
-                                            ))}
                                           </div>
                                         )}
                                       </div>

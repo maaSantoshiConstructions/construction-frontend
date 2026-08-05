@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { FaStar, FaSpinner } from 'react-icons/fa';
 import { getReviews, createReview, voteHelpful } from '../../api/reviews';
+import { getProjects } from '../../api/projects';
 
 // Import sub-components
 import StatsSummary from '../../components/reviews/StatsSummary';
@@ -10,16 +11,9 @@ import FiltersRow from '../../components/reviews/FiltersRow';
 import ReviewCard from '../../components/reviews/ReviewCard';
 import ReviewModal from '../../components/reviews/ReviewModal';
 
-const PROJECT_OPTIONS = [
-  'Royal Gardens Phase 1',
-  'Royal Gardens Phase 2',
-  'Santoshi Vihar',
-  'Santoshi Enclave',
-  'Maa Santoshi Heights',
-];
-
 export default function CustomerReviews() {
   const [reviews, setReviews] = useState([]);
+  const [projectOptions, setProjectOptions] = useState([]);
   const [stats, setStats] = useState({
     totalReviews: 0,
     averageRating: 0,
@@ -38,7 +32,7 @@ export default function CustomerReviews() {
   const [newReview, setNewReview] = useState({
     name: '',
     rating: 5,
-    project: PROJECT_OPTIONS[0],
+    project: '',
     comment: ''
   });
 
@@ -75,6 +69,23 @@ export default function CustomerReviews() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const fetchProjectsList = async () => {
+      try {
+        const { data: res } = await getProjects({ limit: 100 });
+        const items = res?.data || [];
+        const names = items.map((p) => p.name).filter(Boolean);
+        setProjectOptions(names);
+        if (names.length > 0) {
+          setNewReview((prev) => (prev.project ? prev : { ...prev, project: names[0] }));
+        }
+      } catch (err) {
+        console.error('Failed to fetch projects for reviews:', err);
+      }
+    };
+    fetchProjectsList();
+  }, []);
 
   useEffect(() => {
     fetchReviewsData();
@@ -122,7 +133,7 @@ export default function CustomerReviews() {
         setNewReview({
           name: '',
           rating: 5,
-          project: PROJECT_OPTIONS[0],
+          project: projectOptions[0] || '',
           comment: ''
         });
         fetchReviewsData();
@@ -172,7 +183,7 @@ export default function CustomerReviews() {
           onRatingFilterChange={setRatingFilter}
           sortOption={sortOption}
           onSortOptionChange={setSortOption}
-          projectOptions={PROJECT_OPTIONS}
+          projectOptions={projectOptions}
         />
 
         {/* FEED SECTION */}
@@ -225,7 +236,7 @@ export default function CustomerReviews() {
         setNewReview={setNewReview}
         onSubmit={handleCreateReview}
         submitting={submitting}
-        projectOptions={PROJECT_OPTIONS}
+        projectOptions={projectOptions}
       />
     </div>
   );

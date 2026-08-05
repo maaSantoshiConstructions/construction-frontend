@@ -55,7 +55,7 @@ export default function EMIResultsCard({
           <LuChartPie size={16} className="text-indigo-600" />
           <span className="text-xs font-bold text-slate-800">Loan Breakdown</span>
         </div>
-        
+
         <div className="flex items-center gap-4 flex-wrap">
           {/* Doughnut Chart Container */}
           <div className="w-32 h-32 relative shrink-0 mx-auto">
@@ -84,7 +84,6 @@ export default function EMIResultsCard({
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

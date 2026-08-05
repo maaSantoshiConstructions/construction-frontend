@@ -242,7 +242,7 @@ export default function EMICalculator() {
     for (let i = 1; i <= totalMonths; i++) {
       const interestComp = balance * monthlyRate;
       let principalComp = monthlyEMI - interestComp;
-      
+
       if (i === totalMonths || balance <= principalComp) {
         principalComp = balance;
         balance = 0;
@@ -342,7 +342,7 @@ export default function EMICalculator() {
 
   return (
     <div className="bg-white rounded-2xl border border-[var(--line,#e6e6f0)] shadow-sm p-6 sm:p-9 transition-all">
-      
+
       {/* Header with Title & Reset Button */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-7">
         <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2 font-['Poppins',sans-serif]">

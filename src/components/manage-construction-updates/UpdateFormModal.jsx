@@ -20,8 +20,6 @@ export default function UpdateFormModal({
   projects = [],
   plots = [],
   progressValue = 0,
-  files = [],
-  setFiles,
   register,
   handleSubmitForm,
   errors,
@@ -139,35 +137,6 @@ export default function UpdateFormModal({
               </div>
             </FormField>
           </div>
-
-          <FormField label="Images (max 5)">
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={(e) => setFiles(Array.from(e.target.files).slice(0, 5))}
-              className="text-xs text-slate-700 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"
-            />
-            {files.length > 0 && (
-              <div className="flex gap-2 flex-wrap mt-2">
-                {files.map((f, i) => (
-                  <span
-                    key={i}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100"
-                  >
-                    {f.name}
-                  </span>
-                ))}
-              </div>
-            )}
-            {editing?.images?.length > 0 && (
-              <div className="mt-1.5">
-                <span className="text-[11px] text-slate-400">
-                  {editing.images.length} existing image(s)
-                </span>
-              </div>
-            )}
-          </FormField>
 
           <FormField label="Engineer Report">
             <textarea

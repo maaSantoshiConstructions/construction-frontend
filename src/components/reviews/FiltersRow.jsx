@@ -23,9 +23,10 @@ export default function FiltersRow({
           className="px-3.5 py-1.5 rounded-full border border-slate-200 text-xs bg-white text-slate-700 font-semibold outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-100 cursor-pointer shadow-sm"
         >
           <option value="">All Projects</option>
-          {projectOptions.map(proj => (
-            <option key={proj} value={proj}>{proj}</option>
-          ))}
+          {projectOptions.map((proj) => {
+            const pName = typeof proj === 'object' ? proj.name : proj;
+            return <option key={pName} value={pName}>{pName}</option>;
+          })}
         </select>
 
         {/* Rating Filter Pill */}

@@ -98,9 +98,17 @@ export default function ReviewModal({
                   onChange={(e) => setNewReview(prev => ({ ...prev, project: e.target.value }))}
                   className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50/50 focus:bg-white focus:border-indigo-600 outline-none cursor-pointer transition font-semibold"
                 >
-                  {projectOptions.map((proj) => (
-                    <option key={proj} value={proj}>{proj}</option>
-                  ))}
+                  {projectOptions.length === 0 ? (
+                    <option value="" disabled>Loading projects...</option>
+                  ) : (
+                    <>
+                      {!newReview.project && <option value="" disabled>Select Project</option>}
+                      {projectOptions.map((proj) => {
+                        const pName = typeof proj === 'object' ? proj.name : proj;
+                        return <option key={pName} value={pName}>{pName}</option>;
+                      })}
+                    </>
+                  )}
                 </select>
               </div>
 

@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { LuHardHat, LuImage, LuChevronDown, LuChevronUp } from 'react-icons/lu';
+import { LuHardHat, LuChevronDown, LuChevronUp } from 'react-icons/lu';
 import { getMyPlotUpdates } from '../../../api/constructionUpdates';
 import ErrorMessage from '../../../components/common/ErrorMessage';
-import { getAssetUrl } from '../../../config';
 
 const stageBadgeStyle = {
   planning: 'bg-indigo-50 text-indigo-700 border-indigo-200',
@@ -179,11 +178,6 @@ export default function ConstructionUpdates() {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          {u.images?.length > 0 && (
-                            <div className="flex items-center gap-1 text-xs text-slate-500 font-semibold bg-white px-2 py-1 rounded-md border border-slate-200">
-                              <LuImage className="text-xs" /> {u.images.length}
-                            </div>
-                          )}
                           {expanded === u._id ? (
                             <LuChevronUp className="text-slate-400 text-base" />
                           ) : (
@@ -198,30 +192,16 @@ export default function ConstructionUpdates() {
                         </p>
                       )}
 
-                      {expanded === u._id && (
+                      {expanded === u._id && u.engineerReport && (
                         <div className="mt-3 pt-3 border-t border-slate-200/80">
-                          {u.engineerReport && (
-                            <div className="mb-3 p-3 bg-blue-50/80 rounded-xl border border-blue-100">
-                              <p className="text-xs font-bold text-blue-800 mb-1">
-                                Engineer Report
-                              </p>
-                              <p className="text-xs text-blue-700 leading-relaxed">
-                                {u.engineerReport}
-                              </p>
-                            </div>
-                          )}
-                          {u.images?.length > 0 && (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                              {u.images.map((img, j) => (
-                                <img
-                                  key={j}
-                                  src={getAssetUrl(img)}
-                                  alt={`Update ${i + 1} - ${j + 1}`}
-                                  className="w-full h-24 object-cover rounded-xl border border-slate-200 bg-slate-100"
-                                />
-                              ))}
-                            </div>
-                          )}
+                          <div className="p-3 bg-blue-50/80 rounded-xl border border-blue-100">
+                            <p className="text-xs font-bold text-blue-800 mb-1">
+                              Engineer Report
+                            </p>
+                            <p className="text-xs text-blue-700 leading-relaxed">
+                              {u.engineerReport}
+                            </p>
+                          </div>
                         </div>
                       )}
                     </div>

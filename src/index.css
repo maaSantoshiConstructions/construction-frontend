@@ -23,12 +23,15 @@
   }
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--navy);
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
   color: var(--text);
-  background: var(--white);
+  background-color: var(--white);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -324,7 +327,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .cta-stats .lbl { font-size: 11px; color: #d8d4ff; }
 
 /* ===== FOOTER ===== */
-footer { background: var(--navy); color: #c7cae0; padding: 70px 0 0; margin-top: 70px; }
+footer { background: var(--navy); color: #c7cae0; padding: 70px 0 0; }
 .foot-grid {
   display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
   gap: 30px; padding-bottom: 50px;
@@ -455,7 +458,7 @@ footer { background: var(--navy); color: #c7cae0; padding: 70px 0 0; margin-top:
   .cta-banner .btn-gold { width: 100%; justify-content: center; }
 
   /* Footer */
-  footer { padding: 44px 0 0; margin-top: 40px; }
+  footer { padding: 44px 0 0; }
   .foot-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
   .foot-bottom { flex-direction: column; text-align: center; gap: 12px; align-items: center; }
   .foot-bottom div { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-left: 0; }

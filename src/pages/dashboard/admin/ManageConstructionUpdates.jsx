@@ -20,7 +20,6 @@ export default function ManageConstructionUpdates() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [files, setFiles] = useState([]);
 
   const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
   const progressValue = watch('progressPercent', 0);
@@ -56,14 +55,12 @@ export default function ManageConstructionUpdates() {
 
   const openCreate = () => {
     setEditing(null);
-    setFiles([]);
     reset({ title: '', description: '', project: '', plot: '', stage: '', progressPercent: 0, engineerReport: '' });
     setShowModal(true);
   };
 
   const openEdit = (u) => {
     setEditing(u);
-    setFiles([]);
     reset({
       title: u.title || '',
       description: u.description || '',
@@ -79,20 +76,18 @@ export default function ManageConstructionUpdates() {
   const onSubmit = async (formData) => {
     setSubmitting(true);
     try {
-      const fd = new FormData();
-      fd.append('title', formData.title || '');
-      fd.append('description', formData.description || '');
-      fd.append('project', formData.project || '');
-      fd.append('stage', formData.stage || '');
-      fd.append('progressPercent', formData.progressPercent ? parseInt(formData.progressPercent) : 0);
-      if (formData.plot) fd.append('plot', formData.plot);
-      if (formData.engineerReport) fd.append('engineerReport', formData.engineerReport);
-      files.forEach((f) => fd.append('images', f));
+      const payload = {
+        title: formData.title || '',
+        description: formData.description || '',
+        project: formData.project || '',
+        stage: formData.stage || '',
+        progressPercent: formData.progressPercent ? parseInt(formData.progressPercent) : 0,
+        plot: formData.plot || undefined,
+        engineerReport: formData.engineerReport || undefined,
+      };
 
-      const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-
-      if (editing) { await updateUpdate(editing._id, fd, config); toast.success('Update saved'); }
-      else { await createUpdate(fd, config); toast.success('Update created'); }
+      if (editing) { await updateUpdate(editing._id, payload); toast.success('Update saved'); }
+      else { await createUpdate(payload); toast.success('Update created'); }
       setShowModal(false); fetchUpdates();
     } catch (err) { toast.error(err?.response?.data?.message || 'Operation failed'); }
     finally { setSubmitting(false); }
@@ -130,8 +125,6 @@ export default function ManageConstructionUpdates() {
         projects={projects}
         plots={plots}
         progressValue={progressValue}
-        files={files}
-        setFiles={setFiles}
         register={register}
         handleSubmitForm={handleSubmit}
         errors={errors}
