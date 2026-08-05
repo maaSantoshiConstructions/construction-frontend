@@ -6,13 +6,8 @@ export const getBookingPayments = (bookingId) => API.get(`/payments/booking/${bo
 export const getMyPayments = () => API.get('/payments/my-payments');
 export const getPaymentStats = () => API.get('/payments/stats');
 
-// Create payment — supports FormData with optional receipt file
-export const createPayment = (data) => {
-  const isFormData = data instanceof FormData;
-  return API.post('/payments', data, {
-    headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {},
-  });
-};
+// Create payment
+export const createPayment = (data) => API.post('/payments', data);
 
 // Receipt / invoice download
 export const downloadReceipt = (id) =>

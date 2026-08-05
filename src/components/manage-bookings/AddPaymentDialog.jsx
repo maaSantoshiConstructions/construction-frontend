@@ -1,15 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes, FaPaperclip } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { createPayment } from '../../api/payments';
-import { getUsers } from '../../api/users';
 
 export default function AddPaymentDialog({ booking, onClose, onSuccess }) {
   const [submitting, setSubmitting] = useState(false);
-  const [receiptFile, setReceiptFile] = useState(null);
-  const fileRef = useRef(null);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -26,17 +23,16 @@ export default function AddPaymentDialog({ booking, onClose, onSuccess }) {
   const onSubmit = async (data) => {
     setSubmitting(true);
     try {
-      const formData = new FormData();
-      formData.append('booking', booking._id);
-      formData.append('amount', data.amount);
-      formData.append('paymentType', data.paymentType);
-      formData.append('paymentMethod', data.paymentMethod);
-      if (data.referenceNumber) formData.append('referenceNumber', data.referenceNumber);
-      if (data.remarks) formData.append('remarks', data.remarks);
-      if (data.paymentDate) formData.append('paymentDate', data.paymentDate);
-      if (receiptFile) formData.append('receipt', receiptFile);
+      await createPayment({
+        booking: booking._id,
+        amount: data.amount,
+        paymentType: data.paymentType,
+        paymentMethod: data.paymentMethod,
+        referenceNumber: data.referenceNumber || undefined,
+        remarks: data.remarks || undefined,
+        paymentDate: data.paymentDate || undefined,
+      });
 
-      await createPayment(formData);
       toast.success('Payment recorded successfully');
       onSuccess?.();
       onClose();
@@ -165,34 +161,6 @@ export default function AddPaymentDialog({ booking, onClose, onSuccess }) {
                   {...register('remarks')}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-medium outline-none focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-100 transition-all resize-none"
                 />
-              </div>
-
-              {/* Receipt Upload */}
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  Upload Receipt
-                </label>
-                <div
-                  onClick={() => fileRef.current?.click()}
-                  className="flex items-center gap-3 px-4 py-3 bg-slate-50 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-amber-400 hover:bg-amber-50/30 transition-all"
-                >
-                  <FaPaperclip className="text-slate-400 shrink-0" />
-                  <span className="text-sm text-slate-500 truncate">
-                    {receiptFile ? receiptFile.name : 'Click to attach receipt (PDF / Image)'}
-                  </span>
-                </div>
-                <input
-                  ref={fileRef}
-                  type="file"
-                  accept="image/*,.pdf"
-                  className="hidden"
-                  onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
-                />
-                {receiptFile && (
-                  <p className="text-xs text-emerald-600 mt-1.5 font-medium">
-                    ✓ {receiptFile.name} ({(receiptFile.size / 1024).toFixed(0)} KB)
-                  </p>
-                )}
               </div>
 
             </div>
