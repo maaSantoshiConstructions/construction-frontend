@@ -45,7 +45,7 @@ export default function ReviewCard({ review, votedIds, onVoteHelpful }) {
           <div>
             <h4 className="text-xs font-bold text-slate-800 font-poppins">{review.name}</h4>
             {review.project && (
-              <span className="text-[9px] font-bold text-indigo-600 uppercase tracking-wider">
+              <span className="text-[9px] font-bold text-green-700 uppercase tracking-wider">
                 Verified Owner • {review.project}
               </span>
             )}
@@ -57,7 +57,7 @@ export default function ReviewCard({ review, votedIds, onVoteHelpful }) {
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition cursor-pointer ${
             isVoted
               ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
-              : 'bg-white border-slate-200 text-slate-500 hover:text-indigo-600 hover:border-indigo-600'
+              : 'bg-white border-slate-200 text-slate-500 hover:text-green-700 hover:border-green-700'
           }`}
         >
           <FaThumbsUp className="text-[10px]" />

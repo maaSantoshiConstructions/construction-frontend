@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="bg-[#0b0f2e] sticky top-0 z-[1100] border-b border-white/10">
+      <header className="bg-[#051408]/95 backdrop-blur-md sticky top-0 z-[1100] border-b border-white/10">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between relative z-[1015]">
           {/* Brand */}
           <NavbarLogo onClick={() => setMobileOpen(false)} />
@@ -38,10 +38,10 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all no-underline !text-white ${
+                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all no-underline ${
                     active
-                      ? '!bg-indigo-600/80 font-bold shadow-xs'
-                      : 'hover:!bg-white/15'
+                      ? '!bg-emerald-500/20 !text-amber-300 border border-emerald-400/30 font-bold shadow-xs'
+                      : '!text-slate-200 hover:!text-white hover:!bg-white/10'
                   }`}
                 >
                   {item.label}

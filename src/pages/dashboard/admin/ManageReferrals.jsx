@@ -17,7 +17,7 @@ const statusColors = {
   new: 'bg-orange-100 text-orange-700',
   contacted: 'bg-amber-100 text-amber-700',
   interested: 'bg-amber-100 text-amber-700',
-  site_visit_done: 'bg-indigo-100 text-indigo-700',
+  site_visit_done: 'bg-green-100 text-green-800',
   negotiation: 'bg-purple-100 text-purple-700',
   booking_done: 'bg-emerald-100 text-emerald-700 font-semibold',
   commission_paid: 'bg-green-100 text-green-800 font-bold',
@@ -237,7 +237,7 @@ export default function ManageReferrals() {
               setCommissionAmount(r.commissionAmount || '');
               setShowStatusModal(true);
             }}
-            className="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+            className="p-1.5 text-green-700 hover:bg-green-50 rounded-lg transition-colors"
             title="Update Referral & Payout Status"
           >
             <LuPencil size={16} />
@@ -291,7 +291,7 @@ export default function ManageReferrals() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <LuGift className="text-indigo-600" /> Manage Referrals &amp; Rewards
+            <LuGift className="text-green-700" /> Manage Referrals &amp; Rewards
           </h1>
           <p className="text-slate-500 text-sm">
             Track customer referrals, referrer attributions, and cash reward payouts.

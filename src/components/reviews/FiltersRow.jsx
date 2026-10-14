@@ -20,7 +20,7 @@ export default function FiltersRow({
         <select
           value={projectFilter}
           onChange={(e) => onProjectFilterChange(e.target.value)}
-          className="px-3.5 py-1.5 rounded-full border border-slate-200 text-xs bg-white text-slate-700 font-semibold outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-100 cursor-pointer shadow-sm"
+          className="px-3.5 py-1.5 rounded-full border border-slate-200 text-xs bg-white text-slate-700 font-semibold outline-none focus:border-green-600 focus:ring-1 focus:ring-green-100 cursor-pointer shadow-sm"
         >
           <option value="">All Projects</option>
           {projectOptions.map((proj) => {
@@ -33,7 +33,7 @@ export default function FiltersRow({
         {ratingFilter && (
           <button
             onClick={() => onRatingFilterChange('')}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-indigo-50 border border-indigo-100 text-indigo-700 hover:bg-indigo-100 transition cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-green-50 border border-green-100 text-green-700 hover:bg-green-100 transition cursor-pointer"
           >
             {ratingFilter} Stars <FaTimes className="text-[9px]" />
           </button>
@@ -56,7 +56,7 @@ export default function FiltersRow({
         <select
           value={sortOption}
           onChange={(e) => onSortOptionChange(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-slate-200 text-xs bg-white text-slate-700 font-semibold outline-none focus:border-indigo-600 cursor-pointer shadow-sm"
+          className="px-4 py-2 rounded-lg border border-slate-200 text-xs bg-white text-slate-700 font-semibold outline-none focus:border-green-600 cursor-pointer shadow-sm"
         >
           <option value="newest">Most Recent</option>
           <option value="highest">Highest Rated</option>

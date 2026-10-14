@@ -38,7 +38,7 @@ export default function ReferralStatusModal({
             <select
               value={newStatus}
               onChange={(e) => setNewStatus(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-green-600 bg-white"
             >
               <option value="new">New</option>
               <option value="contacted">Contacted</option>
@@ -58,7 +58,7 @@ export default function ReferralStatusModal({
               placeholder="e.g. 25000"
               value={commissionAmount}
               onChange={(e) => setCommissionAmount(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-green-600"
             />
           </div>
 
@@ -73,7 +73,7 @@ export default function ReferralStatusModal({
             <button
               type="button"
               onClick={onSave}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg"
+              className="px-4 py-2 bg-green-700 hover:bg-green-800 text-white text-xs font-bold rounded-lg"
             >
               Save Changes
             </button>

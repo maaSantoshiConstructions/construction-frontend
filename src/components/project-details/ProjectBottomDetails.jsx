@@ -21,7 +21,7 @@ export default function ProjectBottomDetails({
                 key={i}
                 className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 bg-white"
               >
-                <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 text-sm shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center text-green-700 text-sm shrink-0">
                   <LuSparkles />
                 </div>
                 <span className="text-xs sm:text-sm font-semibold text-slate-800">{amenity}</span>
@@ -48,11 +48,11 @@ export default function ProjectBottomDetails({
           </div>
 
           {/* Premium CTA box */}
-          <div className="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 rounded-2xl p-6 sm:p-7 text-white shadow-lg">
+          <div className="bg-gradient-to-r from-[#2d6a2d] via-[#4a8c3f] to-[#3a7a2a] rounded-2xl p-6 sm:p-7 text-white shadow-lg">
             <h3 className="font-['Poppins',sans-serif] text-lg font-extrabold mb-2">
               Interested in this project?
             </h3>
-            <p className="text-xs sm:text-sm text-indigo-100 mb-5 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-green-100 mb-5 leading-relaxed font-normal">
               Our dedicated relationship managers will guide you through site visits, layout maps, and plot bookings.
             </p>
             <a

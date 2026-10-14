@@ -55,10 +55,10 @@ function StatCounter({ value, suffix, label, ic }) {
       ref={ref}
       className="bg-white rounded-2xl border border-slate-200/80 p-5 md:p-7 text-center shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center justify-center gap-2"
     >
-      <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl md:text-2xl font-bold">
+      <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-green-50 text-green-700 flex items-center justify-center text-xl md:text-2xl font-bold">
         {ic}
       </div>
-      <div className="font-poppins text-2xl md:text-3xl font-extrabold text-indigo-600 tracking-tight">
+      <div className="font-poppins text-2xl md:text-3xl font-extrabold text-green-700 tracking-tight">
         {count}{suffix}
       </div>
       <div className="text-xs md:text-sm font-semibold text-slate-500">{label}</div>
@@ -68,10 +68,10 @@ function StatCounter({ value, suffix, label, ic }) {
 
 export default function About() {
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-[#f5f9f3] min-h-screen">
       {/* ===== HERO HEADER ===== */}
-      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-14 md:py-20 text-center relative overflow-hidden px-4">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-600/20 via-transparent to-transparent pointer-events-none" />
+      <div className="bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] py-14 md:py-20 text-center relative overflow-hidden px-4">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-600/20 via-transparent to-transparent pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10">
           <span className="inline-block px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-bold text-[11px] md:text-xs uppercase tracking-widest mb-3 border border-white/10">
             OUR STORY
@@ -125,7 +125,7 @@ export default function About() {
                 className="rounded-2xl w-full h-64 sm:h-80 lg:h-96 object-cover shadow-lg"
               />
               <div className="absolute -bottom-4 left-4 bg-white rounded-2xl p-4 sm:p-5 shadow-xl border border-slate-200/80">
-                <div className="font-poppins text-2xl sm:text-3xl font-extrabold text-indigo-600">
+                <div className="font-poppins text-2xl sm:text-3xl font-extrabold text-green-700">
                   15+
                 </div>
                 <div className="text-xs font-semibold text-slate-500">Years of Excellence</div>
@@ -151,7 +151,7 @@ export default function About() {
                 key={v.title}
                 className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition duration-300"
               >
-                <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-4">
+                <div className="w-12 h-12 rounded-xl bg-green-50 text-green-700 flex items-center justify-center text-2xl mb-4">
                   {v.ic}
                 </div>
                 <h3 className="text-lg font-bold text-slate-800 mb-2 font-poppins">
@@ -185,7 +185,7 @@ export default function About() {
                 <img
                   src={m.image}
                   alt={m.name}
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover mx-auto mb-3 border-4 border-indigo-50 shadow-sm"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover mx-auto mb-3 border-4 border-green-50 shadow-sm"
                 />
                 <h4 className="text-xs md:text-sm font-bold text-slate-800 mb-1 font-poppins">
                   {m.name}
@@ -199,7 +199,7 @@ export default function About() {
         </div>
 
         {/* ===== CTA BANNER ===== */}
-        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-10 md:p-12 text-white shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="bg-gradient-to-r from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] rounded-3xl p-6 sm:p-10 md:p-12 text-white shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="space-y-2 text-center lg:text-left">
             <h3 className="text-2xl sm:text-3xl font-extrabold font-poppins">
               Ready to Start Your Journey?

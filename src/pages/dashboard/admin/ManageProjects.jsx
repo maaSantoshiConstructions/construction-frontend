@@ -18,7 +18,7 @@ import ProjectFormModal from '../../../components/manage-projects/ProjectFormMod
 
 const statusStyle = {
   upcoming: 'bg-amber-50 text-amber-700 border-amber-200',
-  ongoing: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  ongoing: 'bg-green-50 text-green-800 border-green-200',
   completed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
 };
 
@@ -247,7 +247,7 @@ export default function ManageProjects() {
             </div>
           ) : projects.length === 0 ? (
             <div className="p-12 text-center">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mx-auto mb-3">
+              <div className="w-12 h-12 rounded-2xl bg-green-50 text-green-700 flex items-center justify-center text-2xl mx-auto mb-3">
                 <LuBuilding2 />
               </div>
               <p className="text-slate-500 text-xs sm:text-sm mb-4">
@@ -280,7 +280,7 @@ export default function ManageProjects() {
               <tbody className="divide-y divide-slate-100">
                 {projects.map((r, i) => {
                   const badgeStyle =
-                    statusStyle[r.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                    statusStyle[r.status] || 'bg-green-50 text-green-800 border-green-200';
                   return (
                     <tr key={r._id} className="hover:bg-slate-50/80 transition-colors">
                       <td className="px-4 py-3.5 text-xs font-bold text-slate-500 align-middle">
@@ -334,7 +334,7 @@ export default function ManageProjects() {
                           <button
                             type="button"
                             onClick={() => openEdit(r)}
-                            className="px-3 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 text-indigo-700 text-xs font-bold transition-colors cursor-pointer"
+                            className="px-3 py-1.5 rounded-lg border border-green-200 bg-green-50/50 hover:bg-green-50 text-green-800 text-xs font-bold transition-colors cursor-pointer"
                           >
                             Edit
                           </button>
@@ -364,7 +364,7 @@ export default function ManageProjects() {
                   onClick={() => setPage(p)}
                   className={`w-8 h-8 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                     p === page
-                      ? 'bg-indigo-600 text-white shadow-xs'
+                      ? 'bg-green-700 text-white shadow-xs'
                       : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                   }`}
                 >

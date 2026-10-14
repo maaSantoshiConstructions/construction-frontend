@@ -10,7 +10,7 @@ const referralStatusColors = {
   new: 'bg-orange-100 text-orange-700',
   contacted: 'bg-amber-100 text-amber-700',
   interested: 'bg-amber-100 text-amber-700',
-  site_visit_done: 'bg-indigo-100 text-indigo-700',
+  site_visit_done: 'bg-green-100 text-green-800',
   negotiation: 'bg-purple-100 text-purple-700',
   booking_done: 'bg-emerald-100 text-emerald-700 font-semibold',
   commission_paid: 'bg-green-100 text-green-800 font-bold',

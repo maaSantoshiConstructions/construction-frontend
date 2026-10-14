@@ -27,7 +27,7 @@ export default function UpdateFormModal({
   if (!showModal) return null;
 
   const inputClass = (hasErr) =>
-    `w-full px-3.5 py-2.5 border rounded-xl text-xs font-medium text-slate-900 outline-none bg-white transition-colors focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 ${
+    `w-full px-3.5 py-2.5 border rounded-xl text-xs font-medium text-slate-900 outline-none bg-white transition-colors focus:border-green-600 focus:ring-2 focus:ring-green-600/10 ${
       hasErr ? 'border-red-500' : 'border-slate-200 hover:border-slate-300'
     }`;
 
@@ -120,7 +120,7 @@ export default function UpdateFormModal({
                 min="0"
                 max="100"
                 {...register('progressPercent')}
-                className="w-full accent-indigo-600 cursor-pointer"
+                className="w-full accent-green-700 cursor-pointer"
               />
               <div className="flex justify-between text-[11px] text-slate-400 mt-1">
                 <span>0%</span>
@@ -130,7 +130,7 @@ export default function UpdateFormModal({
               <div className="h-2 bg-slate-200 rounded-full mt-2 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-200 ${
-                    (progressValue || 0) >= 80 ? 'bg-emerald-600' : 'bg-indigo-600'
+                    (progressValue || 0) >= 80 ? 'bg-emerald-600' : 'bg-green-700'
                   }`}
                   style={{ width: `${progressValue || 0}%` }}
                 />

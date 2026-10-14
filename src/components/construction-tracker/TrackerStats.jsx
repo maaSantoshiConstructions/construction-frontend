@@ -33,7 +33,7 @@ export default function TrackerStats({
       {/* Progress Bar */}
       <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden mb-4">
         <div
-          className="h-full bg-gradient-to-r from-indigo-700 to-indigo-500 rounded-full transition-all duration-500 ease-out"
+          className="h-full bg-gradient-to-r from-green-700 to-green-500 rounded-full transition-all duration-500 ease-out"
           style={{ width: `${projectStats.avgProgress}%` }}
         />
       </div>

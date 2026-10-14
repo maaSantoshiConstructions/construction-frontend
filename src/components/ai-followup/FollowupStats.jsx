@@ -19,7 +19,7 @@ export default function FollowupStats() {
           transition={{ delay: 0.1 * i }}
           className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm text-center"
         >
-          <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+          <div className="w-10 h-10 bg-green-50 text-green-700 rounded-xl flex items-center justify-center mx-auto mb-3">
             <stat.icon className="text-base" />
           </div>
           <h4 className="text-[10px] text-slate-400 font-bold uppercase tracking-wider m-0 font-poppins">

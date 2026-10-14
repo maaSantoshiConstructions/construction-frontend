@@ -174,13 +174,13 @@ export default function PlotMap() {
   ];
 
   return (
-    <div className="bg-[#f0f2f5] min-h-screen">
+    <div className="bg-[#f5f9f3] min-h-screen">
       {/* HEADER */}
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 py-4 sm:py-5">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 flex items-center justify-center text-white text-lg shadow-md shadow-indigo-600/20 shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-r from-green-700 to-green-800 flex items-center justify-center text-white text-lg shadow-md shadow-green-700/20 shrink-0">
                 <LuMapPin />
               </div>
               <div>
@@ -238,7 +238,7 @@ export default function PlotMap() {
             <button
               type="button"
               onClick={() => setShowFilters(true)}
-              className="fixed bottom-6 right-6 z-[150] px-5 py-3.5 bg-indigo-600 border-0 rounded-2xl shadow-lg shadow-indigo-600/30 text-xs font-bold text-white cursor-pointer flex items-center gap-2"
+              className="fixed bottom-6 right-6 z-[150] px-5 py-3.5 bg-green-700 border-0 rounded-2xl shadow-lg shadow-green-700/30 text-xs font-bold text-white cursor-pointer flex items-center gap-2"
             >
               <LuFilter className="text-sm" /> Filters ({filteredPlots.length})
             </button>
@@ -262,7 +262,7 @@ export default function PlotMap() {
                   onClick={() => setActiveView(v.key)}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-lg border-0 cursor-pointer text-xs font-bold transition-all ${
                     activeView === v.key
-                      ? 'bg-indigo-600 text-white shadow-xs'
+                      ? 'bg-green-700 text-white shadow-xs'
                       : 'bg-transparent text-slate-600 hover:bg-slate-50'
                   }`}
                 >

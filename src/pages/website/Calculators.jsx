@@ -39,10 +39,10 @@ export default function Calculators() {
   };
 
   return (
-    <div className="bg-[#f7f7fb] min-h-screen pb-24">
+    <div className="bg-[#f5f9f3] min-h-screen pb-24">
       {/* ===== HEADER ===== */}
-      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0b0f2e] via-[#161b45] to-[#1c1450]">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0d1f0d] via-[#1a3a1a] to-[#162b16]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="wrap max-w-4xl mx-auto">
           <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold tracking-wider uppercase mb-3">
             FINANCIAL TOOLS
@@ -69,11 +69,11 @@ export default function Calculators() {
                 onClick={() => handleTabChange(tab.id)}
                 className={`flex-1 flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-xl text-xs sm:text-sm font-bold cursor-pointer transition-all whitespace-nowrap border-0 ${
                   isActive
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                    ? 'bg-green-700 text-white shadow-md shadow-green-700/20'
                     : 'bg-transparent text-slate-600 hover:bg-slate-50'
                 }`}
               >
-                <TabIcon className={`text-base shrink-0 ${isActive ? 'text-white' : 'text-indigo-600'}`} />
+                <TabIcon className={`text-base shrink-0 ${isActive ? 'text-white' : 'text-green-700'}`} />
                 <span>{tab.label}</span>
               </button>
             );

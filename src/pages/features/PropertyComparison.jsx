@@ -72,7 +72,7 @@ export default function PropertyComparison() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-24">
+    <div className="bg-[#f5f9f3] min-h-screen pb-24">
       
       {/* ===== PAGE HEADER ===== */}
       <ComparisonHeader />
@@ -83,7 +83,7 @@ export default function PropertyComparison() {
         
         {loading && (
           <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-xl">
-            <div className="w-10 h-10 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4" />
+            <div className="w-10 h-10 border-4 border-slate-100 border-t-green-700 rounded-full animate-spin mx-auto mb-4" />
             <p className="text-sm font-semibold text-slate-400">Fetching live property listings...</p>
           </div>
         )}
@@ -100,7 +100,7 @@ export default function PropertyComparison() {
 
         {!loading && !error && properties.length === 0 && (
           <div className="text-center py-20 bg-white rounded-2xl border border-slate-200 shadow-xl px-4">
-            <div className="w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4">
+            <div className="w-14 h-14 rounded-full bg-green-50 text-green-700 flex items-center justify-center mx-auto mb-4">
               <FaPlus className="text-xl" />
             </div>
             <h3 className="text-lg font-bold text-slate-800 mb-1 font-poppins">

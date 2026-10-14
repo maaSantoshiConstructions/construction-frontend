@@ -15,7 +15,7 @@ export default function BookingsStatCards({ stats }) {
   ];
 
   const colorMap = {
-    indigo: { bg: 'bg-indigo-50', icon: 'bg-indigo-100 text-indigo-600', border: 'border-indigo-200' },
+    indigo: { bg: 'bg-green-50', icon: 'bg-green-100 text-green-700', border: 'border-green-200' },
     sky: { bg: 'bg-sky-50', icon: 'bg-sky-100 text-sky-600', border: 'border-sky-200' },
     emerald: { bg: 'bg-emerald-50', icon: 'bg-emerald-100 text-emerald-600', border: 'border-emerald-200' },
     orange: { bg: 'bg-orange-50', icon: 'bg-orange-100 text-orange-600', border: 'border-orange-200' },

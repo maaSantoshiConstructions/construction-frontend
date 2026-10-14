@@ -61,8 +61,8 @@ export default function VirtualSiteTour() {
       `}</style>
 
       {/* ===== PAGE HEADER ===== */}
-      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-r from-[#0b0f2e] via-[#161b45] to-[#1c1450]">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-r from-[#0d1f0d] via-[#1a3a1a] to-[#162b16]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="wrap max-w-4xl mx-auto">
           <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold tracking-wider uppercase mb-3">
             IMMERSIVE VISIT
@@ -88,7 +88,7 @@ export default function VirtualSiteTour() {
             /* Poster Intro Panel */
             <div
               onClick={() => setIsPlaying(true)}
-              className="relative aspect-video bg-[#0b0f2e] flex items-center justify-center cursor-pointer group"
+              className="relative aspect-video bg-[#0d1f0d] flex items-center justify-center cursor-pointer group"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/40 to-slate-950/80 z-10" />
               <img
@@ -98,7 +98,7 @@ export default function VirtualSiteTour() {
               />
               <div className="relative z-20 text-center px-4">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/95 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl group-hover:scale-110 transition-transform">
-                  <LuPlay className="text-indigo-600 text-2xl sm:text-3xl ml-1" />
+                  <LuPlay className="text-green-700 text-2xl sm:text-3xl ml-1" />
                 </div>
                 <h3 className="text-lg sm:text-2xl font-extrabold text-white font-['Poppins',sans-serif] m-0">
                   Start Panoramic Site Visit
@@ -130,7 +130,7 @@ export default function VirtualSiteTour() {
                     key={spot.id}
                     type="button"
                     onClick={() => setActiveHotspot(spot)}
-                    className="absolute bg-indigo-600 border-2 border-white rounded-full w-9 h-9 flex items-center justify-center text-white cursor-pointer shadow-lg z-15 outline-none -translate-x-1/2 -translate-y-1/2"
+                    className="absolute bg-green-700 border-2 border-white rounded-full w-9 h-9 flex items-center justify-center text-white cursor-pointer shadow-lg z-15 outline-none -translate-x-1/2 -translate-y-1/2"
                     style={{
                       left: spot.x,
                       top: spot.y,
@@ -203,7 +203,7 @@ export default function VirtualSiteTour() {
                       <LuX className="text-sm" />
                     </button>
                     <h4 className="text-sm sm:text-base font-extrabold text-slate-900 mb-1 flex items-center gap-2 font-['Poppins',sans-serif]">
-                      <span className="inline-block w-2 h-2 rounded-full bg-indigo-600" />
+                      <span className="inline-block w-2 h-2 rounded-full bg-green-700" />
                       {activeHotspot.name}
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pr-6">
@@ -242,7 +242,7 @@ export default function VirtualSiteTour() {
               transition={{ delay: i * 0.1 }}
               className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs"
             >
-              <div className="w-11 h-11 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 text-lg mb-4">
+              <div className="w-11 h-11 bg-green-50 rounded-xl flex items-center justify-center text-green-700 text-lg mb-4">
                 <item.icon />
               </div>
               <h3 className="text-base font-bold text-slate-900 mb-2 font-['Poppins',sans-serif]">

@@ -33,7 +33,7 @@ export default function TrackerHeader({
                 if (e.target.value) setSearchParams({ project: e.target.value });
                 else setSearchParams({});
               }}
-              className="px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold text-slate-800 bg-white cursor-pointer outline-none focus:border-indigo-600 min-w-[180px] shadow-xs"
+              className="px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold text-slate-800 bg-white cursor-pointer outline-none focus:border-green-600 min-w-[180px] shadow-xs"
             >
               <option value="">All Projects</option>
               {projects.map((p) => <option key={p._id} value={p._id}>{p.name}</option>)}

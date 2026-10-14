@@ -37,7 +37,7 @@ export default function ProjectMainInfo({
                   key={i}
                   type="button"
                   onClick={() => setSelectedImage(i)}
-                  className={`w-[74px] h-[56px] rounded-lg overflow-hidden border-2 p-0 bg-none shrink-0 cursor-pointer transition-all ${selectedImage === i ? 'border-indigo-600 shadow-xs' : 'border-transparent opacity-70 hover:opacity-100'
+                  className={`w-[74px] h-[56px] rounded-lg overflow-hidden border-2 p-0 bg-none shrink-0 cursor-pointer transition-all ${selectedImage === i ? 'border-green-700 shadow-xs' : 'border-transparent opacity-70 hover:opacity-100'
                     }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
@@ -51,7 +51,7 @@ export default function ProjectMainInfo({
         <div className="lg:col-span-6">
           {project.status && (
             <span
-              className="inline-block px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider mb-3 border border-indigo-100"
+              className="inline-block px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider mb-3 border border-slate-200"
               style={{
                 background: stColor.bg,
                 color: stColor.text,
@@ -79,7 +79,7 @@ export default function ProjectMainInfo({
             <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
               Starting Price
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 font-['Poppins',sans-serif]">
+            <div className="text-2xl sm:text-3xl font-extrabold text-[#d4880a] font-['Poppins',sans-serif]">
               {formattedPrice}
             </div>
           </div>

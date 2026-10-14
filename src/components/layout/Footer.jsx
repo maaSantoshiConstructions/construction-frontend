@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import constructionLogo from '../../assets/construction logo.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getProjects } from '../../api/projects';
@@ -30,7 +31,7 @@ export default function Footer() {
           <div className="foot-about">
             <Link to="/" className="inline-block no-underline mb-3">
               <img
-                src="/construction logo.png"
+                src={constructionLogo}
                 alt="JSMIL – Jai Santoshi Maa Infrastructure"
                 className="h-20 w-auto object-contain"
               />

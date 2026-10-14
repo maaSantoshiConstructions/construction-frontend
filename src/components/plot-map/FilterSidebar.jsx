@@ -54,7 +54,7 @@ export default function FilterSidebar({
   }, [plots, getProjectName]);
 
   const selectStyle =
-    'w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none cursor-pointer focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 transition-colors';
+    'w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none cursor-pointer focus:border-green-600 focus:ring-2 focus:ring-green-600/10 transition-colors';
 
   return (
     <div
@@ -93,7 +93,7 @@ export default function FilterSidebar({
             placeholder="Search plot number..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-10 pl-9 pr-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 focus:bg-white transition-all"
+            className="w-full h-10 pl-9 pr-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 focus:bg-white transition-all"
           />
         </div>
 
@@ -194,7 +194,7 @@ export default function FilterSidebar({
               setFilters({ project: '', facing: '', status: '', sizeRange: '' });
               setSearchQuery('');
             }}
-            className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 bg-transparent border-0 cursor-pointer text-left p-0 transition-colors mt-1"
+            className="text-xs font-semibold text-green-700 hover:text-green-800 bg-transparent border-0 cursor-pointer text-left p-0 transition-colors mt-1"
           >
             Clear all filters
           </button>

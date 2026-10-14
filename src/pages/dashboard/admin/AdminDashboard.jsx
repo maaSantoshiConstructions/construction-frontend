@@ -26,18 +26,18 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const statCards = [
-  { key: 'totalProjects', label: 'Projects', ic: LuBuilding2, iconBg: 'bg-indigo-50 text-indigo-700', textClass: 'text-indigo-700' },
+  { key: 'totalProjects', label: 'Projects', ic: LuBuilding2, iconBg: 'bg-green-50 text-green-800', textClass: 'text-green-800' },
   { key: 'totalPlots', label: 'Total Plots', ic: LuMap, iconBg: 'bg-purple-50 text-purple-700', textClass: 'text-purple-700' },
   { key: 'availablePlots', label: 'Available', ic: LuCircleCheck, iconBg: 'bg-emerald-50 text-emerald-700', textClass: 'text-emerald-700' },
   { key: 'soldPlots', label: 'Sold', ic: LuCircleX, iconBg: 'bg-rose-50 text-rose-700', textClass: 'text-rose-700' },
   { key: 'reservedPlots', label: 'Reserved', ic: LuLock, iconBg: 'bg-amber-50 text-amber-700', textClass: 'text-amber-700' },
   { key: 'revenue', label: 'Revenue', ic: LuIndianRupee, iconBg: 'bg-emerald-50 text-emerald-700', textClass: 'text-emerald-700', money: true },
-  { key: 'totalLeads', label: 'Leads', ic: LuTrendingUp, iconBg: 'bg-indigo-50 text-indigo-700', textClass: 'text-indigo-700' },
+  { key: 'totalLeads', label: 'Leads', ic: LuTrendingUp, iconBg: 'bg-green-50 text-green-800', textClass: 'text-green-800' },
   { key: 'siteVisitsThisMonth', label: 'Site Visits', ic: LuMapPin, iconBg: 'bg-sky-50 text-sky-700', textClass: 'text-sky-700' },
 ];
 
 const leadStatusStyle = {
-  new: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  new: 'bg-green-50 text-green-800 border-green-200',
   contacted: 'bg-amber-50 text-amber-700 border-amber-200',
   interested: 'bg-purple-50 text-purple-700 border-purple-200',
   booking_done: 'bg-emerald-50 text-emerald-700 border-emerald-200',
@@ -191,7 +191,7 @@ export default function AdminDashboard() {
               <Link
                 key={a.path}
                 to={a.path}
-                className="flex items-center px-4 py-3 rounded-xl border border-indigo-100 bg-indigo-50/50 hover:bg-indigo-50 text-indigo-700 text-xs font-bold no-underline transition-colors"
+                className="flex items-center px-4 py-3 rounded-xl border border-green-100 bg-green-50/50 hover:bg-green-50 text-green-800 text-xs font-bold no-underline transition-colors"
               >
                 {a.label}
               </Link>
@@ -210,7 +210,7 @@ export default function AdminDashboard() {
             </h2>
             <Link
               to="/admin/leads"
-              className="text-xs font-bold text-indigo-600 hover:text-indigo-700 no-underline transition-colors"
+              className="text-xs font-bold text-green-700 hover:text-green-800 no-underline transition-colors"
             >
               View all →
             </Link>
@@ -221,7 +221,7 @@ export default function AdminDashboard() {
             <div className="divide-y divide-slate-100">
               {recentLeads.slice(0, 5).map((lead, i) => {
                 const badgeStyle =
-                  leadStatusStyle[lead.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                  leadStatusStyle[lead.status] || 'bg-green-50 text-green-800 border-green-200';
                 return (
                   <div key={i} className="flex justify-between items-center py-3">
                     <div>
@@ -252,7 +252,7 @@ export default function AdminDashboard() {
             </h2>
             <Link
               to="/admin/bookings"
-              className="text-xs font-bold text-indigo-600 hover:text-indigo-700 no-underline transition-colors"
+              className="text-xs font-bold text-green-700 hover:text-green-800 no-underline transition-colors"
             >
               View all →
             </Link>
@@ -263,7 +263,7 @@ export default function AdminDashboard() {
             <div className="divide-y divide-slate-100">
               {recentBookings.slice(0, 5).map((b, i) => {
                 const badgeStyle =
-                  bookingStatusStyle[b.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                  bookingStatusStyle[b.status] || 'bg-green-50 text-green-800 border-green-200';
                 return (
                   <div key={i} className="flex justify-between items-center py-3">
                     <div>

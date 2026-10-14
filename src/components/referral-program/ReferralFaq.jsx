@@ -5,7 +5,7 @@ export default function ReferralFaq({ faqs = [], openFaq = null, setOpenFaq }) {
   return (
     <div className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200">
       <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-        <LuCircleHelp size={20} className="text-indigo-600" /> Frequently Asked Questions
+        <LuCircleHelp size={20} className="text-green-700" /> Frequently Asked Questions
       </h3>
 
       <div className="space-y-4">
@@ -18,7 +18,7 @@ export default function ReferralFaq({ faqs = [], openFaq = null, setOpenFaq }) {
               <span>{faq.q}</span>
               <LuChevronDown
                 size={16}
-                className={`transition-transform ${openFaq === idx ? 'rotate-180 text-indigo-600' : 'text-slate-400'}`}
+                className={`transition-transform ${openFaq === idx ? 'rotate-180 text-green-700' : 'text-slate-400'}`}
               />
             </button>
             {openFaq === idx && (

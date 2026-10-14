@@ -29,10 +29,10 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-[#f5f9f3] min-h-screen">
       {/* ===== PAGE HEADER ===== */}
-      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-14 md:py-20 text-center relative overflow-hidden px-4">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-600/20 via-transparent to-transparent pointer-events-none" />
+      <div className="bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] py-14 md:py-20 text-center relative overflow-hidden px-4">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-600/20 via-transparent to-transparent pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10">
           <span className="inline-block px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-bold text-[11px] md:text-xs uppercase tracking-widest mb-3 border border-white/10">
             GET IN TOUCH
@@ -150,7 +150,7 @@ export default function Contact() {
                 key={item.label}
                 className="bg-white border border-slate-200/80 rounded-2xl p-4 flex items-start gap-4 shadow-sm hover:shadow-md transition duration-300"
               >
-                <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg flex-shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center text-lg flex-shrink-0">
                   {item.icon}
                 </div>
                 <div>
@@ -165,12 +165,12 @@ export default function Contact() {
             ))}
 
             {/* CTA mini banner */}
-            <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 rounded-2xl p-6 text-white shadow-xl space-y-4">
+            <div className="bg-gradient-to-br from-[#2d6a2d] via-[#4a8c3f] to-[#3a7a2a] rounded-2xl p-6 text-white shadow-xl space-y-4">
               <div>
                 <h4 className="font-poppins text-lg font-bold text-white mb-1">
                   Ready to Book a Site Visit?
                 </h4>
-                <p className="text-xs text-indigo-100 leading-relaxed">
+                <p className="text-xs text-green-100 leading-relaxed">
                   Our team will personally take you through our projects. Schedule your visit today.
                 </p>
               </div>

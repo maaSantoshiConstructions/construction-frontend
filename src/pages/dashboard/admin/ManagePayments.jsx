@@ -88,7 +88,7 @@ export default function ManagePayments() {
       render: (r) => r.booking ? (
         <button
           onClick={() => navigate(`/admin/bookings/${r.booking._id}`)}
-          className="font-mono text-xs text-indigo-600 hover:underline"
+          className="font-mono text-xs text-green-700 hover:underline"
         >
           #{r.booking.bookingId || r.booking._id?.slice(-6)}
         </button>
@@ -134,7 +134,7 @@ export default function ManagePayments() {
         <button
           onClick={() => handleDownload(r._id, r.paymentId)}
           title="Download Receipt"
-          className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+          className="p-1.5 text-slate-400 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors"
         >
           <FaDownload className="text-xs" />
         </button>

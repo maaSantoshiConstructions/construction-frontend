@@ -6,9 +6,9 @@ import config from '../../config';
 
 export default function BookVisitSuccess({ visitDetails, setSuccess, setVisitDetails }) {
   return (
-    <div className="bg-[#f7f7fb] min-h-screen pb-[90px]">
+    <div className="bg-[#f5f9f3] min-h-screen pb-[90px]">
       {/* ===== PAGE HEADER ===== */}
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-center py-16 px-4 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] text-center py-16 px-4 relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
           <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-white/10 text-amber-400 border border-white/10">
             SUCCESS
@@ -73,7 +73,7 @@ export default function BookVisitSuccess({ visitDetails, setSuccess, setVisitDet
 
           <button
             onClick={() => { setSuccess(false); setVisitDetails(null); }}
-            className="bg-transparent border-0 text-indigo-600 hover:text-indigo-800 font-semibold text-xs sm:text-sm mt-5 cursor-pointer inline-flex items-center gap-1 transition-colors"
+            className="bg-transparent border-0 text-green-700 hover:text-green-800 font-semibold text-xs sm:text-sm mt-5 cursor-pointer inline-flex items-center gap-1 transition-colors"
           >
             <LuArrowLeft /> Book Another Visit
           </button>

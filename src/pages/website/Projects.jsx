@@ -12,7 +12,7 @@ const typeFilters = ['all', 'plotted_development', 'villas', 'apartments'];
 
 const statusStyle = {
   upcoming: 'bg-amber-50 text-amber-700 border-amber-200',
-  ongoing: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  ongoing: 'bg-green-50 text-green-700 border-green-200',
   completed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
 };
 
@@ -51,10 +51,10 @@ export default function Projects() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-24">
+    <div className="bg-[#f5f9f3] min-h-screen pb-24">
       {/* ===== HEADER ===== */}
-      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0b0f2e] via-[#161b45] to-[#1c1450]">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0d1f0d] via-[#1a3a1a] to-[#162b16]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="wrap max-w-4xl mx-auto">
           <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold tracking-wider uppercase mb-3">
             PREMIUM PROPERTIES
@@ -80,7 +80,7 @@ export default function Projects() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search projects by name, city, location..."
-                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 outline-none bg-white transition-colors focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10"
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 outline-none bg-white transition-colors focus:border-green-600 focus:ring-2 focus:ring-green-600/10"
                 />
               </div>
               <button
@@ -105,7 +105,7 @@ export default function Projects() {
                       onClick={() => setStatusFilter(s)}
                       className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border-0 cursor-pointer ${
                         statusFilter === s
-                          ? 'bg-indigo-600 text-white shadow-xs'
+                          ? 'bg-green-700 text-white shadow-xs'
                           : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                       }`}
                     >
@@ -128,7 +128,7 @@ export default function Projects() {
                       onClick={() => setTypeFilter(t)}
                       className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border-0 cursor-pointer ${
                         typeFilter === t
-                          ? 'bg-indigo-600 text-white shadow-xs'
+                          ? 'bg-green-700 text-white shadow-xs'
                           : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                       }`}
                     >
@@ -161,7 +161,7 @@ export default function Projects() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => {
               const bStyle =
-                statusStyle[project.status] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                statusStyle[project.status] || 'bg-green-50 text-green-700 border-green-200';
               return (
                 <div
                   key={project._id}
@@ -186,7 +186,7 @@ export default function Projects() {
                     )}
                   </div>
                   <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-['Poppins',sans-serif] text-base font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                    <h3 className="font-['Poppins',sans-serif] text-base font-bold text-slate-900 group-hover:text-green-700 transition-colors">
                       {project.name}
                     </h3>
                     <div className="text-xs text-slate-500 font-medium flex items-center gap-1.5 mt-1">
@@ -216,7 +216,7 @@ export default function Projects() {
                       </div>
                       <RouterLink
                         to={`/projects/${project.slug}`}
-                        className=" cta-btn inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-700 transition-colors no-underline"
+                        className="cta-btn inline-flex items-center gap-1 text-xs font-bold no-underline"
                       >
                         <span>View Project</span>
                         <LuArrowRight className="text-xs" />

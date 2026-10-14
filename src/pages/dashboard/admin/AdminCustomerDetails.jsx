@@ -104,7 +104,7 @@ export default function AdminCustomerDetails() {
       desc: `${custName} registered account in system`,
       date: fmtDate(userObj.createdAt || customerObj.createdAt),
       icon: FaUser,
-      color: 'bg-indigo-500',
+      color: 'bg-green-500',
       timestamp: new Date(userObj.createdAt || customerObj.createdAt).getTime(),
     },
     ...siteVisits.map((sv) => ({

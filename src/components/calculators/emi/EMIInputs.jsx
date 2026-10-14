@@ -47,8 +47,8 @@ export default function EMIInputs({
             onFocus={handleLoanFocus}
             onBlur={handleLoanBlur}
             aria-label="Loan Amount in Rupees"
-            className={`w-36 text-right text-xs font-bold text-indigo-700 bg-[#f9f9fd] border rounded-lg px-2.5 py-1.5 outline-none transition-colors ${
-              errors.loan ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+            className={`w-36 text-right text-xs font-bold text-green-700 bg-[#f9f9fd] border rounded-lg px-2.5 py-1.5 outline-none transition-colors ${
+              errors.loan ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
             }`}
           />
         </div>
@@ -63,7 +63,7 @@ export default function EMIInputs({
           aria-valuemin={LOAN_MIN}
           aria-valuemax={LOAN_MAX}
           aria-valuenow={loanAmount}
-          className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+          className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-green-700 cursor-pointer"
         />
         <div className="flex justify-between text-[10.5px] text-slate-400 mt-1">
           <span>₹1 Lakh</span>
@@ -93,8 +93,8 @@ export default function EMIInputs({
               onChange={handleRateInputChange}
               onBlur={handleRateBlur}
               aria-label="Interest Rate per annum"
-              className={`w-24 text-right text-xs font-bold text-indigo-700 bg-[#f9f9fd] border rounded-lg px-2.5 py-1.5 outline-none transition-colors ${
-                errors.rate ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+              className={`w-24 text-right text-xs font-bold text-green-700 bg-[#f9f9fd] border rounded-lg px-2.5 py-1.5 outline-none transition-colors ${
+                errors.rate ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
               }`}
             />
             <span className="text-xs font-bold text-slate-500">%</span>
@@ -111,7 +111,7 @@ export default function EMIInputs({
           aria-valuemin={RATE_MIN}
           aria-valuemax={RATE_MAX}
           aria-valuenow={interestRate}
-          className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+          className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-green-700 cursor-pointer"
         />
         <div className="flex justify-between text-[10.5px] text-slate-400 mt-1">
           <span>1%</span>
@@ -141,8 +141,8 @@ export default function EMIInputs({
               onChange={handleTenureInputChange}
               onBlur={handleTenureBlur}
               aria-label="Loan Tenure in years"
-              className={`w-24 text-right text-xs font-bold text-indigo-700 bg-[#f9f9fd] border rounded-lg px-2.5 py-1.5 outline-none transition-colors ${
-                errors.tenure ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+              className={`w-24 text-right text-xs font-bold text-green-700 bg-[#f9f9fd] border rounded-lg px-2.5 py-1.5 outline-none transition-colors ${
+                errors.tenure ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
               }`}
             />
             <span className="text-xs font-bold text-slate-500">Yr</span>
@@ -159,7 +159,7 @@ export default function EMIInputs({
           aria-valuemin={TENURE_MIN}
           aria-valuemax={TENURE_MAX}
           aria-valuenow={tenureYears}
-          className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-indigo-600 cursor-pointer"
+          className="w-full h-1.5 bg-slate-200 rounded-md appearance-none accent-green-700 cursor-pointer"
         />
         <div className="flex justify-between text-[10.5px] text-slate-400 mt-1">
           <span>1 Year</span>
@@ -173,8 +173,8 @@ export default function EMIInputs({
       </div>
 
       {/* Quick Summary Banner */}
-      <div className="bg-indigo-50/60 border border-indigo-100 rounded-xl p-4 flex items-center gap-3">
-        <LuCalendar size={26} className="text-indigo-600 shrink-0" />
+      <div className="bg-green-50/60 border border-green-100 rounded-xl p-4 flex items-center gap-3">
+        <LuCalendar size={26} className="text-green-700 shrink-0" />
         <div className="text-xs text-slate-700 leading-relaxed">
           Total of <strong>{calculationResults.totalMonths} EMI payments</strong> over <strong>{tenureYears} years</strong>.
         </div>

@@ -112,7 +112,7 @@ export default function BookingPaymentsTable({
                       <button
                         onClick={() => handleDownloadReceipt(p._id)}
                         title="Download Receipt"
-                        className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                        className="p-1.5 text-slate-400 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors"
                       >
                         <FaDownload className="text-xs" />
                       </button>

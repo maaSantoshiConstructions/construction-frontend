@@ -16,10 +16,10 @@ export default function BookVisitForm({
   const visitType = watch ? watch('visitType', 'physical') : 'physical';
 
   return (
-    <div className="bg-[#f7f7fb] min-h-screen pb-[90px]">
+    <div className="bg-[#f5f9f3] min-h-screen pb-[90px]">
       {/* ===== PAGE HEADER ===== */}
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-center py-16 px-4 relative overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] text-center py-16 px-4 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10">
           <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-white/10 text-amber-400 border border-white/10">
             SECURE YOUR PLOT
@@ -38,7 +38,7 @@ export default function BookVisitForm({
         <div>
           {/* ===== FORM CARD ===== */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 sm:p-9">
-            <span className="inline-block px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider rounded-md bg-indigo-50 text-indigo-700 mb-2">
+            <span className="inline-block px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider rounded-md bg-green-50 text-green-700 mb-2">
               SCHEDULE YOUR VISIT
             </span>
             <h2 className="text-xl font-extrabold text-slate-900 mb-7">
@@ -51,7 +51,7 @@ export default function BookVisitForm({
                 <select
                   {...register('project', { required: 'Please select a project' })}
                   className={`w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
-                    errors.project ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                    errors.project ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
                   }`}
                 >
                   <option value="">Choose a project</option>
@@ -65,7 +65,7 @@ export default function BookVisitForm({
                 <select
                   {...register('visitType', { required: 'Please select a visit type' })}
                   className={`w-full px-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
-                    errors.visitType ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                    errors.visitType ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
                   }`}
                 >
                   <option value="physical">Physical Visit (on-site with executive)</option>
@@ -84,7 +84,7 @@ export default function BookVisitForm({
                       min={getMinDate()}
                       {...register('date', { required: 'Please select a date' })}
                       className={`w-full pl-9.5 pr-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
-                        errors.date ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                        errors.date ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
                       }`}
                     />
                   </div>
@@ -98,7 +98,7 @@ export default function BookVisitForm({
                     <select
                       {...register('timeSlot', { required: 'Please select a time' })}
                       className={`w-full pl-9.5 pr-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
-                        errors.timeSlot ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                        errors.timeSlot ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
                       }`}
                     >
                       <option value="">Select time</option>
@@ -118,7 +118,7 @@ export default function BookVisitForm({
                       type="text"
                       {...register('pickupLocation', { required: visitType === 'physical' ? 'Pickup location is required' : false })}
                       className={`w-full pl-9.5 pr-3.5 py-2.5 rounded-lg text-xs sm:text-sm text-slate-800 bg-white outline-none transition-colors border ${
-                        errors.pickupLocation ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-indigo-600'
+                        errors.pickupLocation ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 focus:border-green-600'
                       }`}
                       placeholder="Enter your pickup address"
                     />
@@ -128,7 +128,7 @@ export default function BookVisitForm({
               )}
 
               {visitType === 'vr' && (
-                <div className="p-3.5 rounded-lg border border-indigo-200 bg-indigo-50/70 text-xs font-medium text-indigo-900 leading-relaxed">
+                <div className="p-3.5 rounded-lg border border-green-200 bg-green-50/70 text-xs font-medium text-green-950 leading-relaxed">
                   <strong>Virtual Reality Tour:</strong> You will join an online meeting. We will provide a 3D VR walkthrough of the project and plots. No pickup or physical travel is required!
                 </div>
               )}

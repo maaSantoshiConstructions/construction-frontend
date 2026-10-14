@@ -37,7 +37,7 @@ export default function ReferralNoteModal({
               value={noteText}
               onChange={(e) => setNoteText(e.target.value)}
               placeholder="e.g. Spoke to friend, site visit scheduled for Saturday"
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-green-600"
             />
           </div>
           <div className="flex justify-end gap-3 pt-2">
@@ -51,7 +51,7 @@ export default function ReferralNoteModal({
             <button
               type="button"
               onClick={onSave}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg"
+              className="px-4 py-2 bg-green-700 hover:bg-green-800 text-white text-xs font-bold rounded-lg"
             >
               Add Note
             </button>

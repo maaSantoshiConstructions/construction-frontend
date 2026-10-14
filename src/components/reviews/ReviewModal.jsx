@@ -84,7 +84,7 @@ export default function ReviewModal({
                   value={newReview.name}
                   onChange={(e) => setNewReview(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="Full name"
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50/50 focus:bg-white focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 outline-none transition"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50/50 focus:bg-white focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition"
                 />
               </div>
 
@@ -96,7 +96,7 @@ export default function ReviewModal({
                 <select
                   value={newReview.project}
                   onChange={(e) => setNewReview(prev => ({ ...prev, project: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50/50 focus:bg-white focus:border-indigo-600 outline-none cursor-pointer transition font-semibold"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50/50 focus:bg-white focus:border-green-600 outline-none cursor-pointer transition font-semibold"
                 >
                   {projectOptions.length === 0 ? (
                     <option value="" disabled>Loading projects...</option>
@@ -123,7 +123,7 @@ export default function ReviewModal({
                   value={newReview.comment}
                   onChange={(e) => setNewReview(prev => ({ ...prev, comment: e.target.value }))}
                   placeholder="Tell us about your experience buying plots or construction with us..."
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50/50 focus:bg-white focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 outline-none transition"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50/50 focus:bg-white focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition"
                 />
               </div>
 
@@ -131,7 +131,7 @@ export default function ReviewModal({
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer mt-2"
+                className="w-full py-3.5 bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer mt-2"
               >
                 {submitting ? (
                   <>

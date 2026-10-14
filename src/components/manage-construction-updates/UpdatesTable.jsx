@@ -2,9 +2,9 @@ import React from 'react';
 import ErrorMessage from '../common/ErrorMessage';
 
 const stageColorMap = {
-  planning: 'bg-indigo-50 text-indigo-700 border-indigo-100',
+  planning: 'bg-green-50 text-green-700 border-green-100',
   foundation: 'bg-amber-50 text-amber-700 border-amber-100',
-  structure: 'bg-indigo-50 text-indigo-700 border-indigo-100',
+  structure: 'bg-green-50 text-green-700 border-green-100',
   roofing: 'bg-purple-50 text-purple-700 border-purple-100',
   finishing: 'bg-emerald-50 text-emerald-700 border-emerald-100',
   completed: 'bg-emerald-50 text-emerald-700 border-emerald-100',
@@ -77,7 +77,7 @@ export default function UpdatesTable({
                           <span
                             className={`inline-block text-[11px] font-bold px-2.5 py-1 rounded-full border ${
                               stageColorMap[r.stage?.toLowerCase()] ||
-                              'bg-indigo-50 text-indigo-700 border-indigo-100'
+                              'bg-green-50 text-green-700 border-green-100'
                             }`}
                           >
                             {r.stage.charAt(0).toUpperCase() + r.stage.slice(1)}
@@ -91,7 +91,7 @@ export default function UpdatesTable({
                           <div className="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
                             <div
                               className={`h-full rounded-full transition-all duration-300 ${
-                                (r.progressPercent || 0) >= 80 ? 'bg-emerald-600' : 'bg-indigo-600'
+                                (r.progressPercent || 0) >= 80 ? 'bg-emerald-600' : 'bg-green-700'
                               }`}
                               style={{ width: `${r.progressPercent || 0}%` }}
                             />
@@ -110,7 +110,7 @@ export default function UpdatesTable({
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => openEdit(r)}
-                            className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-indigo-600 text-xs font-semibold hover:bg-indigo-50 transition-colors cursor-pointer"
+                            className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-green-700 text-xs font-semibold hover:bg-green-50 transition-colors cursor-pointer"
                           >
                             Edit
                           </button>
@@ -137,7 +137,7 @@ export default function UpdatesTable({
                   onClick={() => setPage(p)}
                   className={`w-8.5 h-8.5 rounded-lg border text-xs font-bold cursor-pointer transition-all ${
                     p === page
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                      ? 'bg-green-700 text-white border-green-600 shadow-xs'
                       : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
                   }`}
                 >

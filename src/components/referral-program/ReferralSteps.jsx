@@ -11,11 +11,11 @@ export default function ReferralSteps() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-2xl p-6 border border-slate-200 relative overflow-hidden">
-          <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xl mb-4">
+          <div className="w-12 h-12 rounded-xl bg-green-50 text-green-700 flex items-center justify-center font-bold text-xl mb-4">
             1
           </div>
           <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
-            <LuShare2 size={18} className="text-indigo-600" /> Share &amp; Invite
+            <LuShare2 size={18} className="text-green-700" /> Share &amp; Invite
           </h3>
           <p className="text-xs text-slate-500 leading-relaxed">
             Log in to get your custom referral link or submit your friend's details directly using your referral dashboard.

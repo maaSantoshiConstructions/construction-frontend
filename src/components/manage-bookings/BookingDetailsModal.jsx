@@ -48,7 +48,7 @@ export default function BookingDetailsModal({ viewBooking, setViewBooking }) {
             </div>
             <div>
               <span className="text-slate-500">Total Amount</span>
-              <p className="font-bold text-indigo-700">₹{(viewBooking.totalAmount || 0).toLocaleString('en-IN')}</p>
+              <p className="font-bold text-green-700">₹{(viewBooking.totalAmount || 0).toLocaleString('en-IN')}</p>
             </div>
             <div>
               <span className="text-slate-500">Paid Amount</span>

@@ -17,7 +17,7 @@ export default function ReferralForm({
   return (
     <div className="lg:col-span-7 bg-white rounded-2xl p-6 md:p-8 border border-slate-200">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-xl bg-green-50 text-green-700 flex items-center justify-center">
           <LuSend size={20} />
         </div>
         <div>
@@ -36,7 +36,7 @@ export default function ReferralForm({
               placeholder="Friend's full name"
               value={friendName}
               onChange={(e) => setFriendName(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-green-600"
             />
           </div>
           <div>
@@ -47,7 +47,7 @@ export default function ReferralForm({
               placeholder="Friend's mobile number"
               value={friendPhone}
               onChange={(e) => setFriendPhone(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-green-600"
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function ReferralForm({
             placeholder="Friend's email address"
             value={friendEmail}
             onChange={(e) => setFriendEmail(e.target.value)}
-            className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-green-600"
           />
         </div>
 
@@ -70,14 +70,14 @@ export default function ReferralForm({
             placeholder="e.g. Interested in Bhubaneswar residential plot, budget 25 Lakhs"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-green-600"
           />
         </div>
 
         <button
           type="submit"
           disabled={submitting}
-          className="w-full py-3 bg-[#0b0f2e] hover:bg-[#161b45] text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
+          className="w-full py-3 bg-[#0d1f0d] hover:bg-[#1a3a1a] text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2"
         >
           {submitting ? 'Submitting Referral...' : 'Submit Referral Lead →'}
         </button>

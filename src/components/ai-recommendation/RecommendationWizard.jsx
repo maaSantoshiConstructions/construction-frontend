@@ -54,8 +54,8 @@ export default function RecommendationWizard({
   return (
     <div className="bg-[#f7f7fb] min-h-screen pb-[90px]">
       {/* Header */}
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-center py-14 sm:py-16 px-4 relative overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] text-center py-14 sm:py-16 px-4 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10">
           <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-white/10 text-amber-400 border border-white/10">
             AI PROPERTY FINDER
@@ -81,7 +81,7 @@ export default function RecommendationWizard({
                       step > s.id
                         ? 'bg-emerald-500 text-white'
                         : step === s.id
-                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30'
+                        ? 'bg-green-700 text-white shadow-md shadow-green-700/30'
                         : 'bg-slate-100 text-slate-500'
                     }`}
                   >
@@ -124,12 +124,12 @@ export default function RecommendationWizard({
                             onClick={() => updateField('budget', r.value)}
                             className={`w-full p-4 rounded-xl border-2 text-center cursor-pointer transition-all outline-none flex flex-col items-center justify-center ${
                               isSelected
-                                ? 'border-indigo-600 bg-indigo-50/60 shadow-xs'
+                                ? 'border-green-600 bg-green-50/60 shadow-xs'
                                 : 'border-slate-200 bg-white hover:border-slate-300 hover:-translate-y-0.5'
                             }`}
                           >
-                            <Icon size={24} className={`mb-2 transition-colors ${isSelected ? 'text-indigo-600' : 'text-slate-400'}`} />
-                            <span className={`text-sm font-semibold transition-colors ${isSelected ? 'text-indigo-700 font-bold' : 'text-slate-800'}`}>
+                            <Icon size={24} className={`mb-2 transition-colors ${isSelected ? 'text-green-700' : 'text-slate-400'}`} />
+                            <span className={`text-sm font-semibold transition-colors ${isSelected ? 'text-green-700 font-bold' : 'text-slate-800'}`}>
                               {r.label}
                             </span>
                             <span className="text-[11.5px] text-slate-500 font-normal mt-0.5">{r.desc}</span>
@@ -155,12 +155,12 @@ export default function RecommendationWizard({
                             onClick={() => updateField('location', loc.name)}
                             className={`w-full p-4 rounded-xl border-2 text-center cursor-pointer transition-all outline-none flex flex-col items-center justify-center ${
                               isSelected
-                                ? 'border-indigo-600 bg-indigo-50/60 shadow-xs'
+                                ? 'border-green-600 bg-green-50/60 shadow-xs'
                                 : 'border-slate-200 bg-white hover:border-slate-300 hover:-translate-y-0.5'
                             }`}
                           >
-                            <Icon size={22} className={`mb-2 transition-colors ${isSelected ? 'text-indigo-600' : 'text-slate-400'}`} />
-                            <span className={`text-sm font-semibold transition-colors ${isSelected ? 'text-indigo-700 font-bold' : 'text-slate-800'}`}>
+                            <Icon size={22} className={`mb-2 transition-colors ${isSelected ? 'text-green-700' : 'text-slate-400'}`} />
+                            <span className={`text-sm font-semibold transition-colors ${isSelected ? 'text-green-700 font-bold' : 'text-slate-800'}`}>
                               {loc.name}
                             </span>
                             <span className="text-[11.5px] text-slate-500 font-normal mt-0.5">{loc.desc}</span>
@@ -186,12 +186,12 @@ export default function RecommendationWizard({
                             onClick={() => updateField('propertyType', t.name)}
                             className={`w-full p-4 rounded-xl border-2 text-center cursor-pointer transition-all outline-none flex flex-col items-center justify-center ${
                               isSelected
-                                ? 'border-indigo-600 bg-indigo-50/60 shadow-xs'
+                                ? 'border-green-600 bg-green-50/60 shadow-xs'
                                 : 'border-slate-200 bg-white hover:border-slate-300 hover:-translate-y-0.5'
                             }`}
                           >
-                            <Icon size={22} className={`mb-2 transition-colors ${isSelected ? 'text-indigo-600' : 'text-slate-400'}`} />
-                            <span className={`text-sm font-semibold transition-colors ${isSelected ? 'text-indigo-700 font-bold' : 'text-slate-800'}`}>
+                            <Icon size={22} className={`mb-2 transition-colors ${isSelected ? 'text-green-700' : 'text-slate-400'}`} />
+                            <span className={`text-sm font-semibold transition-colors ${isSelected ? 'text-green-700 font-bold' : 'text-slate-800'}`}>
                               {t.name}
                             </span>
                             <span className="text-[11.5px] text-slate-500 font-normal mt-0.5">{t.desc}</span>
@@ -217,17 +217,17 @@ export default function RecommendationWizard({
                             onClick={() => updateField('purpose', p.name)}
                             className={`w-full p-4 rounded-xl border-2 flex items-center gap-3.5 cursor-pointer transition-all outline-none text-left ${
                               isSelected
-                                ? 'border-indigo-600 bg-indigo-50/60 shadow-xs'
+                                ? 'border-green-600 bg-green-50/60 shadow-xs'
                                 : 'border-slate-200 bg-white hover:border-slate-300 hover:-translate-y-0.5'
                             }`}
                           >
                             <div className={`w-10 h-10 rounded-lg shrink-0 flex items-center justify-center text-base transition-colors ${
-                              isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'
+                              isSelected ? 'bg-green-700 text-white' : 'bg-slate-100 text-slate-500'
                             }`}>
                               <Icon size={18} />
                             </div>
                             <div>
-                              <span className={`text-sm font-semibold block transition-colors ${isSelected ? 'text-indigo-700 font-bold' : 'text-slate-800'}`}>
+                              <span className={`text-sm font-semibold block transition-colors ${isSelected ? 'text-green-700 font-bold' : 'text-slate-800'}`}>
                                 {p.name}
                               </span>
                               <span className="text-xs text-slate-500 font-normal">{p.desc}</span>

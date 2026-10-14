@@ -22,7 +22,7 @@ const scoreColors = {
 const sourceColors = {
   website: 'bg-orange-100 text-orange-700',
   website_contact: 'bg-orange-100 text-orange-700',
-  website_register: 'bg-indigo-100 text-indigo-700 font-semibold',
+  website_register: 'bg-green-100 text-green-800 font-semibold',
   referral: 'bg-green-100 text-green-700',
   customer_referral: 'bg-emerald-100 text-emerald-700 font-semibold',
   walk_in: 'bg-amber-100 text-amber-700',

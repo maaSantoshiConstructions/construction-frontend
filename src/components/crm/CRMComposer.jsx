@@ -21,7 +21,7 @@ export default function CRMComposer({
   sent,
 }) {
   return (
-    <div className="bg-slate-50 border border-dashed border-indigo-200 rounded-2xl p-6 md:p-8">
+    <div className="bg-slate-50 border border-dashed border-green-200 rounded-2xl p-6 md:p-8">
       <h3 className="text-base font-bold text-slate-800 mb-1.5 font-poppins">
         Smart Message Composer (WhatsApp CRM)
       </h3>
@@ -45,8 +45,8 @@ export default function CRMComposer({
               onClick={() => setTemplate(t.id)}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition duration-200 outline-none cursor-pointer ${
                 template === t.id
-                  ? 'bg-indigo-50 border border-indigo-600 text-indigo-600'
-                  : 'bg-white border border-slate-200 text-slate-700 hover:border-indigo-600 hover:text-indigo-600'
+                  ? 'bg-green-50 border border-green-600 text-green-700'
+                  : 'bg-white border border-slate-200 text-slate-700 hover:border-green-600 hover:text-green-700'
               }`}
             >
               {t.label}
@@ -67,7 +67,7 @@ export default function CRMComposer({
                 value={selectedProject}
                 onChange={(e) => setSelectedProject(e.target.value)}
                 disabled={loading || uniqueProjects.length === 0}
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none cursor-pointer focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none cursor-pointer focus:border-green-600 focus:ring-2 focus:ring-green-100 transition"
               >
                 {uniqueProjects.map((p) => (
                   <option key={p} value={p}>{p}</option>
@@ -79,7 +79,7 @@ export default function CRMComposer({
                 value={selectedPlotId}
                 onChange={(e) => setSelectedPlotId(e.target.value)}
                 disabled={loading || filteredPlots.length === 0}
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none cursor-pointer focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none cursor-pointer focus:border-green-600 focus:ring-2 focus:ring-green-100 transition"
               >
                 {filteredPlots.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -104,7 +104,7 @@ export default function CRMComposer({
               placeholder="Customer Name (e.g. Rahul)"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
+              className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition"
             />
           </div>
           <div className="flex-1 min-w-[200px]">
@@ -113,7 +113,7 @@ export default function CRMComposer({
               placeholder="Recipient Phone (+91 XXXXX XXXXX)"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition"
+              className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-white text-slate-800 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition"
             />
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function CRMComposer({
         <textarea
           value={customMessage}
           onChange={(e) => setCustomMessage(e.target.value)}
-          className="w-full h-44 px-4 py-3.5 rounded-xl border border-indigo-600 text-xs md:text-sm font-sans leading-relaxed outline-none bg-slate-50 text-slate-800 resize-y focus:bg-white transition"
+          className="w-full h-44 px-4 py-3.5 rounded-xl border border-green-600 text-xs md:text-sm font-sans leading-relaxed outline-none bg-slate-50 text-slate-800 resize-y focus:bg-white transition"
         />
       </div>
 

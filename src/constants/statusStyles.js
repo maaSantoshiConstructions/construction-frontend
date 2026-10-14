@@ -23,7 +23,7 @@ export const TXSTATUS_COLORS = {
 };
 
 export const TYPE_COLORS = {
-  token:             'bg-indigo-100 text-indigo-700',
+  token:             'bg-green-100 text-green-700',
   installment:       'bg-sky-100 text-sky-700',
   final_payment:     'bg-emerald-100 text-emerald-700',
   loan_disbursement: 'bg-teal-100 text-teal-700',

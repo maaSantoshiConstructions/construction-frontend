@@ -70,15 +70,15 @@ export default function EMICalculator() {
       {/* Header with Title & Reset Button */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-7">
         <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2 font-['Poppins',sans-serif]">
-          <LuChartPie size={22} className="text-indigo-600 shrink-0" /> Home Loan EMI Calculator
+          <LuChartPie size={22} className="text-green-700 shrink-0" /> Home Loan EMI Calculator
         </h2>
         <button
           type="button"
           onClick={handleReset}
           aria-label="Reset Calculator inputs to default"
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 bg-[#f7f7fb] hover:bg-[#eeeef7] hover:border-indigo-500 text-xs font-semibold text-slate-700 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 bg-[#f7f7fb] hover:bg-[#eeeef7] hover:border-green-600 text-xs font-semibold text-slate-700 transition-all cursor-pointer"
         >
-          <LuRotateCcw size={14} className="text-indigo-600" /> Reset Calculator
+          <LuRotateCcw size={14} className="text-green-700" /> Reset Calculator
         </button>
       </div>
 

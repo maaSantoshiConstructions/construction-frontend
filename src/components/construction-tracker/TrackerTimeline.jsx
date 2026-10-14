@@ -42,9 +42,9 @@ export default function TrackerTimeline({
           <div key={projectName} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
 
             {/* Project Header */}
-            <div className="p-4 sm:p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white flex items-center justify-between">
+            <div className="p-4 sm:p-6 bg-gradient-to-r from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] text-white flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <LuHouse className="text-lg text-indigo-300 shrink-0" />
+                <LuHouse className="text-lg text-green-300 shrink-0" />
                 <span className="font-['Poppins',sans-serif] text-base sm:text-lg font-bold text-white">{projectName}</span>
               </div>
               <div className="flex items-center gap-3 text-xs">
@@ -125,7 +125,7 @@ export default function TrackerTimeline({
                               />
                               <div
                                 className={`flex-1 p-3.5 sm:p-4 rounded-xl bg-slate-50/80 border cursor-pointer transition-all hover:bg-slate-50 ${
-                                  isExpanded ? 'border-indigo-300 shadow-xs' : 'border-slate-200'
+                                  isExpanded ? 'border-green-300 shadow-xs' : 'border-slate-200'
                                 }`}
                                 onClick={() => setExpandedUpdate(isExpanded ? null : update._id)}
                               >
@@ -156,7 +156,7 @@ export default function TrackerTimeline({
                                         {new Date(update.createdAt || update.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                                       </span>
                                       {update.engineerReport && (
-                                        <span className="text-xs text-indigo-600 font-semibold">Has Report</span>
+                                        <span className="text-xs text-green-700 font-semibold">Has Report</span>
                                       )}
                                     </div>
                                   </div>

@@ -167,8 +167,8 @@ export default function InvestmentHeatmap() {
       `}</style>
 
       {/* ===== PAGE HEADER ===== */}
-      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10" />
+      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10" />
         <div className="max-w-7xl mx-auto px-8 relative z-10">
           <span className="inline-block bg-white/10 text-amber-400 font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full mb-3.5">
             INVESTMENT ANALYTICS
@@ -176,7 +176,7 @@ export default function InvestmentHeatmap() {
           <h1 className="font-['Poppins',sans-serif] text-white text-3xl md:text-4xl font-extrabold mt-2 mb-3">
             Odisha Investment Heatmap
           </h1>
-          <p className="text-indigo-200 text-xs sm:text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+          <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-lg mx-auto leading-relaxed">
             Identify high-growth vectors and appreciation triggers for real estate investments.
           </p>
         </div>
@@ -186,7 +186,7 @@ export default function InvestmentHeatmap() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 -mt-7 relative z-10">
         {loading && (
           <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-xl mb-8">
-            <LuLoader className="animate-spin text-indigo-600 text-2xl mx-auto mb-3" />
+            <LuLoader className="animate-spin text-green-700 text-2xl mx-auto mb-3" />
             <p className="text-xs sm:text-sm font-semibold text-slate-400">
               Loading investment projects...
             </p>
@@ -234,8 +234,8 @@ export default function InvestmentHeatmap() {
                       onClick={() => setSelected(region)}
                       className={`p-3.5 rounded-xl text-center cursor-pointer outline-none transition-all duration-200 border ${
                         isActive
-                          ? 'border-indigo-600 bg-indigo-50/50 shadow-md shadow-indigo-600/5'
-                          : 'border-slate-200 bg-white hover:border-indigo-600'
+                          ? 'border-green-700 bg-green-50/50 shadow-md shadow-green-700/5'
+                          : 'border-slate-200 bg-white hover:border-green-700'
                       }`}
                     >
                       <div
@@ -366,12 +366,12 @@ export default function InvestmentHeatmap() {
                       {
                         label: 'Infrastructure Score',
                         value: `${Math.min(95, 60 + selected.growth * 2)}/100`,
-                        color: 'text-indigo-600',
+                        color: 'text-green-700',
                       },
                       {
                         label: 'Demand Index',
                         value: `${Math.min(100, 50 + selected.growth * 2.5)}/100`,
-                        color: 'text-indigo-600',
+                        color: 'text-green-700',
                       },
                     ].map((item, i) => (
                       <div key={i} className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">

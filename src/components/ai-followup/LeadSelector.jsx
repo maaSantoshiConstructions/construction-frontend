@@ -16,7 +16,7 @@ export default function LeadSelector({
       </h3>
       {loadingLeads ? (
         <div className="flex items-center gap-2 text-xs text-slate-500 py-2">
-          <FaSpinner className="animate-spin text-indigo-600" />
+          <FaSpinner className="animate-spin text-green-700" />
           Loading active leads...
         </div>
       ) : leads.length === 0 ? (
@@ -28,7 +28,7 @@ export default function LeadSelector({
           <select
             value={selectedLeadId}
             onChange={(e) => setSelectedLeadId(e.target.value)}
-            className="w-full md:w-2/3 px-4 py-2.5 rounded-lg border border-slate-200 text-sm bg-white text-slate-800 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition cursor-pointer"
+            className="w-full md:w-2/3 px-4 py-2.5 rounded-lg border border-slate-200 text-sm bg-white text-slate-800 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition cursor-pointer"
           >
             {leads.map((l) => (
               <option key={l._id} value={l._id}>

@@ -28,7 +28,7 @@ export default function PropertySelector({
           {selected.map((prop) => (
             <div
               key={prop.id}
-              className="relative border border-indigo-600 bg-indigo-50/50 rounded-xl px-4 py-3.5 flex flex-col justify-center"
+              className="relative border border-green-700 bg-green-50/50 rounded-xl px-4 py-3.5 flex flex-col justify-center"
             >
               <button
                 onClick={() => removeProperty(prop.id)}
@@ -57,14 +57,14 @@ export default function PropertySelector({
                 placeholder="Search by plot number or facing..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-slate-50/50 text-slate-800 outline-none focus:border-indigo-600 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition"
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-slate-50/50 text-slate-800 outline-none focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 transition"
               />
             </div>
             <div className="flex-1 min-w-[200px]">
               <select
                 value={projectFilter}
                 onChange={(e) => setProjectFilter(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-slate-50/50 text-slate-700 outline-none focus:border-indigo-600 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition cursor-pointer"
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-xs bg-slate-50/50 text-slate-700 outline-none focus:border-green-600 focus:bg-white focus:ring-2 focus:ring-green-100 transition cursor-pointer"
               >
                 <option value="">All Projects</option>
                 {uniqueProjects.map((proj) => (
@@ -82,9 +82,9 @@ export default function PropertySelector({
                   <button
                     key={prop.id}
                     onClick={() => addProperty(prop)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-700 transition hover:border-indigo-600 hover:text-indigo-600 hover:shadow-sm"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-700 transition hover:border-green-700 hover:text-green-700 hover:shadow-sm"
                   >
-                    <FaPlus className="text-[8px] text-indigo-600" /> {prop.name} — {prop.project}
+                    <FaPlus className="text-[8px] text-green-700" /> {prop.name} — {prop.project}
                   </button>
                 ))}
               </div>

@@ -22,9 +22,9 @@ export default function ComparisonTable({ selected = [] }) {
       className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden mb-8"
     >
       {/* Mobile Scroll Indicator Banner */}
-      <div className="md:hidden bg-indigo-50 border-b border-indigo-100 px-4 py-2.5 flex items-center justify-between text-xs font-semibold text-indigo-700">
+      <div className="md:hidden bg-green-50 border-b border-green-100 px-4 py-2.5 flex items-center justify-between text-xs font-semibold text-green-700">
         <span>👈 Swipe horizontally to compare 👉</span>
-        <span className="text-[10px] bg-indigo-200/60 px-2 py-0.5 rounded-full font-bold">
+        <span className="text-[10px] bg-green-200/60 px-2 py-0.5 rounded-full font-bold">
           {selected.length} Selected
         </span>
       </div>

@@ -147,19 +147,19 @@ export default function CustomerReviews() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-24">
+    <div className="bg-[#f5f9f3] min-h-screen pb-24">
       {/* ===== HERO BANNER ===== */}
-      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-slate-900 to-indigo-950">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-amber-500/5 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-8 relative z-10">
-          <span className="inline-block bg-white/10 text-[#e8b355] font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full mb-3.5">
+          <span className="inline-block bg-white/10 text-[#f0a500] font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full mb-3.5">
             CLIENT TESTIMONIALS
           </span>
           <h1 className="font-poppins text-white text-3xl md:text-4xl font-extrabold mt-2 mb-3">
             Customer Reviews & Ratings
           </h1>
-          <p className="text-indigo-200 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+          <p className="text-slate-300 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
             Read verified reviews and feedback directly from our property owners.
           </p>
         </div>
@@ -190,7 +190,7 @@ export default function CustomerReviews() {
         <div>
           {loading ? (
             <div className="text-center py-20 bg-white rounded-2xl border border-slate-200 shadow-xl">
-              <FaSpinner className="text-3xl text-indigo-600 animate-spin mx-auto mb-4" />
+              <FaSpinner className="text-3xl text-green-700 animate-spin mx-auto mb-4" />
               <p className="text-sm font-semibold text-slate-400">Loading verified customer reviews...</p>
             </div>
           ) : reviews.length === 0 ? (

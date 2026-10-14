@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import constructionLogo from '../../assets/construction logo.png';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -40,20 +41,20 @@ export default function Register() {
   };
 
   const inputClass = (hasErr) =>
-    `w-full px-3.5 py-2.5 border rounded-xl text-sm font-medium text-slate-900 outline-none bg-white transition-colors focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/10 ${
+    `w-full px-3.5 py-2.5 border rounded-xl text-sm font-medium text-slate-900 outline-none bg-white transition-colors focus:border-green-700 focus:ring-2 focus:ring-green-700/10 ${
       hasErr ? 'border-red-500' : 'border-slate-200 hover:border-slate-300'
     }`;
 
   return (
     <div className="min-h-screen flex">
       {/* Left Decorative Panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0b0f2e] via-[#161b45] to-[#1c1450] items-center justify-center p-12 relative overflow-hidden flex-col text-center">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/15 pointer-events-none" />
-        <div className="absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-amber-500/10 pointer-events-none" />
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] items-center justify-center p-12 relative overflow-hidden flex-col text-center">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/15 pointer-events-none" />
+        <div className="absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-yellow-500/10 pointer-events-none" />
 
         <div className="relative z-10 max-w-sm">
           <img
-            src="/construction logo.png"
+            src={constructionLogo}
             alt="JSMIL"
             className="h-32 w-auto object-contain mx-auto mb-5 block"
           />
@@ -82,12 +83,12 @@ export default function Register() {
       </div>
 
       {/* Right Form Panel */}
-      <div className="flex-1 flex items-center justify-center bg-[#f7f7fb] p-6 sm:p-8">
+      <div className="flex-1 flex items-center justify-center bg-[#f5f9f3] p-6 sm:p-8">
         <div className="w-full max-w-md">
           {/* Logo for mobile */}
           <div className="flex lg:hidden justify-center mb-6">
             <img
-              src="/construction logo.png"
+              src={constructionLogo}
               alt="JSMIL"
               className="h-20 w-auto object-contain"
             />
@@ -224,7 +225,7 @@ export default function Register() {
               Already have an account?{' '}
               <Link
                 to="/login"
-                className="text-indigo-600 hover:text-indigo-700 font-bold no-underline transition-colors"
+                className="text-green-700 hover:text-green-800 font-bold no-underline transition-colors"
               >
                 Sign in
               </Link>

@@ -71,8 +71,8 @@ export default function RecommendationResults({
   return (
     <div className="bg-[#f7f7fb] min-h-screen pb-[90px]">
       {/* Header */}
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-center py-16 px-4 relative overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16] text-center py-16 px-4 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10">
           <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-white/10 text-amber-400 border border-white/10">
             AI POWERED ANALYSIS
@@ -93,17 +93,17 @@ export default function RecommendationResults({
           {/* Preference pills */}
           <div className="bg-white rounded-xl border border-slate-200 p-3.5 sm:p-5 mb-6 flex flex-wrap gap-2.5 items-center shadow-xs">
             <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Your Preferences:</span>
-            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-green-50 text-green-700">
               {budgetRanges.find((b) => b.value === formData.budget)?.label || formData.budget}
             </span>
-            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">{formData.location}</span>
-            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">{formData.propertyType}</span>
-            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">{formData.purpose}</span>
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-green-50 text-green-700">{formData.location}</span>
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-green-50 text-green-700">{formData.propertyType}</span>
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-green-50 text-green-700">{formData.purpose}</span>
           </div>
 
           {plots.length === 0 ? (
             <div className="bg-white rounded-2xl border border-slate-200 p-10 sm:p-16 text-center shadow-xs">
-              <LuSearch size={48} className="text-indigo-500 mx-auto mb-4" />
+              <LuSearch size={48} className="text-green-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-slate-800 mb-2">No Matching Plots Found</h3>
               <p className="text-sm text-slate-500 max-w-md mx-auto mb-6 leading-relaxed">
                 We couldn't find plots matching your exact preferences. Try adjusting your budget range or exploring a different location.
@@ -147,7 +147,7 @@ export default function RecommendationResults({
                             {project.name || 'Recommended Plot'}
                           </h3>
                           <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
-                            <LuMapPin size={13} className="text-indigo-600 shrink-0" />
+                            <LuMapPin size={13} className="text-green-700 shrink-0" />
                             {project.location?.city || ''}{project.location?.state ? `, ${project.location.state}` : ''}
                           </p>
                         </div>
@@ -218,7 +218,7 @@ export default function RecommendationResults({
           )}
 
           <div className="text-center mt-9">
-            <button onClick={resetWizard} className="bg-transparent border-0 text-indigo-600 hover:bg-indigo-50 font-semibold text-sm cursor-pointer inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg transition-colors">
+            <button onClick={resetWizard} className="bg-transparent border-0 text-green-700 hover:bg-green-50 font-semibold text-sm cursor-pointer inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg transition-colors">
               <LuRotateCcw size={16} /> Start New Search
             </button>
           </div>

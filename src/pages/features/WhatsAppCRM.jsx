@@ -133,18 +133,18 @@ export default function WhatsAppCRM() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-24">
+    <div className="bg-[#f5f9f3] min-h-screen pb-24">
       {/* ===== PAGE HEADER ===== */}
-      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-slate-900 to-indigo-950">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10" />
+      <div className="relative overflow-hidden text-center py-16 px-4 bg-gradient-to-br from-[#0d1f0d] via-[#1a3a1a] to-[#162b16]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10" />
         <div className="max-w-7xl mx-auto px-8 relative z-10">
-          <span className="inline-block bg-white/10 text-[#e8b355] font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full mb-3.5">
+          <span className="inline-block bg-white/10 text-[#f0a500] font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full mb-3.5">
             CRM INTEGRATIONS
           </span>
           <h1 className="font-poppins text-white text-3xl md:text-4xl font-extrabold mt-2 mb-3">
             WhatsApp CRM Integration
           </h1>
-          <p className="text-indigo-200 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+          <p className="text-slate-300 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
             Never lose a lead. Automated project alerts and routing sent instantly to your phone.
           </p>
         </div>

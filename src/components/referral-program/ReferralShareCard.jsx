@@ -16,9 +16,9 @@ export default function ReferralShareCard({
 }) {
   return (
     <div className="lg:col-span-5 space-y-6">
-      <div className="bg-gradient-to-br from-[#0b0f2e] to-[#1c1450] text-white rounded-2xl p-6 shadow-md border border-white/10">
+      <div className="bg-gradient-to-br from-[#0d1f0d] to-[#162b16] text-white rounded-2xl p-6 shadow-md border border-white/10">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#e8b355]">
+          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#f0a500]">
             <LuGift size={20} />
           </div>
           <div>
@@ -48,7 +48,7 @@ export default function ReferralShareCard({
                   if (onResetForm) onResetForm();
                   toast.success("Form reset. Enter your next friend's details!");
                 }}
-                className="text-[#e8b355] font-bold hover:underline cursor-pointer"
+                className="text-[#f0a500] font-bold hover:underline cursor-pointer"
               >
                 + Refer Another Friend
               </button>
@@ -72,7 +72,7 @@ export default function ReferralShareCard({
             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all shrink-0 flex items-center gap-1 ${
               !referralCreated
                 ? 'bg-slate-600/50 text-slate-400 opacity-50 cursor-not-allowed'
-                : 'bg-[#e8b355] hover:bg-[#d8a345] text-[#0b0f2e] cursor-pointer'
+                : 'bg-[#f0a500] hover:bg-[#d4880a] text-[#0d1f0d] cursor-pointer'
             }`}
           >
             {copied ? <LuCheck size={14} /> : <LuCopy size={14} />}
@@ -99,13 +99,13 @@ export default function ReferralShareCard({
       <div className="bg-white rounded-2xl p-6 border border-slate-200 flex items-center justify-between">
         <div>
           <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <LuUserCheck size={16} className="text-indigo-600" /> Track Payouts &amp; Earnings
+            <LuUserCheck size={16} className="text-green-700" /> Track Payouts &amp; Earnings
           </h4>
           <p className="text-xs text-slate-500 mt-1">View real-time referral conversions in your Owner Dashboard.</p>
         </div>
         <Link
           to={user?.role === 'channel_partner' ? '/partner/referrals' : '/customer/referrals'}
-          className="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-xl transition-colors shrink-0 ml-3"
+          className="px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold rounded-xl transition-colors shrink-0 ml-3"
         >
           My Referrals →
         </Link>

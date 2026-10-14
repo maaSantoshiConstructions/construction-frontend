@@ -51,10 +51,10 @@ export default function SmartFeatures() {
   });
 
   return (
-    <div className="bg-[#f7f7fb] min-h-screen pb-24">
+    <div className="bg-[#f5f9f3] min-h-screen pb-24">
       {/* ===== HEADER ===== */}
-      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0b0f2e] via-[#161b45] to-[#1c1450]">
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-indigo-500/10 pointer-events-none" />
+      <div className="relative overflow-hidden text-center py-14 sm:py-16 px-4 bg-gradient-to-r from-[#0d1f0d] via-[#1a3a1a] to-[#162b16]">
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-green-500/10 pointer-events-none" />
         <div className="wrap max-w-4xl mx-auto">
           <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold tracking-wider uppercase mb-3">
             POWERED BY INNOVATION
@@ -77,18 +77,18 @@ export default function SmartFeatures() {
               <Link
                 key={i}
                 to={f.title === 'Owner Dashboard' ? dashboardPath : f.path}
-                className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-indigo-600 transition-all duration-200 no-underline group"
+                className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-green-600 transition-all duration-200 no-underline group"
               >
-                <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 text-xl shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center mb-4 text-xl shrink-0">
                   <Icon />
                 </div>
-                <h3 className="font-['Poppins',sans-serif] text-base font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+                <h3 className="font-['Poppins',sans-serif] text-base font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors">
                   {f.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 leading-relaxed flex-grow">
                   {f.desc}
                 </p>
-                <div className="mt-4 text-xs font-bold text-indigo-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+                <div className="mt-4 text-xs font-bold text-green-700 flex items-center gap-1 group-hover:gap-2 transition-all">
                   <span>Try Feature</span>
                   <LuArrowRight className="text-sm" />
                 </div>

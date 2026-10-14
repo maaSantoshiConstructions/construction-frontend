@@ -22,7 +22,7 @@ export default function CalculatorsSection() {
               <p>Calculate your property returns and future value</p>
               <Link to="/calculators?tab=investment" className="go-btn">Calculate Returns</Link>
             </div>
-            <div className="icon-box"><LuTrendingUp size={32} className="text-indigo-600" /></div>
+            <div className="icon-box"><LuTrendingUp size={32} className="text-green-700" /></div>
           </div>
           <div className="ccard">
             <div>
@@ -30,7 +30,7 @@ export default function CalculatorsSection() {
               <p>Check your maximum loan eligibility based on income</p>
               <Link to="/calculators?tab=loan-eligibility" className="go-btn">Check Eligibility</Link>
             </div>
-            <div className="icon-box"><LuBadgePercent size={32} className="text-indigo-600" /></div>
+            <div className="icon-box"><LuBadgePercent size={32} className="text-green-700" /></div>
           </div>
           <div className="ccard">
             <div>
@@ -38,7 +38,7 @@ export default function CalculatorsSection() {
               <p>Calculate exact monthly EMI &amp; payment schedule</p>
               <Link to="/calculators?tab=emi" className="go-btn">Calculate EMI</Link>
             </div>
-            <div className="icon-box"><LuChartPie size={32} className="text-indigo-600" /></div>
+            <div className="icon-box"><LuChartPie size={32} className="text-green-700" /></div>
           </div>
           <div className="ccard">
             <div>
@@ -46,7 +46,7 @@ export default function CalculatorsSection() {
               <p>Estimate construction cost for your dream project</p>
               <Link to="/calculators?tab=construction" className="go-btn">Calculate Cost</Link>
             </div>
-            <div className="icon-box"><LuCalculator size={32} className="text-indigo-600" /></div>
+            <div className="icon-box"><LuCalculator size={32} className="text-green-700" /></div>
           </div>
         </div>
 

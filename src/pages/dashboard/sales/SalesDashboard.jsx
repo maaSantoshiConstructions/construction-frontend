@@ -89,7 +89,7 @@ export default function SalesDashboard() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatsCard title="Assigned Leads" value={stats.assignedLeads || 0} icon={FaUsers} color="blue" />
-        <StatsCard title="Site Visits This Week" value={stats.siteVisitsThisWeek || 0} icon={FaMapMarkerAlt} color="indigo" />
+        <StatsCard title="Site Visits This Week" value={stats.siteVisitsThisWeek || 0} icon={FaMapMarkerAlt} color="green" />
         <StatsCard title="Upcoming Visits" value={stats.upcomingVisits || 0} icon={FaCalendarCheck} color="purple" />
         <StatsCard title="Conversion Rate" value={(stats.conversionRate || 0) + '%'} icon={FaChartLine} color="green" />
       </div>

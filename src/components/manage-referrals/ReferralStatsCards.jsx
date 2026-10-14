@@ -10,7 +10,7 @@ export default function ReferralStatsCards({ totalCount = 0, convertedCount = 0,
         animate={{ opacity: 1, y: 0 }}
         className="bg-white rounded-2xl border border-slate-200 p-5 flex items-center gap-4"
       >
-        <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xl">
+        <div className="w-12 h-12 rounded-xl bg-green-50 text-green-700 flex items-center justify-center font-bold text-xl">
           <LuGift size={22} />
         </div>
         <div>

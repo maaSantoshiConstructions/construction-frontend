@@ -18,7 +18,7 @@ export default function ReferralFilterToolbar({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && onSearchEnter && onSearchEnter()}
-          className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-green-600"
         />
       </div>
 
@@ -26,7 +26,7 @@ export default function ReferralFilterToolbar({
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-3 py-2 text-xs border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 bg-white cursor-pointer"
+          className="px-3 py-2 text-xs border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-green-600 bg-white cursor-pointer"
         >
           <option value="">All Statuses</option>
           <option value="new">New</option>

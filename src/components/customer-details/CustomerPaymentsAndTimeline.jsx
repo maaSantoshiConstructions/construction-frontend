@@ -19,7 +19,7 @@ export default function CustomerPaymentsAndTimeline({
       key: 'bookingId',
       label: 'Booking ID',
       render: (r) => (
-        <span className="font-mono text-xs text-indigo-600 font-semibold">
+        <span className="font-mono text-xs text-green-700 font-semibold">
           {r.booking?.bookingId ? `#${r.booking.bookingId}` : r.booking ? `#${r.booking._id?.slice(-6)}` : '—'}
         </span>
       ),
@@ -63,7 +63,7 @@ export default function CustomerPaymentsAndTimeline({
       render: (r) => (
         <button
           onClick={() => handleDownloadReceipt(r._id, r.paymentId)}
-          className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+          className="p-1.5 text-slate-400 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors"
           title="Download Receipt"
         >
           <FaDownload className="text-xs" />

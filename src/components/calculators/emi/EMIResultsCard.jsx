@@ -14,14 +14,14 @@ export default function EMIResultsCard({
   return (
     <div className="flex flex-col gap-4">
       {/* Main EMI Highlight Card */}
-      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-purple-600 rounded-xl p-6 text-white shadow-lg shadow-indigo-900/10">
-        <p className="text-xs text-indigo-200 uppercase font-bold tracking-wide">
+      <div className="bg-gradient-to-r from-[#2d6a2d] via-[#4a8c3f] to-[#3a7a2a] rounded-xl p-6 text-white shadow-lg shadow-green-950/10">
+        <p className="text-xs text-green-100 uppercase font-bold tracking-wide">
           Monthly EMI
         </p>
         <p className="text-3xl font-extrabold mt-1 mb-0.5">
           {formatIndianCurrency(calculationResults.monthlyEMI)}
         </p>
-        <p className="text-xs text-indigo-200">
+        <p className="text-xs text-green-100">
           Estimated monthly installment for {tenureYears} years
         </p>
       </div>
@@ -30,7 +30,7 @@ export default function EMIResultsCard({
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-[#f7f7fb] border border-slate-200 rounded-xl p-3.5 flex flex-col">
           <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Principal Amount</span>
-          <span className="text-base font-extrabold text-indigo-700 mt-0.5">
+          <span className="text-base font-extrabold text-green-700 mt-0.5">
             {formatIndianCurrency(calculationResults.principal)}
           </span>
         </div>
@@ -52,7 +52,7 @@ export default function EMIResultsCard({
       {/* Doughnut Chart & Custom Legend */}
       <div className="bg-[#f7f7fb] border border-slate-200 rounded-xl p-5 mt-1">
         <div className="flex items-center gap-2 mb-3.5">
-          <LuChartPie size={16} className="text-indigo-600" />
+          <LuChartPie size={16} className="text-green-700" />
           <span className="text-xs font-bold text-slate-800">Loan Breakdown</span>
         </div>
 
@@ -70,7 +70,7 @@ export default function EMIResultsCard({
           <div className="flex-1 flex flex-col gap-2.5 min-w-[140px]">
             <div className="flex items-center justify-between text-xs">
               <span className="flex items-center gap-1.5 text-slate-500">
-                <span className="w-2.5 h-2.5 rounded-full bg-indigo-700 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-700 inline-block" />
                 Principal ({principalPct}%)
               </span>
               <strong className="text-slate-900">{formatIndianCurrency(calculationResults.principal)}</strong>

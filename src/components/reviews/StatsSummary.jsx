@@ -41,7 +41,7 @@ export default function StatsSummary({
                 key={stars}
                 onClick={() => onRatingFilterChange(isSelected ? '' : String(stars))}
                 className={`flex items-center gap-3 text-left w-full hover:bg-slate-50 p-1 rounded transition group cursor-pointer ${
-                  isSelected ? 'bg-indigo-50/70 hover:bg-indigo-50' : ''
+                  isSelected ? 'bg-green-50/70 hover:bg-green-50' : ''
                 }`}
               >
                 <span className="text-xs font-semibold text-slate-600 w-12 flex items-center gap-1">
@@ -50,7 +50,7 @@ export default function StatsSummary({
                 <div className="flex-1 bg-slate-100 h-2.5 rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
-                      isSelected ? 'bg-indigo-600' : 'bg-amber-400 group-hover:bg-amber-500'
+                      isSelected ? 'bg-green-700' : 'bg-amber-400 group-hover:bg-amber-500'
                     }`}
                     style={{ width: `${percent}%` }}
                   />
@@ -67,7 +67,7 @@ export default function StatsSummary({
         <div className="md:col-span-3 flex flex-col items-center md:items-stretch justify-center pl-0 md:pl-4 text-center md:text-left gap-4">
           <button
             onClick={onOpenModal}
-            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-md hover:shadow-lg cursor-pointer"
+            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-green-700 hover:bg-green-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-md hover:shadow-lg cursor-pointer"
           >
             <FaPlus className="text-[10px]" /> Write a Review
           </button>

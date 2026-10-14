@@ -25,7 +25,7 @@ export default function ProjectSummaryBar({
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs mb-4">
       <div className="flex items-center gap-3 mb-3.5">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 flex items-center justify-center text-white text-sm shrink-0">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-r from-green-700 to-green-800 flex items-center justify-center text-white text-sm shrink-0">
           <LuBuilding />
         </div>
         <div className="min-w-0">
@@ -54,7 +54,7 @@ export default function ProjectSummaryBar({
           <SummaryItem
             label="Price/Sqft"
             value={currentProject.pricePerSqft ? formatCurrency(currentProject.pricePerSqft) : 'N/A'}
-            colorClass="text-indigo-600"
+            colorClass="text-green-700"
           />
         )}
         {currentProject.possessionDate && !isMobile && (

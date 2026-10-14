@@ -5,7 +5,7 @@ import { getMyPlotUpdates } from '../../../api/constructionUpdates';
 import ErrorMessage from '../../../components/common/ErrorMessage';
 
 const stageBadgeStyle = {
-  planning: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  planning: 'bg-green-50 text-green-800 border-green-200',
   foundation: 'bg-amber-50 text-amber-700 border-amber-200',
   structure: 'bg-purple-50 text-purple-700 border-purple-200',
   roofing: 'bg-pink-50 text-pink-700 border-pink-200',
@@ -14,7 +14,7 @@ const stageBadgeStyle = {
 };
 
 const stageDotStyle = {
-  planning: 'bg-indigo-600',
+  planning: 'bg-green-700',
   foundation: 'bg-amber-500',
   structure: 'bg-purple-600',
   roofing: 'bg-pink-600',
@@ -119,14 +119,14 @@ export default function ConstructionUpdates() {
               <h2 className="font-['Poppins',sans-serif] text-base sm:text-lg font-bold text-slate-900">
                 {projectName}
               </h2>
-              <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100">
+              <span className="text-xs font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-lg border border-green-100">
                 {avgProgress}% Complete
               </span>
             </div>
 
             <div className="w-full bg-slate-100 rounded-full h-2.5 mb-6 overflow-hidden">
               <div
-                className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
+                className="bg-green-700 h-2.5 rounded-full transition-all duration-500"
                 style={{ width: `${avgProgress}%` }}
               />
             </div>
@@ -134,8 +134,8 @@ export default function ConstructionUpdates() {
             <div className="relative">
               {projectUpdates.map((u, i) => {
                 const bStyle =
-                  stageBadgeStyle[u.stage] || 'bg-indigo-50 text-indigo-700 border-indigo-200';
-                const dStyle = stageDotStyle[u.stage] || 'bg-indigo-600';
+                  stageBadgeStyle[u.stage] || 'bg-green-50 text-green-800 border-green-200';
+                const dStyle = stageDotStyle[u.stage] || 'bg-green-700';
 
                 return (
                   <motion.div

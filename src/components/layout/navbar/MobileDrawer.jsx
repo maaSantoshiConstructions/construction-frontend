@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LuX } from 'react-icons/lu';
 import { motion, AnimatePresence } from 'framer-motion';
+import constructionLogo from '../../../assets/construction logo.png';
 
 export default function MobileDrawer({
   mobileOpen = false,
@@ -38,7 +39,7 @@ export default function MobileDrawer({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', ease: 'easeOut', duration: 0.3 }}
-            className="fixed top-0 right-0 bottom-0 w-[280px] bg-[#0b0f2e] border-l border-white/10 z-[2005] shadow-2xl p-6 pt-20 flex flex-col box-border"
+            className="fixed top-0 right-0 bottom-0 w-[280px] bg-[#0d1f0d] border-l border-white/10 z-[2005] shadow-2xl p-6 pt-20 flex flex-col box-border"
           >
             {/* Close Button Inside Drawer */}
             <button
@@ -52,7 +53,7 @@ export default function MobileDrawer({
             {/* Logo at top of drawer */}
             <div className="flex justify-center mb-6">
               <img
-                src="/construction logo.png"
+                src={constructionLogo}
                 alt="JSMIL Logo"
                 className="h-[90px] w-auto object-contain"
               />
@@ -70,7 +71,7 @@ export default function MobileDrawer({
                     style={{ color: '#ffffff' }}
                     className={`px-4 py-3 rounded-xl text-[15px] font-bold transition-all no-underline !text-white flex items-center justify-between ${
                       active
-                        ? 'bg-indigo-600 !text-white shadow-md shadow-indigo-600/30'
+                        ? 'bg-green-700 !text-white shadow-md shadow-green-700/30'
                         : 'hover:bg-white/10 hover:!text-amber-300'
                     }`}
                   >

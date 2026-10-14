@@ -33,7 +33,7 @@ const statusConfig = {
 };
 
 const projectColors = [
-  { border: 'border-indigo-200', bg: 'bg-indigo-50/30', headerBg: 'bg-indigo-700' },
+  { border: 'border-green-200', bg: 'bg-green-50/30', headerBg: 'bg-green-700' },
   { border: 'border-emerald-200', bg: 'bg-emerald-50/30', headerBg: 'bg-emerald-700' },
   { border: 'border-amber-200', bg: 'bg-amber-50/30', headerBg: 'bg-amber-700' },
   { border: 'border-pink-200', bg: 'bg-pink-50/30', headerBg: 'bg-pink-700' },

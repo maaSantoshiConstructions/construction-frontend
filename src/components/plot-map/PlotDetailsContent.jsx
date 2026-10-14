@@ -147,7 +147,7 @@ export default function PlotDetailsContent({ plot, onClose, getProjectName }) {
       <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex flex-col gap-2.5">
         {plot.status === 'available' ? (
           <>
-            <Link to="/book-visit" className="flex items-center justify-center gap-2 w-full py-3 text-sm font-bold text-white rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-md shadow-indigo-500/20 hover:from-indigo-700 hover:to-indigo-800 transition-all font-inter no-underline">
+            <Link to="/book-visit" className="flex items-center justify-center gap-2 w-full py-3 text-sm font-bold text-white rounded-xl bg-gradient-to-r from-green-700 to-green-800 shadow-md shadow-green-700/20 hover:from-green-800 hover:to-green-900 transition-all font-inter no-underline">
               <LuExternalLink className="text-xs" /> Book Site Visit
             </Link>
             <Link to="/contact" className="flex items-center justify-center gap-2 w-full py-3 text-sm font-bold text-slate-700 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-all font-inter no-underline">

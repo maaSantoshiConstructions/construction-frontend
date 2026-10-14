@@ -4,12 +4,12 @@ import { LuTrendingUp, LuTrendingDown, LuMinus } from 'react-icons/lu';
 
 export default function StatsCard({ title, value, icon: Icon, color = 'blue', trend }) {
   const colorMap = {
-    blue: 'bg-indigo-50 text-indigo-600',
+    blue: 'bg-green-50 text-green-700',
     green: 'bg-emerald-50 text-emerald-600',
     red: 'bg-red-50 text-red-600',
     yellow: 'bg-amber-50 text-amber-600',
     purple: 'bg-purple-50 text-purple-600',
-    indigo: 'bg-indigo-50 text-indigo-600',
+    indigo: 'bg-green-50 text-green-700',
     teal: 'bg-teal-50 text-teal-600',
     orange: 'bg-orange-50 text-orange-600',
   };

@@ -28,9 +28,9 @@ export default function PaymentSummaryCards({
       label: 'Total Amount',
       value: `₹${fmt(totalAmount)}`,
       sub: null,
-      iconBg: 'bg-indigo-100',
-      iconColor: 'text-indigo-600',
-      borderColor: 'border-indigo-200',
+      iconBg: 'bg-green-100',
+      iconColor: 'text-green-700',
+      borderColor: 'border-green-200',
     },
     {
       icon: <FaCheckCircle />,

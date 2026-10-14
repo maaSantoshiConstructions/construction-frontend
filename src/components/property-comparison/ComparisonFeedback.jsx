@@ -20,7 +20,7 @@ export default function ComparisonFeedback({ selectedCount = 0 }) {
 
   return (
     <div className="text-center py-20 px-8 bg-white rounded-2xl border border-slate-200 shadow-md">
-      <div className="w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4">
+      <div className="w-14 h-14 rounded-full bg-green-50 text-green-700 flex items-center justify-center mx-auto mb-4">
         <FaPlus className="text-xl" />
       </div>
       <h3 className="text-base font-bold text-slate-800 mb-1.5 font-poppins">

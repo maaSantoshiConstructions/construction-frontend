@@ -25,7 +25,7 @@ export default function ReferralGuestCard() {
         <Link
           to="/register?redirect=/referral-program"
         
-          className="w-full sm:w-auto px-8 py-3.5 bg-[#0b0f2e] hover:bg-slate-800 text-white text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2 no-underline"
+          className="w-full sm:w-auto px-8 py-3.5 bg-[#0d1f0d] hover:bg-[#1a3a1a] text-white text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2 no-underline"
         >
           <LuUserPlus size={18} className="text-white" />
           <span className="text-white">Create Account</span>

@@ -49,7 +49,7 @@ export default function MySiteVisits() {
         </div>
         <Link
           to="/book-visit"
-          className="inline-flex items-center justify-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm rounded-xl shadow-sm transition-colors self-start sm:self-auto"
+          className="inline-flex items-center justify-center px-4 py-2.5 bg-green-700 hover:bg-green-800 text-white font-medium text-sm rounded-xl shadow-sm transition-colors self-start sm:self-auto"
         >
           📍 Schedule Visit
         </Link>
@@ -62,7 +62,7 @@ export default function MySiteVisits() {
           <p className="text-slate-400 text-sm mt-1 mb-6">Schedule a free site visit to see your dream plots in person</p>
           <Link
             to="/book-visit"
-            className="inline-flex items-center justify-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl transition-colors"
+            className="inline-flex items-center justify-center px-5 py-2.5 bg-green-700 hover:bg-green-800 text-white font-semibold text-sm rounded-xl transition-colors"
           >
             Schedule a Visit Now
           </Link>
